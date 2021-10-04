@@ -159,7 +159,7 @@ module Printers = struct
         Format.eprintf "@[Error: %a@]" pp_print_trace errs ;
         exit 1
 
-  let string_of_value : type a. a Script_typed_ir.ty -> a -> string =
+  let string_of_value : type a ac. (a, ac) Script_typed_ir.ty -> a -> string =
    fun ty v ->
     string_of_something @@ fun ctxt ->
     Script_ir_translator.(
@@ -175,8 +175,7 @@ module Printers = struct
 
   let string_of_code code = string_of_something @@ fun _ -> return code
 
-  let string_of_comparable_ty cty =
-    string_of_ty (Script_ir_translator.ty_of_comparable_ty cty)
+  let string_of_comparable_ty cty = string_of_ty cty
 end
 
 module Tests = struct
@@ -284,7 +283,7 @@ module Tests = struct
       ~expected_ratios:(1., 0.05)
 
   let contains_exceptions ty =
-    let apply : type a. bool -> a Script_typed_ir.ty -> bool =
+    let apply : type a ac. bool -> (a, ac) Script_typed_ir.ty -> bool =
      fun accu -> function
       (* Boxed sets and maps point to a shared first class module.
          This is an overapproximation that we want to ignore in
@@ -296,10 +295,7 @@ module Tests = struct
           true
       | _ -> accu
     in
-    Script_typed_ir.ty_traverse
-      ty
-      false
-      {apply; apply_comparable = (fun accu _ -> accu)}
+    Script_typed_ir.ty_traverse ty false {apply}
 
   let value_size nsamples =
     iter_n_es nsamples @@ fun i ->
