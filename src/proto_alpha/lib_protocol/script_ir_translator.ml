@@ -161,68 +161,13 @@ let check_kind kinds expr =
    (everything that cannot contain a lambda). The rest is located at
    the end of the file. *)
 
-let rec ty_of_comparable_ty : type a. a comparable_ty -> a ty = function
-  | Unit_key -> Unit_t
-  | Never_key -> Never_t
-  | Int_key -> Int_t
-  | Nat_key -> Nat_t
-  | Signature_key -> Signature_t
-  | String_key -> String_t
-  | Bytes_key -> Bytes_t
-  | Mutez_key -> Mutez_t
-  | Bool_key -> Bool_t
-  | Key_hash_key -> Key_hash_t
-  | Key_key -> Key_t
-  | Timestamp_key -> Timestamp_t
-  | Address_key -> Address_t
-  | Tx_rollup_l2_address_key -> Tx_rollup_l2_address_t
-  | Chain_id_key -> Chain_id_t
-  | Pair_key (l, r, meta) ->
-      Pair_t (ty_of_comparable_ty l, ty_of_comparable_ty r, meta)
-  | Union_key (l, r, meta) ->
-      Union_t (ty_of_comparable_ty l, ty_of_comparable_ty r, meta)
-  | Option_key (t, meta) -> Option_t (ty_of_comparable_ty t, meta)
-
-let rec unparse_comparable_ty_uncarbonated :
-    type a loc. loc:loc -> a comparable_ty -> loc Script.michelson_node =
- fun ~loc -> function
-  | Unit_key -> Prim (loc, T_unit, [], [])
-  | Never_key -> Prim (loc, T_never, [], [])
-  | Int_key -> Prim (loc, T_int, [], [])
-  | Nat_key -> Prim (loc, T_nat, [], [])
-  | Signature_key -> Prim (loc, T_signature, [], [])
-  | String_key -> Prim (loc, T_string, [], [])
-  | Bytes_key -> Prim (loc, T_bytes, [], [])
-  | Mutez_key -> Prim (loc, T_mutez, [], [])
-  | Bool_key -> Prim (loc, T_bool, [], [])
-  | Key_hash_key -> Prim (loc, T_key_hash, [], [])
-  | Key_key -> Prim (loc, T_key, [], [])
-  | Timestamp_key -> Prim (loc, T_timestamp, [], [])
-  | Address_key -> Prim (loc, T_address, [], [])
-  | Tx_rollup_l2_address_key -> Prim (loc, T_tx_rollup_l2_address, [], [])
-  | Chain_id_key -> Prim (loc, T_chain_id, [], [])
-  | Pair_key (l, r, _meta) -> (
-      let tl = unparse_comparable_ty_uncarbonated ~loc l in
-      let tr = unparse_comparable_ty_uncarbonated ~loc r in
-      (* Fold [pair a1 (pair ... (pair an-1 an))] into [pair a1 ... an] *)
-      (* Note that the folding does not happen if the pair on the right has a
-         field annotation because this annotation would be lost *)
-      match tr with
-      | Prim (_, T_pair, ts, []) -> Prim (loc, T_pair, tl :: ts, [])
-      | _ -> Prim (loc, T_pair, [tl; tr], []))
-  | Union_key (l, r, _meta) ->
-      let tl = unparse_comparable_ty_uncarbonated ~loc l in
-      let tr = unparse_comparable_ty_uncarbonated ~loc r in
-      Prim (loc, T_or, [tl; tr], [])
-  | Option_key (t, _meta) ->
-      Prim (loc, T_option, [unparse_comparable_ty_uncarbonated ~loc t], [])
-
 let unparse_memo_size ~loc memo_size =
   let z = Sapling.Memo_size.unparse_to_z memo_size in
   Int (loc, z)
 
 let rec unparse_ty_entrypoints_uncarbonated :
-    type a loc. loc:loc -> a ty -> a entrypoints -> loc Script.michelson_node =
+    type a ac loc.
+    loc:loc -> (a, ac) ty -> a entrypoints -> loc Script.michelson_node =
  fun ~loc ty {nested = nested_entrypoints; name = entrypoint_name} ->
   let (name, args) =
     match ty with
@@ -248,7 +193,7 @@ let rec unparse_ty_entrypoints_uncarbonated :
     | Contract_t (ut, _meta) ->
         let t = unparse_ty_entrypoints_uncarbonated ~loc ut no_entrypoints in
         (T_contract, [t])
-    | Pair_t (utl, utr, _meta) -> (
+    | Pair_t (utl, utr, _meta, _) -> (
         let tl = unparse_ty_entrypoints_uncarbonated ~loc utl no_entrypoints in
         let tr = unparse_ty_entrypoints_uncarbonated ~loc utr no_entrypoints in
         (* Fold [pair a1 (pair ... (pair an-1 an))] into [pair a1 ... an] *)
@@ -257,7 +202,7 @@ let rec unparse_ty_entrypoints_uncarbonated :
         match tr with
         | Prim (_, T_pair, ts, []) -> (T_pair, tl :: ts)
         | _ -> (T_pair, [tl; tr]))
-    | Union_t (utl, utr, _meta) ->
+    | Union_t (utl, utr, _meta, _) ->
         let (entrypoints_l, entrypoints_r) =
           match nested_entrypoints with
           | Entrypoints_None -> (no_entrypoints, no_entrypoints)
@@ -270,7 +215,7 @@ let rec unparse_ty_entrypoints_uncarbonated :
         let ta = unparse_ty_entrypoints_uncarbonated ~loc uta no_entrypoints in
         let tr = unparse_ty_entrypoints_uncarbonated ~loc utr no_entrypoints in
         (T_lambda, [ta; tr])
-    | Option_t (ut, _meta) ->
+    | Option_t (ut, _meta, _) ->
         let ut = unparse_ty_entrypoints_uncarbonated ~loc ut no_entrypoints in
         (T_option, [ut])
     | List_t (ut, _meta) ->
@@ -304,6 +249,10 @@ let rec unparse_ty_entrypoints_uncarbonated :
   in
   Prim (loc, name, args, annot)
 
+and unparse_comparable_ty_uncarbonated :
+    type a loc. loc:loc -> a comparable_ty -> loc Script.michelson_node =
+ fun ~loc ty -> unparse_ty_entrypoints_uncarbonated ~loc ty no_entrypoints
+
 let unparse_ty_uncarbonated ~loc ty =
   unparse_ty_entrypoints_uncarbonated ~loc ty no_entrypoints
 
@@ -329,42 +278,17 @@ let serialize_ty_for_error ty =
   *)
   unparse_ty_uncarbonated ~loc:() ty |> Micheline.strip_locations
 
-let[@coq_axiom_with_reason "gadt"] rec comparable_ty_of_ty :
-    type a.
-    context -> Script.location -> a ty -> (a comparable_ty * context) tzresult =
+let[@coq_axiom_with_reason "gadt"] comparable_ty_of_ty :
+    type a ac.
+    context ->
+    Script.location ->
+    (a, ac) ty ->
+    (a comparable_ty * context) tzresult =
  fun ctxt loc ty ->
   Gas.consume ctxt Typecheck_costs.comparable_ty_of_ty_cycle >>? fun ctxt ->
-  match ty with
-  | Unit_t -> ok ((Unit_key : a comparable_ty), ctxt)
-  | Never_t -> ok (Never_key, ctxt)
-  | Int_t -> ok (Int_key, ctxt)
-  | Nat_t -> ok (Nat_key, ctxt)
-  | Signature_t -> ok (Signature_key, ctxt)
-  | String_t -> ok (String_key, ctxt)
-  | Bytes_t -> ok (Bytes_key, ctxt)
-  | Mutez_t -> ok (Mutez_key, ctxt)
-  | Bool_t -> ok (Bool_key, ctxt)
-  | Key_hash_t -> ok (Key_hash_key, ctxt)
-  | Key_t -> ok (Key_key, ctxt)
-  | Timestamp_t -> ok (Timestamp_key, ctxt)
-  | Address_t -> ok (Address_key, ctxt)
-  | Tx_rollup_l2_address_t -> ok (Tx_rollup_l2_address_key, ctxt)
-  | Chain_id_t -> ok (Chain_id_key, ctxt)
-  | Pair_t (l, r, pname) ->
-      comparable_ty_of_ty ctxt loc l >>? fun (lty, ctxt) ->
-      comparable_ty_of_ty ctxt loc r >|? fun (rty, ctxt) ->
-      (Pair_key (lty, rty, pname), ctxt)
-  | Union_t (l, r, meta) ->
-      comparable_ty_of_ty ctxt loc l >>? fun (lty, ctxt) ->
-      comparable_ty_of_ty ctxt loc r >|? fun (rty, ctxt) ->
-      (Union_key (lty, rty, meta), ctxt)
-  | Option_t (tt, meta) ->
-      comparable_ty_of_ty ctxt loc tt >|? fun (ty, ctxt) ->
-      (Option_key (ty, meta), ctxt)
-  | Lambda_t _ | List_t _ | Ticket_t _ | Set_t _ | Map_t _ | Big_map_t _
-  | Contract_t _ | Operation_t | Bls12_381_fr_t | Bls12_381_g1_t
-  | Bls12_381_g2_t | Sapling_state_t _ | Sapling_transaction_t _ | Chest_key_t
-  | Chest_t ->
+  match is_comparable ty with
+  | Yes -> ok ((ty : a comparable_ty), ctxt)
+  | No ->
       let t = serialize_ty_for_error ty in
       error (Comparable_type_expected (loc, t))
 
@@ -578,8 +502,8 @@ let unparse_option ~loc unparse_v ctxt = function
 
 let comparable_comb_witness2 :
     type t. t comparable_ty -> (t, unit -> unit -> unit) comb_witness = function
-  | Pair_key (_, Pair_key _, _) -> Comb_Pair (Comb_Pair Comb_Any)
-  | Pair_key _ -> Comb_Pair Comb_Any
+  | Pair_t (_, Pair_t _, _, _) -> Comb_Pair (Comb_Pair Comb_Any)
+  | Pair_t _ -> Comb_Pair Comb_Any
   | _ -> Comb_Any
 
 let[@coq_axiom_with_reason "gadt"] rec unparse_comparable_data :
@@ -601,36 +525,35 @@ let[@coq_axiom_with_reason "gadt"] rec unparse_comparable_data :
   >>?=
   fun ctxt ->
   match (ty, a) with
-  | (Unit_key, v) -> Lwt.return @@ unparse_unit ~loc ctxt v
-  | (Int_key, v) -> Lwt.return @@ unparse_int ~loc ctxt v
-  | (Nat_key, v) -> Lwt.return @@ unparse_nat ~loc ctxt v
-  | (String_key, s) -> Lwt.return @@ unparse_string ~loc ctxt s
-  | (Bytes_key, s) -> Lwt.return @@ unparse_bytes ~loc ctxt s
-  | (Bool_key, b) -> Lwt.return @@ unparse_bool ~loc ctxt b
-  | (Timestamp_key, t) -> Lwt.return @@ unparse_timestamp ~loc ctxt mode t
-  | (Address_key, address) ->
-      Lwt.return @@ unparse_address ~loc ctxt mode address
-  | (Tx_rollup_l2_address_key, address) ->
+  | (Unit_t, v) -> Lwt.return @@ unparse_unit ~loc ctxt v
+  | (Int_t, v) -> Lwt.return @@ unparse_int ~loc ctxt v
+  | (Nat_t, v) -> Lwt.return @@ unparse_nat ~loc ctxt v
+  | (String_t, s) -> Lwt.return @@ unparse_string ~loc ctxt s
+  | (Bytes_t, s) -> Lwt.return @@ unparse_bytes ~loc ctxt s
+  | (Bool_t, b) -> Lwt.return @@ unparse_bool ~loc ctxt b
+  | (Timestamp_t, t) -> Lwt.return @@ unparse_timestamp ~loc ctxt mode t
+  | (Address_t, address) -> Lwt.return @@ unparse_address ~loc ctxt mode address
+  | (Tx_rollup_l2_address_t, address) ->
       Lwt.return @@ unparse_tx_rollup_l2_address ~loc ctxt mode address
-  | (Signature_key, s) -> Lwt.return @@ unparse_signature ~loc ctxt mode s
-  | (Mutez_key, v) -> Lwt.return @@ unparse_mutez ~loc ctxt v
-  | (Key_key, k) -> Lwt.return @@ unparse_key ~loc ctxt mode k
-  | (Key_hash_key, k) -> Lwt.return @@ unparse_key_hash ~loc ctxt mode k
-  | (Chain_id_key, chain_id) ->
+  | (Signature_t, s) -> Lwt.return @@ unparse_signature ~loc ctxt mode s
+  | (Mutez_t, v) -> Lwt.return @@ unparse_mutez ~loc ctxt v
+  | (Key_t, k) -> Lwt.return @@ unparse_key ~loc ctxt mode k
+  | (Key_hash_t, k) -> Lwt.return @@ unparse_key_hash ~loc ctxt mode k
+  | (Chain_id_t, chain_id) ->
       Lwt.return @@ unparse_chain_id ~loc ctxt mode chain_id
-  | (Pair_key (tl, tr, _), pair) ->
+  | (Pair_t (tl, tr, _, YesYes), pair) ->
       let r_witness = comparable_comb_witness2 tr in
       let unparse_l ctxt v = unparse_comparable_data ~loc ctxt mode tl v in
       let unparse_r ctxt v = unparse_comparable_data ~loc ctxt mode tr v in
       unparse_pair ~loc unparse_l unparse_r ctxt mode r_witness pair
-  | (Union_key (tl, tr, _), v) ->
+  | (Union_t (tl, tr, _, YesYes), v) ->
       let unparse_l ctxt v = unparse_comparable_data ~loc ctxt mode tl v in
       let unparse_r ctxt v = unparse_comparable_data ~loc ctxt mode tr v in
       unparse_union ~loc unparse_l unparse_r ctxt v
-  | (Option_key (t, _), v) ->
+  | (Option_t (t, _, Yes), v) ->
       let unparse_v ctxt v = unparse_comparable_data ~loc ctxt mode t v in
       unparse_option ~loc unparse_v ctxt v
-  | (Never_key, _) -> .
+  | (Never_t, _) -> .
 
 let pack_node unparsed ctxt =
   Gas.consume ctxt (Script.strip_locations_cost unparsed) >>? fun ctxt ->
@@ -662,14 +585,13 @@ let hash_comparable_data ctxt ty data =
    checking this property when adding new types.
 *)
 let check_dupable_comparable_ty : type a. a comparable_ty -> unit = function
-  | Unit_key | Never_key | Int_key | Nat_key | Signature_key | String_key
-  | Bytes_key | Mutez_key | Bool_key | Key_hash_key | Key_key | Timestamp_key
-  | Chain_id_key | Address_key | Tx_rollup_l2_address_key | Pair_key _
-  | Union_key _ | Option_key _ ->
+  | Unit_t | Never_t | Int_t | Nat_t | Signature_t | String_t | Bytes_t
+  | Mutez_t | Bool_t | Key_hash_t | Key_t | Timestamp_t | Chain_id_t | Address_t
+  | Tx_rollup_l2_address_t | Pair_t _ | Union_t _ | Option_t _ ->
       ()
 
 let check_dupable_ty ctxt loc ty =
-  let rec aux : type a. location -> a ty -> (unit, error) Gas_monad.t =
+  let rec aux : type a ac. location -> (a, ac) ty -> (unit, error) Gas_monad.t =
    fun loc ty ->
     let open Gas_monad.Syntax in
     let* () = Gas_monad.consume_gas Typecheck_costs.check_dupable_cycle in
@@ -699,10 +621,10 @@ let check_dupable_ty ctxt loc ty =
     | Chest_t -> return_unit
     | Chest_key_t -> return_unit
     | Ticket_t _ -> fail @@ Unexpected_ticket loc
-    | Pair_t (ty_a, ty_b, _) ->
+    | Pair_t (ty_a, ty_b, _, _) ->
         let* () = aux loc ty_a in
         aux loc ty_b
-    | Union_t (ty_a, ty_b, _) ->
+    | Union_t (ty_a, ty_b, _, _) ->
         let* () = aux loc ty_a in
         aux loc ty_b
     | Lambda_t (_, _, _) ->
@@ -715,7 +637,7 @@ let check_dupable_ty ctxt loc ty =
             Hence non-dupable should imply non-packable.
       *)
         return_unit
-    | Option_t (ty, _) -> aux loc ty
+    | Option_t (ty, _, _) -> aux loc ty
     | List_t (ty, _) -> aux loc ty
     | Set_t (key_ty, _) ->
         let () = check_dupable_comparable_ty key_ty in
@@ -772,63 +694,58 @@ let rec comparable_ty_eq :
       @@ Error
            (match error_details with
            | Fast -> (Inconsistent_types_fast : error_trace)
-           | Informative ->
-               trace_of_error
-               @@ default_ty_eq_error
-                    (ty_of_comparable_ty ta)
-                    (ty_of_comparable_ty tb))
+           | Informative -> trace_of_error @@ default_ty_eq_error ta tb)
     in
     match (ta, tb) with
-    | (Unit_key, Unit_key) ->
-        return (Eq : (ta comparable_ty, tb comparable_ty) eq)
-    | (Unit_key, _) -> not_equal ()
-    | (Never_key, Never_key) -> return Eq
-    | (Never_key, _) -> not_equal ()
-    | (Int_key, Int_key) -> return Eq
-    | (Int_key, _) -> not_equal ()
-    | (Nat_key, Nat_key) -> return Eq
-    | (Nat_key, _) -> not_equal ()
-    | (Signature_key, Signature_key) -> return Eq
-    | (Signature_key, _) -> not_equal ()
-    | (String_key, String_key) -> return Eq
-    | (String_key, _) -> not_equal ()
-    | (Bytes_key, Bytes_key) -> return Eq
-    | (Bytes_key, _) -> not_equal ()
-    | (Mutez_key, Mutez_key) -> return Eq
-    | (Mutez_key, _) -> not_equal ()
-    | (Bool_key, Bool_key) -> return Eq
-    | (Bool_key, _) -> not_equal ()
-    | (Key_hash_key, Key_hash_key) -> return Eq
-    | (Key_hash_key, _) -> not_equal ()
-    | (Key_key, Key_key) -> return Eq
-    | (Key_key, _) -> not_equal ()
-    | (Timestamp_key, Timestamp_key) -> return Eq
-    | (Timestamp_key, _) -> not_equal ()
-    | (Chain_id_key, Chain_id_key) -> return Eq
-    | (Chain_id_key, _) -> not_equal ()
-    | (Address_key, Address_key) -> return Eq
-    | (Address_key, _) -> not_equal ()
-    | (Tx_rollup_l2_address_key, Tx_rollup_l2_address_key) -> return Eq
-    | (Tx_rollup_l2_address_key, _) -> not_equal ()
-    | (Pair_key (left_a, right_a, meta_a), Pair_key (left_b, right_b, meta_b))
-      ->
+    | (Unit_t, Unit_t) -> return (Eq : (ta comparable_ty, tb comparable_ty) eq)
+    | (Unit_t, _) -> not_equal ()
+    | (Never_t, Never_t) -> return Eq
+    | (Never_t, _) -> not_equal ()
+    | (Int_t, Int_t) -> return Eq
+    | (Int_t, _) -> not_equal ()
+    | (Nat_t, Nat_t) -> return Eq
+    | (Nat_t, _) -> not_equal ()
+    | (Signature_t, Signature_t) -> return Eq
+    | (Signature_t, _) -> not_equal ()
+    | (String_t, String_t) -> return Eq
+    | (String_t, _) -> not_equal ()
+    | (Bytes_t, Bytes_t) -> return Eq
+    | (Bytes_t, _) -> not_equal ()
+    | (Mutez_t, Mutez_t) -> return Eq
+    | (Mutez_t, _) -> not_equal ()
+    | (Bool_t, Bool_t) -> return Eq
+    | (Bool_t, _) -> not_equal ()
+    | (Key_hash_t, Key_hash_t) -> return Eq
+    | (Key_hash_t, _) -> not_equal ()
+    | (Key_t, Key_t) -> return Eq
+    | (Key_t, _) -> not_equal ()
+    | (Timestamp_t, Timestamp_t) -> return Eq
+    | (Timestamp_t, _) -> not_equal ()
+    | (Chain_id_t, Chain_id_t) -> return Eq
+    | (Chain_id_t, _) -> not_equal ()
+    | (Address_t, Address_t) -> return Eq
+    | (Address_t, _) -> not_equal ()
+    | (Tx_rollup_l2_address_t, Tx_rollup_l2_address_t) -> return Eq
+    | (Tx_rollup_l2_address_t, _) -> not_equal ()
+    | ( Pair_t (left_a, right_a, meta_a, YesYes),
+        Pair_t (left_b, right_b, meta_b, YesYes) ) ->
         let* () = type_metadata_eq meta_a meta_b in
         let* Eq = comparable_ty_eq ~error_details left_a left_b in
         let+ Eq = comparable_ty_eq ~error_details right_a right_b in
         (Eq : (ta comparable_ty, tb comparable_ty) eq)
-    | (Pair_key _, _) -> not_equal ()
-    | (Union_key (left_a, right_a, meta_a), Union_key (left_b, right_b, meta_b))
-      ->
+    | (Pair_t _, _) -> not_equal ()
+    | ( Union_t (left_a, right_a, meta_a, YesYes),
+        Union_t (left_b, right_b, meta_b, YesYes) ) ->
         let* () = type_metadata_eq meta_a meta_b in
         let* Eq = comparable_ty_eq ~error_details left_a left_b in
         let+ Eq = comparable_ty_eq ~error_details right_a right_b in
         (Eq : (ta comparable_ty, tb comparable_ty) eq)
-    | (Union_key _, _) -> not_equal ()
-    | (Option_key (ta, meta_a), Option_key (tb, meta_b)) ->
+    | (Union_t _, _) -> not_equal ()
+    | (Option_t (ta, meta_a, Yes), Option_t (tb, meta_b, Yes)) ->
         let* () = type_metadata_eq meta_a meta_b in
         let+ Eq = comparable_ty_eq ~error_details ta tb in
         (Eq : (ta comparable_ty, tb comparable_ty) eq)
-    | (Option_key _, _) -> not_equal ()
+    | (Option_t _, _) -> not_equal ()
 
 let memo_size_eq :
     type error_trace.
@@ -846,12 +763,12 @@ let memo_size_eq :
 
 (** Same as comparable_ty_eq but for any types. *)
 let ty_eq :
-    type a b error_trace.
+    type a ac b bc error_trace.
     error_details:error_trace error_details ->
     Script.location ->
-    a ty ->
-    b ty ->
-    ((a ty, b ty) eq, error_trace) Gas_monad.t =
+    (a, ac) ty ->
+    (b, bc) ty ->
+    (((a, ac) ty, (b, bc) ty) eq, error_trace) Gas_monad.t =
  fun ~error_details loc ty1 ty2 ->
   let type_metadata_eq meta1 meta2 =
     Gas_monad.of_result (type_metadata_eq ~error_details meta1 meta2)
@@ -864,15 +781,19 @@ let ty_eq :
     Gas_monad.of_result (memo_size_eq ~error_details ms1 ms2)
   in
   let rec help :
-      type ta tb. ta ty -> tb ty -> ((ta ty, tb ty) eq, error_trace) Gas_monad.t
-      =
+      type ta tac tb tbc.
+      (ta, tac) ty ->
+      (tb, tbc) ty ->
+      (((ta, tac) ty, (tb, tbc) ty) eq, error_trace) Gas_monad.t =
    fun ty1 ty2 ->
     help0 ty1 ty2
     |> Gas_monad.record_trace_eval ~error_details (fun () ->
            default_ty_eq_error ty1 ty2)
   and help0 :
-      type ta tb. ta ty -> tb ty -> ((ta ty, tb ty) eq, error_trace) Gas_monad.t
-      =
+      type ta tac tb tbc.
+      (ta, tac) ty ->
+      (tb, tbc) ty ->
+      (((ta, tac) ty, (tb, tbc) ty) eq, error_trace) Gas_monad.t =
    fun ty1 ty2 ->
     let open Gas_monad.Syntax in
     let* () = Gas_monad.consume_gas Typecheck_costs.merge_cycle in
@@ -884,7 +805,7 @@ let ty_eq :
            | Informative -> trace_of_error @@ default_ty_eq_error ty1 ty2)
     in
     match (ty1, ty2) with
-    | (Unit_t, Unit_t) -> return (Eq : (ta ty, tb ty) eq)
+    | (Unit_t, Unit_t) -> return (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Unit_t, _) -> not_equal ()
     | (Int_t, Int_t) -> return Eq
     | (Int_t, _) -> not_equal ()
@@ -926,56 +847,60 @@ let ty_eq :
         let* () = type_metadata_eq meta1 meta2 in
         let* Eq = help tar tbr in
         let+ Eq = comparable_ty_eq ~error_details tal tbl in
-        (Eq : (ta ty, tb ty) eq)
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Map_t _, _) -> not_equal ()
     | (Big_map_t (tal, tar, meta1), Big_map_t (tbl, tbr, meta2)) ->
         let* () = type_metadata_eq meta1 meta2 in
         let* Eq = help tar tbr in
         let+ Eq = comparable_ty_eq ~error_details tal tbl in
-        (Eq : (ta ty, tb ty) eq)
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Big_map_t _, _) -> not_equal ()
     | (Set_t (ea, meta1), Set_t (eb, meta2)) ->
         let* () = type_metadata_eq meta1 meta2 in
         let+ Eq = comparable_ty_eq ~error_details ea eb in
-        (Eq : (ta ty, tb ty) eq)
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Set_t _, _) -> not_equal ()
     | (Ticket_t (ea, meta1), Ticket_t (eb, meta2)) ->
         let* () = type_metadata_eq meta1 meta2 in
         let+ Eq = comparable_ty_eq ~error_details ea eb in
-        (Eq : (ta ty, tb ty) eq)
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Ticket_t _, _) -> not_equal ()
-    | (Pair_t (tal, tar, meta1), Pair_t (tbl, tbr, meta2)) ->
+    | (Pair_t (tal, tar, meta1, witness1), Pair_t (tbl, tbr, meta2, witness2))
+      ->
         let* () = type_metadata_eq meta1 meta2 in
         let* Eq = help tal tbl in
         let+ Eq = help tar tbr in
-        (Eq : (ta ty, tb ty) eq)
+        let Eq = merge_comparable_witness witness1 witness2 in
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Pair_t _, _) -> not_equal ()
-    | (Union_t (tal, tar, meta1), Union_t (tbl, tbr, meta2)) ->
+    | (Union_t (tal, tar, meta1, witness1), Union_t (tbl, tbr, meta2, witness2))
+      ->
         let* () = type_metadata_eq meta1 meta2 in
         let* Eq = help tal tbl in
         let+ Eq = help tar tbr in
-        (Eq : (ta ty, tb ty) eq)
+        let Eq = merge_comparable_witness witness1 witness2 in
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Union_t _, _) -> not_equal ()
     | (Lambda_t (tal, tar, meta1), Lambda_t (tbl, tbr, meta2)) ->
         let* () = type_metadata_eq meta1 meta2 in
         let* Eq = help tal tbl in
         let+ Eq = help tar tbr in
-        (Eq : (ta ty, tb ty) eq)
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Lambda_t _, _) -> not_equal ()
     | (Contract_t (tal, meta1), Contract_t (tbl, meta2)) ->
         let* () = type_metadata_eq meta1 meta2 in
         let+ Eq = help tal tbl in
-        (Eq : (ta ty, tb ty) eq)
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Contract_t _, _) -> not_equal ()
-    | (Option_t (tva, meta1), Option_t (tvb, meta2)) ->
+    | (Option_t (tva, meta1, _cmp1), Option_t (tvb, meta2, _cmp2)) ->
         let* () = type_metadata_eq meta1 meta2 in
         let+ Eq = help tva tvb in
-        (Eq : (ta ty, tb ty) eq)
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (Option_t _, _) -> not_equal ()
     | (List_t (tva, meta1), List_t (tvb, meta2)) ->
         let* () = type_metadata_eq meta1 meta2 in
         let+ Eq = help tva tvb in
-        (Eq : (ta ty, tb ty) eq)
+        (Eq : ((ta, tac) ty, (tb, tbc) ty) eq)
     | (List_t _, _) -> not_equal ()
     | (Sapling_state_t ms1, Sapling_state_t ms2) ->
         let+ () = memo_size_eq ms1 ms2 in
@@ -1201,11 +1126,11 @@ let[@coq_struct "ty"] rec parse_comparable_ty :
                T_key;
              ]
 
-type ex_ty = Ex_ty : 'a ty -> ex_ty
+type ex_ty = Ex_ty : ('a, _) ty -> ex_ty
 
 type ex_parameter_ty_and_entrypoints =
   | Ex_parameter_ty_and_entrypoints : {
-      arg_type : 'a ty;
+      arg_type : ('a, _) ty;
       entrypoints : 'a entrypoints;
     }
       -> ex_parameter_ty_and_entrypoints
@@ -1350,7 +1275,7 @@ let[@coq_axiom_with_reason "complex mutually recursive definition"] rec parse_ty
           utr
         >>? fun (Ex_ty tr, ctxt) ->
         check_type_annot loc annot >>? fun () ->
-        pair_t loc tl tr >|? fun ty -> return ctxt ty
+        pair_t loc tl tr >|? fun (Ty_ex_c ty) -> return ctxt ty
     | Prim (loc, T_or, [utl; utr], annot) -> (
         (match ret with
         | Don't_parse_entrypoints ->
@@ -1385,7 +1310,7 @@ let[@coq_axiom_with_reason "complex mutually recursive definition"] rec parse_ty
         | Don't_parse_entrypoints ->
             let (Ex_ty tl) = parsed_l in
             let (Ex_ty tr) = parsed_r in
-            union_t loc tl tr >|? fun ty -> ((Ex_ty ty : ret), ctxt)
+            union_t loc tl tr >|? fun (Ty_ex_c ty) -> ((Ex_ty ty : ret), ctxt)
         | Parse_entrypoints ->
             let (Ex_parameter_ty_and_entrypoints
                   {arg_type = tl; entrypoints = left}) =
@@ -1395,7 +1320,7 @@ let[@coq_axiom_with_reason "complex mutually recursive definition"] rec parse_ty
                   {arg_type = tr; entrypoints = right}) =
               parsed_r
             in
-            union_t loc tl tr >|? fun arg_type ->
+            union_t loc tl tr >|? fun (Ty_ex_c arg_type) ->
             let entrypoints =
               {name; nested = Entrypoints_Union {left; right}}
             in
@@ -1703,12 +1628,12 @@ let parse_storage_ty :
             remaining_storage
           >>? fun (Ex_ty remaining_storage, ctxt) ->
           check_composed_type_annot loc storage_annot >>? fun () ->
-          pair_t loc big_map_ty remaining_storage >|? fun ty -> (Ex_ty ty, ctxt)
-      )
+          pair_t loc big_map_ty remaining_storage >|? fun (Ty_ex_c ty) ->
+          (Ex_ty ty, ctxt))
   | _ -> (parse_normal_storage_ty [@tailcall]) ctxt ~stack_depth ~legacy node
 
 let check_packable ~legacy loc root =
-  let rec check : type t. t ty -> unit tzresult = function
+  let rec check : type t tc. (t, tc) ty -> unit tzresult = function
     (* /!\ When adding new lazy storage kinds, be sure to return an error. /!\
        Lazy storage should not be packable. *)
     | Big_map_t _ -> error (Unexpected_lazy_storage loc)
@@ -1735,9 +1660,9 @@ let check_packable ~legacy loc root =
     | Bls12_381_g1_t -> Result.return_unit
     | Bls12_381_g2_t -> Result.return_unit
     | Bls12_381_fr_t -> Result.return_unit
-    | Pair_t (l_ty, r_ty, _) -> check l_ty >>? fun () -> check r_ty
-    | Union_t (l_ty, r_ty, _) -> check l_ty >>? fun () -> check r_ty
-    | Option_t (v_ty, _) -> check v_ty
+    | Pair_t (l_ty, r_ty, _, _) -> check l_ty >>? fun () -> check r_ty
+    | Union_t (l_ty, r_ty, _, _) -> check l_ty >>? fun () -> check r_ty
+    | Option_t (v_ty, _, _) -> check v_ty
     | List_t (elt_ty, _) -> check elt_ty
     | Map_t (_, elt_ty, _) -> check elt_ty
     | Contract_t (_, _) when legacy -> Result.return_unit
@@ -1759,8 +1684,8 @@ type ('arg, 'storage) code =
   | Code : {
       code :
         (('arg, 'storage) pair, (operation boxed_list, 'storage) pair) lambda;
-      arg_type : 'arg ty;
-      storage_type : 'storage ty;
+      arg_type : ('arg, _) ty;
+      storage_type : ('storage, _) ty;
       views : view SMap.t;
       entrypoints : 'arg entrypoints;
       code_size : Cache_memory_helpers.sint;
@@ -1771,9 +1696,9 @@ type ex_script =
   | Ex_script : {
       code :
         (('arg, 'storage) pair, (operation boxed_list, 'storage) pair) lambda;
-      arg_type : 'arg ty;
+      arg_type : ('arg, _) ty;
       storage : 'storage;
-      storage_type : 'storage ty;
+      storage_type : ('storage, _) ty;
       views : view SMap.t;
       entrypoints : 'arg entrypoints;
       code_size : Cache_memory_helpers.sint;
@@ -1795,7 +1720,7 @@ type 'storage ex_view =
 type (_, _) dig_proof_argument =
   | Dig_proof_argument :
       ('x, 'a * 's, 'a, 's, 'b, 't, 'c, 'u) stack_prefix_preservation_witness
-      * 'x ty
+      * ('x, _) ty
       * ('c, 'u) stack_ty
       -> ('b, 't) dig_proof_argument
 
@@ -1831,24 +1756,24 @@ type 'before uncomb_proof_argument =
 
 type 'before comb_get_proof_argument =
   | Comb_get_proof_argument :
-      ('before, 'after) comb_get_gadt_witness * 'after ty
+      ('before, 'after) comb_get_gadt_witness * ('after, _) ty
       -> 'before comb_get_proof_argument
 
 type ('rest, 'before) comb_set_proof_argument =
   | Comb_set_proof_argument :
-      ('rest, 'before, 'after) comb_set_gadt_witness * 'after ty
+      ('rest, 'before, 'after) comb_set_gadt_witness * ('after, _) ty
       -> ('rest, 'before) comb_set_proof_argument
 
 type 'before dup_n_proof_argument =
   | Dup_n_proof_argument :
-      ('before, 'a) dup_n_gadt_witness * 'a ty
+      ('before, 'a) dup_n_gadt_witness * ('a, _) ty
       -> 'before dup_n_proof_argument
 
 let rec make_dug_proof_argument :
-    type a s x.
+    type a s x xc.
     location ->
     int ->
-    x ty ->
+    (x, xc) ty ->
     (a, s) stack_ty ->
     (a, s, x) dug_proof_argument option =
  fun loc n x stk ->
@@ -1862,13 +1787,13 @@ let rec make_dug_proof_argument :
   | (_, _) -> None
 
 let rec make_comb_get_proof_argument :
-    type b. int -> b ty -> b comb_get_proof_argument option =
+    type b bc. int -> (b, bc) ty -> b comb_get_proof_argument option =
  fun n ty ->
   match (n, ty) with
   | (0, value_ty) -> Some (Comb_get_proof_argument (Comb_get_zero, value_ty))
-  | (1, Pair_t (hd_ty, _, _annot)) ->
+  | (1, Pair_t (hd_ty, _, _annot, _)) ->
       Some (Comb_get_proof_argument (Comb_get_one, hd_ty))
-  | (n, Pair_t (_, tl_ty, _annot)) ->
+  | (n, Pair_t (_, tl_ty, _annot, _)) ->
       make_comb_get_proof_argument (n - 2) tl_ty
       |> Option.map
          @@ fun (Comb_get_proof_argument (comb_get_left_witness, ty')) ->
@@ -1876,38 +1801,38 @@ let rec make_comb_get_proof_argument :
   | _ -> None
 
 let rec make_comb_set_proof_argument :
-    type value before a s.
+    type value valuec before beforec a s.
     context ->
     (a, s) stack_ty ->
     location ->
     int ->
-    value ty ->
-    before ty ->
+    (value, valuec) ty ->
+    (before, beforec) ty ->
     (value, before) comb_set_proof_argument tzresult =
  fun ctxt stack_ty loc n value_ty ty ->
   match (n, ty) with
   | (0, _) -> ok @@ Comb_set_proof_argument (Comb_set_zero, value_ty)
-  | (1, Pair_t (_hd_ty, tl_ty, _)) ->
-      pair_t loc value_ty tl_ty >|? fun after_ty ->
+  | (1, Pair_t (_hd_ty, tl_ty, _, _)) ->
+      pair_t loc value_ty tl_ty >|? fun (Ty_ex_c after_ty) ->
       Comb_set_proof_argument (Comb_set_one, after_ty)
-  | (n, Pair_t (hd_ty, tl_ty, _)) ->
+  | (n, Pair_t (hd_ty, tl_ty, _, _)) ->
       make_comb_set_proof_argument ctxt stack_ty loc (n - 2) value_ty tl_ty
       >>? fun (Comb_set_proof_argument (comb_set_left_witness, tl_ty')) ->
-      pair_t loc hd_ty tl_ty' >|? fun after_ty ->
+      pair_t loc hd_ty tl_ty' >|? fun (Ty_ex_c after_ty) ->
       Comb_set_proof_argument (Comb_set_plus_two comb_set_left_witness, after_ty)
   | _ ->
       let whole_stack = serialize_stack_for_error ctxt stack_ty in
       error (Bad_stack (loc, I_UPDATE, 2, whole_stack))
 
-let find_entrypoint (type full error_trace)
-    ~(error_details : error_trace error_details) (full : full ty)
+let find_entrypoint (type full fullc error_trace)
+    ~(error_details : error_trace error_details) (full : (full, fullc) ty)
     (entrypoints : full entrypoints) entrypoint :
     ((Script.node -> Script.node) * ex_ty, error_trace) Gas_monad.t =
   let open Gas_monad.Syntax in
   let loc = Micheline.dummy_location in
   let rec find_entrypoint :
-      type t.
-      t ty ->
+      type t tc.
+      (t, tc) ty ->
       t entrypoints ->
       Entrypoint.t ->
       ((Script.node -> Script.node) * ex_ty, unit) Gas_monad.t =
@@ -1916,7 +1841,8 @@ let find_entrypoint (type full error_trace)
     match (ty, entrypoints) with
     | (_, {name = Some name; _}) when Entrypoint.(name = entrypoint) ->
         return ((fun e -> e), Ex_ty ty)
-    | (Union_t (tl, tr, _), {nested = Entrypoints_Union {left; right}; _}) -> (
+    | (Union_t (tl, tr, _, _), {nested = Entrypoints_Union {left; right}; _})
+      -> (
         Gas_monad.bind_recover (find_entrypoint tl left entrypoint) @@ function
         | Ok (f, t) -> return ((fun e -> Prim (loc, D_Left, [f e], [])), t)
         | Error () ->
@@ -1936,9 +1862,10 @@ let find_entrypoint (type full error_trace)
              | Fast -> (Inconsistent_types_fast : error_trace)
              | Informative -> trace_of_error @@ No_such_entrypoint entrypoint)
 
-let find_entrypoint_for_type (type full exp error_trace) ~error_details
-    ~(full : full ty) ~(expected : exp ty) entrypoints entrypoint loc :
-    (Entrypoint.t * exp ty, error_trace) Gas_monad.t =
+let find_entrypoint_for_type (type full fullc exp expc error_trace)
+    ~error_details ~(full : (full, fullc) ty) ~(expected : (exp, expc) ty)
+    entrypoints entrypoint loc :
+    (Entrypoint.t * (exp, expc) ty, error_trace) Gas_monad.t =
   let open Gas_monad.Syntax in
   let* res = find_entrypoint ~error_details full entrypoints entrypoint in
   match res with
@@ -1948,17 +1875,18 @@ let find_entrypoint_for_type (type full exp error_trace) ~error_details
           Gas_monad.bind_recover
             (ty_eq ~error_details:Fast loc ty expected)
             (function
-              | Ok Eq -> return (Entrypoint.default, (ty : exp ty))
+              | Ok Eq -> return (Entrypoint.default, (ty : (exp, expc) ty))
               | Error Inconsistent_types_fast ->
                   let+ Eq = ty_eq ~error_details loc full expected in
-                  (Entrypoint.root, (full : exp ty)))
+                  (Entrypoint.root, (full : (exp, expc) ty)))
       | _ ->
           let+ Eq = ty_eq ~error_details loc ty expected in
-          (entrypoint, (ty : exp ty)))
+          (entrypoint, (ty : (exp, expc) ty)))
 
-let well_formed_entrypoints (type full) (full : full ty) entrypoints =
-  let merge path (type t) (ty : t ty) (entrypoints : t entrypoints) reachable
-      ((first_unreachable, all) as acc) =
+let well_formed_entrypoints (type full fullc) (full : (full, fullc) ty)
+    entrypoints =
+  let merge path (type t tc) (ty : (t, tc) ty) (entrypoints : t entrypoints)
+      reachable ((first_unreachable, all) as acc) =
     match entrypoints.name with
     | None ->
         ok
@@ -1976,8 +1904,8 @@ let well_formed_entrypoints (type full) (full : full ty) entrypoints =
         else ok ((first_unreachable, Entrypoint.Set.add name all), true)
   in
   let rec check :
-      type t.
-      t ty ->
+      type t tc.
+      (t, tc) ty ->
       t entrypoints ->
       prim list ->
       bool ->
@@ -1985,7 +1913,7 @@ let well_formed_entrypoints (type full) (full : full ty) entrypoints =
       (prim list option * Entrypoint.Set.t) tzresult =
    fun t entrypoints path reachable acc ->
     match (t, entrypoints) with
-    | (Union_t (tl, tr, _), {nested = Entrypoints_Union {left; right}; _}) ->
+    | (Union_t (tl, tr, _, _), {nested = Entrypoints_Union {left; right}; _}) ->
         merge (D_Left :: path) tl left reachable acc
         >>? fun (acc, l_reachable) ->
         merge (D_Right :: path) tr right reachable acc
@@ -2393,7 +2321,7 @@ let parse_option parse_v ctxt ~legacy = function
 
 let comparable_comb_witness1 :
     type t. t comparable_ty -> (t, unit -> unit) comb_witness = function
-  | Pair_key _ -> Comb_Pair Comb_Any
+  | Pair_t _ -> Comb_Pair Comb_Any
   | _ -> Comb_Any
 
 let[@coq_axiom_with_reason "gadt"] rec parse_comparable_data :
@@ -2408,7 +2336,7 @@ let[@coq_axiom_with_reason "gadt"] rec parse_comparable_data :
      [parse_comparable_data] doesn't call [parse_returning].
      The stack depth is bounded by the type depth, bounded by 1024. *)
   let parse_data_error () =
-    let ty = serialize_ty_for_error (ty_of_comparable_ty ty) in
+    let ty = serialize_ty_for_error ty in
     Invalid_constant (location script_data, strip_locations script_data, ty)
   in
   let traced_no_lwt body = record_trace_eval parse_data_error body in
@@ -2420,46 +2348,46 @@ let[@coq_axiom_with_reason "gadt"] rec parse_comparable_data :
   fun ctxt ->
   let legacy = false in
   match (ty, script_data) with
-  | (Unit_key, expr) ->
+  | (Unit_t, expr) ->
       Lwt.return @@ traced_no_lwt
       @@ (parse_unit ctxt ~legacy expr : (a * context) tzresult)
-  | (Bool_key, expr) ->
+  | (Bool_t, expr) ->
       Lwt.return @@ traced_no_lwt @@ parse_bool ctxt ~legacy expr
-  | (String_key, expr) -> Lwt.return @@ traced_no_lwt @@ parse_string ctxt expr
-  | (Bytes_key, expr) -> Lwt.return @@ traced_no_lwt @@ parse_bytes ctxt expr
-  | (Int_key, expr) -> Lwt.return @@ traced_no_lwt @@ parse_int ctxt expr
-  | (Nat_key, expr) -> Lwt.return @@ traced_no_lwt @@ parse_nat ctxt expr
-  | (Mutez_key, expr) -> Lwt.return @@ traced_no_lwt @@ parse_mutez ctxt expr
-  | (Timestamp_key, expr) ->
+  | (String_t, expr) -> Lwt.return @@ traced_no_lwt @@ parse_string ctxt expr
+  | (Bytes_t, expr) -> Lwt.return @@ traced_no_lwt @@ parse_bytes ctxt expr
+  | (Int_t, expr) -> Lwt.return @@ traced_no_lwt @@ parse_int ctxt expr
+  | (Nat_t, expr) -> Lwt.return @@ traced_no_lwt @@ parse_nat ctxt expr
+  | (Mutez_t, expr) -> Lwt.return @@ traced_no_lwt @@ parse_mutez ctxt expr
+  | (Timestamp_t, expr) ->
       Lwt.return @@ traced_no_lwt @@ parse_timestamp ctxt expr
-  | (Key_key, expr) -> Lwt.return @@ traced_no_lwt @@ parse_key ctxt expr
-  | (Key_hash_key, expr) ->
+  | (Key_t, expr) -> Lwt.return @@ traced_no_lwt @@ parse_key ctxt expr
+  | (Key_hash_t, expr) ->
       Lwt.return @@ traced_no_lwt @@ parse_key_hash ctxt expr
-  | (Signature_key, expr) ->
+  | (Signature_t, expr) ->
       Lwt.return @@ traced_no_lwt @@ parse_signature ctxt expr
-  | (Chain_id_key, expr) ->
+  | (Chain_id_t, expr) ->
       Lwt.return @@ traced_no_lwt @@ parse_chain_id ctxt expr
-  | (Address_key, expr) ->
-      Lwt.return @@ traced_no_lwt @@ parse_address ctxt expr
-  | (Tx_rollup_l2_address_key, expr) ->
+  | (Address_t, expr) -> Lwt.return @@ traced_no_lwt @@ parse_address ctxt expr
+  | (Tx_rollup_l2_address_t, expr) ->
       Lwt.return @@ traced_no_lwt @@ parse_tx_rollup_l2_address ctxt expr
-  | (Pair_key (tl, tr, _), expr) ->
+  | (Pair_t (tl, tr, _, YesYes), expr) ->
       let r_witness = comparable_comb_witness1 tr in
       let parse_l ctxt v = parse_comparable_data ?type_logger ctxt tl v in
       let parse_r ctxt v = parse_comparable_data ?type_logger ctxt tr v in
       traced @@ parse_pair parse_l parse_r ctxt ~legacy r_witness expr
-  | (Union_key (tl, tr, _), expr) ->
+  | (Union_t (tl, tr, _, YesYes), expr) ->
       let parse_l ctxt v = parse_comparable_data ?type_logger ctxt tl v in
       let parse_r ctxt v = parse_comparable_data ?type_logger ctxt tr v in
       traced @@ parse_union parse_l parse_r ctxt ~legacy expr
-  | (Option_key (t, _), expr) ->
+  | (Option_t (t, _, Yes), expr) ->
       let parse_v ctxt v = parse_comparable_data ?type_logger ctxt t v in
       traced @@ parse_option parse_v ctxt ~legacy expr
-  | (Never_key, expr) -> Lwt.return @@ traced_no_lwt @@ parse_never expr
+  | (Never_t, expr) -> Lwt.return @@ traced_no_lwt @@ parse_never expr
 
 (* -- parse data of any type -- *)
 
-let comb_witness1 : type t. t ty -> (t, unit -> unit) comb_witness = function
+let comb_witness1 : type t tc. (t, tc) ty -> (t, unit -> unit) comb_witness =
+  function
   | Pair_t _ -> Comb_Pair Comb_Any
   | _ -> Comb_Any
 
@@ -2477,13 +2405,13 @@ let comb_witness1 : type t. t ty -> (t, unit -> unit) comb_witness = function
 *)
 
 let[@coq_axiom_with_reason "gadt"] rec parse_data :
-    type a.
+    type a ac.
     ?type_logger:type_logger ->
     stack_depth:int ->
     context ->
     legacy:bool ->
     allow_forged:bool ->
-    a ty ->
+    (a, ac) ty ->
     Script.node ->
     (a * context) tzresult Lwt.t =
  fun ?type_logger ~stack_depth ctxt ~legacy ~allow_forged ty script_data ->
@@ -2660,7 +2588,7 @@ let[@coq_axiom_with_reason "gadt"] rec parse_data :
             ~entrypoint:address.entrypoint
           >|=? fun (ctxt, _) -> (Typed_contract {arg_ty; address}, ctxt) )
   (* Pairs *)
-  | (Pair_t (tl, tr, _), expr) ->
+  | (Pair_t (tl, tr, _, _), expr) ->
       let r_witness = comb_witness1 tr in
       let parse_l ctxt v =
         non_terminal_recursion ?type_logger ctxt ~legacy tl v
@@ -2670,7 +2598,7 @@ let[@coq_axiom_with_reason "gadt"] rec parse_data :
       in
       traced @@ parse_pair parse_l parse_r ctxt ~legacy r_witness expr
   (* Unions *)
-  | (Union_t (tl, tr, _), expr) ->
+  | (Union_t (tl, tr, _, _), expr) ->
       let parse_l ctxt v =
         non_terminal_recursion ?type_logger ctxt ~legacy tl v
       in
@@ -2693,7 +2621,7 @@ let[@coq_axiom_with_reason "gadt"] rec parse_data :
   | (Lambda_t _, expr) ->
       traced_fail (Invalid_kind (location expr, [Seq_kind], kind expr))
   (* Options *)
-  | (Option_t (t, _), expr) ->
+  | (Option_t (t, _, _), expr) ->
       let parse_v ctxt v =
         non_terminal_recursion ?type_logger ctxt ~legacy t v
       in
@@ -2902,11 +2830,11 @@ let[@coq_axiom_with_reason "gadt"] rec parse_data :
       traced_fail (Invalid_kind (location expr, [Bytes_kind], kind expr))
 
 and parse_view_returning :
-    type storage.
+    type storage storagec.
     ?type_logger:type_logger ->
     context ->
     legacy:bool ->
-    storage ty ->
+    (storage, storagec) ty ->
     view ->
     (storage ex_view * context) tzresult Lwt.t =
  fun ?type_logger ctxt ~legacy storage_type {input_ty; output_ty; view_code} ->
@@ -2924,7 +2852,7 @@ and parse_view_returning :
         (Some "return of view", strip_locations output_ty, output_ty_loc))
     (parse_view_output_ty ctxt ~stack_depth:0 ~legacy output_ty)
   >>?= fun (Ex_ty output_ty', ctxt) ->
-  pair_t input_ty_loc input_ty' storage_type >>?= fun pair_ty ->
+  pair_t input_ty_loc input_ty' storage_type >>?= fun (Ty_ex_c pair_ty) ->
   parse_instr
     ?type_logger
     ~stack_depth:0
@@ -2962,11 +2890,11 @@ and parse_view_returning :
       | _ -> error (ill_type_view loc aft ()))
 
 and typecheck_views :
-    type storage.
+    type storage storagec.
     ?type_logger:type_logger ->
     context ->
     legacy:bool ->
-    storage ty ->
+    (storage, storagec) ty ->
     view SMap.t ->
     context tzresult Lwt.t =
  fun ?type_logger ctxt ~legacy storage_type views ->
@@ -2977,14 +2905,14 @@ and typecheck_views :
   SMap.fold_es aux views ctxt
 
 and[@coq_axiom_with_reason "gadt"] parse_returning :
-    type arg ret.
+    type arg argc ret retc.
     ?type_logger:type_logger ->
     stack_depth:int ->
     tc_context ->
     context ->
     legacy:bool ->
-    arg ty ->
-    ret ty ->
+    (arg, argc) ty ->
+    (ret, retc) ty ->
     Script.node ->
     ((arg, ret) lambda * context) tzresult Lwt.t =
  fun ?type_logger ~stack_depth tc_context ctxt ~legacy arg ret script_instr ->
@@ -3029,8 +2957,8 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
     (a, s) stack_ty ->
     ((a, s) judgement * context) tzresult Lwt.t =
  fun ?type_logger ~stack_depth tc_context ctxt ~legacy script_instr stack_ty ->
-  let check_item_ty (type a b) ctxt (exp : a ty) (got : b ty) loc name n m :
-      ((a, b) eq * context) tzresult =
+  let check_item_ty (type a ac b bc) ctxt (exp : (a, ac) ty) (got : (b, bc) ty)
+      loc name n m : ((a, b) eq * context) tzresult =
     record_trace_eval (fun () ->
         let stack_ty = serialize_stack_for_error ctxt stack_ty in
         Bad_stack (loc, name, m, stack_ty))
@@ -3226,7 +3154,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       option_t loc t >>?= fun ty ->
       let stack_ty = Item_t (ty, stack) in
       typed ctxt loc cons_none stack_ty
-  | (Prim (loc, I_MAP, [body], annot), Item_t (Option_t (t, _), rest)) -> (
+  | (Prim (loc, I_MAP, [body], annot), Item_t (Option_t (t, _, _), rest)) -> (
       check_kind [Seq_kind] body >>?= fun () ->
       check_var_type_annot loc annot >>?= fun () ->
       non_terminal_recursion
@@ -3260,7 +3188,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
           error (Invalid_map_body (loc, aft))
       | Failed _ -> error (Invalid_map_block_fail loc))
   | ( Prim (loc, I_IF_NONE, [bt; bf], annot),
-      (Item_t (Option_t (t, _), rest) as bef) ) ->
+      (Item_t (Option_t (t, _, _), rest) as bef) ) ->
       check_kind [Seq_kind] bt >>?= fun () ->
       check_kind [Seq_kind] bf >>?= fun () ->
       error_unexpected_annot loc annot >>?= fun () ->
@@ -3288,7 +3216,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
   (* pairs *)
   | (Prim (loc, I_PAIR, [], annot), Item_t (a, Item_t (b, rest))) ->
       check_constr_annot loc annot >>?= fun () ->
-      pair_t loc a b >>?= fun ty ->
+      pair_t loc a b >>?= fun (Ty_ex_c ty) ->
       let stack_ty = Item_t (ty, rest) in
       let cons_pair = {apply = (fun kinfo k -> ICons_pair (kinfo, k))} in
       typed ctxt loc cons_pair stack_ty
@@ -3305,7 +3233,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
             make_proof_argument (n - 1) tl_ty
             >>? fun (Comb_proof_argument (comb_witness, Item_t (b_ty, tl_ty')))
               ->
-            pair_t loc a_ty b_ty >|? fun pair_t ->
+            pair_t loc a_ty b_ty >|? fun (Ty_ex_c pair_t) ->
             Comb_proof_argument (Comb_succ comb_witness, Item_t (pair_t, tl_ty'))
         | _ ->
             let whole_stack = serialize_stack_for_error ctxt stack_ty in
@@ -3328,7 +3256,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
         match (n, stack_ty) with
         | (1, Item_t (a_ty, tl_ty)) ->
             ok @@ Uncomb_proof_argument (Uncomb_one, Item_t (a_ty, tl_ty))
-        | (n, Item_t (Pair_t (a_ty, b_ty, _), tl_ty)) ->
+        | (n, Item_t (Pair_t (a_ty, b_ty, _, _), tl_ty)) ->
             make_proof_argument (n - 1) (Item_t (b_ty, tl_ty))
             >|? fun (Uncomb_proof_argument (uncomb_witness, after_ty)) ->
             Uncomb_proof_argument
@@ -3371,15 +3299,15 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
         {apply = (fun kinfo k -> IComb_set (kinfo, n, witness, k))}
       in
       typed ctxt loc comb_set after_stack_ty
-  | (Prim (loc, I_UNPAIR, [], annot), Item_t (Pair_t (a, b, _), rest)) ->
+  | (Prim (loc, I_UNPAIR, [], annot), Item_t (Pair_t (a, b, _, _), rest)) ->
       check_unpair_annot loc annot >>?= fun () ->
       let unpair = {apply = (fun kinfo k -> IUnpair (kinfo, k))} in
       typed ctxt loc unpair (Item_t (a, Item_t (b, rest)))
-  | (Prim (loc, I_CAR, [], annot), Item_t (Pair_t (a, _, _), rest)) ->
+  | (Prim (loc, I_CAR, [], annot), Item_t (Pair_t (a, _, _, _), rest)) ->
       check_destr_annot loc annot >>?= fun () ->
       let car = {apply = (fun kinfo k -> ICar (kinfo, k))} in
       typed ctxt loc car (Item_t (a, rest))
-  | (Prim (loc, I_CDR, [], annot), Item_t (Pair_t (_, b, _), rest)) ->
+  | (Prim (loc, I_CDR, [], annot), Item_t (Pair_t (_, b, _, _), rest)) ->
       check_destr_annot loc annot >>?= fun () ->
       let cdr = {apply = (fun kinfo k -> ICdr (kinfo, k))} in
       typed ctxt loc cdr (Item_t (b, rest))
@@ -3389,7 +3317,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       >>?= fun (Ex_ty tr, ctxt) ->
       check_constr_annot loc annot >>?= fun () ->
       let cons_left = {apply = (fun kinfo k -> ICons_left (kinfo, k))} in
-      union_t loc tl tr >>?= fun ty ->
+      union_t loc tl tr >>?= fun (Ty_ex_c ty) ->
       let stack_ty = Item_t (ty, rest) in
       typed ctxt loc cons_left stack_ty
   | (Prim (loc, I_RIGHT, [tl], annot), Item_t (tr, rest)) ->
@@ -3397,11 +3325,11 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       >>?= fun (Ex_ty tl, ctxt) ->
       check_constr_annot loc annot >>?= fun () ->
       let cons_right = {apply = (fun kinfo k -> ICons_right (kinfo, k))} in
-      union_t loc tl tr >>?= fun ty ->
+      union_t loc tl tr >>?= fun (Ty_ex_c ty) ->
       let stack_ty = Item_t (ty, rest) in
       typed ctxt loc cons_right stack_ty
   | ( Prim (loc, I_IF_LEFT, [bt; bf], annot),
-      (Item_t (Union_t (tl, tr, _), rest) as bef) ) ->
+      (Item_t (Union_t (tl, tr, _, _), rest) as bef) ) ->
       check_kind [Seq_kind] bt >>?= fun () ->
       check_kind [Seq_kind] bf >>?= fun () ->
       error_unexpected_annot loc annot >>?= fun () ->
@@ -3564,10 +3492,9 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       check_var_type_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IEmpty_set (kinfo, t, k))} in
       set_t loc t >>?= fun ty -> typed ctxt loc instr (Item_t (ty, rest))
-  | (Prim (loc, I_ITER, [body], annot), Item_t (Set_t (comp_elt, _), rest)) -> (
+  | (Prim (loc, I_ITER, [body], annot), Item_t (Set_t (elt, _), rest)) -> (
       check_kind [Seq_kind] body >>?= fun () ->
       error_unexpected_annot loc annot >>?= fun () ->
-      let elt = ty_of_comparable_ty comp_elt in
       non_terminal_recursion
         ?type_logger
         tc_context
@@ -3603,7 +3530,6 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       | Failed {descr} -> typed_no_lwt ctxt loc (mk_iset_iter (descr rest)) rest
       )
   | (Prim (loc, I_MEM, [], annot), Item_t (v, Item_t (Set_t (elt, _), rest))) ->
-      let elt = ty_of_comparable_ty elt in
       check_var_type_annot loc annot >>?= fun () ->
       check_item_ty ctxt elt v loc I_MEM 1 2 >>?= fun (Eq, ctxt) ->
       let instr = {apply = (fun kinfo k -> ISet_mem (kinfo, k))} in
@@ -3611,8 +3537,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
         : ((a, s) judgement * context) tzresult Lwt.t)
   | ( Prim (loc, I_UPDATE, [], annot),
       Item_t (v, Item_t (Bool_t, Item_t (Set_t (elt, meta), rest))) ) ->
-      check_item_ty ctxt (ty_of_comparable_ty elt) v loc I_UPDATE 1 3
-      >>?= fun (Eq, ctxt) ->
+      check_item_ty ctxt elt v loc I_UPDATE 1 3 >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> ISet_update (kinfo, k))} in
       (typed ctxt loc instr (Item_t (Set_t (elt, meta), rest))
@@ -3630,12 +3555,11 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       check_var_type_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IEmpty_map (kinfo, tk, k))} in
       map_t loc tk tv >>?= fun ty -> typed ctxt loc instr (Item_t (ty, stack))
-  | ( Prim (loc, I_MAP, [body], annot),
-      Item_t (Map_t (ck, elt, _), starting_rest) ) -> (
-      let k = ty_of_comparable_ty ck in
+  | (Prim (loc, I_MAP, [body], annot), Item_t (Map_t (k, elt, _), starting_rest))
+    -> (
       check_kind [Seq_kind] body >>?= fun () ->
       check_var_type_annot loc annot >>?= fun () ->
-      pair_t loc k elt >>?= fun ty ->
+      pair_t loc k elt >>?= fun (Ty_ex_c ty) ->
       non_terminal_recursion
         ?type_logger
         tc_context
@@ -3667,7 +3591,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
                       IMap_map (kinfo, ibody, k));
                 }
               in
-              map_t loc ck ret >>? fun ty ->
+              map_t loc k ret >>? fun ty ->
               let stack = Item_t (ty, rest) in
               typed_no_lwt ctxt loc instr stack )
       | Typed {aft; _} ->
@@ -3675,11 +3599,10 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
           error (Invalid_map_body (loc, aft))
       | Failed _ -> error (Invalid_map_block_fail loc))
   | ( Prim (loc, I_ITER, [body], annot),
-      Item_t (Map_t (comp_elt, element_ty, _), rest) ) -> (
+      Item_t (Map_t (key, element_ty, _), rest) ) -> (
       check_kind [Seq_kind] body >>?= fun () ->
       error_unexpected_annot loc annot >>?= fun () ->
-      let key = ty_of_comparable_ty comp_elt in
-      pair_t loc key element_ty >>?= fun ty ->
+      pair_t loc key element_ty >>?= fun (Ty_ex_c ty) ->
       non_terminal_recursion
         ?type_logger
         tc_context
@@ -3713,17 +3636,15 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
             >>? fun (Eq, ctxt) : ((a, s) judgement * context) tzresult ->
               typed_no_lwt ctxt loc (make_instr ibody) rest )
       | Failed {descr} -> typed_no_lwt ctxt loc (make_instr (descr rest)) rest)
-  | (Prim (loc, I_MEM, [], annot), Item_t (vk, Item_t (Map_t (ck, _, _), rest)))
+  | (Prim (loc, I_MEM, [], annot), Item_t (vk, Item_t (Map_t (k, _, _), rest)))
     ->
-      let k = ty_of_comparable_ty ck in
       check_item_ty ctxt vk k loc I_MEM 1 2 >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IMap_mem (kinfo, k))} in
       (typed ctxt loc instr (Item_t (bool_t, rest))
         : ((a, s) judgement * context) tzresult Lwt.t)
-  | ( Prim (loc, I_GET, [], annot),
-      Item_t (vk, Item_t (Map_t (ck, elt, _), rest)) ) ->
-      let k = ty_of_comparable_ty ck in
+  | (Prim (loc, I_GET, [], annot), Item_t (vk, Item_t (Map_t (k, elt, _), rest)))
+    ->
       check_item_ty ctxt vk k loc I_GET 1 2 >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IMap_get (kinfo, k))} in
@@ -3732,28 +3653,23 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       typed ctxt loc instr (Item_t (ty, rest))
   | ( Prim (loc, I_UPDATE, [], annot),
       Item_t
-        (vk, Item_t (Option_t (vv, _), Item_t (Map_t (ck, v, map_name), rest)))
-    ) ->
-      let k = ty_of_comparable_ty ck in
+        ( vk,
+          Item_t (Option_t (vv, _, _), (Item_t (Map_t (k, v, _), _) as stack))
+        ) ) ->
       check_item_ty ctxt vk k loc I_UPDATE 1 3 >>?= fun (Eq, ctxt) ->
       check_item_ty ctxt vv v loc I_UPDATE 2 3 >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IMap_update (kinfo, k))} in
-      (typed ctxt loc instr (Item_t (Map_t (ck, v, map_name), rest))
-        : ((a, s) judgement * context) tzresult Lwt.t)
+      (typed ctxt loc instr stack : ((a, s) judgement * context) tzresult Lwt.t)
   | ( Prim (loc, I_GET_AND_UPDATE, [], annot),
       Item_t
         ( vk,
-          Item_t (Option_t (vv, vname), Item_t (Map_t (ck, v, map_name), rest))
+          (Item_t (Option_t (vv, _, _), Item_t (Map_t (k, v, _), _)) as stack)
         ) ) ->
-      let k = ty_of_comparable_ty ck in
       check_item_ty ctxt vk k loc I_GET_AND_UPDATE 1 3 >>?= fun (Eq, ctxt) ->
       check_item_ty ctxt vv v loc I_GET_AND_UPDATE 2 3 >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IMap_get_and_update (kinfo, k))} in
-      let stack =
-        Item_t (Option_t (vv, vname), Item_t (Map_t (ck, v, map_name), rest))
-      in
       (typed ctxt loc instr stack : ((a, s) judgement * context) tzresult Lwt.t)
   | (Prim (loc, I_SIZE, [], annot), Item_t (Map_t (_, _, _), rest)) ->
       check_var_annot loc annot >>?= fun () ->
@@ -3773,16 +3689,14 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       let stack = Item_t (ty, stack) in
       typed ctxt loc instr stack
   | ( Prim (loc, I_MEM, [], annot),
-      Item_t (set_key, Item_t (Big_map_t (map_key, _, _), rest)) ) ->
-      let k = ty_of_comparable_ty map_key in
+      Item_t (set_key, Item_t (Big_map_t (k, _, _), rest)) ) ->
       check_item_ty ctxt set_key k loc I_MEM 1 2 >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IBig_map_mem (kinfo, k))} in
       let stack = Item_t (bool_t, rest) in
       (typed ctxt loc instr stack : ((a, s) judgement * context) tzresult Lwt.t)
   | ( Prim (loc, I_GET, [], annot),
-      Item_t (vk, Item_t (Big_map_t (ck, elt, _), rest)) ) ->
-      let k = ty_of_comparable_ty ck in
+      Item_t (vk, Item_t (Big_map_t (k, elt, _), rest)) ) ->
       check_item_ty ctxt vk k loc I_GET 1 2 >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IBig_map_get (kinfo, k))} in
@@ -3793,31 +3707,24 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       Item_t
         ( set_key,
           Item_t
-            ( Option_t (set_value, _),
-              Item_t (Big_map_t (map_key, map_value, map_name), rest) ) ) ) ->
-      let k = ty_of_comparable_ty map_key in
-      check_item_ty ctxt set_key k loc I_UPDATE 1 3 >>?= fun (Eq, ctxt) ->
+            ( Option_t (set_value, _, _),
+              (Item_t (Big_map_t (map_key, map_value, _), _) as stack) ) ) ) ->
+      check_item_ty ctxt set_key map_key loc I_UPDATE 1 3 >>?= fun (Eq, ctxt) ->
       check_item_ty ctxt set_value map_value loc I_UPDATE 2 3
       >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> IBig_map_update (kinfo, k))} in
-      let stack = Item_t (Big_map_t (map_key, map_value, map_name), rest) in
       (typed ctxt loc instr stack : ((a, s) judgement * context) tzresult Lwt.t)
   | ( Prim (loc, I_GET_AND_UPDATE, [], annot),
       Item_t
         ( vk,
-          Item_t
-            (Option_t (vv, vname), Item_t (Big_map_t (ck, v, map_name), rest))
-        ) ) ->
-      let k = ty_of_comparable_ty ck in
+          (Item_t (Option_t (vv, _, _), Item_t (Big_map_t (k, v, _), _)) as
+          stack) ) ) ->
       check_item_ty ctxt vk k loc I_GET_AND_UPDATE 1 3 >>?= fun (Eq, ctxt) ->
       check_item_ty ctxt vv v loc I_GET_AND_UPDATE 2 3 >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
       let instr =
         {apply = (fun kinfo k -> IBig_map_get_and_update (kinfo, k))}
-      in
-      let stack =
-        Item_t (Option_t (vv, vname), Item_t (Big_map_t (ck, v, map_name), rest))
       in
       (typed ctxt loc instr stack : ((a, s) judgement * context) tzresult Lwt.t)
   (* Sapling *)
@@ -3841,7 +3748,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       let instr =
         {apply = (fun kinfo k -> ISapling_verify_update (kinfo, k))}
       in
-      pair_t loc int_t state_ty >>?= fun pair_ty ->
+      pair_t loc int_t state_ty >>?= fun (Ty_ex_c pair_ty) ->
       option_t loc pair_ty >>?= fun ty ->
       let stack = Item_t (ty, rest) in
       typed ctxt loc instr stack
@@ -3938,7 +3845,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
           in
           typed_no_lwt ctxt loc instr rest)
   | ( Prim (loc, I_LOOP_LEFT, [body], annot),
-      (Item_t (Union_t (tl, tr, _), rest) as stack) ) -> (
+      (Item_t (Union_t (tl, tr, _, _), rest) as stack) ) -> (
       check_kind [Seq_kind] body >>?= fun () ->
       check_var_annot loc annot >>?= fun () ->
       non_terminal_recursion
@@ -4018,8 +3925,8 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
   | ( Prim (loc, I_APPLY, [], annot),
       Item_t
         ( capture,
-          Item_t (Lambda_t (Pair_t (capture_ty, arg_ty, _), ret, _), rest) ) )
-    ->
+          Item_t (Lambda_t (Pair_t (capture_ty, arg_ty, _, _), ret, _), rest) )
+    ) ->
       check_packable ~legacy:false loc capture_ty >>?= fun () ->
       check_item_ty ctxt capture capture_ty loc I_APPLY 1 2
       >>?= fun (Eq, ctxt) ->
@@ -4517,7 +4424,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       let stack = Item_t (operation_t, rest) in
       (typed ctxt loc instr stack : ((a, s) judgement * context) tzresult Lwt.t)
   | ( Prim (loc, (I_SET_DELEGATE as prim), [], annot),
-      Item_t (Option_t (Key_hash_t, _), rest) ) ->
+      Item_t (Option_t (Key_hash_t, _, _), rest) ) ->
       Tc_context.check_not_in_view loc ~legacy tc_context prim >>?= fun () ->
       check_var_annot loc annot >>?= fun () ->
       let instr = {apply = (fun kinfo k -> ISet_delegate (kinfo, k))} in
@@ -4531,8 +4438,9 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       let stack = Item_t (contract_unit_t, rest) in
       typed ctxt loc instr stack
   | ( Prim (loc, (I_CREATE_CONTRACT as prim), [(Seq _ as code)], annot),
-      Item_t (Option_t (Key_hash_t, _), Item_t (Mutez_t, Item_t (ginit, rest)))
-    ) ->
+      Item_t
+        (Option_t (Key_hash_t, _, _), Item_t (Mutez_t, Item_t (ginit, rest))) )
+    ->
       Tc_context.check_not_in_view ~legacy loc tc_context prim >>?= fun () ->
       check_two_var_annot loc annot >>?= fun () ->
       let canonical_code = Micheline.strip_locations code in
@@ -4555,8 +4463,9 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
            ~legacy
            storage_type)
       >>?= fun (Ex_ty storage_type, ctxt) ->
-      pair_t loc arg_type storage_type >>?= fun arg_type_full ->
-      pair_t loc list_operation_t storage_type >>?= fun ret_type_full ->
+      pair_t loc arg_type storage_type >>?= fun (Ty_ex_c arg_type_full) ->
+      pair_t loc list_operation_t storage_type
+      >>?= fun (Ty_ex_c ret_type_full) ->
       trace
         (Ill_typed_contract (canonical_code, []))
         (parse_returning
@@ -4804,7 +4713,8 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       let stack = Item_t (Bls12_381_fr_t, rest) in
       typed ctxt loc instr stack
   | ( Prim (loc, I_PAIRING_CHECK, [], annot),
-      Item_t (List_t (Pair_t (Bls12_381_g1_t, Bls12_381_g2_t, _), _), rest) ) ->
+      Item_t (List_t (Pair_t (Bls12_381_g1_t, Bls12_381_g2_t, _, _), _), rest)
+    ) ->
       check_var_annot loc annot >>?= fun () ->
       let instr =
         {apply = (fun kinfo k -> IPairing_check_bls12_381 (kinfo, k))}
@@ -4823,18 +4733,17 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
       (Item_t (Ticket_t (t, _), _) as full_stack) ) ->
       check_var_annot loc annot >>?= fun () ->
       let () = check_dupable_comparable_ty t in
-      opened_ticket_type loc t >>?= fun opened_ticket_ty ->
-      let result = ty_of_comparable_ty opened_ticket_ty in
+      opened_ticket_type loc t >>?= fun result ->
       let instr = {apply = (fun kinfo k -> IRead_ticket (kinfo, k))} in
       let stack = Item_t (result, full_stack) in
       typed ctxt loc instr stack
   | ( Prim (loc, I_SPLIT_TICKET, [], annot),
       Item_t
-        ((Ticket_t (t, _) as ticket_t), Item_t (Pair_t (Nat_t, Nat_t, _), rest))
-    ) ->
+        ( (Ticket_t (t, _) as ticket_t),
+          Item_t (Pair_t (Nat_t, Nat_t, _, _), rest) ) ) ->
       check_var_annot loc annot >>?= fun () ->
       let () = check_dupable_comparable_ty t in
-      pair_t loc ticket_t ticket_t >>?= fun pair_tickets_ty ->
+      pair_t loc ticket_t ticket_t >>?= fun (Ty_ex_c pair_tickets_ty) ->
       option_t loc pair_tickets_ty >>?= fun res_ty ->
       let instr = {apply = (fun kinfo k -> ISplit_ticket (kinfo, k))} in
       let stack = Item_t (res_ty, rest) in
@@ -4844,6 +4753,7 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
         ( Pair_t
             ( (Ticket_t (contents_ty_a, _) as ty_a),
               Ticket_t (contents_ty_b, _),
+              _,
               _ ),
           rest ) ) ->
       check_var_annot loc annot >>?= fun () ->
@@ -5064,11 +4974,11 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
            ]
 
 and[@coq_axiom_with_reason "complex mutually recursive definition"] parse_contract :
-    type arg.
+    type arg argc.
     stack_depth:int ->
     context ->
     Script.location ->
-    arg ty ->
+    (arg, argc) ty ->
     Destination.t ->
     entrypoint:Entrypoint.t ->
     (context * arg typed_contract) tzresult Lwt.t =
@@ -5133,7 +5043,7 @@ and[@coq_axiom_with_reason "complex mutually recursive definition"] parse_contra
         (* /!\ This pattern matching needs to remain in sync with
            [parse_contract] and [parse_tx_rollup_deposit_parameters]. *)
         match arg with
-        | Pair_t (Ticket_t (_, _), Tx_rollup_l2_address_t, _) ->
+        | Pair_t (Ticket_t (_, _), Tx_rollup_l2_address_t, _, _) ->
             return
               ( ctxt,
                 Typed_contract
@@ -5259,10 +5169,10 @@ and parse_toplevel :
    returned and some overapproximation of the typechecking gas is consumed.
    This can still fail on gas exhaustion. *)
 let parse_contract_for_script :
-    type arg.
+    type arg argc.
     context ->
     Script.location ->
-    arg ty ->
+    (arg, argc) ty ->
     Destination.t ->
     entrypoint:Entrypoint.t ->
     (context * arg typed_contract option) tzresult Lwt.t =
@@ -5341,7 +5251,7 @@ let parse_contract_for_script :
          [parse_contract_for_script] and
          [parse_tx_rollup_deposit_parameters]. *)
       match arg with
-      | Pair_t (Ticket_t (_, _), Tx_rollup_l2_address_t, _)
+      | Pair_t (Ticket_t (_, _), Tx_rollup_l2_address_t, _, _)
         when Entrypoint.(
                entrypoint = Alpha_context.Tx_rollup.deposit_entrypoint) -> (
           Tx_rollup_state.find ctxt tx_rollup >|=? function
@@ -5376,9 +5286,10 @@ let parse_code :
     (Ill_formed_type (Some "storage", code, storage_type_loc))
     (parse_storage_ty ctxt ~stack_depth:0 ~legacy storage_type)
   >>?= fun (Ex_ty storage_type, ctxt) ->
-  pair_t storage_type_loc arg_type storage_type >>?= fun arg_type_full ->
+  pair_t storage_type_loc arg_type storage_type
+  >>?= fun (Ty_ex_c arg_type_full) ->
   pair_t storage_type_loc list_operation_t storage_type
-  >>?= fun ret_type_full ->
+  >>?= fun (Ty_ex_c ret_type_full) ->
   trace
     (Ill_typed_contract (code, []))
     (parse_returning
@@ -5418,7 +5329,7 @@ let parse_storage :
     context ->
     legacy:bool ->
     allow_forged:bool ->
-    'storage ty ->
+    ('storage, _) ty ->
     storage:lazy_expr ->
     ('storage * context) tzresult Lwt.t =
  fun ?type_logger ctxt ~legacy ~allow_forged storage_type ~storage ->
@@ -5487,9 +5398,10 @@ let typecheck_code :
     (Ill_formed_type (Some "storage", code, storage_type_loc))
     (parse_storage_ty ctxt ~stack_depth:0 ~legacy storage_type)
   >>?= fun (Ex_ty storage_type, ctxt) ->
-  pair_t storage_type_loc arg_type storage_type >>?= fun arg_type_full ->
+  pair_t storage_type_loc arg_type storage_type
+  >>?= fun (Ty_ex_c arg_type_full) ->
   pair_t storage_type_loc list_operation_t storage_type
-  >>?= fun ret_type_full ->
+  >>?= fun (Ty_ex_c ret_type_full) ->
   let type_logger loc ~stack_ty_before ~stack_ty_after =
     type_map := (loc, (stack_ty_before, stack_ty_after)) :: !type_map
   in
@@ -5518,10 +5430,10 @@ let typecheck_code :
   trace (Ill_typed_contract (code, !type_map)) views_result >|=? fun ctxt ->
   (!type_map, ctxt)
 
-let list_entrypoints ctxt (type full) (full : full ty)
+let list_entrypoints ctxt (type full fullc) (full : (full, fullc) ty)
     (entrypoints : full entrypoints) =
-  let merge path (type t) (ty : t ty) (entrypoints : t entrypoints) reachable
-      ((unreachables, all) as acc) =
+  let merge path (type t tc) (ty : (t, tc) ty) (entrypoints : t entrypoints)
+      reachable ((unreachables, all) as acc) =
     match entrypoints.name with
     | None ->
         ok
@@ -5541,8 +5453,8 @@ let list_entrypoints ctxt (type full) (full : full ty)
         >|? fun unreachable_all -> (unreachable_all, true)
   in
   let rec fold_tree :
-      type t.
-      t ty ->
+      type t tc.
+      (t, tc) ty ->
       t entrypoints ->
       prim list ->
       bool ->
@@ -5553,7 +5465,7 @@ let list_entrypoints ctxt (type full) (full : full ty)
       tzresult =
    fun t entrypoints path reachable acc ->
     match (t, entrypoints) with
-    | (Union_t (tl, tr, _), {nested = Entrypoints_Union {left; right}; _}) ->
+    | (Union_t (tl, tr, _, _), {nested = Entrypoints_Union {left; right}; _}) ->
         merge (D_Left :: path) tl left reachable acc
         >>? fun (acc, l_reachable) ->
         merge (D_Right :: path) tr right reachable acc
@@ -5575,18 +5487,18 @@ let list_entrypoints ctxt (type full) (full : full ty)
 
 (* -- Unparsing data of any type -- *)
 
-let comb_witness2 : type t. t ty -> (t, unit -> unit -> unit) comb_witness =
-  function
-  | Pair_t (_, Pair_t _, _) -> Comb_Pair (Comb_Pair Comb_Any)
+let comb_witness2 :
+    type t tc. (t, tc) ty -> (t, unit -> unit -> unit) comb_witness = function
+  | Pair_t (_, Pair_t _, _, _) -> Comb_Pair (Comb_Pair Comb_Any)
   | Pair_t _ -> Comb_Pair Comb_Any
   | _ -> Comb_Any
 
 let[@coq_axiom_with_reason "gadt"] rec unparse_data :
-    type a.
+    type a ac.
     context ->
     stack_depth:int ->
     unparsing_mode ->
-    a ty ->
+    (a, ac) ty ->
     a ->
     (Script.node * context) tzresult Lwt.t =
  fun ctxt ~stack_depth mode ty a ->
@@ -5621,16 +5533,16 @@ let[@coq_axiom_with_reason "gadt"] rec unparse_data :
   | (Bls12_381_g1_t, x) -> Lwt.return @@ unparse_bls12_381_g1 ~loc ctxt x
   | (Bls12_381_g2_t, x) -> Lwt.return @@ unparse_bls12_381_g2 ~loc ctxt x
   | (Bls12_381_fr_t, x) -> Lwt.return @@ unparse_bls12_381_fr ~loc ctxt x
-  | (Pair_t (tl, tr, _), pair) ->
+  | (Pair_t (tl, tr, _, _), pair) ->
       let r_witness = comb_witness2 tr in
       let unparse_l ctxt v = non_terminal_recursion ctxt mode tl v in
       let unparse_r ctxt v = non_terminal_recursion ctxt mode tr v in
       unparse_pair ~loc unparse_l unparse_r ctxt mode r_witness pair
-  | (Union_t (tl, tr, _), v) ->
+  | (Union_t (tl, tr, _, _), v) ->
       let unparse_l ctxt v = non_terminal_recursion ctxt mode tl v in
       let unparse_r ctxt v = non_terminal_recursion ctxt mode tr v in
       unparse_union ~loc unparse_l unparse_r ctxt v
-  | (Option_t (t, _), v) ->
+  | (Option_t (t, _, _), v) ->
       let unparse_v ctxt v = non_terminal_recursion ctxt mode t v in
       unparse_option ~loc unparse_v ctxt v
   | (List_t (t, _), items) ->
@@ -5643,8 +5555,7 @@ let[@coq_axiom_with_reason "gadt"] rec unparse_data :
       >|=? fun (items, ctxt) -> (Micheline.Seq (loc, List.rev items), ctxt)
   | (Ticket_t (t, _), {ticketer; contents; amount}) ->
       (* ideally we would like to allow a little overhead here because it is only used for unparsing *)
-      opened_ticket_type loc t >>?= fun opened_ticket_ty ->
-      let t = ty_of_comparable_ty opened_ticket_ty in
+      opened_ticket_type loc t >>?= fun t ->
       let destination : Destination.t = Contract ticketer in
       let addr = {destination; entrypoint = Entrypoint.default} in
       (unparse_data [@tailcall])
@@ -5758,12 +5669,12 @@ let[@coq_axiom_with_reason "gadt"] rec unparse_data :
         Script_timelock.chest_encoding
 
 and unparse_items :
-    type k v.
+    type k v vc.
     context ->
     stack_depth:int ->
     unparsing_mode ->
     k comparable_ty ->
-    v ty ->
+    (v, vc) ty ->
     (k * v) list ->
     (Script.node list * context) tzresult Lwt.t =
  fun ctxt ~stack_depth mode kt vt items ->
@@ -6066,7 +5977,7 @@ type 'ty has_lazy_storage =
     the types, which happen to be literally written types, so the gas for them
     has already been paid.
 *)
-let rec has_lazy_storage : type t. t ty -> t has_lazy_storage =
+let rec has_lazy_storage : type t tc. (t, tc) ty -> t has_lazy_storage =
  fun ty ->
   let aux1 cons t =
     match has_lazy_storage t with False_f -> False_f | h -> cons h
@@ -6105,9 +6016,9 @@ let rec has_lazy_storage : type t. t ty -> t has_lazy_storage =
   | Ticket_t _ -> False_f
   | Chest_key_t -> False_f
   | Chest_t -> False_f
-  | Pair_t (l, r, _) -> aux2 (fun l r -> Pair_f (l, r)) l r
-  | Union_t (l, r, _) -> aux2 (fun l r -> Union_f (l, r)) l r
-  | Option_t (t, _) -> aux1 (fun h -> Option_f h) t
+  | Pair_t (l, r, _, _) -> aux2 (fun l r -> Pair_f (l, r)) l r
+  | Union_t (l, r, _, _) -> aux2 (fun l r -> Union_f (l, r)) l r
+  | Option_t (t, _, _) -> aux1 (fun h -> Option_f h) t
   | List_t (t, _) -> aux1 (fun h -> List_f h) t
   | Map_t (_, t, _) -> aux1 (fun h -> Map_f h) t
 
@@ -6122,13 +6033,13 @@ let rec has_lazy_storage : type t. t ty -> t has_lazy_storage =
 let[@coq_axiom_with_reason "gadt"] extract_lazy_storage_updates ctxt mode
     ~temporary ids_to_copy acc ty x =
   let rec aux :
-      type a.
+      type a ac.
       context ->
       unparsing_mode ->
       temporary:bool ->
       Lazy_storage.IdSet.t ->
       Lazy_storage.diffs ->
-      a ty ->
+      (a, ac) ty ->
       a ->
       has_lazy_storage:a has_lazy_storage ->
       (context * a * Lazy_storage.IdSet.t * Lazy_storage.diffs) tzresult Lwt.t =
@@ -6160,19 +6071,19 @@ let[@coq_axiom_with_reason "gadt"] extract_lazy_storage_updates ctxt mode
         let diff = Lazy_storage.make Sapling_state id diff in
         let ids_to_copy = Lazy_storage.IdSet.add Sapling_state id ids_to_copy in
         (ctxt, sapling_state, ids_to_copy, diff :: acc)
-    | (Pair_f (hl, hr), Pair_t (tyl, tyr, _), (xl, xr)) ->
+    | (Pair_f (hl, hr), Pair_t (tyl, tyr, _, _), (xl, xr)) ->
         aux ctxt mode ~temporary ids_to_copy acc tyl xl ~has_lazy_storage:hl
         >>=? fun (ctxt, xl, ids_to_copy, acc) ->
         aux ctxt mode ~temporary ids_to_copy acc tyr xr ~has_lazy_storage:hr
         >|=? fun (ctxt, xr, ids_to_copy, acc) ->
         (ctxt, (xl, xr), ids_to_copy, acc)
-    | (Union_f (has_lazy_storage, _), Union_t (ty, _, _), L x) ->
+    | (Union_f (has_lazy_storage, _), Union_t (ty, _, _, _), L x) ->
         aux ctxt mode ~temporary ids_to_copy acc ty x ~has_lazy_storage
         >|=? fun (ctxt, x, ids_to_copy, acc) -> (ctxt, L x, ids_to_copy, acc)
-    | (Union_f (_, has_lazy_storage), Union_t (_, ty, _), R x) ->
+    | (Union_f (_, has_lazy_storage), Union_t (_, ty, _, _), R x) ->
         aux ctxt mode ~temporary ids_to_copy acc ty x ~has_lazy_storage
         >|=? fun (ctxt, x, ids_to_copy, acc) -> (ctxt, R x, ids_to_copy, acc)
-    | (Option_f has_lazy_storage, Option_t (ty, _), Some x) ->
+    | (Option_f has_lazy_storage, Option_t (ty, _, _), Some x) ->
         aux ctxt mode ~temporary ids_to_copy acc ty x ~has_lazy_storage
         >|=? fun (ctxt, x, ids_to_copy, acc) -> (ctxt, Some x, ids_to_copy, acc)
     | (List_f has_lazy_storage, List_t (ty, _), l) ->
@@ -6215,7 +6126,7 @@ let[@coq_axiom_with_reason "gadt"] extract_lazy_storage_updates ctxt mode
                and type value = M.value),
           ids_to_copy,
           acc )
-    | (_, Option_t (_, _), None) -> return (ctxt, None, ids_to_copy, acc)
+    | (_, Option_t (_, _, _), None) -> return (ctxt, None, ids_to_copy, acc)
   in
   let has_lazy_storage = has_lazy_storage ty in
   aux ctxt mode ~temporary ids_to_copy acc ty x ~has_lazy_storage
@@ -6232,11 +6143,11 @@ end
     [unit] type for [error] if you are in a case where errors are impossible.
 *)
 let[@coq_axiom_with_reason "gadt"] rec fold_lazy_storage :
-    type a error.
+    type a ac error.
     f:('acc, error) Fold_lazy_storage.result Lazy_storage.IdSet.fold_f ->
     init:'acc ->
     context ->
-    a ty ->
+    (a, ac) ty ->
     a ->
     has_lazy_storage:a has_lazy_storage ->
     (('acc, error) Fold_lazy_storage.result * context) tzresult =
@@ -6254,19 +6165,19 @@ let[@coq_axiom_with_reason "gadt"] rec fold_lazy_storage :
       ok (Fold_lazy_storage.Ok init, ctxt)
   | (Sapling_state_f, Sapling_state_t _, {id = None; _}) ->
       ok (Fold_lazy_storage.Ok init, ctxt)
-  | (Pair_f (hl, hr), Pair_t (tyl, tyr, _), (xl, xr)) -> (
+  | (Pair_f (hl, hr), Pair_t (tyl, tyr, _, _), (xl, xr)) -> (
       fold_lazy_storage ~f ~init ctxt tyl xl ~has_lazy_storage:hl
       >>? fun (init, ctxt) ->
       match init with
       | Fold_lazy_storage.Ok init ->
           fold_lazy_storage ~f ~init ctxt tyr xr ~has_lazy_storage:hr
       | Fold_lazy_storage.Error -> ok (init, ctxt))
-  | (Union_f (has_lazy_storage, _), Union_t (ty, _, _), L x) ->
+  | (Union_f (has_lazy_storage, _), Union_t (ty, _, _, _), L x) ->
       fold_lazy_storage ~f ~init ctxt ty x ~has_lazy_storage
-  | (Union_f (_, has_lazy_storage), Union_t (_, ty, _), R x) ->
+  | (Union_f (_, has_lazy_storage), Union_t (_, ty, _, _), R x) ->
       fold_lazy_storage ~f ~init ctxt ty x ~has_lazy_storage
-  | (_, Option_t (_, _), None) -> ok (Fold_lazy_storage.Ok init, ctxt)
-  | (Option_f has_lazy_storage, Option_t (ty, _), Some x) ->
+  | (_, Option_t (_, _, _), None) -> ok (Fold_lazy_storage.Ok init, ctxt)
+  | (Option_f has_lazy_storage, Option_t (ty, _, _), Some x) ->
       fold_lazy_storage ~f ~init ctxt ty x ~has_lazy_storage
   | (List_f has_lazy_storage, List_t (ty, _), l) ->
       List.fold_left_e
