@@ -463,7 +463,7 @@ let apply ctxt gas capture_ty capture lam =
   let loc = Micheline.dummy_location in
   unparse_ty ~loc ctxt capture_ty >>?= fun (ty_expr, ctxt) ->
   match full_arg_ty with
-  | Pair_t (capture_ty, arg_ty, _) ->
+  | Pair_t (capture_ty, arg_ty, _, _) ->
       let arg_stack_ty = Item_t (arg_ty, Bot_t) in
       let full_descr =
         {
@@ -503,9 +503,9 @@ let transfer (ctxt, sc) gas amount tp p destination entrypoint =
      parameters submitted by the interpreter to prepare them for the
      [Transaction] operation. *)
   let craft_transfer_parameters :
-      type a.
+      type a ac.
       context ->
-      a ty ->
+      (a, ac) ty ->
       (location, prim) Micheline.node ->
       Destination.t ->
       ((location, prim) Micheline.node * context) tzresult =
@@ -525,7 +525,7 @@ let transfer (ctxt, sc) gas amount tp p destination entrypoint =
     | Tx_rollup _ -> (
         let open Micheline in
         match tp with
-        | Pair_t (Ticket_t (tp, _), _, _) ->
+        | Pair_t (Ticket_t (tp, _), _, _, _) ->
             Script_ir_translator.unparse_comparable_ty
               ~loc:dummy_location
               ctxt
@@ -876,12 +876,12 @@ type ('a, 'b, 'c, 'd, 'e, 'f) ilsr_nat_type =
 type ifailwith_type =
   | IFailwith_fun : {
       ifailwith :
-        'a 'b.
+        'a 'ac 'b.
         logger option ->
         outdated_context * step_constants ->
         local_gas_counter ->
         Script.location ->
-        'a ty ->
+        ('a, 'ac) ty ->
         'a ->
         ('b, error trace) result Lwt.t;
     }
