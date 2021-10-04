@@ -49,11 +49,6 @@ let parameters_encoding =
           (req "map_size" range_encoding)))
 
 (* ------------------------------------------------------------------------- *)
-(* Helpers. *)
-
-let comparable_downcast = Script_ir_translator.ty_of_comparable_ty
-
-(* ------------------------------------------------------------------------- *)
 (* Type names. *)
 
 (* We only want to generated inhabited types, hence Never is not included. *)
@@ -253,7 +248,7 @@ module type S = sig
   end
 
   module rec Random_value : sig
-    val value : 'a Script_typed_ir.ty -> 'a sampler
+    val value : ('a, _) Script_typed_ir.ty -> 'a sampler
 
     val comparable : 'a Script_typed_ir.comparable_ty -> 'a sampler
 
@@ -377,7 +372,7 @@ end)
             let* (Ex_ty right) = m_type ~size:rsize in
             match pair_t (-1) left right with
             | Error _ -> assert false
-            | Ok res_ty -> return @@ Ex_ty res_ty)
+            | Ok (Ty_ex_c res_ty) -> return @@ Ex_ty res_ty)
         | `TLambda -> (
             let* (lsize, rsize) = pick_split (size - 1) in
             let* (Ex_ty domain) = m_type ~size:lsize in
@@ -391,7 +386,7 @@ end)
             let* (Ex_ty right) = m_type ~size:rsize in
             match union_t (-1) left right with
             | Error _ -> assert false
-            | Ok res_ty -> return @@ Ex_ty res_ty)
+            | Ok (Ty_ex_c res_ty) -> return @@ Ex_ty res_ty)
         | `TOption -> (
             let* (Ex_ty t) = m_type ~size:(size - 1) in
             match option_t (-1) t with
@@ -484,7 +479,7 @@ end)
 
   (* Type-directed generation of random values. *)
   module rec Random_value : sig
-    val value : 'a Script_typed_ir.ty -> 'a sampler
+    val value : ('a, _) Script_typed_ir.ty -> 'a sampler
 
     val comparable : 'a Script_typed_ir.comparable_ty -> 'a sampler
 
@@ -533,7 +528,7 @@ end)
     let signature rng_state =
       Script_signature.make (Michelson_base.signature rng_state)
 
-    let rec value : type a. a Script_typed_ir.ty -> a sampler =
+    let rec value : type a ac. (a, ac) Script_typed_ir.ty -> a sampler =
       let open Script_typed_ir in
       fun typ ->
         match typ with
@@ -551,18 +546,18 @@ end)
         | Bool_t -> Base_samplers.uniform_bool
         | Address_t -> address
         | Tx_rollup_l2_address_t -> tx_rollup_l2_address
-        | Pair_t (left_t, right_t, _) ->
+        | Pair_t (left_t, right_t, _, _) ->
             M.(
               let* left_v = value left_t in
               let* right_v = value right_t in
               return (left_v, right_v))
-        | Union_t (left_t, right_t, _) ->
+        | Union_t (left_t, right_t, _, _) ->
             fun rng_state ->
               if Base_samplers.uniform_bool rng_state then
                 L (value left_t rng_state)
               else R (value right_t rng_state)
         | Lambda_t (arg_ty, ret_ty, _) -> generate_lambda arg_ty ret_ty
-        | Option_t (ty, _) ->
+        | Option_t (ty, _, _) ->
             fun rng_state ->
               if Base_samplers.uniform_bool rng_state then None
               else Some (value ty rng_state)
@@ -576,9 +571,7 @@ end)
         | Bls12_381_g1_t -> generate_bls12_381_g1
         | Bls12_381_g2_t -> generate_bls12_381_g2
         | Bls12_381_fr_t -> generate_bls12_381_fr
-        | Ticket_t (contents_ty, _) ->
-            let ty = comparable_downcast contents_ty in
-            generate_ticket ty
+        | Ticket_t (contents_ty, _) -> generate_ticket contents_ty
         | Sapling_transaction_t _ ->
             fail_sampling
               "Michelson_samplers: sapling transactions not handled yet"
@@ -589,16 +582,17 @@ end)
         | Chest_t -> fail_sampling "Michelson_samplers: chest not handled yet"
 
     and generate_lambda :
-        type arg ret.
-        arg Script_typed_ir.ty ->
-        ret Script_typed_ir.ty ->
+        type arg argc ret retc.
+        (arg, argc) Script_typed_ir.ty ->
+        (ret, retc) Script_typed_ir.ty ->
         (arg, ret) Script_typed_ir.lambda sampler =
      fun _arg_ty _ret_ty _rng_state ->
       fail_sampling "Michelson_samplers: lambda not handled yet"
 
     and generate_list :
-        type elt.
-        elt Script_typed_ir.ty -> elt Script_typed_ir.boxed_list sampler =
+        type elt eltc.
+        (elt, eltc) Script_typed_ir.ty -> elt Script_typed_ir.boxed_list sampler
+        =
      fun elt_type ->
       let open M in
       let* (length, elements) =
@@ -615,11 +609,10 @@ end)
         elt Script_typed_ir.comparable_ty -> elt Script_typed_ir.set sampler =
      fun elt_ty ->
       let open M in
-      let ety = comparable_downcast elt_ty in
       let* (_, elements) =
         Structure_samplers.list
           ~range:P.parameters.set_size
-          ~sampler:(value ety)
+          ~sampler:(value elt_ty)
       in
       return
       @@ List.fold_left
@@ -628,16 +621,15 @@ end)
            elements
 
     and generate_map :
-        type key elt.
+        type key elt eltc.
         key Script_typed_ir.comparable_ty ->
-        elt Script_typed_ir.ty ->
+        (elt, eltc) Script_typed_ir.ty ->
         (key, elt) Script_typed_ir.map sampler =
      fun key_ty elt_ty rng_state ->
       let size =
         Base_samplers.sample_in_interval rng_state ~range:P.parameters.map_size
       in
-      let kty = comparable_downcast key_ty in
-      let keys = List.init size (fun _ -> value kty rng_state) in
+      let keys = List.init size (fun _ -> value key_ty rng_state) in
       let elts = List.init size (fun _ -> value elt_ty rng_state) in
       List.fold_left2
         (fun map key elt -> Script_map.update key (Some elt) map)
@@ -646,9 +638,9 @@ end)
         elts
 
     and generate_big_map :
-        type key elt.
+        type key elt eltc.
         key Script_typed_ir.comparable_ty ->
-        elt Script_typed_ir.ty ->
+        (elt, eltc) Script_typed_ir.ty ->
         (key, elt) Script_typed_ir.big_map sampler =
       let open Script_typed_ir in
       fun key_ty elt_ty rng_state ->
@@ -680,8 +672,9 @@ end)
             fail_sampling "raise_if_error"
 
     and generate_contract :
-        type arg.
-        arg Script_typed_ir.ty -> arg Script_typed_ir.typed_contract sampler =
+        type arg argc.
+        (arg, argc) Script_typed_ir.ty ->
+        arg Script_typed_ir.typed_contract sampler =
      fun arg_ty ->
       let open M in
       let* address = value address_t in
@@ -718,7 +711,8 @@ end)
       | None -> assert false
 
     and generate_ticket :
-        type a. a Script_typed_ir.ty -> a Script_typed_ir.ticket sampler =
+        type a ac.
+        (a, ac) Script_typed_ir.ty -> a Script_typed_ir.ticket sampler =
      fun ty rng_state ->
       let contents = value ty rng_state in
       let ticketer =
@@ -727,7 +721,7 @@ end)
       let amount = Michelson_base.nat rng_state in
       Script_typed_ir.{ticketer; contents; amount}
 
-    let comparable ty = value (comparable_downcast ty)
+    let comparable ty = value ty
 
     (* Random stack generation. *)
     let rec stack : type a b. (a, b) Script_typed_ir.stack_ty -> (a * b) sampler

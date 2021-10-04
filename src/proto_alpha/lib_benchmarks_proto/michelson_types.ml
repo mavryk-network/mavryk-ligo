@@ -96,9 +96,15 @@ let set k = match set_t (-1) k with Error _ -> assert false | Ok t -> t
 let pair k1 k2 =
   match pair_t (-1) k1 k2 with Error _ -> assert false | Ok t -> t
 
+let cpair k1 k2 =
+  match pair_key (-1) k1 k2 with Error _ -> assert false | Ok t -> t
+
 (* union type constructor*)
 let union k1 k2 =
   match union_t (-1) k1 k2 with Error _ -> assert false | Ok t -> t
+
+let cunion k1 k2 =
+  match union_key (-1) k1 k2 with Error _ -> assert false | Ok t -> t
 
 let lambda x y =
   match lambda_t (-1) x y with Error _ -> assert false | Ok t -> t

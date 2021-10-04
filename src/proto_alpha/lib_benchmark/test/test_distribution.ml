@@ -54,7 +54,7 @@ module Type_name_multiset =
   Basic_structures.Basic_impl.Free_module.Float_valued.Make_with_map (Type_name)
 
 let rec tnames_of_type :
-    type a. a Script_typed_ir.ty -> type_name list -> type_name list =
+    type a ac. (a, ac) Script_typed_ir.ty -> type_name list -> type_name list =
  fun t acc ->
   match t with
   | Script_typed_ir.Unit_t -> `TUnit :: acc
@@ -70,13 +70,13 @@ let rec tnames_of_type :
   | Script_typed_ir.Address_t -> `TAddress :: acc
   | Script_typed_ir.Tx_rollup_l2_address_t -> `TTx_rollup_l2_address :: acc
   | Script_typed_ir.Bool_t -> `TBool :: acc
-  | Script_typed_ir.Pair_t (lty, rty, _) ->
+  | Script_typed_ir.Pair_t (lty, rty, _, _) ->
       tnames_of_type lty (tnames_of_type rty (`TPair :: acc))
-  | Script_typed_ir.Union_t (lty, rty, _) ->
+  | Script_typed_ir.Union_t (lty, rty, _, _) ->
       tnames_of_type lty (tnames_of_type rty (`TUnion :: acc))
   | Script_typed_ir.Lambda_t (dom, range, _) ->
       tnames_of_type dom (tnames_of_type range (`TLambda :: acc))
-  | Script_typed_ir.Option_t (ty, _) -> tnames_of_type ty (`TOption :: acc)
+  | Script_typed_ir.Option_t (ty, _, _) -> tnames_of_type ty (`TOption :: acc)
   | Script_typed_ir.List_t (ty, _) -> tnames_of_type ty (`TList :: acc)
   | Script_typed_ir.Set_t (ty, _) -> tnames_of_comparable_type ty (`TSet :: acc)
   | Script_typed_ir.Map_t (kty, vty, _) ->
@@ -102,30 +102,30 @@ and tnames_of_comparable_type :
     =
  fun t acc ->
   match t with
-  | Script_typed_ir.Unit_key -> `TUnit :: acc
-  | Script_typed_ir.Never_key -> assert false
-  | Script_typed_ir.Int_key -> `TInt :: acc
-  | Script_typed_ir.Nat_key -> `TNat :: acc
-  | Script_typed_ir.Signature_key -> `TSignature :: acc
-  | Script_typed_ir.String_key -> `TString :: acc
-  | Script_typed_ir.Bytes_key -> `TBytes :: acc
-  | Script_typed_ir.Mutez_key -> `TMutez :: acc
-  | Script_typed_ir.Bool_key -> `TBool :: acc
-  | Script_typed_ir.Key_hash_key -> `TKey_hash :: acc
-  | Script_typed_ir.Key_key -> `TKey :: acc
-  | Script_typed_ir.Timestamp_key -> `TTimestamp :: acc
-  | Script_typed_ir.Chain_id_key -> `TChain_id :: acc
-  | Script_typed_ir.Address_key -> `TAddress :: acc
-  | Script_typed_ir.Tx_rollup_l2_address_key -> `TTx_rollup_l2_address :: acc
-  | Script_typed_ir.Pair_key (lty, rty, _) ->
+  | Script_typed_ir.Unit_t -> `TUnit :: acc
+  | Script_typed_ir.Never_t -> assert false
+  | Script_typed_ir.Int_t -> `TInt :: acc
+  | Script_typed_ir.Nat_t -> `TNat :: acc
+  | Script_typed_ir.Signature_t -> `TSignature :: acc
+  | Script_typed_ir.String_t -> `TString :: acc
+  | Script_typed_ir.Bytes_t -> `TBytes :: acc
+  | Script_typed_ir.Mutez_t -> `TMutez :: acc
+  | Script_typed_ir.Bool_t -> `TBool :: acc
+  | Script_typed_ir.Key_hash_t -> `TKey_hash :: acc
+  | Script_typed_ir.Key_t -> `TKey :: acc
+  | Script_typed_ir.Timestamp_t -> `TTimestamp :: acc
+  | Script_typed_ir.Chain_id_t -> `TChain_id :: acc
+  | Script_typed_ir.Address_t -> `TAddress :: acc
+  | Script_typed_ir.Tx_rollup_l2_address_t -> `TTx_rollup_l2_address :: acc
+  | Script_typed_ir.Pair_t (lty, rty, _, YesYes) ->
       tnames_of_comparable_type
         lty
         (tnames_of_comparable_type rty (`TPair :: acc))
-  | Script_typed_ir.Union_key (lty, rty, _) ->
+  | Script_typed_ir.Union_t (lty, rty, _, YesYes) ->
       tnames_of_comparable_type
         lty
         (tnames_of_comparable_type rty (`TUnion :: acc))
-  | Script_typed_ir.Option_key (ty, _) ->
+  | Script_typed_ir.Option_t (ty, _, Yes) ->
       tnames_of_comparable_type ty (`TOption :: acc)
 
 module Crypto_samplers = Crypto_samplers.Make_finite_key_pool (struct
