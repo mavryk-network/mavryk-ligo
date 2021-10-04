@@ -41,32 +41,7 @@ let ty_traverse_f =
   in
   let base_compound_no_meta = header_size in
   let base_compound _meta = h1w in
-  let apply_comparable :
-      type a. nodes_and_size -> a comparable_ty -> nodes_and_size =
-   fun accu cty ->
-    match cty with
-    | Unit_key -> ret_succ_adding accu base_basic
-    | Int_key -> ret_succ_adding accu base_basic
-    | Nat_key -> ret_succ_adding accu base_basic
-    | Signature_key -> ret_succ_adding accu base_basic
-    | String_key -> ret_succ_adding accu base_basic
-    | Bytes_key -> ret_succ_adding accu base_basic
-    | Mutez_key -> ret_succ_adding accu base_basic
-    | Key_hash_key -> ret_succ_adding accu base_basic
-    | Key_key -> ret_succ_adding accu base_basic
-    | Timestamp_key -> ret_succ_adding accu base_basic
-    | Address_key -> ret_succ_adding accu base_basic
-    | Tx_rollup_l2_address_key -> ret_succ_adding accu base_basic
-    | Bool_key -> ret_succ_adding accu base_basic
-    | Chain_id_key -> ret_succ_adding accu base_basic
-    | Never_key -> ret_succ_adding accu base_basic
-    | Pair_key (_ty1, _ty2, a) ->
-        ret_succ_adding accu @@ (base_compound a +! (word_size *? 2))
-    | Union_key (_ty1, _ty2, a) ->
-        ret_succ_adding accu @@ (base_compound a +! (word_size *? 2))
-    | Option_key (_ty, a) ->
-        ret_succ_adding accu @@ (base_compound a +! word_size)
-  and apply : type a. nodes_and_size -> a ty -> nodes_and_size =
+  let apply : type a ac. nodes_and_size -> (a, ac) ty -> nodes_and_size =
    fun accu ty ->
     match ty with
     | Unit_t -> ret_succ_adding accu base_basic
@@ -90,13 +65,14 @@ let ty_traverse_f =
     | Bls12_381_fr_t -> ret_succ_adding accu base_basic
     | Chest_key_t -> ret_succ_adding accu base_basic
     | Chest_t -> ret_succ_adding accu base_basic
-    | Pair_t (_ty1, _ty2, a) ->
-        ret_succ_adding accu @@ (base_compound a +! (word_size *? 2))
-    | Union_t (_ty1, _ty2, a) ->
-        ret_succ_adding accu @@ (base_compound a +! (word_size *? 2))
+    | Pair_t (_ty1, _ty2, a, _) ->
+        ret_succ_adding accu @@ (base_compound a +! (word_size *? 3))
+    | Union_t (_ty1, _ty2, a, _) ->
+        ret_succ_adding accu @@ (base_compound a +! (word_size *? 3))
     | Lambda_t (_ty1, _ty2, a) ->
         ret_succ_adding accu @@ (base_compound a +! (word_size *? 2))
-    | Option_t (_ty, a) -> ret_succ_adding accu @@ (base_compound a +! word_size)
+    | Option_t (_ty, a, _) ->
+        ret_succ_adding accu @@ (base_compound a +! (word_size *? 2))
     | List_t (_ty, a) -> ret_succ_adding accu @@ (base_compound a +! word_size)
     | Set_t (_cty, a) -> ret_succ_adding accu @@ (base_compound a +! word_size)
     | Map_t (_cty, _ty, a) ->
@@ -114,12 +90,12 @@ let ty_traverse_f =
     | Ticket_t (_cty, a) ->
         ret_succ_adding accu @@ (base_compound a +! word_size)
   in
-  ({apply; apply_comparable} : nodes_and_size ty_traverse)
+  ({apply} : nodes_and_size ty_traverse)
 
 let comparable_ty_size : type a. a comparable_ty -> nodes_and_size =
- fun cty -> comparable_ty_traverse cty zero ty_traverse_f
+ fun cty -> ty_traverse cty zero ty_traverse_f
 
-let ty_size : type a. a ty -> nodes_and_size =
+let ty_size : type a ac. (a, ac) ty -> nodes_and_size =
  fun ty -> ty_traverse ty zero ty_traverse_f
 
 let stack_ty_size s =
@@ -264,14 +240,14 @@ let kinfo_size {iloc = _; kstack_ty = _} = h2w
    cannot be nested. (See [big_map_size].) For this reason, these
    functions should not trigger stack overflows. *)
 let rec value_size :
-    type a.
+    type a ac.
     count_lambda_nodes:bool ->
     nodes_and_size ->
-    (a ty, a comparable_ty) union ->
+    (a, ac) ty ->
     a ->
     nodes_and_size =
  fun ~count_lambda_nodes accu ty x ->
-  let apply : type a. nodes_and_size -> a ty -> a -> nodes_and_size =
+  let apply : type a ac. nodes_and_size -> (a, ac) ty -> a -> nodes_and_size =
    fun accu ty x ->
     match ty with
     | Unit_t -> ret_succ accu
@@ -288,11 +264,11 @@ let rec value_size :
     | Tx_rollup_l2_address_t ->
         ret_succ_adding accu (tx_rollup_l2_address_size x)
     | Bool_t -> ret_succ accu
-    | Pair_t (_, _, _) -> ret_succ_adding accu h2w
-    | Union_t (_, _, _) -> ret_succ_adding accu h1w
+    | Pair_t _ -> ret_succ_adding accu h2w
+    | Union_t _ -> ret_succ_adding accu h1w
     | Lambda_t (_, _, _) ->
         (lambda_size [@ocaml.tailcall]) ~count_lambda_nodes (ret_succ accu) x
-    | Option_t (_, _) -> ret_succ_adding accu (option_size (fun _ -> !!0) x)
+    | Option_t _ -> ret_succ_adding accu (option_size (fun _ -> !!0) x)
     | List_t (_, _) -> ret_succ_adding accu (h2w +! (h2w *? x.length))
     | Set_t (_, _) ->
         let module M = (val Script_set.get x) in
@@ -333,39 +309,15 @@ let rec value_size :
     | Chest_key_t -> ret_succ_adding accu (chest_key_size x)
     | Chest_t -> ret_succ_adding accu (chest_size x)
   in
-  let apply_comparable :
-      type a. nodes_and_size -> a comparable_ty -> a -> nodes_and_size =
-   fun accu ty x ->
-    match ty with
-    | Unit_key -> ret_succ accu
-    | Int_key -> ret_succ_adding accu (script_int_size x)
-    | Nat_key -> ret_succ_adding accu (script_nat_size x)
-    | Signature_key -> ret_succ_adding accu signature_size
-    | String_key -> ret_succ_adding accu (script_string_size x)
-    | Bytes_key -> ret_succ_adding accu (bytes_size x)
-    | Mutez_key -> ret_succ_adding accu mutez_size
-    | Key_hash_key -> ret_succ_adding accu (key_hash_size x)
-    | Key_key -> ret_succ_adding accu (public_key_size x)
-    | Timestamp_key -> ret_succ_adding accu (timestamp_size x)
-    | Address_key -> ret_succ_adding accu (address_size x)
-    | Tx_rollup_l2_address_key ->
-        ret_succ_adding accu (tx_rollup_l2_address_size x)
-    | Bool_key -> ret_succ accu
-    | Pair_key (_, _, _) -> ret_succ_adding accu h2w
-    | Union_key (_, _, _) -> ret_succ_adding accu h1w
-    | Option_key (_, _) -> ret_succ_adding accu (option_size (fun _ -> !!0) x)
-    | Chain_id_key -> ret_succ_adding accu chain_id_size
-    | Never_key -> ( match x with _ -> .)
-  in
-  value_traverse ty x accu {apply; apply_comparable}
+  value_traverse ty x accu {apply}
  [@@coq_axiom_with_reason "unreachable expressions '.' not handled for now"]
 
 and big_map_size :
-    type a b.
+    type a b bc.
     count_lambda_nodes:bool ->
     nodes_and_size ->
     a comparable_ty ->
-    b ty ->
+    (b, bc) ty ->
     (a, b) big_map ->
     nodes_and_size =
  fun ~count_lambda_nodes accu cty ty' (Big_map {id; diff; key_type; value_type}) ->
@@ -379,15 +331,11 @@ and big_map_size :
           (* The following recursive call cannot introduce a stack
              overflow because this would require a key of type
              big_map while big_map is not comparable. *)
-          let accu = value_size ~count_lambda_nodes accu (R cty) key in
+          let accu = value_size ~count_lambda_nodes accu cty key in
           match value with
           | None -> accu
           | Some value ->
-              (value_size [@ocaml.tailcall])
-                ~count_lambda_nodes
-                accu
-                (L ty')
-                value)
+              (value_size [@ocaml.tailcall]) ~count_lambda_nodes accu ty' value)
         diff.map
         accu
     in
@@ -441,11 +389,8 @@ and kinstr_size :
     | ISwap (kinfo, _) -> ret_succ_adding accu (base kinfo)
     | IConst (kinfo, x, k) ->
         let accu = ret_succ_adding accu (base kinfo +! word_size) in
-        (value_size [@ocaml.tailcall])
-          ~count_lambda_nodes
-          accu
-          (L (stack_top_ty (kinfo_of_kinstr k).kstack_ty))
-          x
+        let (Ty_ex_c top_ty) = stack_top_ty (kinfo_of_kinstr k).kstack_ty in
+        (value_size [@ocaml.tailcall]) ~count_lambda_nodes accu top_ty x
     | ICons_pair (kinfo, _) -> ret_succ_adding accu (base kinfo)
     | ICar (kinfo, _) -> ret_succ_adding accu (base kinfo)
     | ICdr (kinfo, _) -> ret_succ_adding accu (base kinfo)
@@ -744,7 +689,7 @@ let kinstr_size kinstr =
   let size = (kinstr_size *? 157 /? 100) +! (kinstr_extra_size *? 18 /? 100) in
   (Nodes.add kinstr_nodes kinstr_extra_size_nodes, size)
 
-let value_size ty x = value_size ~count_lambda_nodes:true zero (L ty) x
+let value_size ty x = value_size ~count_lambda_nodes:true zero ty x
 
 module Internal_for_tests = struct
   let ty_size = ty_size
