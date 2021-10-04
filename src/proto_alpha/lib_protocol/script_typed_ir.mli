@@ -191,6 +191,34 @@ end
 
 type 'a ty_metadata = {size : 'a Type_size.t} [@@unboxed]
 
+type no = private DNo
+
+type yes = private DYes
+
+type _ dbool = No : no dbool | Yes : yes dbool
+
+type ('a, 'b, 'r) both_attr_witness =
+  | NoNo : (no, no, no) both_attr_witness
+  | NoYes : (no, yes, no) both_attr_witness
+  | YesNo : (yes, no, no) both_attr_witness
+  | YesYes : (yes, yes, yes) both_attr_witness
+
+type ('a, 'b) ex_both =
+  | Ex_both : ('a, 'b, _) both_attr_witness -> ('a, 'b) ex_both
+[@@unboxed]
+
+val attr_both : 'a dbool -> 'b dbool -> ('a, 'b) ex_both
+
+val dbool_of_both : (_, _, 'r) both_attr_witness -> 'r dbool
+
+type (_, _) eq = Eq : ('a, 'a) eq
+
+(** Proof that both_attr_witness is a function *)
+val merge_comparable_witness :
+  ('a, 'b, 'c1) both_attr_witness ->
+  ('a, 'b, 'c2) both_attr_witness ->
+  ('c1, 'c2) eq
+
 type _ comparable_ty =
   | Unit_key : unit comparable_ty
   | Never_key : never comparable_ty

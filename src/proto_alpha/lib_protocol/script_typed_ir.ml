@@ -225,7 +225,7 @@ type 'a ticket = {ticketer : Contract.t; contents : 'a; amount : n num}
 
 module type TYPE_SIZE = sig
   (* A type size represents the size of its type parameter.
-     This constraint is enforced inside this module (Script_type_ir), hence there
+     This constraint is enforced inside this module (Script_typed_ir), hence there
      should be no way to construct a type size outside of it.
 
      It allows keeping type metadata and types non-private.
@@ -315,6 +315,50 @@ type empty_cell = EmptyCell
 type end_of_stack = empty_cell * empty_cell
 
 type 'a ty_metadata = {size : 'a Type_size.t} [@@unboxed]
+
+type no = private DNo
+
+type yes = private DYes
+
+type _ dbool = No : no dbool | Yes : yes dbool
+
+type ('a, 'b, 'r) both_attr_witness =
+  | NoNo : (no, no, no) both_attr_witness
+  | NoYes : (no, yes, no) both_attr_witness
+  | YesNo : (yes, no, no) both_attr_witness
+  | YesYes : (yes, yes, yes) both_attr_witness
+
+type ('a, 'b) ex_both =
+  | Ex_both : ('a, 'b, _) both_attr_witness -> ('a, 'b) ex_both
+[@@unboxed]
+
+let attr_both : type a b. a dbool -> b dbool -> (a, b) ex_both =
+ fun a b ->
+  match (a, b) with
+  | (No, No) -> Ex_both NoNo
+  | (No, Yes) -> Ex_both NoYes
+  | (Yes, No) -> Ex_both YesNo
+  | (Yes, Yes) -> Ex_both YesYes
+
+let dbool_of_both : type a b r. (a, b, r) both_attr_witness -> r dbool =
+  function
+  | NoNo -> No
+  | NoYes -> No
+  | YesNo -> No
+  | YesYes -> Yes
+
+type (_, _) eq = Eq : ('a, 'a) eq
+
+let merge_comparable_witness :
+    type a b c1 c2.
+    (a, b, c1) both_attr_witness -> (a, b, c2) both_attr_witness -> (c1, c2) eq
+    =
+ fun w1 w2 ->
+  match (w1, w2) with
+  | (NoNo, NoNo) -> Eq
+  | (NoYes, NoYes) -> Eq
+  | (YesNo, YesNo) -> Eq
+  | (YesYes, YesYes) -> Eq
 
 type _ comparable_ty =
   | Unit_key : unit comparable_ty
