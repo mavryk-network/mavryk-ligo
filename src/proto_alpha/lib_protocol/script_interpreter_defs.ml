@@ -834,7 +834,7 @@ type ('a, 'b) ifailwith_type =
   logger option ->
   outdated_context * step_constants ->
   local_gas_counter ->
-  int ->
+  Script.location ->
   'a ty ->
   'a ->
   ('b, error trace) result Lwt.t

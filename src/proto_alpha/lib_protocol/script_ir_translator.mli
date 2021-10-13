@@ -158,7 +158,7 @@ module Gas_monad : sig
 end
 
 type type_logger =
-  int ->
+  Script.location ->
   (Script.expr * Script.annot) list ->
   (Script.expr * Script.annot) list ->
   unit
