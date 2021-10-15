@@ -38,6 +38,8 @@ type canonical_location = int
 
 val dummy_location : canonical_location
 
+val is_dummy_location : canonical_location -> bool
+
 val root : 'p canonical -> (canonical_location, 'p) node
 
 val canonical_location_encoding : canonical_location Data_encoding.encoding
