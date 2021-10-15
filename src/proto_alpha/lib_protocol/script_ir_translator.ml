@@ -3060,7 +3060,8 @@ and[@coq_axiom_with_reason "gadt"] parse_instr :
   in
   let log_stack ctxt loc stack_ty aft =
     match (type_logger, script_instr) with
-    | (None, _) | (Some _, (Seq (-1, _) | Int _ | String _ | Bytes _)) ->
+    | (None, _) | (Some _, (Int _ | String _ | Bytes _)) -> Result.return_unit
+    | (Some _, Seq (loc, _)) when Micheline.is_dummy_location loc ->
         Result.return_unit
     | (Some log, (Prim _ | Seq _)) ->
         (* Unparsing for logging done in an unlimited context as this
