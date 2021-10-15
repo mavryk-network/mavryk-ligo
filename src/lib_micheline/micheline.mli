@@ -74,6 +74,10 @@ type canonical_location = int
 (** A location that won't exist in any well-formed canonical value *)
 val dummy_location : canonical_location
 
+(** Checks whether a location is dummy, i.e. do not come from a well-formed
+    canonical value. *)
+val is_dummy_location : canonical_location -> bool
+
 (** Encoding for canonical integer locations. *)
 val canonical_location_encoding : canonical_location Data_encoding.encoding
 

@@ -36,6 +36,8 @@ type canonical_location = int
 
 let dummy_location = -1
 
+let is_dummy_location loc = loc < 0
+
 type 'p canonical = Canonical of (canonical_location, 'p) node
 
 let canonical_location_encoding =
