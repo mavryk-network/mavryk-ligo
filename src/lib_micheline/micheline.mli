@@ -71,6 +71,9 @@ type 'p canonical
 (** Canonical integer locations that appear inside {!canonical} expressions. *)
 type canonical_location = int
 
+(** A location that won't exist in any well-formed canonical value *)
+val dummy_location : canonical_location
+
 (** Encoding for canonical integer locations. *)
 val canonical_location_encoding : canonical_location Data_encoding.encoding
 
