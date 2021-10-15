@@ -238,7 +238,7 @@ let check_depth node =
                 (* Because [depth] doesn't care about the content
                    of the expression, we can safely throw away information
                    about primitives and replace them with the [Seq] constructor.*)
-                (Seq (-1, tl))
+                (Seq (Micheline.dummy_location, tl))
                 depth
                 (fun dtl -> (k [@tailcall]) (Compare.Int.max dhd dtl)))
   in
