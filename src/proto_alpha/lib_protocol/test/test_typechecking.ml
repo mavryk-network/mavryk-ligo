@@ -206,6 +206,12 @@ let test_parse_ty ctxt node expected =
       Script_ir_translator.ty_eq ctxt (location node) actual expected
       >|? fun (_, ctxt) -> ctxt )
 
+let var_annot s = Script_ir_annot.Var_annot s
+
+let type_annot s = Script_ir_annot.Type_annot s
+
+let field_annot s = Script_ir_annot.Field_annot s
+
 let test_parse_comb_type () =
   let open Script in
   let open Script_typed_ir in
@@ -248,7 +254,7 @@ let test_parse_comb_type () =
   (* pair (nat %a) nat *)
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "a"), None)
+    (nat_ty, Some (field_annot "a"), None)
     (nat_ty, None, None)
     ~annot:None
   >>??= fun pair_nat_a_nat_ty ->
@@ -258,7 +264,7 @@ let test_parse_comb_type () =
   pair_t
     (-1)
     (nat_ty, None, None)
-    (nat_ty, Some (Field_annot "b"), None)
+    (nat_ty, Some (field_annot "b"), None)
     ~annot:None
   >>??= fun pair_nat_nat_b_ty ->
   test_parse_ty ctxt (pair_prim2 nat_prim nat_prim_b) pair_nat_nat_b_ty
@@ -266,8 +272,8 @@ let test_parse_comb_type () =
   (* pair (nat %a) (nat %b) *)
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "a"), None)
-    (nat_ty, Some (Field_annot "b"), None)
+    (nat_ty, Some (field_annot "a"), None)
+    (nat_ty, Some (field_annot "b"), None)
     ~annot:None
   >>??= fun pair_nat_a_nat_b_ty ->
   test_parse_ty ctxt (pair_prim2 nat_prim_a nat_prim_b) pair_nat_a_nat_b_ty
@@ -275,13 +281,13 @@ let test_parse_comb_type () =
   (* pair (nat %a) (nat %b) (nat %c) *)
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "b"), None)
-    (nat_ty, Some (Field_annot "c"), None)
+    (nat_ty, Some (field_annot "b"), None)
+    (nat_ty, Some (field_annot "c"), None)
     ~annot:None
   >>??= fun pair_nat_b_nat_c_ty ->
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "a"), None)
+    (nat_ty, Some (field_annot "a"), None)
     (pair_nat_b_nat_c_ty, None, None)
     ~annot:None
   >>??= fun pair_nat_a_nat_b_nat_c_ty ->
@@ -295,8 +301,8 @@ let test_parse_comb_type () =
   >>??= fun pair_b_nat_nat_ty ->
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "a"), None)
-    (pair_b_nat_nat_ty, Some (Field_annot "b"), None)
+    (nat_ty, Some (field_annot "a"), None)
+    (pair_b_nat_nat_ty, Some (field_annot "b"), None)
     ~annot:None
   >>??= fun pair_nat_a_pair_b_nat_nat_ty ->
   test_parse_ty
@@ -349,7 +355,7 @@ let test_unparse_comb_type () =
   (* pair (nat %a) nat *)
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "a"), None)
+    (nat_ty, Some (field_annot "a"), None)
     (nat_ty, None, None)
     ~annot:None
   >>??= fun pair_nat_a_nat_ty ->
@@ -363,7 +369,7 @@ let test_unparse_comb_type () =
   pair_t
     (-1)
     (nat_ty, None, None)
-    (nat_ty, Some (Field_annot "b"), None)
+    (nat_ty, Some (field_annot "b"), None)
     ~annot:None
   >>??= fun pair_nat_nat_b_ty ->
   test_unparse_ty
@@ -375,8 +381,8 @@ let test_unparse_comb_type () =
   (* pair (nat %a) (nat %b) *)
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "a"), None)
-    (nat_ty, Some (Field_annot "b"), None)
+    (nat_ty, Some (field_annot "a"), None)
+    (nat_ty, Some (field_annot "b"), None)
     ~annot:None
   >>??= fun pair_nat_a_nat_b_ty ->
   test_unparse_ty
@@ -388,13 +394,13 @@ let test_unparse_comb_type () =
   (* pair (nat %a) (nat %b) (nat %c) *)
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "b"), None)
-    (nat_ty, Some (Field_annot "c"), None)
+    (nat_ty, Some (field_annot "b"), None)
+    (nat_ty, Some (field_annot "c"), None)
     ~annot:None
   >>??= fun pair_nat_b_nat_c_ty ->
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "a"), None)
+    (nat_ty, Some (field_annot "a"), None)
     (pair_nat_b_nat_c_ty, None, None)
     ~annot:None
   >>??= fun pair_nat_a_nat_b_nat_c_ty ->
@@ -409,8 +415,8 @@ let test_unparse_comb_type () =
   >>??= fun pair_nat_nat_ty ->
   pair_t
     (-1)
-    (nat_ty, Some (Field_annot "a"), None)
-    (pair_nat_nat_ty, Some (Field_annot "b"), None)
+    (nat_ty, Some (field_annot "a"), None)
+    (pair_nat_nat_ty, Some (field_annot "b"), None)
     ~annot:None
   >>??= fun pair_nat_a_pair_b_nat_nat_ty ->
   test_unparse_ty
@@ -423,7 +429,7 @@ let test_unparse_comb_type () =
   pair_t
     (-1)
     (nat_ty, None, None)
-    (pair_nat_nat_ty, None, Some (Var_annot "b"))
+    (pair_nat_nat_ty, None, Some (var_annot "b"))
     ~annot:None
   >>??= fun pair_nat_pair_b_nat_nat_ty ->
   test_unparse_ty
@@ -437,7 +443,7 @@ let test_unparse_comb_type () =
     (-1)
     (nat_ty, None, None)
     (nat_ty, None, None)
-    ~annot:(Some (Type_annot "b"))
+    ~annot:(Some (type_annot "b"))
   >>??= fun pair_b_nat_nat_ty ->
   pair_t (-1) (nat_ty, None, None) (pair_b_nat_nat_ty, None, None) ~annot:None
   >>??= fun pair_nat_pair_b_nat_nat_ty ->
@@ -493,7 +499,7 @@ let test_unparse_comb_comparable_type () =
     pair_nat_nat_nat_ty
   >>?= fun ctxt ->
   (* pair (nat %a) nat *)
-  pair_key (-1) (nat_ty, Some (Field_annot "a")) (nat_ty, None) ~annot:None
+  pair_key (-1) (nat_ty, Some (field_annot "a")) (nat_ty, None) ~annot:None
   >>??= fun pair_nat_a_nat_ty ->
   test_unparse_comparable_ty
     __LOC__
@@ -502,7 +508,7 @@ let test_unparse_comb_comparable_type () =
     pair_nat_a_nat_ty
   >>?= fun ctxt ->
   (* pair nat (nat %b) *)
-  pair_key (-1) (nat_ty, None) (nat_ty, Some (Field_annot "b")) ~annot:None
+  pair_key (-1) (nat_ty, None) (nat_ty, Some (field_annot "b")) ~annot:None
   >>??= fun pair_nat_nat_b_ty ->
   test_unparse_comparable_ty
     __LOC__
@@ -513,8 +519,8 @@ let test_unparse_comb_comparable_type () =
   (* pair (nat %a) (nat %b) *)
   pair_key
     (-1)
-    (nat_ty, Some (Field_annot "a"))
-    (nat_ty, Some (Field_annot "b"))
+    (nat_ty, Some (field_annot "a"))
+    (nat_ty, Some (field_annot "b"))
     ~annot:None
   >>??= fun pair_nat_a_nat_b_ty ->
   test_unparse_comparable_ty
@@ -526,13 +532,13 @@ let test_unparse_comb_comparable_type () =
   (* pair (nat %a) (nat %b) (nat %c) *)
   pair_key
     (-1)
-    (nat_ty, Some (Field_annot "b"))
-    (nat_ty, Some (Field_annot "c"))
+    (nat_ty, Some (field_annot "b"))
+    (nat_ty, Some (field_annot "c"))
     ~annot:None
   >>??= fun pair_nat_b_nat_c_ty ->
   pair_key
     (-1)
-    (nat_ty, Some (Field_annot "a"))
+    (nat_ty, Some (field_annot "a"))
     (pair_nat_b_nat_c_ty, None)
     ~annot:None
   >>??= fun pair_nat_a_nat_b_nat_c_ty ->
@@ -545,8 +551,8 @@ let test_unparse_comb_comparable_type () =
   (* pair (nat %a) (pair %b nat nat) *)
   pair_key
     (-1)
-    (nat_ty, Some (Field_annot "a"))
-    (pair_nat_nat_ty, Some (Field_annot "b"))
+    (nat_ty, Some (field_annot "a"))
+    (pair_nat_nat_ty, Some (field_annot "b"))
     ~annot:None
   >>??= fun pair_nat_a_pair_b_nat_nat_ty ->
   test_unparse_comparable_ty
@@ -556,7 +562,7 @@ let test_unparse_comb_comparable_type () =
     pair_nat_a_pair_b_nat_nat_ty
   >>?= fun ctxt ->
   (* pair nat (pair :b nat nat) *)
-  pair_key (-1) (nat_ty, None) (nat_ty, None) ~annot:(Some (Type_annot "b"))
+  pair_key (-1) (nat_ty, None) (nat_ty, None) ~annot:(Some (type_annot "b"))
   >>??= fun pair_b_nat_nat_ty ->
   pair_key (-1) (nat_ty, None) (pair_b_nat_nat_ty, None) ~annot:None
   >>??= fun pair_nat_pair_b_nat_nat_ty ->
