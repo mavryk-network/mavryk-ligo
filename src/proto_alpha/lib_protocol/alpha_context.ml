@@ -49,6 +49,7 @@ module Timestamp = struct
   let predecessor = Raw_context.predecessor_timestamp
 end
 
+module Entrypoint = Entrypoint_repr
 include Operation_repr
 
 module Operation = struct
