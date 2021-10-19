@@ -37,7 +37,7 @@ val run_view :
   chain:Shell_services.chain ->
   block:Shell_services.block ->
   contract:Contract.t ->
-  entrypoint:string ->
+  entrypoint:Entrypoint.t ->
   input:Michelson_v1_parser.parsed ->
   unparsing_mode:Script_ir_translator.unparsing_mode ->
   ?source:Contract.t ->
@@ -59,7 +59,7 @@ val run :
   ?source:Contract.t ->
   ?payer:Contract.t ->
   ?gas:Gas.Arith.integral ->
-  ?entrypoint:string ->
+  ?entrypoint:Entrypoint.t ->
   unit ->
   (Script.expr * packed_internal_operation list * Lazy_storage.diffs option)
   tzresult
@@ -78,7 +78,7 @@ val trace :
   ?source:Contract.t ->
   ?payer:Contract.t ->
   ?gas:Gas.Arith.integral ->
-  ?entrypoint:string ->
+  ?entrypoint:Entrypoint.t ->
   unit ->
   (Script.expr
   * packed_internal_operation list
@@ -156,7 +156,7 @@ val entrypoint_type :
   chain:Shell_services.chain ->
   block:Shell_services.block ->
   Michelson_v1_parser.parsed ->
-  entrypoint:string ->
+  entrypoint:Entrypoint.t ->
   Script.expr option tzresult Lwt.t
 
 val print_entrypoint_type :
@@ -165,7 +165,7 @@ val print_entrypoint_type :
   ?script_name:string ->
   show_source:bool ->
   parsed:Michelson_v1_parser.parsed ->
-  entrypoint:string ->
+  entrypoint:Entrypoint.t ->
   Script_repr.expr option tzresult ->
   unit tzresult Lwt.t
 
