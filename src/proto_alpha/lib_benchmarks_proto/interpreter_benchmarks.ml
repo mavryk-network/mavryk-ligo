@@ -2106,7 +2106,7 @@ module Registration_section = struct
           (IContract
              ( kinfo (address @$ bot),
                unit,
-               "default",
+               Alpha_context.Entrypoint.default,
                halt (option (contract unit) @$ bot) ))
         ()
 
@@ -2332,7 +2332,7 @@ module Registration_section = struct
           (ISelf
              ( kinfo (unit @$ bot),
                unit,
-               "default",
+               Alpha_context.Entrypoint.default,
                halt (contract unit @$ unit @$ bot) ))
         ()
 
