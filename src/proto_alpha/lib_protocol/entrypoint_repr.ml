@@ -32,6 +32,20 @@ let is_default name = name = default
 
 let root = "root"
 
+type error += Name_too_long of string
+
+let () =
+  (* Entrypoint name too long *)
+  register_error_kind
+    `Permanent
+    ~id:"michelson_v1.entrypoint_name_too_long"
+    ~title:"Entrypoint name too long (type error)"
+    ~description:
+      "An entrypoint name exceeds the maximum length of 31 characters."
+    Data_encoding.(obj1 (req "name" string))
+    (function Name_too_long entrypoint -> Some entrypoint | _ -> None)
+    (fun entrypoint -> Name_too_long entrypoint)
+
 type of_string_result =
   | Ok of t
   | Too_long  (** length > 31 *)

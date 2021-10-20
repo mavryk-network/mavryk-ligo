@@ -38,6 +38,8 @@ val is_default : t -> bool
 (** Root entrypoint *)
 val root : t
 
+type error += Name_too_long of string
+
 (** Converts a string to an entrypoint.
     Fails with [Invalid_arg] if the string is too long or is "default".
     Converts "" to "default". *)
