@@ -38,6 +38,9 @@ val is_default : t -> bool
 (** Root entrypoint *)
 val root : t
 
+(** Pretty-print an entrypoint *)
+val pp : Format.formatter -> t -> unit
+
 (** In-memory size of an entrypoint *)
 val in_memory_size : t -> Saturation_repr.may_saturate Saturation_repr.t
 
