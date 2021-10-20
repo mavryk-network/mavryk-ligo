@@ -38,6 +38,11 @@ val is_default : t -> bool
 (** Root entrypoint *)
 val root : t
 
+(** Converts a string to an entrypoint.
+    Fails with [Invalid_arg] if the string is too long or is "default".
+    Converts "" to "default". *)
+val of_string_strict_exn : string -> t
+
 (** Pretty-print an entrypoint *)
 val pp : Format.formatter -> t -> unit
 
