@@ -37,3 +37,9 @@ val is_default : t -> bool
 
 (** Root entrypoint *)
 val root : t
+
+(** Set of entrypoints *)
+module Set : Set.S with type elt = t
+
+(** Map of entrypoints *)
+module Map : Map.S with type key = t

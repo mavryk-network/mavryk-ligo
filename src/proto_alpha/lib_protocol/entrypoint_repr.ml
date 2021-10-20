@@ -30,3 +30,6 @@ let default = "default"
 let is_default name = name = default
 
 let root = "root"
+
+module Set = Set.Make (String)
+module Map = Map.Make (String)
