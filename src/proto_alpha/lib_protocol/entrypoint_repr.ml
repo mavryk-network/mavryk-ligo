@@ -65,7 +65,8 @@ type of_string_result =
   | Ok of t
   | Too_long  (** length > 31 *)
   | Got_default
-      (** Got exactly "default", which can be an error in some cases or OK in others *)
+      (** Got exactly "default", which can be an error in some cases (strict)
+          or OK in others (lax) *)
 
 let of_string str =
   if str = "" then
@@ -92,6 +93,12 @@ let of_string_strict_exn str =
 
 let of_annot_strict ~loc (a : Non_empty_string.t) =
   of_string_strict ~loc (a :> string)
+
+let of_string_lax str =
+  match of_string str with
+  | Too_long -> error (Name_too_long str)
+  | Got_default -> Ok default
+  | Ok name -> Ok name
 
 let pp = Format.pp_print_string
 

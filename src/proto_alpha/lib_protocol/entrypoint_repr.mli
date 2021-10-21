@@ -55,6 +55,11 @@ val of_string_strict : loc:Script_repr.location -> string -> t tzresult
     Converts "" to "default". *)
 val of_string_strict_exn : string -> t
 
+(** Converts a string to an entrypoint.
+    Returns an error if the string is too long.
+    Accepts "default" and converts "" to "default". *)
+val of_string_lax : string -> t tzresult
+
 (** Pretty-print an entrypoint *)
 val pp : Format.formatter -> t -> unit
 
