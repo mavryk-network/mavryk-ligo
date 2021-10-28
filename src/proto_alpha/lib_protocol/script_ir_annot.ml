@@ -41,65 +41,70 @@ module FOR_TESTS = struct
   let unsafe_field_annot_of_string s = Field_annot s
 end
 
-let default_now_annot = Some (Var_annot "now")
+let some_var_annot_of_string_exn s = Some (Var_annot s)
 
-let default_amount_annot = Some (Var_annot "amount")
+let some_field_annot_of_string_exn s = Some (Field_annot s)
 
-let default_balance_annot = Some (Var_annot "balance")
+let default_now_annot = some_var_annot_of_string_exn "now"
 
-let default_level_annot = Some (Var_annot "level")
+let default_amount_annot = some_var_annot_of_string_exn "amount"
 
-let default_steps_annot = Some (Var_annot "steps")
+let default_balance_annot = some_var_annot_of_string_exn "balance"
 
-let default_source_annot = Some (Var_annot "source")
+let default_level_annot = some_var_annot_of_string_exn "level"
 
-let default_sender_annot = Some (Var_annot "sender")
+let default_steps_annot = some_var_annot_of_string_exn "steps"
 
-let default_self_annot = Some (Var_annot "self")
+let default_source_annot = some_var_annot_of_string_exn "source"
 
-let default_arg_annot = Some (Var_annot "arg")
+let default_sender_annot = some_var_annot_of_string_exn "sender"
 
-let lambda_arg_annot = Some (Var_annot "@arg")
+let default_self_annot = some_var_annot_of_string_exn "self"
 
-let default_param_annot = Some (Var_annot "parameter")
+let default_arg_annot = some_var_annot_of_string_exn "arg"
 
-let default_storage_annot = Some (Var_annot "storage")
+let lambda_arg_annot = some_var_annot_of_string_exn "@arg"
 
-let default_car_annot = Some (Field_annot "car")
+let default_param_annot = some_var_annot_of_string_exn "parameter"
 
-let default_cdr_annot = Some (Field_annot "cdr")
+let default_storage_annot = some_var_annot_of_string_exn "storage"
 
-let default_contract_annot = Some (Field_annot "contract")
+let default_car_annot = some_field_annot_of_string_exn "car"
 
-let default_addr_annot = Some (Field_annot "address")
+let default_cdr_annot = some_field_annot_of_string_exn "cdr"
 
-let default_manager_annot = Some (Field_annot "manager")
+let default_contract_annot = some_field_annot_of_string_exn "contract"
 
-let default_pack_annot = Some (Field_annot "packed")
+let default_addr_annot = some_field_annot_of_string_exn "address"
 
-let default_unpack_annot = Some (Field_annot "unpacked")
+let default_manager_annot = some_field_annot_of_string_exn "manager"
 
-let default_slice_annot = Some (Field_annot "slice")
+let default_pack_annot = some_field_annot_of_string_exn "packed"
 
-let default_elt_annot = Some (Field_annot "elt")
+let default_unpack_annot = some_field_annot_of_string_exn "unpacked"
 
-let default_key_annot = Some (Field_annot "key")
+let default_slice_annot = some_field_annot_of_string_exn "slice"
 
-let default_hd_annot = Some (Field_annot "hd")
+let default_elt_annot = some_field_annot_of_string_exn "elt"
 
-let default_tl_annot = Some (Field_annot "tl")
+let default_key_annot = some_field_annot_of_string_exn "key"
 
-let default_some_annot = Some (Field_annot "some")
+let default_hd_annot = some_field_annot_of_string_exn "hd"
 
-let default_left_annot = Some (Field_annot "left")
+let default_tl_annot = some_field_annot_of_string_exn "tl"
 
-let default_right_annot = Some (Field_annot "right")
+let default_some_annot = some_field_annot_of_string_exn "some"
 
-let default_binding_annot = Some (Field_annot "bnd")
+let default_left_annot = some_field_annot_of_string_exn "left"
 
-let default_sapling_state_annot = Some (Var_annot "sapling")
+let default_right_annot = some_field_annot_of_string_exn "right"
 
-let default_sapling_balance_annot = Some (Var_annot "sapling_balance")
+let default_binding_annot = some_field_annot_of_string_exn "bnd"
+
+let default_sapling_state_annot = some_var_annot_of_string_exn "sapling"
+
+let default_sapling_balance_annot =
+  some_var_annot_of_string_exn "sapling_balance"
 
 let unparse_type_annot : type_annot option -> string list = function
   | None -> []
