@@ -110,7 +110,20 @@ let of_string_lax str =
 
 let of_annot_lax (a : Non_empty_string.t) = of_string_lax (a :> string)
 
+let of_string_lax' str =
+  match of_string str with
+  | Too_long -> Error ("Entrypoint name too long \"" ^ str ^ "\"")
+  | Got_default -> Ok default
+  | Ok name -> Ok name
+
 let pp = Format.pp_print_string
+
+let simple_encoding =
+  let open Data_encoding in
+  conv_with_guard
+    (function "" -> assert false (* invariant violated *) | s -> s)
+    of_string_lax'
+    string
 
 let in_memory_size name =
   Cache_memory_helpers.string_size_gen (String.length name)
