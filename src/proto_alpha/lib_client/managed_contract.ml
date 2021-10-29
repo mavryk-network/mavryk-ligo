@@ -202,7 +202,11 @@ let build_lambda_for_transfer_to_originated ~destination ~entrypoint ~amount
   in
   let amount = Tez.to_mutez amount in
   let (`Hex destination) = Hex.of_bytes destination in
-  let entrypoint = match entrypoint with "default" -> "" | s -> "%" ^ s in
+  let entrypoint =
+    match (entrypoint : Entrypoint.t :> string) with
+    | "default" -> ""
+    | s -> "%" ^ s
+  in
   if parameter_type = t_unit then
     Format.asprintf
       "{ DROP ; NIL operation ;PUSH address 0x%s; CONTRACT %s %a; \
