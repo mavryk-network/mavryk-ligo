@@ -473,12 +473,7 @@ let unparse_timestamp ~loc ctxt mode t =
       | Some s -> ok (String (loc, s), ctxt))
 
 let unparse_address ~loc ctxt mode (c, entrypoint) =
-  Gas.consume ctxt Unparse_costs.contract >>? fun ctxt ->
-  (match (entrypoint : Entrypoint.t :> string) with
-  (* given parse_address, this should not happen *)
-  | "" -> error Unparsing_invariant_violated
-  | _ -> ok ())
-  >|? fun () ->
+  Gas.consume ctxt Unparse_costs.contract >|? fun ctxt ->
   match mode with
   | Optimized | Optimized_legacy ->
       let bytes =
@@ -489,7 +484,7 @@ let unparse_address ~loc ctxt mode (c, entrypoint) =
       (Bytes (loc, bytes), ctxt)
   | Readable ->
       let notation =
-        match (entrypoint :> string) with
+        match (entrypoint : Entrypoint.t :> string) with
         | "default" -> Contract.to_b58check c
         | entrypoint -> Contract.to_b58check c ^ "%" ^ entrypoint
       in
