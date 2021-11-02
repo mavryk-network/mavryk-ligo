@@ -246,7 +246,7 @@ let parse_annots loc ?(allow_special_var = false) ?(allow_special_field = false)
       | "%@" when allow_special_field -> ok @@ Field_annot_opt (Some at)
       | s -> (
           let len = String.length s in
-          if Compare.Int.(String.length s = 0 || len > max_annot_length) then
+          if Compare.Int.(len = 0 || len > max_annot_length) then
             error (Unexpected_annotation loc)
           else
             let rest = String.sub s 1 (len - 1) in
