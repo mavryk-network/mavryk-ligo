@@ -92,6 +92,15 @@ let mempool_arg =
              Mempool.(Local {filename = Uri.to_string uri}))
        uri_parameter)
 
+let ignore_node_mempool_switch =
+  Clic.switch
+    ~long:"ignore-node-mempool"
+    ~doc:
+      "Ignore mempool operations from the node and do not subsequently monitor \
+       them. Use in conjunction with --mempool option to restrict the observed \
+       operations to those of the mempool file."
+    ()
+
 let context_path_arg =
   Clic.arg
     ~long:"context"
@@ -158,7 +167,7 @@ let delegate_commands () =
     command
       ~group
       ~desc:"Forge and inject block using the delegate rights."
-      (args9
+      (args10
          max_priority_arg
          minimal_fees_arg
          minimal_nanotez_per_gas_unit_arg
@@ -167,7 +176,8 @@ let delegate_commands () =
          minimal_timestamp_switch
          mempool_arg
          context_path_arg
-         liquidity_baking_escape_vote_switch)
+         liquidity_baking_escape_vote_switch
+         ignore_node_mempool_switch)
       (prefixes ["bake"; "for"]
       @@ Client_keys.Public_key_hash.source_param
            ~name:"baker"
@@ -181,9 +191,11 @@ let delegate_commands () =
              minimal_timestamp,
              mempool,
              context_path,
-             liquidity_baking_escape_vote )
+             liquidity_baking_escape_vote,
+             ignore_node_mempool )
            delegate
            cctxt ->
+        ignore @@ ignore_node_mempool ;
         bake_block
           cctxt
           ~minimal_fees
