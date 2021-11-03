@@ -28,6 +28,118 @@ open Alpha_context
 open Protocol_client_context
 module Events = Delegate_events.Baking_forge
 
+module Mempool = struct
+  type t =
+    | Local of {filename : string}
+    | Remote of {uri : Uri.t; http_headers : (string * string) list option}
+
+  let encoding =
+    let open Data_encoding in
+    union
+      ~tag_size:`Uint8
+      [
+        case
+          (Tag 1)
+          ~title:"Local"
+          (obj2 (req "filename" string) (req "kind" (constant "Local")))
+          (function Local {filename} -> Some (filename, ()) | _ -> None)
+          (fun (filename, ()) -> Local {filename});
+        case
+          (Tag 2)
+          ~title:"Remote"
+          (obj3
+             (req "uri" string)
+             (opt "http_headers" (list (tup2 string string)))
+             (req "kind" (constant "Remote")))
+          (function
+            | Remote {uri; http_headers} ->
+                Some (Uri.to_string uri, http_headers, ())
+            | _ -> None)
+          (fun (uri_str, http_headers, ()) ->
+            Remote {uri = Uri.of_string uri_str; http_headers});
+      ]
+
+  type error +=
+    | Failed_mempool_fetch of {
+        path : string;
+        reason : string;
+        details : Data_encoding.json option;
+      }
+
+  let ops_of_mempool
+      (ops : Protocol_client_context.Alpha_block_services.Mempool.t) =
+    (* We only retain the applied, unprocessed and delayed operations *)
+    List.rev
+      (Operation_hash.Map.fold (fun _ op acc -> op :: acc) ops.unprocessed
+      @@ Operation_hash.Map.fold
+           (fun _ (op, _) acc -> op :: acc)
+           ops.branch_delayed
+      @@ List.rev_map (fun (_, op) -> op) ops.applied)
+
+  let retrieve mempool =
+    match mempool with
+    | None -> Lwt.return_none
+    | Some mempool -> (
+        let fail reason details =
+          let path =
+            match mempool with
+            | Local {filename} -> filename
+            | Remote {uri; _} -> Uri.to_string uri
+          in
+          fail (Failed_mempool_fetch {path; reason; details})
+        in
+        let decode_mempool json =
+          protect
+            ~on_error:(fun _ ->
+              fail "cannot decode the received JSON into mempool" (Some json))
+            (fun () ->
+              let mempool =
+                Data_encoding.Json.destruct
+                  Protocol_client_context.Alpha_block_services.S.Mempool
+                  .encoding
+                  json
+              in
+              return (ops_of_mempool mempool))
+        in
+        match mempool with
+        | Local {filename} ->
+            if Sys.file_exists filename then
+              Tezos_stdlib_unix.Lwt_utils_unix.Json.read_file filename
+              >>= function
+              | Error _ ->
+                  Events.(emit invalid_json_file filename) >>= fun () ->
+                  Lwt.return_none
+              | Ok json -> (
+                  decode_mempool json >>= function
+                  | Ok mempool -> Lwt.return_some mempool
+                  | Error _ -> assert false)
+            else
+              Events.(emit no_mempool_found_in_file filename) >>= fun () ->
+              Lwt.return_none
+        | Remote {uri; http_headers} -> (
+            ( (with_timeout
+                 (Systime_os.sleep (Time.System.Span.of_seconds_exn 5.))
+                 (fun _ ->
+                   Tezos_rpc_http_client_unix.RPC_client_unix.generic_json_call
+                     ?headers:http_headers
+                     `GET
+                     uri)
+               >>=? function
+               | `Ok json -> return json
+               | `Unauthorized json -> fail "unauthorized request" json
+               | `Gone json -> fail "gone" json
+               | `Error json -> fail "error" json
+               | `Not_found json -> fail "not found" json
+               | `Forbidden json -> fail "forbidden" json
+               | `Conflict json -> fail "conflict" json)
+            >>=? fun json -> decode_mempool json )
+            >>= function
+            | Ok mempool -> Lwt.return_some mempool
+            | Error errs ->
+                Events.(emit cannot_fetch_mempool errs) >>= fun () ->
+                Lwt.return_none))
+end
+
 (* The index of the different components of the protocol's validation passes *)
 (* TODO: ideally, we would like this to be more abstract and possibly part of
    the protocol, while retaining the generality of lists *)
@@ -444,21 +556,13 @@ let ops_of_mempool (ops : Alpha_block_services.Mempool.t) =
 
 let unopt_operations cctxt chain mempool = function
   | None -> (
-      match mempool with
+      Mempool.retrieve mempool >>= function
       | None ->
           Alpha_block_services.Mempool.pending_operations cctxt ~chain ()
           >>=? fun mpool ->
           let ops = ops_of_mempool mpool in
           return ops
-      | Some file ->
-          Tezos_stdlib_unix.Lwt_utils_unix.Json.read_file file >>=? fun json ->
-          let mpool =
-            Data_encoding.Json.destruct
-              Alpha_block_services.S.Mempool.encoding
-              json
-          in
-          let ops = ops_of_mempool mpool in
-          return ops)
+      | Some ops -> return ops)
   | Some operations -> return operations
 
 let all_ops_valid (results : error Preapply_result.t list) =

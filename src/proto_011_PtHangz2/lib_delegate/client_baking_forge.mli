@@ -26,6 +26,14 @@
 open Protocol
 open Alpha_context
 
+module Mempool : sig
+  type t =
+    | Local of {filename : string}
+    | Remote of {uri : Uri.t; http_headers : (string * string) list option}
+
+  val encoding : t Data_encoding.t
+end
+
 (** [generate_seed_nonce ()] is a random nonce that is typically used
     in block headers. When baking, bakers generate random nonces whose
     hash is committed in the block they bake. They will typically
@@ -84,7 +92,7 @@ val forge_block :
   ?minimal_nanotez_per_gas_unit:Q.t ->
   ?minimal_nanotez_per_byte:Q.t ->
   ?timestamp:Time.Protocol.t ->
-  ?mempool:string ->
+  ?mempool:Mempool.t ->
   ?context_path:string ->
   ?seed_nonce_hash:Nonce_hash.t ->
   liquidity_baking_escape_vote:bool ->
