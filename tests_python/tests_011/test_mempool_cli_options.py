@@ -57,14 +57,14 @@ def get_filename(basename: str) -> str:
 #         balance1 = client.get_balance(sender)
 #         assert balance1 == balance0
 
-    def test_no_ignore(self, client: Client):
-        """Check that a transfer injected, then ignored, can be injected at the
-        next block"""
-        sender = "bootstrap4"
-        balance0 = client.get_balance(sender)
-        utils.bake(client, bake_args=['--minimal-timestamp'])
-        balance1 = client.get_balance(sender)
-        assert balance1 != balance0
+#     def test_no_ignore(self, client: Client):
+#         """Check that a transfer injected, then ignored, can be injected at the
+#         next block"""
+#         sender = "bootstrap4"
+#         balance0 = client.get_balance(sender)
+#         utils.bake(client, bake_args=['--minimal-timestamp'])
+#         balance1 = client.get_balance(sender)
+#         assert balance1 != balance0
 
 
 class TestNonNodeMempool:
