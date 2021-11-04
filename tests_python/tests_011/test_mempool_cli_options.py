@@ -62,6 +62,7 @@ class TestIgnoreNodeMempool:
         # Make sure the operations has not been included, indirectly through
         # balance checks
         assert balance1 == balance0
+        assert client.get_level() == 2
 
     def test_no_ignore(self, client: Client):
         """Check that a transfer injected, then ignored, can be injected at the
@@ -71,6 +72,7 @@ class TestIgnoreNodeMempool:
         utils.bake(client, bake_args=['--minimal-timestamp'])
         balance1 = client.get_balance(sender)
         assert balance1 != balance0
+        assert client.get_level() == 3
 
 
 class TestNonNodeMempool:
@@ -122,7 +124,8 @@ class TestNonNodeMempool:
         self, client: Client, session: dict
     ):
         """Construct a transaction over the current state, and bake it.
-        This serves as a dynamic oracle for the next steps.
+        Store it into the context to serves as a dynamic oracle for the next
+        steps.
         """
         sender = 'bootstrap2'
         balance0 = client.get_mutez_balance(sender)
@@ -168,9 +171,13 @@ class TestNonNodeMempool:
         balance1 = client.get_mutez_balance(sender)
         assert balance0 - balance1 == session['difference']
 
-    def test_bake_singleton_mempool_http(self, client: Client, session: dict):
-        # Bake once more to clear pending_operations
-        utils.bake(client)
+    def test_bake_singleton_mempool_http(
+        self, client: Client, sandbox: Sandbox, session: dict
+    ):
+        # Restart
+        sandbox.node(0).terminate()
+        sandbox.node(0).run()
+        client.check_node_listening()
 
         sender = 'bootstrap2'
         balance0 = client.get_mutez_balance(sender)
