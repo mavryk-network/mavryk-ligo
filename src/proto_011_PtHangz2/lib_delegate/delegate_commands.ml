@@ -195,7 +195,6 @@ let delegate_commands () =
              ignore_node_mempool )
            delegate
            cctxt ->
-        ignore @@ ignore_node_mempool ;
         bake_block
           cctxt
           ~minimal_fees
@@ -204,6 +203,7 @@ let delegate_commands () =
           ~force
           ?max_priority
           ~minimal_timestamp
+          ~ignore_node_mempool
           ?mempool
           ?context_path
           ~liquidity_baking_escape_vote

@@ -43,28 +43,30 @@ def get_filename(basename: str) -> str:
     return os.path.join(TEST_DIR, MEMPOOL_FILES_DIRECTORY, f"{basename}.json")
 
 
-# class TestIgnoreNodeMempool:
-#     def test_ignore(self, client: Client):
-#         """Check that a transfer injected into the node is dutifully ignored
-#         when baking with --ignore-node-mempool
-#         """
-#         sender = "bootstrap4"
-#         balance0 = client.get_balance(sender)
-#         client.transfer(2, sender, 'bootstrap5')
-#         utils.bake(
-#             client, bake_args=['--minimal-timestamp', "--ignore-node-mempool"]
-#         )
-#         balance1 = client.get_balance(sender)
-#         assert balance1 == balance0
+class TestIgnoreNodeMempool:
+    def test_ignore(self, client: Client):
+        """Check that a transfer injected into the node is dutifully ignored
+        when baking with --ignore-node-mempool
+        """
+        sender = "bootstrap4"
+        balance0 = client.get_balance(sender)
+        client.transfer(2, sender, 'bootstrap5')
+        utils.bake(
+            client, bake_args=['--minimal-timestamp', "--ignore-node-mempool"]
+        )
+        balance1 = client.get_balance(sender)
+        # Make sure the operations has not been included, indirectly through
+        # balance checks
+        assert balance1 == balance0 
 
-#     def test_no_ignore(self, client: Client):
-#         """Check that a transfer injected, then ignored, can be injected at the
-#         next block"""
-#         sender = "bootstrap4"
-#         balance0 = client.get_balance(sender)
-#         utils.bake(client, bake_args=['--minimal-timestamp'])
-#         balance1 = client.get_balance(sender)
-#         assert balance1 != balance0
+    def test_no_ignore(self, client: Client):
+        """Check that a transfer injected, then ignored, can be injected at the
+        next block"""
+        sender = "bootstrap4"
+        balance0 = client.get_balance(sender)
+        utils.bake(client, bake_args=['--minimal-timestamp'])
+        balance1 = client.get_balance(sender)
+        assert balance1 != balance0
 
 
 class TestNonNodeMempool:

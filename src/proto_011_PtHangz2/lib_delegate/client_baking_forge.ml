@@ -554,15 +554,19 @@ let ops_of_mempool (ops : Alpha_block_services.Mempool.t) =
          ops.branch_delayed
     @@ List.rev_map (fun (_, op) -> op) ops.applied)
 
-let unopt_operations cctxt chain mempool = function
-  | None -> (
-      Mempool.retrieve mempool >>= function
-      | None ->
-          Alpha_block_services.Mempool.pending_operations cctxt ~chain ()
-          >>=? fun mpool ->
-          let ops = ops_of_mempool mpool in
-          return ops
-      | Some ops -> return ops)
+let unopt_operations cctxt ~ignore_node_mempool chain mempool operations =
+  match operations with
+  | None ->
+      Mempool.retrieve mempool >>= fun mempool_ops_opt ->
+      let mempool_ops =
+        match mempool_ops_opt with None -> [] | Some ops -> ops
+      in
+      if ignore_node_mempool then return mempool_ops
+      else
+        Alpha_block_services.Mempool.pending_operations cctxt ~chain ()
+        >>=? fun mpool ->
+        let ops = ops_of_mempool mpool in
+        return (mempool_ops @ ops)
   | Some operations -> return operations
 
 let all_ops_valid (results : error Preapply_result.t list) =
@@ -865,11 +869,13 @@ let forge_block cctxt ?force ?operations ?(best_effort = operations = None)
     ?(sort = best_effort) ?(minimal_fees = default_minimal_fees)
     ?(minimal_nanotez_per_gas_unit = default_minimal_nanotez_per_gas_unit)
     ?(minimal_nanotez_per_byte = default_minimal_nanotez_per_byte) ?timestamp
-    ?mempool ?context_path ?seed_nonce_hash ~liquidity_baking_escape_vote ~chain
-    ~priority ~delegate_pkh ~delegate_sk block =
+    ?(ignore_node_mempool = false) ?mempool ?context_path ?seed_nonce_hash
+    ~liquidity_baking_escape_vote ~chain ~priority ~delegate_pkh ~delegate_sk
+    block =
   Alpha_services.Constants.all cctxt (chain, block) >>=? fun constants ->
   (* making the arguments usable *)
-  unopt_operations cctxt chain mempool operations >>=? fun operations_arg ->
+  unopt_operations cctxt ~ignore_node_mempool chain mempool operations
+  >>=? fun operations_arg ->
   Client_baking_blocks.info cctxt ~chain block >>=? fun block_info ->
   compute_endorsement_powers cctxt constants.parametric ~chain ~block:block_info
   >>=? fun endorsement_powers ->
