@@ -5,13 +5,17 @@
 
 import os.path
 import json
-
+import time
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from multiprocessing import Process
 
-from client.client import Client
-from tools import utils
+import pytest
 
+from client.client import Client
+from tools import constants, utils
+
+from launchers.sandbox import Sandbox
+from . import protocol
 
 PORT = 8888
 MEMPOOL_FILES_DIRECTORY = "mempool_files"
@@ -57,7 +61,7 @@ class TestIgnoreNodeMempool:
         balance1 = client.get_balance(sender)
         # Make sure the operations has not been included, indirectly through
         # balance checks
-        assert balance1 == balance0 
+        assert balance1 == balance0
 
     def test_no_ignore(self, client: Client):
         """Check that a transfer injected, then ignored, can be injected at the
@@ -144,9 +148,7 @@ class TestNonNodeMempool:
         balance0 = client.get_mutez_balance(sender)
         client.transfer(session['amount'], sender, 'bootstrap3')
 
-        pending_ops = client.rpc(
-            'get', '/chains/main/mempool/pending_operations'
-        )
+        pending_ops = client.get_mempool()
 
         # Write the transaction to a file
         file = get_filename(SINGLETON_MEMPOOL)
@@ -174,9 +176,7 @@ class TestNonNodeMempool:
         balance0 = client.get_mutez_balance(sender)
         client.transfer(session['amount'], sender, 'bootstrap3')
 
-        pending_ops = client.rpc(
-            'get', '/chains/main/mempool/pending_operations'
-        )
+        pending_ops = client.get_mempool()
 
         assert len(pending_ops['applied'][0]['contents']) == 1
 
@@ -199,3 +199,74 @@ class TestNonNodeMempool:
         server.close()
         balance1 = client.get_mutez_balance(sender)
         assert balance0 - balance1 == session['difference']
+
+
+@pytest.mark.incremental
+class TestBakerExternalMempool:
+    """Test adding an external mempool to a baker daemon"""
+
+    def test_init(self, sandbox: Sandbox):
+        sandbox.add_node(0, params=constants.NODE_PARAMS)
+        parameters = dict(protocol.PARAMETERS)
+        utils.activate_protocol(
+            sandbox.client(0),
+            protocol.HASH,
+            parameters=parameters,
+            activate_in_the_past=True,
+        )
+
+    def test_gen_mempool(self, sandbox: Sandbox, session: dict):
+        """Generate a transfer operation and save it to a file"""
+        sandbox.client(0).transfer(3, 'bootstrap1', 'bootstrap3')
+        utils.bake(sandbox.client(0))
+        # We are now at level 2, next block at level 3
+
+        session['transfer_value'] = 2
+        sandbox.client(0).transfer(
+            session['transfer_value'], 'bootstrap1', 'bootstrap3'
+        )
+
+        pending_ops = sandbox.client(0).get_mempool()
+
+        # Write the transaction to a file
+        filename = get_filename(SINGLETON_MEMPOOL)
+        session['mempool_file'] = filename
+        with open(filename, 'w') as fdesc:
+            fdesc.write(json.dumps(pending_ops))
+
+    def test_terminate_sandbox(self, sandbox: Sandbox):
+        """Cleanup the node's mempool. Forget about the last transfer"""
+        sandbox.node(0).terminate()
+
+    def test_baker(self, sandbox: Sandbox, session: dict):
+        """Restart the node and add a baker"""
+        sandbox.node(0).run()
+        assert sandbox.client(0).check_node_listening()
+        sandbox.add_baker(
+            0,
+            'bootstrap1',
+            proto=protocol.DAEMON,
+            run_params=['--mempool', session['mempool_file']],
+        )
+
+    @pytest.mark.timeout(3)
+    def test_wait_until_level5(self, sandbox: Sandbox):
+        """Wait until we have seen enough blocks.
+        This should not take much time."""
+        while sandbox.client(0).get_level() < 5:
+            time.sleep(1)
+
+    def test_check_block3(self, sandbox: Sandbox, session: dict):
+        """Check that block 3 exactly contains the operations that we put into
+        our mempool file"""
+        block_3 = sandbox.client(0).rpc('get', '/chains/main/blocks/3')
+        manager_ops = block_3['operations'][3]
+        assert len(manager_ops) == 1
+        assert int(
+            manager_ops[0]['contents'][0]['amount']
+        ) == utils.mutez_of_tez(session['transfer_value'])
+
+    def test_check_block4(self, sandbox: Sandbox):
+        """Check that block 4 is empty of operations"""
+        block_4 = sandbox.client(0).rpc('get', '/chains/main/blocks/4')
+        assert all(lambda ops: len(ops) == 0 for ops in block_4['operations'])
