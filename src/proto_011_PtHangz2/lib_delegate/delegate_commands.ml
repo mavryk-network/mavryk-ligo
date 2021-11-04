@@ -326,14 +326,15 @@ let baker_commands () =
     command
       ~group
       ~desc:"Launch the baker daemon."
-      (args7
+      (args8
          pidfile_arg
          max_priority_arg
          minimal_fees_arg
          minimal_nanotez_per_gas_unit_arg
          minimal_nanotez_per_byte_arg
          keep_alive_arg
-         per_block_vote_file_arg)
+         per_block_vote_file_arg
+         mempool_arg)
       (prefixes ["run"; "with"; "local"; "node"]
       @@ param
            ~name:"context_path"
@@ -346,7 +347,8 @@ let baker_commands () =
              minimal_nanotez_per_gas_unit,
              minimal_nanotez_per_byte,
              keep_alive,
-             per_block_vote_file )
+             per_block_vote_file,
+             mempool )
            node_path
            delegates
            cctxt ->
@@ -363,6 +365,7 @@ let baker_commands () =
           ~minimal_nanotez_per_byte
           ?max_priority
           ?per_block_vote_file
+          ?mempool
           ~context_path:(Filename.concat node_path "context")
           ~keep_alive
           (List.map snd delegates));

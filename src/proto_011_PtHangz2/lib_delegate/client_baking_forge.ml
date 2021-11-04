@@ -184,13 +184,14 @@ type state = {
   (* truly mutable *)
   mutable best_slot : slot option;
   mutable retry_counter : int;
+  external_mempool : Mempool.t option;
 }
 
 let create_state ?(minimal_fees = default_minimal_fees)
     ?(minimal_nanotez_per_gas_unit = default_minimal_nanotez_per_gas_unit)
     ?(minimal_nanotez_per_byte = default_minimal_nanotez_per_byte)
-    ?(retry_counter = default_retry_counter) context_path index nonces_location
-    delegates constants =
+    ?(retry_counter = default_retry_counter) ?external_mempool context_path
+    index nonces_location delegates constants =
   {
     context_path;
     index;
@@ -202,6 +203,7 @@ let create_state ?(minimal_fees = default_minimal_fees)
     minimal_nanotez_per_byte;
     best_slot = None;
     retry_counter;
+    external_mempool;
   }
 
 let get_delegates cctxt state =
@@ -967,6 +969,7 @@ let forge_block cctxt ?force ?operations ?(best_effort = operations = None)
           minimal_nanotez_per_gas_unit = default_minimal_nanotez_per_gas_unit;
           minimal_nanotez_per_byte = default_minimal_nanotez_per_byte;
           retry_counter = default_retry_counter;
+          external_mempool = mempool;
         }
       in
       compute_endorsement_powers
@@ -1245,10 +1248,10 @@ let fetch_operations (cctxt : #Protocol_client_context.full) ~chain state
     with consistent operations that went through the client-side
     validation *)
 let build_block cctxt ~user_activated_upgrades state seed_nonce_hash
-    ((slot_timestamp, (bi, priority, delegate)) as slot)
+    ((slot_timestamp, (block_info, priority, delegate)) as slot)
     ~liquidity_baking_escape_vote =
-  let chain = `Hash bi.Client_baking_blocks.chain_id in
-  let block = `Hash (bi.hash, 0) in
+  let chain = `Hash block_info.Client_baking_blocks.chain_id in
+  let block = `Hash (block_info.hash, 0) in
   Plugin.RPC.current_level cctxt ~offset:1l (chain, block)
   >>=? fun next_level ->
   let seed_nonce_hash =
@@ -1256,12 +1259,27 @@ let build_block cctxt ~user_activated_upgrades state seed_nonce_hash
   in
   Client_keys.Public_key_hash.name cctxt delegate >>=? fun name ->
   let time = Time.System.of_protocol_exn slot_timestamp in
-  Events.(emit try_baking) (bi.hash, priority, name, time) >>= fun () ->
-  compute_endorsement_powers cctxt state.constants.parametric ~chain ~block:bi
+  Events.(emit try_baking) (block_info.hash, priority, name, time) >>= fun () ->
+  compute_endorsement_powers
+    cctxt
+    state.constants.parametric
+    ~chain
+    ~block:block_info
   >>=? fun endorsement_powers ->
+  (* if --ignore-node-mempool was implemented for the baker, this is
+     approximately where it
+      would step in *)
   fetch_operations cctxt ~chain state endorsement_powers slot >>=? function
   | None -> Events.(emit new_head_received) () >>= fun () -> return_none
   | Some (operations, timestamp) -> (
+      Mempool.retrieve state.external_mempool
+      >>= fun external_mempool_ops_opt ->
+      (* prepend external mempool operations *)
+      let operations =
+        match external_mempool_ops_opt with
+        | None -> operations
+        | Some ops -> ops @ operations
+      in
       classify_operations
         cctxt
         ~chain
@@ -1279,7 +1297,7 @@ let build_block cctxt ~user_activated_upgrades state seed_nonce_hash
             ~user_activated_upgrades
             ~level:(Raw_level.to_int32 next_level.level)
         with
-        | None -> bi.next_protocol
+        | None -> block_info.next_protocol
         | Some hash -> hash
       in
       if Protocol_hash.(Protocol.hash <> next_version) then
@@ -1307,7 +1325,7 @@ let build_block cctxt ~user_activated_upgrades state seed_nonce_hash
           ~block
           ~priority
           ~protocol_data
-          bi
+          block_info
           (operations, overflowing_ops)
         >>= function
         | Error errs ->
@@ -1335,9 +1353,12 @@ let build_block cctxt ~user_activated_upgrades state seed_nonce_hash
             else Lwt.return_unit)
             >>= fun () ->
             Events.(emit try_forging)
-              (bi.hash, priority, name, Time.System.of_protocol_exn timestamp)
+              ( block_info.hash,
+                priority,
+                name,
+                Time.System.of_protocol_exn timestamp )
             >>= fun () ->
-            let current_protocol = bi.next_protocol in
+            let current_protocol = block_info.next_protocol in
             let context =
               Shell_context.unwrap_disk_context validation_result.context
             in
@@ -1347,14 +1368,14 @@ let build_block cctxt ~user_activated_upgrades state seed_nonce_hash
                 final_context.header
                 ~timestamp:valid_timestamp
                 validation_result
-                bi.predecessor_block_metadata_hash
-                bi.predecessor_operations_metadata_hash
+                block_info.predecessor_block_metadata_hash
+                block_info.predecessor_operations_metadata_hash
               >>= function
               | Error _ as errs -> Lwt.return errs
               | Ok shell_header ->
                   let raw_ops = List.map (List.map forge) operations in
                   return_some
-                    ( bi,
+                    ( block_info,
                       priority,
                       shell_header,
                       raw_ops,
@@ -1687,7 +1708,7 @@ let reveal_potential_nonces (cctxt : #Client_context.full) constants ~chain
     the [delegates] *)
 let create (cctxt : #Protocol_client_context.full) ~user_activated_upgrades
     ?minimal_fees ?minimal_nanotez_per_gas_unit ?minimal_nanotez_per_byte
-    ?max_priority ?per_block_vote_file ~chain ~context_path delegates
+    ?max_priority ?per_block_vote_file ?mempool ~chain ~context_path delegates
     block_stream =
   let state_maker bi =
     Alpha_services.Constants.all cctxt (chain, `Head 0) >>=? fun constants ->
@@ -1699,10 +1720,12 @@ let create (cctxt : #Protocol_client_context.full) ~user_activated_upgrades
     Client_baking_files.resolve_location cctxt ~chain `Nonce
     >>=? fun nonces_location ->
     let state =
+      let external_mempool = mempool in
       create_state
         ?minimal_fees
         ?minimal_nanotez_per_gas_unit
         ?minimal_nanotez_per_byte
+        ?external_mempool
         context_path
         index
         nonces_location

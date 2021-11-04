@@ -120,6 +120,7 @@ val create :
   ?minimal_nanotez_per_byte:Q.t ->
   ?max_priority:int ->
   ?per_block_vote_file:string ->
+  ?mempool:Mempool.t ->
   chain:Chain_services.chain ->
   context_path:string ->
   public_key_hash list ->
