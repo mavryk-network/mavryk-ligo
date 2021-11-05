@@ -6,18 +6,19 @@
 import os.path
 import json
 import time
+
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from multiprocessing import Process
+from typing import List, Any
 
 import pytest
 
 from client.client import Client
 from tools import constants, utils
-
 from launchers.sandbox import Sandbox
 from . import protocol
 
-PORT = 8888
+PORT = 12121
 MEMPOOL_FILES_DIRECTORY = "mempool_files"
 EMPTY_MEMPOOL = "empty_mempool"
 ABSENT_MEMPOOL = "this_file_should_not_exist"
@@ -29,7 +30,7 @@ class MyHttpServer:
     """Simple HTTP server launching in a separate process"""
 
     def __init__(self):
-        server_address = ('', PORT)
+        server_address = ('localhost', PORT)
         httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
         process = Process(target=httpd.serve_forever, args=())
         self.process = process
@@ -41,6 +42,14 @@ class MyHttpServer:
     def close(self):
         self.server.server_close()
         self.process.terminate()
+
+
+@pytest.fixture
+def http_server():
+    server = MyHttpServer()
+    server.run()
+    yield server
+    server.close()
 
 
 def get_filename(basename: str) -> str:
@@ -75,8 +84,13 @@ class TestIgnoreNodeMempool:
         assert client.get_level() == 3
 
 
-class TestNonNodeMempool:
+def all_empty(lls: List[List[Any]]) -> bool:
+    return all(map(lambda l: len(l) == 0, lls))
+
+
+class TestExternalMempool:
     def test_bake_empty_mempool_file(self, client: Client):
+        level = client.get_level()
         utils.bake(
             client,
             bake_args=[
@@ -85,10 +99,14 @@ class TestNonNodeMempool:
                 get_filename(EMPTY_MEMPOOL),
             ],
         )
+        assert client.get_level() == level + 1
+        head = client.get_head()
+        assert all_empty(head['operations'])
 
-    def test_bake_empty_mempool_http(self, client: Client):
-        server = MyHttpServer()
-        server.run()
+    # http_server is a fixture that auto- runs and closes said HTTP server
+    # pylint: disable=W0613
+    def test_bake_empty_mempool_http(self, client: Client, http_server):
+        level = client.get_level()
         utils.bake(
             client,
             bake_args=[
@@ -97,19 +115,25 @@ class TestNonNodeMempool:
                 f"http://localhost:{PORT}/{get_filename(EMPTY_MEMPOOL)}",
             ],
         )
-        server.close()
+        assert client.get_level() == level + 1
+        head = client.get_head()
+        assert all_empty(head['operations'])
 
     def test_bake_absent_mempool_file(self, client: Client):
         """The absent resource should simply be ignored."""
+        level = client.get_level()
         utils.bake(
             client,
             bake_args=['--minimal-timestamp', "--mempool", f"{ABSENT_MEMPOOL}"],
         )
+        assert client.get_level() == level + 1
+        head = client.get_head()
+        assert all_empty(head['operations'])
 
-    def test_bake_absent_mempool_http(self, client: Client):
+    # pylint: disable=W0613
+    def test_bake_absent_mempool_http(self, client: Client, http_server):
         """The absent resource should simply be ignored."""
-        server = MyHttpServer()
-        server.run()
+        level = client.get_level()
         utils.bake(
             client,
             bake_args=[
@@ -118,7 +142,9 @@ class TestNonNodeMempool:
                 f"http://{ABSENT_MEMPOOL}",
             ],
         )
-        server.close()
+        assert client.get_level() == level + 1
+        head = client.get_head()
+        assert all_empty(head['operations'])
 
     def test_bake_singleton_mempool_file_pre(
         self, client: Client, session: dict
@@ -171,8 +197,9 @@ class TestNonNodeMempool:
         balance1 = client.get_mutez_balance(sender)
         assert balance0 - balance1 == session['difference']
 
+    # pylint: disable=W0613
     def test_bake_singleton_mempool_http(
-        self, client: Client, sandbox: Sandbox, session: dict
+        self, client: Client, sandbox: Sandbox, session: dict, http_server
     ):
         # Restart
         sandbox.node(0).terminate()
@@ -192,8 +219,6 @@ class TestNonNodeMempool:
         with open(file, 'w') as fdesc:
             fdesc.write(json.dumps(pending_ops))
 
-        server = MyHttpServer()
-        server.run()
         utils.bake(
             client,
             bake_args=[
@@ -203,7 +228,7 @@ class TestNonNodeMempool:
                 '--ignore-node-mempool',
             ],
         )
-        server.close()
+
         balance1 = client.get_mutez_balance(sender)
         assert balance0 - balance1 == session['difference']
 
@@ -244,6 +269,7 @@ class TestBakerExternalMempool:
     def test_terminate_sandbox(self, sandbox: Sandbox):
         """Cleanup the node's mempool. Forget about the last transfer"""
         sandbox.node(0).terminate()
+        time.sleep(1)
 
     def test_baker(self, sandbox: Sandbox, session: dict):
         """Restart the node and add a baker"""
@@ -251,7 +277,7 @@ class TestBakerExternalMempool:
         assert sandbox.client(0).check_node_listening()
         sandbox.add_baker(
             0,
-            'bootstrap1',
+            ['bootstrap1'],
             proto=protocol.DAEMON,
             run_params=['--mempool', session['mempool_file']],
         )
@@ -276,4 +302,4 @@ class TestBakerExternalMempool:
     def test_check_block4(self, sandbox: Sandbox):
         """Check that block 4 is empty of operations"""
         block_4 = sandbox.client(0).rpc('get', '/chains/main/blocks/4')
-        assert all(lambda ops: len(ops) == 0 for ops in block_4['operations'])
+        assert all_empty(block_4['operations'])
