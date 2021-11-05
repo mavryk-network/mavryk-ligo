@@ -556,20 +556,15 @@ let ops_of_mempool (ops : Alpha_block_services.Mempool.t) =
          ops.branch_delayed
     @@ List.rev_map (fun (_, op) -> op) ops.applied)
 
-let unopt_operations cctxt ~ignore_node_mempool chain mempool operations =
-  match operations with
-  | None ->
-      Mempool.retrieve mempool >>= fun mempool_ops_opt ->
-      let mempool_ops =
-        match mempool_ops_opt with None -> [] | Some ops -> ops
-      in
-      if ignore_node_mempool then return mempool_ops
-      else
-        Alpha_block_services.Mempool.pending_operations cctxt ~chain ()
-        >>=? fun mpool ->
-        let ops = ops_of_mempool mpool in
-        return (mempool_ops @ ops)
-  | Some operations -> return operations
+let get_operations cctxt ~ignore_node_mempool chain mempool =
+  Mempool.retrieve mempool >>= fun mempool_ops_opt ->
+  let mempool_ops = match mempool_ops_opt with None -> [] | Some ops -> ops in
+  if ignore_node_mempool then return mempool_ops
+  else
+    Alpha_block_services.Mempool.pending_operations cctxt ~chain ()
+    >>=? fun mpool ->
+    let ops = ops_of_mempool mpool in
+    return (mempool_ops @ ops)
 
 let all_ops_valid (results : error Preapply_result.t list) =
   let open Operation_hash.Map in
@@ -635,8 +630,8 @@ let merge_preapps (old : error Preapply_result.t)
   (* merge preapplies *)
   {
     Preapply_result.applied = [];
-    refused = merge old.refused neu.refused;
     outdated = merge old.outdated neu.outdated;
+    refused = merge old.refused neu.refused;
     branch_refused = merge old.branch_refused neu.branch_refused;
     branch_delayed = merge old.branch_delayed neu.branch_delayed;
   }
@@ -867,8 +862,8 @@ let finalize_block_header shell_header ~timestamp validation_result
   let context = Context.hash ~time:timestamp ?message context in
   return {header with context}
 
-let forge_block cctxt ?force ?operations ?(best_effort = operations = None)
-    ?(sort = best_effort) ?(minimal_fees = default_minimal_fees)
+let forge_block cctxt ?force ?(best_effort = true) ?(sort = best_effort)
+    ?(minimal_fees = default_minimal_fees)
     ?(minimal_nanotez_per_gas_unit = default_minimal_nanotez_per_gas_unit)
     ?(minimal_nanotez_per_byte = default_minimal_nanotez_per_byte) ?timestamp
     ?(ignore_node_mempool = false) ?mempool ?context_path ?seed_nonce_hash
@@ -876,7 +871,7 @@ let forge_block cctxt ?force ?operations ?(best_effort = operations = None)
     block =
   Alpha_services.Constants.all cctxt (chain, block) >>=? fun constants ->
   (* making the arguments usable *)
-  unopt_operations cctxt ~ignore_node_mempool chain mempool operations
+  get_operations cctxt ~ignore_node_mempool chain mempool
   >>=? fun operations_arg ->
   Client_baking_blocks.info cctxt ~chain block >>=? fun block_info ->
   compute_endorsement_powers cctxt constants.parametric ~chain ~block:block_info

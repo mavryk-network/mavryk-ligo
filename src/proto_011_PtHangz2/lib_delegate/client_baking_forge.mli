@@ -93,7 +93,6 @@ type error += Failed_to_preapply of Tezos_base.Operation.t * error list
 val forge_block :
   #Protocol_client_context.full ->
   ?force:bool ->
-  ?operations:Operation.packed list ->
   ?best_effort:bool ->
   ?sort:bool ->
   ?minimal_fees:Tez.t ->
