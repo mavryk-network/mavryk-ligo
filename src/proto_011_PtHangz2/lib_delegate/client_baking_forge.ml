@@ -66,6 +66,34 @@ module Mempool = struct
         details : Data_encoding.json option;
       }
 
+  let () =
+    register_error_kind
+      `Permanent
+      ~id:(Format.sprintf "baker-%s.failed_to_get_mempool" Protocol.name)
+      ~title:"Failed to get mempool"
+      ~description:"Failed to retrieve the mempool from the given file or uri."
+      ~pp:(fun fmt (path, reason, details) ->
+        Format.fprintf
+          fmt
+          "@[<v 2>Failed to retrieve the mempool from %s:@ @[%s%a@]@]"
+          path
+          reason
+          (fun fmt -> function
+            | None -> ()
+            | Some json -> Format.fprintf fmt ": %a" Data_encoding.Json.pp json)
+          details)
+      Data_encoding.(
+        obj3
+          (req "path" string)
+          (req "reason" string)
+          (opt "details" Data_encoding.json))
+      (function
+        | Failed_mempool_fetch {path; reason; details} ->
+            Some (path, reason, details)
+        | _ -> None)
+      (fun (path, reason, details) ->
+        Failed_mempool_fetch {path; reason; details})
+
   let ops_of_mempool
       (ops : Protocol_client_context.Alpha_block_services.Mempool.t) =
     (* We only retain the applied, unprocessed and delayed operations *)
