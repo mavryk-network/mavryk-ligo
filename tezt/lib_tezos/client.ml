@@ -346,9 +346,7 @@ let activate_protocol ?endpoint ~protocol ?fitness ?key ?timestamp
   |> Process.check
 
 let empty_mempool_file ?(filename = "mempool.json") () =
-  let mempool_str =
-    {|{"applied":[],"refused":[],"outdated":[],"branch_refused":[],"branch_delayed":[],"unprocessed":[]}|}
-  in
+  let mempool_str = "[]" in
   (* TODO: https://gitlab.com/tezos/tezos/-/issues/1928
      a write_file function should be added to the tezt base module *)
   let mempool = Temp.file filename in

@@ -88,6 +88,23 @@ def all_empty(lls: List[List[Any]]) -> bool:
     return all(map(lambda l: len(l) == 0, lls))
 
 
+def mempool_to_operations(mempool):
+    def to_op(applied_op):
+        operation = {}
+        operation['branch'] = applied_op['branch']
+
+        operation['contents'] = applied_op['contents']
+        operation['signature'] = applied_op['signature']
+
+        return operation
+
+    return [to_op(applied_op) for applied_op in mempool['applied']]
+
+
+def get_operations(client: Client) -> List[dict]:
+    return mempool_to_operations(client.get_mempool())
+
+
 class TestExternalMempool:
     def test_bake_empty_mempool_file(self, client: Client):
         level = client.get_level()
@@ -177,7 +194,9 @@ class TestExternalMempool:
         balance0 = client.get_mutez_balance(sender)
         client.transfer(session['amount'], sender, 'bootstrap3')
 
-        pending_ops = client.get_mempool()
+        pending_ops = get_operations(client)
+        assert len(pending_ops) == 1
+        assert len(pending_ops[0]['contents']) == 1
 
         # Write the transaction to a file
         file = get_filename(SINGLETON_MEMPOOL)
@@ -210,9 +229,9 @@ class TestExternalMempool:
         balance0 = client.get_mutez_balance(sender)
         client.transfer(session['amount'], sender, 'bootstrap3')
 
-        pending_ops = client.get_mempool()
-
-        assert len(pending_ops['applied'][0]['contents']) == 1
+        pending_ops = get_operations(client)
+        assert len(pending_ops) == 1
+        assert len(pending_ops[0]['contents']) == 1
 
         # Write the transaction to a file
         file = get_filename(SINGLETON_MEMPOOL)
@@ -258,7 +277,7 @@ class TestBakerExternalMempool:
             session['transfer_value'], 'bootstrap1', 'bootstrap3'
         )
 
-        pending_ops = sandbox.client(0).get_mempool()
+        pending_ops = get_operations(sandbox.client(0))
 
         # Write the transaction to a file
         filename = get_filename(SINGLETON_MEMPOOL)
