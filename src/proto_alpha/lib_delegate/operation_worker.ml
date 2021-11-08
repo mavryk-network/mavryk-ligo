@@ -146,15 +146,8 @@ module Mempool = struct
         details : Data_encoding.json option;
       }
 
-  let ops_of_mempool
-      (ops : Protocol_client_context.Alpha_block_services.Mempool.t) =
-    (* We only retain the applied, unprocessed and delayed operations *)
-    List.rev
-      (Operation_hash.Map.fold (fun _ op acc -> op :: acc) ops.unprocessed
-      @@ Operation_hash.Map.fold
-           (fun _ (op, _) acc -> op :: acc)
-           ops.branch_delayed
-      @@ List.rev_map (fun (_, op) -> op) ops.applied)
+  let operations_encoding =
+    Data_encoding.(list (dynamic_size Operation.encoding))
 
   let retrieve mempool =
     match mempool with
@@ -173,14 +166,9 @@ module Mempool = struct
             ~on_error:(fun _ ->
               fail "cannot decode the received JSON into mempool" (Some json))
             (fun () ->
-              let mempool =
-                Data_encoding.Json.destruct
-                  Protocol_client_context.Alpha_block_services.S.Mempool
-                  .encoding
-                  json
-              in
-              return (ops_of_mempool mempool))
+              return (Data_encoding.Json.destruct operations_encoding json))
         in
+
         match mempool with
         | Baking_configuration.Mempool.Local {filename} ->
             if Sys.file_exists filename then
