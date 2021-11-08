@@ -353,8 +353,24 @@ type manager_content = {
   counter : counter;
 }
 
+(* Ppo = prioritized packed operations *)
+module Ppo = struct
+  (* Higher priority operations will be sorted first *)
+  type t = {priority : int; operation : packed_operation}
+
+  let create priority operation = {priority; operation}
+
+  let extern = create 1
+
+  let node = create 0
+
+  let packed {operation; _} = operation
+
+  let compare t1 t2 = Compare.Int.compare t1.priority t2.priority
+end
+
 let get_manager_content op =
-  let {protocol_data = Operation_data {contents; _}; _} = op in
+  let {protocol_data = Operation_data {contents; _}; _} = Ppo.packed op in
   let open Operation in
   let l = to_list (Contents_list contents) in
   List.fold_left_e
@@ -384,7 +400,7 @@ let get_manager_content op =
    Weight = fee / (max ( (size/size_total), (gas/gas_total))) *)
 let sort_manager_operations ~max_size ~hard_gas_limit_per_block ~minimal_fees
     ~minimal_nanotez_per_gas_unit ~minimal_nanotez_per_byte
-    (operations : packed_operation list) =
+    (operations : Ppo.t list) =
   let compute_weight op (fee, gas) =
     let size = Data_encoding.Binary.length Operation.encoding op in
     let size_f = Q.of_int size in
@@ -404,7 +420,7 @@ let sort_manager_operations ~max_size ~hard_gas_limit_per_block ~minimal_fees
           if Tez.(total_fee < minimal_fees) then None
           else
             let (size, gas, weight_ratio) =
-              compute_weight op (total_fee, total_gas)
+              compute_weight (Ppo.packed op) (total_fee, total_gas)
             in
             let fees_in_nanotez =
               Q.mul (Q.of_int64 (Tez.to_mutez total_fee)) (Q.of_int 1000)
@@ -431,15 +447,19 @@ let sort_manager_operations ~max_size ~hard_gas_limit_per_block ~minimal_fees
   (* We order the operations by their weights except if they belong
      to the same manager, if they do, we order them by their
      counter. *)
-  let compare (_op, weight_ratio, source, counter)
-      (_op', weight_ratio', source', counter') =
+  let compare (op, weight_ratio, source, counter)
+      (op', weight_ratio', source', counter') =
     (* Be careful with the [compare]s *)
     if Signature.Public_key_hash.equal source source' then
       (* we want the smallest counter first *)
       Z.compare counter counter'
     else
-      (* We want the biggest weight first *)
-      Q.compare weight_ratio' weight_ratio
+      (* Prioritize according to tags first, then weight *)
+      match Ppo.compare op op' with
+      | 0 ->
+          (* We want the biggest weight first *)
+          Q.compare weight_ratio' weight_ratio
+      | n -> n
   in
   List.sort compare operations |> List.map (fun (op, _, _, _) -> op)
 
@@ -472,7 +492,9 @@ let trim_manager_operations ~max_size ~hard_gas_limit_per_block
       (fun op ->
         match get_manager_content op with
         | Some {total_gas; _} ->
-            let size = Data_encoding.Binary.length Operation.encoding op in
+            let size =
+              Data_encoding.Binary.length Operation.encoding (Ppo.packed op)
+            in
             Some (op, (size, total_gas))
         | None -> None)
       manager_operations
@@ -503,23 +525,24 @@ let trim_manager_operations ~max_size ~hard_gas_limit_per_block
     - Potentially overflowing operations *)
 let classify_operations (cctxt : #Protocol_client_context.full) ~chain ~block
     ~hard_gas_limit_per_block ~minimal_fees ~minimal_nanotez_per_gas_unit
-    ~minimal_nanotez_per_byte (ops : packed_operation list) =
+    ~minimal_nanotez_per_byte (ops : Ppo.t list) =
   Alpha_block_services.live_blocks cctxt ~chain ~block ()
   >>=? fun live_blocks ->
   let t =
     (* Remove operations that are too old *)
     let ops =
       List.filter
-        (fun {shell = {branch; _}; _} -> Block_hash.Set.mem branch live_blocks)
+        (fun Ppo.{operation = {shell = {branch; _}; _}; _} ->
+          Block_hash.Set.mem branch live_blocks)
         ops
     in
     let validation_passes_len = List.length Main.validation_passes in
     let t = Array.make validation_passes_len [] in
     List.iter
-      (fun (op : packed_operation) ->
+      (fun (op : Ppo.t) ->
         List.iter
           (fun pass -> t.(pass) <- op :: t.(pass))
-          (Main.acceptable_passes op))
+          (Main.acceptable_passes (Ppo.packed op)))
       ops ;
     Array.map List.rev t
   in
@@ -549,9 +572,12 @@ let classify_operations (cctxt : #Protocol_client_context.full) ~chain ~block
     t.(managers_index) <- desired_manager_operations ;
     ok overflowing_manager_operations
   in
+
   Lwt.return
     ( overflowing_manager_operations >>? fun overflowing_manager_operations ->
-      ok (Array.to_list t, overflowing_manager_operations) )
+      ok
+        ( Array.to_list t |> List.map (List.map Ppo.packed),
+          overflowing_manager_operations ) )
 
 let forge (op : Operation.packed) : Operation.raw =
   {
@@ -565,15 +591,21 @@ let forge (op : Operation.packed) : Operation.raw =
 let ops_of_mempool (ops : Alpha_block_services.Mempool.t) =
   (* We only retain the applied, unprocessed and delayed operations *)
   List.rev
-    (Operation_hash.Map.fold (fun _ op acc -> op :: acc) ops.unprocessed
+    (Operation_hash.Map.fold
+       (fun _ op acc -> Ppo.node op :: acc)
+       ops.unprocessed
     @@ Operation_hash.Map.fold
-         (fun _ (op, _) acc -> op :: acc)
+         (fun _ (op, _) acc -> Ppo.node op :: acc)
          ops.branch_delayed
-    @@ List.rev_map (fun (_, op) -> op) ops.applied)
+    @@ List.rev_map (fun (_, op) -> Ppo.node op) ops.applied)
 
 let get_operations cctxt ~ignore_node_mempool chain mempool =
   Mempool.retrieve mempool >>= fun mempool_ops_opt ->
-  let mempool_ops = match mempool_ops_opt with None -> [] | Some ops -> ops in
+  let mempool_ops =
+    match mempool_ops_opt with
+    | None -> []
+    | Some ops -> List.map Ppo.extern ops
+  in
   if ignore_node_mempool then return mempool_ops
   else
     Alpha_block_services.Mempool.pending_operations cctxt ~chain ()
@@ -681,13 +713,13 @@ let compute_endorsement_powers cctxt constants ~chain ~block =
 
 let compute_endorsing_power endorsement_powers operations =
   List.fold_left
-    (fun sum -> function
+    (fun sum op ->
+      match op with
       | {
-          Alpha_context.protocol_data =
-            Operation_data
-              {contents = Single (Endorsement_with_slot {slot; _}); _};
-          _;
-        } -> (
+       Alpha_context.protocol_data =
+         Operation_data {contents = Single (Endorsement_with_slot {slot; _}); _};
+       _;
+      } -> (
           try
             let endorsement_power = endorsement_powers.(slot) in
             sum + endorsement_power
@@ -891,8 +923,9 @@ let forge_block cctxt ?force ?(best_effort = true) ?(sort = best_effort)
   Client_baking_blocks.info cctxt ~chain block >>=? fun block_info ->
   compute_endorsement_powers cctxt constants.parametric ~chain ~block:block_info
   >>=? fun endorsement_powers ->
+  let untagged_operations = List.map Ppo.packed operations_arg in
   let endorsing_power =
-    compute_endorsing_power endorsement_powers operations_arg
+    compute_endorsing_power endorsement_powers untagged_operations
   in
   decode_priority cctxt chain block ~priority ~endorsing_power
   >>=? fun (priority, minimal_timestamp) ->
@@ -960,7 +993,8 @@ let forge_block cctxt ?force ?(best_effort = true) ?(sort = best_effort)
         let result =
           List.fold_left merge_preapps Preapply_result.empty result
         in
-        Lwt.return_error @@ List.filter_map (error_of_op result) operations_arg
+        Lwt.return_error
+        @@ List.filter_map (error_of_op result) untagged_operations
   | Some context_path ->
       assert sort ;
       assert best_effort ;
@@ -1286,9 +1320,10 @@ let build_block cctxt ~user_activated_upgrades state seed_nonce_hash
       >>= fun external_mempool_ops_opt ->
       (* prepend external mempool operations *)
       let operations =
+        let mops = List.map Ppo.node operations in
         match external_mempool_ops_opt with
-        | None -> operations
-        | Some ops -> ops @ operations
+        | None -> mops
+        | Some ops -> List.map Ppo.extern ops @ mops
       in
       classify_operations
         cctxt
