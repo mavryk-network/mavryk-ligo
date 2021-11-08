@@ -94,8 +94,7 @@ module Mempool = struct
       (fun (path, reason, details) ->
         Failed_mempool_fetch {path; reason; details})
 
-  let ops_of_mempool
-      (ops : Protocol_client_context.Alpha_block_services.Mempool.t) =
+  let get_ops (ops : Protocol_client_context.Alpha_block_services.Mempool.t) =
     (* We only retain the applied, unprocessed and delayed operations *)
     List.rev
       (Operation_hash.Map.fold (fun _ op acc -> op :: acc) ops.unprocessed
@@ -127,7 +126,7 @@ module Mempool = struct
                   .encoding
                   json
               in
-              return (ops_of_mempool mempool))
+              return (get_ops mempool))
         in
         match mempool with
         | Local {filename} ->
