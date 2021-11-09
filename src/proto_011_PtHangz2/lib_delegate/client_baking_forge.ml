@@ -353,15 +353,35 @@ type manager_content = {
   counter : counter;
 }
 
-module PrioritizedOperation = struct
-  (* Higher priority operations will be sorted first *)
+module PrioritizedOperation : sig
+  type t = private {priority : int; operation : packed_operation}
+
+  (** prioritize operations coming from an external source (file, uri, ...)*)
+  val extern : packed_operation -> t
+
+  (** prioritize operations coming from a node *)
+  val node : packed_operation -> t
+
+  (** [packed t] is [t.operation]*)
+  val packed : t -> packed_operation
+
+  val compare_priority : t -> t -> int
+end = struct
+  (* Higher priority operations will be included first *)
   type t = {priority : int; operation : packed_operation}
 
   let create priority operation = {priority; operation}
 
-  let extern = create 1
+  (* The magic constants below for [extern] and [node] are just chosen so that
+     there is enough room to add other priorities in between, before and after
+     the two cases we are currently handling.
 
-  let node = create 0
+     640K ought to be enough for anybody, right?
+  *)
+
+  let extern = create 640064
+
+  let node = create 64
 
   let packed {operation; _} = operation
 
