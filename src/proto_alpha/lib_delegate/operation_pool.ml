@@ -289,18 +289,6 @@ let filter_endorsements ops =
       | _ -> None)
     ops
 
-let pool_to_list_list {consensus; votes; anonymous; managers} =
-  [
-    OpSet.elements consensus;
-    OpSet.elements votes;
-    OpSet.elements anonymous;
-    PrioritizedOperationSet.elements managers
-    |> List.map PrioritizedOperation.packed;
-  ]
-
-(* let pool_of_list_list (ll : packed_operation list list) =
- *   List.fold_left add_operations empty ll *)
-
 let ordered_to_list_list
     {ordered_consensus; ordered_votes; ordered_anonymous; ordered_managers} =
   [ordered_consensus; ordered_votes; ordered_anonymous; ordered_managers]
