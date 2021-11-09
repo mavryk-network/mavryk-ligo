@@ -35,9 +35,7 @@ val anonymous_index : int
 val managers_index : int
 
 module PrioritizedOperation : sig
-  type t = {priority : int; operation : packed_operation}
-
-  val create : int -> packed_operation -> t
+  type t = private {priority : int; operation : packed_operation}
 
   (** prioritize operations coming from an external source (file, uri, ...)*)
   val extern : packed_operation -> t
@@ -96,7 +94,7 @@ val payload_of_ordered_pool : ordered_pool -> payload
 val ordered_pool_of_payload :
   consensus_operations:packed_operation list -> payload -> ordered_pool
 
-val add_operation : ?priority:int -> pool -> packed_operation -> pool
+val add_operation : pool -> PrioritizedOperation.t -> pool
 
 val add_operations : pool -> PrioritizedOperation.t list -> pool
 

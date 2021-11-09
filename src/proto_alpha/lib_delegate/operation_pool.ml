@@ -34,9 +34,16 @@ module PrioritizedOperation = struct
 
   let create priority operation = {priority; operation}
 
-  let extern = create 1
+  (* The magic constants below for [extern] and [node] are just chosen so that
+     there is enough room to add other priorities in between, before and after
+     the two cases we are currently handling.
 
-  let node = create 0
+     640K ought to be enough for anybody, right?
+  *)
+
+  let extern = create 640064
+
+  let node = create 64
 
   let packed {operation; _} = operation
 
@@ -171,31 +178,23 @@ let classify op =
       else `Bad
   | _ -> `Bad
 
-let add_operation ?(priority = 0) pool op =
-  match classify op with
+let add_operation pool (PrioritizedOperation.{operation; _} as op) =
+  match classify operation with
   | `Consensus ->
-      let consensus = OpSet.add op pool.consensus in
+      let consensus = OpSet.add operation pool.consensus in
       {pool with consensus}
   | `Votes ->
-      let votes = OpSet.add op pool.votes in
+      let votes = OpSet.add operation pool.votes in
       {pool with votes}
   | `Anonymous ->
-      let anonymous = OpSet.add op pool.anonymous in
+      let anonymous = OpSet.add operation pool.anonymous in
       {pool with anonymous}
   | `Managers ->
-      let managers =
-        let op = PrioritizedOperation.create priority op in
-        PrioritizedOperationSet.add op pool.managers
-      in
+      let managers = PrioritizedOperationSet.add op pool.managers in
       {pool with managers}
   | `Bad -> pool
 
-let add_operations pool ops =
-  List.fold_left
-    (fun pool PrioritizedOperation.{operation; priority} ->
-      add_operation pool ~priority operation)
-    pool
-    ops
+let add_operations pool ops = List.fold_left add_operation pool ops
 
 type consensus_filter = {
   level : int32;
