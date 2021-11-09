@@ -28,6 +28,29 @@ open Alpha_context
 
 (* Should we use a better ordering ? *)
 
+module PrioritizedOperation = struct
+  (* Higher priority operations will be sorted first *)
+  type t = {priority : int; operation : packed_operation}
+
+  let create priority operation = {priority; operation}
+
+  let extern = create 1
+
+  let node = create 0
+
+  let packed {operation; _} = operation
+
+  let compare a b =
+    let c = Compare.Int.compare a.priority b.priority in
+    if c <> 0 then c else compare a.operation b.operation
+end
+
+module PrioritizedOperationSet = Set.Make (struct
+  type t = PrioritizedOperation.t
+
+  let compare = PrioritizedOperation.compare
+end)
+
 module OpSet = Set.Make (struct
   type t = packed_operation
 
@@ -39,7 +62,7 @@ type pool = {
   consensus : OpSet.t;
   votes : OpSet.t;
   anonymous : OpSet.t;
-  managers : OpSet.t;
+  managers : PrioritizedOperationSet.t;
 }
 
 (* TODO refine this: unpack operations *)
@@ -97,7 +120,7 @@ let empty =
     consensus = OpSet.empty;
     votes = OpSet.empty;
     anonymous = OpSet.empty;
-    managers = OpSet.empty;
+    managers = PrioritizedOperationSet.empty;
   }
 
 let empty_ordered =
@@ -115,7 +138,7 @@ let pp_pool fmt {consensus; votes; anonymous; managers} =
     (OpSet.cardinal consensus)
     (OpSet.cardinal votes)
     (OpSet.cardinal anonymous)
-    (OpSet.cardinal managers)
+    (PrioritizedOperationSet.cardinal managers)
 
 let pp_ordered_pool fmt
     {ordered_consensus; ordered_votes; ordered_anonymous; ordered_managers} =
@@ -148,7 +171,7 @@ let classify op =
       else `Bad
   | _ -> `Bad
 
-let add_operation pool op =
+let add_operation ?(priority = 0) pool op =
   match classify op with
   | `Consensus ->
       let consensus = OpSet.add op pool.consensus in
@@ -160,11 +183,19 @@ let add_operation pool op =
       let anonymous = OpSet.add op pool.anonymous in
       {pool with anonymous}
   | `Managers ->
-      let managers = OpSet.add op pool.managers in
+      let managers =
+        let op = PrioritizedOperation.create priority op in
+        PrioritizedOperationSet.add op pool.managers
+      in
       {pool with managers}
   | `Bad -> pool
 
-let add_operations pool new_ops = List.fold_left add_operation pool new_ops
+let add_operations pool ops =
+  List.fold_left
+    (fun pool PrioritizedOperation.{operation; priority} ->
+      add_operation pool ~priority operation)
+    pool
+    ops
 
 type consensus_filter = {
   level : int32;
@@ -259,10 +290,16 @@ let filter_endorsements ops =
     ops
 
 let pool_to_list_list {consensus; votes; anonymous; managers} =
-  List.map OpSet.elements [consensus; votes; anonymous; managers]
+  [
+    OpSet.elements consensus;
+    OpSet.elements votes;
+    OpSet.elements anonymous;
+    PrioritizedOperationSet.elements managers
+    |> List.map PrioritizedOperation.packed;
+  ]
 
-let pool_of_list_list (ll : packed_operation list list) =
-  List.fold_left add_operations empty ll
+(* let pool_of_list_list (ll : packed_operation list list) =
+ *   List.fold_left add_operations empty ll *)
 
 let ordered_to_list_list
     {ordered_consensus; ordered_votes; ordered_anonymous; ordered_managers} =

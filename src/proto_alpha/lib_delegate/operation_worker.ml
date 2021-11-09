@@ -290,10 +290,11 @@ let make_initial_state ?initial_mempool ?(monitor_node_operations = true) () =
   in
   let canceler = Lwt_canceler.create () in
   let operation_pool =
-    Option.fold
-      ~none:Operation_pool.empty
-      ~some:(Operation_pool.add_operations Operation_pool.empty)
-      initial_mempool
+    match initial_mempool with
+    | None -> Operation_pool.empty
+    | Some ops ->
+        List.map Operation_pool.PrioritizedOperation.extern ops
+        |> Operation_pool.add_operations Operation_pool.empty
   in
   let lock = Lwt_mutex.create () in
   {
@@ -470,9 +471,11 @@ let create ?initial_mempool ?(monitor_node_operations = true)
                  current head, otherwise blocks baked with such
                  operations will get rejected by the node. *)
               let filtered_ops =
-                List.filter
-                  (fun {shell; _} ->
-                    Block_hash.(shell.branch <> current_head_hash))
+                List.filter_map
+                  (fun ({shell; _} as op) ->
+                    if Block_hash.(shell.branch <> current_head_hash) then
+                      Some (Operation_pool.PrioritizedOperation.node op)
+                    else None)
                   ops
               in
               state.operation_pool <-
