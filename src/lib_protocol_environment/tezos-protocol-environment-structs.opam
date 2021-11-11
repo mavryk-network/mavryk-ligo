@@ -8,6 +8,7 @@ license: "MIT"
 depends: [
   "dune" { >= "2.0" }
   "tezos-stdlib"
+  "bls12-381-legacy"
   "tezos-crypto"
   "tezos-protocol-environment-packer"
   "data-encoding" { >= "0.4" & < "0.5" }
