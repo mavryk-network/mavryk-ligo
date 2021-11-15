@@ -26,7 +26,7 @@
 module type COMMITMENTS = sig
   val init : Raw_context.t -> Storage.Sapling.id -> Raw_context.t Lwt.t
 
-  val default_root : unit -> Sapling.Hash.t
+  val default_root : Sapling.Hash.t
 
   val get_root :
     Raw_context.t ->
@@ -113,15 +113,7 @@ module Commitments : COMMITMENTS = struct
   let assert_pos pos height =
     assert (Compare.Int64.(pos >= 0L && pos <= pow2 height))
 
-  let default_root_ = ref None
-
-  let default_root () =
-    match ! default_root_ with
-    | None ->
-       let default_root = H.uncommitted ~height:max_height in
-       default_root_ := Some default_root ;
-       default_root
-    | Some default_root -> default_root
+  let default_root = H.uncommitted ~height:max_height
 
   let init = Storage.Sapling.commitments_init
 
@@ -317,7 +309,7 @@ module Roots = struct
     let[@coq_struct "pos"] rec aux ctx pos =
       if Compare.Int32.(pos < 0l) then return ctx
       else
-        Storage.Sapling.Roots.init (ctx, id) pos (Commitments.default_root ())
+        Storage.Sapling.Roots.init (ctx, id) pos Commitments.default_root
         >>=? fun ctx -> aux ctx (Int32.pred pos)
     in
     aux ctx (Int32.pred size) >>=? fun ctx ->
@@ -454,7 +446,7 @@ let root_mem ctx {id; _} tested_root =
   | None ->
       return
         Compare.Int.(
-          Sapling.Hash.compare tested_root (Commitments.default_root ()) = 0)
+          Sapling.Hash.compare tested_root Commitments.default_root = 0)
 
 (* to avoid a double spend we need to check the disk AND the diff *)
 let nullifiers_mem ctx {id; diff; _} nf =
