@@ -15,6 +15,7 @@ depends: [
   "tezos-stdlib"
   "re" { >= "1.7.2" }
   "lwt"
+  "fmt"
   "ptime" { >= "0.8.4" }
   "mtime" { >= "1.0.0" }
   "conf-libev"
