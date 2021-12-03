@@ -248,11 +248,6 @@ let rec bake_until i top =
     Incremental.finalize_block i >>=? fun b ->
     Incremental.begin_construction b >>=? fun i -> bake_until i top
 
-let assert_retired retired =
-  match retired with
-  | `Retired -> return_unit
-  | _ -> failwith "Expected retired"
-
 (** ---- TESTS -------------------------------------------------------------- *)
 
 (** [test_origination] originates a transaction rollup and checks that
@@ -1030,9 +1025,7 @@ let test_commitment_predecessor () =
       | _ -> failwith "Need to check commitment predecessor inbox")
   >>=? fun i ->
   (* Now we create a real commitment *)
-  let commitment : Tx_rollup_commitment.t =
-    {level = raw_level 2l; batches; predecessor = None}
-  in
+  make_commitment_for_batch i (raw_level 2l) tx_rollup >>=? fun commitment ->
   Op.tx_rollup_commit (I i) contract1 tx_rollup commitment >>=? fun op ->
   Incremental.add_operation i op >>=? fun i ->
   (* Commitment without predecessor for block with predecessor*)
