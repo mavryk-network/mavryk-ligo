@@ -2170,6 +2170,8 @@ module Tx_rollup_commitment : sig
 
   type error += Level_already_has_commitment of Raw_level.t
 
+  type error += Retire_uncommitted_level of Raw_level.t
+
   val add_commitment :
     context ->
     Tx_rollup.t ->
@@ -2194,6 +2196,13 @@ module Tx_rollup_commitment : sig
     Tx_rollup.t ->
     Signature.public_key_hash ->
     (context * bool) tzresult Lwt.t
+
+  module Internal_for_tests : sig
+    (** See [Tx_rollup_commitments_storage.retire_rollup_level]
+        for documentation *)
+    val retire_rollup_level :
+      context -> Tx_rollup.t -> Raw_level.t -> context tzresult Lwt.t
+  end
 end
 
 (** This simply re-exports {!Destination_repr}. *)

@@ -87,6 +87,18 @@ let add_commitment ctxt tx_rollup pkh (commitment : Tx_rollup_commitment_repr.t)
   Storage.Tx_rollup.Commitment.add ctxt key submitted >>=? fun (ctxt, _, _) ->
   adjust_commitment_bond ctxt tx_rollup pkh 1
 
+let retire_rollup_level :
+    Raw_context.t ->
+    Tx_rollup_repr.t ->
+    Raw_level_repr.t ->
+    Raw_context.t tzresult Lwt.t =
+ fun ctxt tx_rollup level ->
+  let key = (level, tx_rollup) in
+  Storage.Tx_rollup.Commitment.find ctxt key >>=? function
+  | (_, None) -> fail (Retire_uncommitted_level level)
+  | (ctxt, Some accepted) ->
+      adjust_commitment_bond ctxt tx_rollup accepted.committer (-1)
+
 let get_commitment :
     Raw_context.t ->
     Tx_rollup_repr.t ->

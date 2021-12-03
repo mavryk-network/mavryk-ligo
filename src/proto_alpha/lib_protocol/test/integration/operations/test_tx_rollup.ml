@@ -1071,6 +1071,50 @@ let test_commitment_predecessor () =
   ignore i ;
   return ()
 
+(** [test_commitment_retire_simple] tests commitment retirement simple cases.
+    Note that it manually retires commitments rather than waiting for them to
+    age out. *)
+let test_commitment_retire () =
+  context_init 1 >>=? fun (b, contracts) ->
+  let contract1 =
+    WithExceptions.Option.get ~loc:__LOC__ @@ List.nth contracts 0
+  in
+  originate b contract1 >>=? fun (b, tx_rollup) ->
+  (* In order to have a permissible commitment, we need a transaction. *)
+  let contents = "batch" in
+  Op.tx_rollup_submit_batch (B b) contract1 tx_rollup contents
+  >>=? fun operation ->
+  Block.bake ~operation b >>=? fun b ->
+  Incremental.begin_construction b >>=? fun i ->
+  let level = raw_level 2l in
+  Incremental.finalize_block i >>=? fun b ->
+  Incremental.begin_construction b >>=? fun i ->
+  (* Test retirement with no commitment *)
+  wrap
+    (Tx_rollup_commitment.Internal_for_tests.retire_rollup_level
+       (Incremental.alpha_ctxt i)
+       tx_rollup
+       level)
+  >>= fun res ->
+  Assert.proto_error ~loc:__LOC__ res (fun e ->
+      e = Tx_rollup_commitment.Retire_uncommitted_level level)
+  >>=? fun () ->
+  (* Now, make a commitment *)
+  make_commitment_for_batch i level tx_rollup >>=? fun commitment ->
+  Op.tx_rollup_commit (I i) contract1 tx_rollup commitment >>=? fun op ->
+  Incremental.add_operation i op >>=? fun i ->
+  check_bond (Incremental.alpha_ctxt i) tx_rollup contract1 1 >>=? fun () ->
+  (* We can retire this level *)
+  wrap
+    (Tx_rollup_commitment.Internal_for_tests.retire_rollup_level
+       (Incremental.alpha_ctxt i)
+       tx_rollup
+       level)
+  >>=? fun ctxt ->
+  check_bond ctxt tx_rollup contract1 0 >>=? fun () ->
+  ignore i ;
+  return ()
+
 let tests =
   [
     Tztest.tztest
@@ -1126,4 +1170,5 @@ let tests =
       "Test commitment predecessor edge cases"
       `Quick
       test_commitment_predecessor;
+    Tztest.tztest "Test commitment retirement" `Quick test_commitment_retire;
   ]
