@@ -2181,6 +2181,10 @@ module Tx_rollup_commitment : sig
 
   type error += Retire_uncommitted_level of Raw_level.t
 
+  type error += Bond_does_not_exist of Signature.public_key_hash
+
+  type error += Bond_in_use of Signature.public_key_hash
+
   type error += Too_many_unfinalized_levels
 
   val add_commitment :
@@ -2210,6 +2214,12 @@ module Tx_rollup_commitment : sig
 
   val finalize_pending_commitments :
     context -> Tx_rollup.t -> Raw_level.t -> context tzresult Lwt.t
+
+  val remove_bond :
+    context ->
+    Tx_rollup.t ->
+    Signature.public_key_hash ->
+    context tzresult Lwt.t
 
   module Internal_for_tests : sig
     (** See [Tx_rollup_commitments_storage.retire_rollup_level]
@@ -2297,6 +2307,8 @@ module Kind : sig
 
   type tx_rollup_commit = Tx_rollup_commit_kind
 
+  type tx_rollup_return_bond = Tx_rollup_return_bond_kind
+
   type sc_rollup_originate = Sc_rollup_originate_kind
 
   type sc_rollup_add_messages = Sc_rollup_add_messages_kind
@@ -2311,6 +2323,7 @@ module Kind : sig
     | Tx_rollup_origination_manager_kind : tx_rollup_origination manager
     | Tx_rollup_submit_batch_manager_kind : tx_rollup_submit_batch manager
     | Tx_rollup_commit_manager_kind : tx_rollup_commit manager
+    | Tx_rollup_return_bond_manager_kind : tx_rollup_return_bond manager
     | Sc_rollup_originate_manager_kind : sc_rollup_originate manager
     | Sc_rollup_add_messages_manager_kind : sc_rollup_add_messages manager
 end
@@ -2442,6 +2455,10 @@ and _ manager_operation =
       commitment : Tx_rollup_commitment.t;
     }
       -> Kind.tx_rollup_commit manager_operation
+  | Tx_rollup_return_bond : {
+      tx_rollup : Tx_rollup.t;
+    }
+      -> Kind.tx_rollup_return_bond manager_operation
   | Sc_rollup_originate : {
       kind : Sc_rollup.Kind.t;
       boot_sector : Sc_rollup.PVM.boot_sector;
@@ -2597,6 +2614,9 @@ module Operation : sig
 
     val tx_rollup_commit_case : Kind.tx_rollup_commit Kind.manager case
 
+    val tx_rollup_return_bond_case :
+      Kind.tx_rollup_return_bond Kind.manager case
+
     val register_global_constant_case :
       Kind.register_global_constant Kind.manager case
 
@@ -2636,6 +2656,8 @@ module Operation : sig
       val tx_rollup_submit_batch_case : Kind.tx_rollup_submit_batch case
 
       val tx_rollup_commit_case : Kind.tx_rollup_commit case
+
+      val tx_rollup_return_bond_case : Kind.tx_rollup_return_bond case
 
       val sc_rollup_originate_case : Kind.sc_rollup_originate case
 

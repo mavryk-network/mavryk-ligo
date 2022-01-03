@@ -39,6 +39,11 @@ type error += (* `Temporary *) Level_already_has_commitment of Raw_level_repr.t
 type error += (* `Branch *)
               Retire_uncommitted_level of Raw_level_repr.t
 
+type error += (* `Temporary *)
+              Bond_does_not_exist of Signature.public_key_hash
+
+type error += (* `Temporary *) Bond_in_use of Signature.public_key_hash
+
 type error += (* `Temporary *) Too_many_unfinalized_levels
 
 let () =
@@ -106,7 +111,25 @@ let () =
        messages to keep commitment gas reasonable."
     empty
     (function Too_many_unfinalized_levels -> Some () | _ -> None)
-    (fun () -> Too_many_unfinalized_levels)
+    (fun () -> Too_many_unfinalized_levels) ;
+  (* Bond_does_not_exist *)
+  register_error_kind
+    `Temporary
+    ~id:"tx_rollup_bond_does_not_exist"
+    ~title:"This account does not have a bond for this rollup"
+    ~description:"This account does not have a bond for this rollup"
+    (obj1 (req "contract" Signature.Public_key_hash.encoding))
+    (function Bond_does_not_exist contract -> Some contract | _ -> None)
+    (fun contract -> Bond_does_not_exist contract) ;
+  (* Bond_in_use *)
+  register_error_kind
+    `Temporary
+    ~id:"tx_rollup_bond_in_use"
+    ~title:"This account's bond is in use for one or more commitments"
+    ~description:"This account's bond is in use for one or more commitments"
+    (obj1 (req "contract" Signature.Public_key_hash.encoding))
+    (function Bond_in_use contract -> Some contract | _ -> None)
+    (fun contract -> Bond_in_use contract)
 
 module Commitment_hash = struct
   let commitment_hash = "\017\249\195\013" (* toc1(54) *)
