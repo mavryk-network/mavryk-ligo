@@ -299,6 +299,90 @@ batch is discarded by the transaction rollup node, and the counters of
 the signers are not incremented. This means they can be submitted
 again in a batch with a valid signature.
 
+Commitments and rejections
+**************************
+
+In order to ensure that L2 transfers and **effects** (that is,
+withdrawals) are correctly computed, rollup nodes issue commitments.
+A commitment is a layer-1 operation which describes (using a Merkle
+tree hash) the state of a rollup after each batch of a block, and the
+effects of each batch.  A commitment also includes the predecessor
+commitment's hash (except in the case of the first commitment for a
+rollup) and the level of the block that it is committing to, as well
+as the level's inbox hash (in case of reorganizations).  There is
+exactly one valid commitment possible for a given block, because the
+way that we compute the Merkle tree proof of the L2 operations is
+deterministic.
+
+Commitments can be **rejected** (see below).  A commitment which has
+survived to be greater than 2000 blocks old (the **finality period**,
+defined in ``tx_rollup_finality_period``) without being rejected can
+be finalized.  The finality period needs to be long enough so that an
+attempt by 33% of bakers to steal from a rollup by censoring
+rejections can be noticed, and avoided by forking the chain.
+
+A commitment which has been finalized, and whose successor commit has
+been finalized, can be removed from the context.  Note that the age of
+the commitment is what is tracked, rather than the age of the block to
+which the commitment commits.
+
+When a commitment is applied, any pending final commitments are first
+applied.  This allows finalization to be carbonated.  If no
+commitments are made, it is possible for inboxes to pile up, which
+violates our gas assumptions that inboxes are temporary.  Levels are
+processed in ascending order.  The first-submitted non-rejected
+commitment for each level is chosen, and the rest are removed (along
+with their transitive successors).  To prevent this, if there are more
+than ``tx_rollup_max_unfinalized_levels`` = 2100 inbox levels with
+messages but without finalized commitments, no further messages are
+accepted on the rollup until a commitment is finalized.
+
+In order to issue a commitment, a bond is required.  One bond can
+support any number of commitments on a single rollup.  Since there is
+only one valid commitment per block, a bond will only support one
+commitment per target block.  The bond is collected at the time that
+a given contract creates its first commitment is on a rollup.  It may
+be refunded by another manager operation, once the last commitment
+from its creator has been finalized (that is, after its finality
+period).  The bond is treated just like frozen balances for the
+purposes of delegation.
+
+If a commitment is wrong (that is, its Merkle proof does not
+correspond to the correct execution trace of the L2 apply function) ,
+it may be rejected.  A rejection operation for a commitment names one
+of the batches of the commitment, and includes a Merkle proof of its
+incorrectness.  A L1 node can then replay just the transfers of a
+single batch to determine whether the rejection is valid.  A rejection
+must be included in a block within the finality period of the block
+that the commitment is included in.
+
+In the case of a valid rejection, half of the commitment bond goes to
+the rejector; the rest is burned.  All transitive successor
+commitments of a rejected commitment are also removed at this time,
+and, if they are by different committers, those committers bonds are
+entirely burned (with no additional reward).  In practice, we do not
+expect this to ever happen, since commitment bonds are expensive
+enough (``tx_rollup_commitment_bond`` = 10_000 tez) to discourage bad
+commitments.
+
+Each rejection must be preceded by a **prerejection**.  The
+prerejection is a L1 operation.  This is to prevent bakers from
+front-running rejections.  A prerejection contains a hash of:
+
+#. The rejection
+#. The contract which will submit the rejection
+#. A nonce
+
+The prerejection should be issued two blocks before the rejection to
+ensure that a reorganization does not lose the prerejection before the
+rejection is revealed.  Rejections include the nonce so that their
+prerejections can be verified.  Prerejections prevent bakers from
+front-running rejections and getting bonds without doing their own
+verification. In the case that multiple rejections reject the same
+commitment, the one with the first pre-rejection gets the reward.
+
+Prerejections can be removed from the context after the finality period.
+
 Getting Started
 ---------------
 
