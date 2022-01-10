@@ -494,3 +494,7 @@ end
 
 module Token = Token
 module Cache = Cache_repr
+
+module Internal_for_tests = struct
+  let to_raw x = x
+end

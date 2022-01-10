@@ -980,6 +980,10 @@ module Global_constants_storage : sig
   end
 end
 
+module Internal_for_tests : sig
+  val to_raw : context -> Raw_context.t
+end
+
 module Cache : sig
   type size = int
 
@@ -1759,6 +1763,8 @@ end
 
 (** See {!Sc_rollup_storage} and {!Sc_rollup_repr}. *)
 module Sc_rollup : sig
+  (* TODO expose errors *)
+
   module PVM : sig
     type boot_sector
 
@@ -1797,6 +1803,55 @@ module Sc_rollup : sig
     context -> t -> string list -> (Inbox.t * Z.t * context) tzresult Lwt.t
 
   val inbox : context -> t -> (Inbox.t * context) tzresult Lwt.t
+
+  val deposit_stake :
+    context ->
+    Sc_rollup_repr.t ->
+    Sc_rollup_repr.Staker.t ->
+    (unit * context) tzresult Lwt.t
+
+  val withdraw_stake :
+    context ->
+    Sc_rollup_repr.t ->
+    Sc_rollup_repr.Staker.t ->
+    (unit * context) tzresult Lwt.t
+
+  val refine_stake :
+    context ->
+    Sc_rollup_repr.t ->
+    Raw_level.t ->
+    Sc_rollup_repr.Staker.t ->
+    Sc_rollup_repr.Commitment.t ->
+    (Sc_rollup_repr.Commitment_hash.t * context) tzresult Lwt.t
+
+  val finalize_commitment :
+    context ->
+    Sc_rollup_repr.t ->
+    Raw_level.t ->
+    Sc_rollup_repr.Commitment_hash.t ->
+    (unit * context) tzresult Lwt.t
+
+  type conflict_point =
+    Sc_rollup_repr.Commitment_hash.t * Sc_rollup_repr.Commitment_hash.t
+
+  val get_conflict_point :
+    context ->
+    Sc_rollup_repr.t ->
+    Sc_rollup_repr.Staker.t ->
+    Sc_rollup_repr.Staker.t ->
+    (conflict_point * context) tzresult Lwt.t
+
+  val get_commitment :
+    context ->
+    Sc_rollup_repr.t ->
+    Sc_rollup_repr.Commitment_hash.t ->
+    (Sc_rollup_repr.Commitment.t * context) tzresult Lwt.t
+
+  val remove_staker :
+    context ->
+    Sc_rollup_repr.t ->
+    Sc_rollup_repr.Staker.t ->
+    (unit * context) tzresult Lwt.t
 end
 
 module Block_payload : sig

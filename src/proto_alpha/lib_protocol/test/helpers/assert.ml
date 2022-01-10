@@ -114,6 +114,13 @@ let equal_bool ~loc (a : bool) (b : bool) =
 let not_equal_bool ~loc (a : bool) (b : bool) =
   not_equal ~loc Bool.equal "Booleans are equal" Format.pp_print_bool a b
 
+(* string *)
+let equal_string ~loc (a : string) (b : string) =
+  equal ~loc String.equal "Booleans aren't equal" Format.pp_print_string a b
+
+let not_equal_string ~loc (a : string) (b : string) =
+  not_equal ~loc String.equal "Booleans are equal" Format.pp_print_string a b
+
 (* tez *)
 let equal_tez ~loc (a : Alpha_context.Tez.t) (b : Alpha_context.Tez.t) =
   let open Alpha_context in
