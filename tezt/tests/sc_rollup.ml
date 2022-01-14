@@ -205,6 +205,28 @@ let test_rollup_client_gets_address =
    the Tezos node. Then we can observe that the messages are included in the
    inbox.
 *)
+let send_messages n sc_rollup_address client =
+  let send msg =
+    let* () =
+      Client.send_sc_rollup_message
+        ~src:"bootstrap1"
+        ~dst:sc_rollup_address
+        ~msg
+        client
+    in
+    Client.bake_for client
+  in
+  let messages =
+    range 1 n |> fun is ->
+    List.map
+      (fun i ->
+        Printf.sprintf "text:[%s]" @@ String.concat ", "
+        @@ List.map (fun _ -> Printf.sprintf "\"CAFEBABE\"") (range 1 i))
+      is
+  in
+  let* () = Lwt_list.iter_s send messages in
+  Client.bake_for client
+
 let test_rollup_inbox =
   let output_file = "sc_rollup_inbox" in
   test
@@ -215,27 +237,8 @@ let test_rollup_inbox =
     (fun protocol ->
       setup ~protocol @@ fun node client ->
       ( with_fresh_rollup @@ fun sc_rollup_address _sc_rollup_node _filename ->
-        let send msg =
-          let* () =
-            Client.send_sc_rollup_message
-              ~src:"bootstrap1"
-              ~dst:sc_rollup_address
-              ~msg
-              client
-          in
-          Client.bake_for client
-        in
         let n = 10 in
-        let messages =
-          range 1 n |> fun is ->
-          List.map
-            (fun i ->
-              Printf.sprintf "text:[%s]" @@ String.concat ", "
-              @@ List.map (fun _ -> Printf.sprintf "\"CAFEBABE\"") (range 1 i))
-            is
-        in
-        let* () = Lwt_list.iter_s send messages in
-        let* () = Client.bake_for client in
+        let* () = send_messages n sc_rollup_address client in
         let* inbox = RPC.Sc_rollup.get_inbox ~sc_rollup_address client in
         (List.assoc_opt "inbox_size" (JSON.as_object inbox) |> function
          | None -> failwith "inbox_size is undefined"
