@@ -67,6 +67,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    cache_memory_helpers.ml
    contract_repr.mli contract_repr.ml
    indexable.mli indexable.ml
+   entrypoint_repr.mli entrypoint_repr.ml
    tx_rollup_l2_address.mli tx_rollup_l2_address.ml
    tx_rollup_repr.mli tx_rollup_repr.ml
    tx_rollup_state_repr.mli tx_rollup_state_repr.ml
@@ -75,7 +76,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_commitments_repr.mli tx_rollup_commitments_repr.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
-   entrypoint_repr.mli entrypoint_repr.ml
    destination_repr.mli destination_repr.ml
    operation_repr.mli operation_repr.ml
    manager_repr.mli manager_repr.ml
@@ -223,6 +223,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    cache_memory_helpers.ml
    contract_repr.mli contract_repr.ml
    indexable.mli indexable.ml
+   entrypoint_repr.mli entrypoint_repr.ml
    tx_rollup_l2_address.mli tx_rollup_l2_address.ml
    tx_rollup_repr.mli tx_rollup_repr.ml
    tx_rollup_state_repr.mli tx_rollup_state_repr.ml
@@ -231,7 +232,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_commitments_repr.mli tx_rollup_commitments_repr.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
-   entrypoint_repr.mli entrypoint_repr.ml
    destination_repr.mli destination_repr.ml
    operation_repr.mli operation_repr.ml
    manager_repr.mli manager_repr.ml
@@ -379,6 +379,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    cache_memory_helpers.ml
    contract_repr.mli contract_repr.ml
    indexable.mli indexable.ml
+   entrypoint_repr.mli entrypoint_repr.ml
    tx_rollup_l2_address.mli tx_rollup_l2_address.ml
    tx_rollup_repr.mli tx_rollup_repr.ml
    tx_rollup_state_repr.mli tx_rollup_state_repr.ml
@@ -387,7 +388,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_commitments_repr.mli tx_rollup_commitments_repr.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
-   entrypoint_repr.mli entrypoint_repr.ml
    destination_repr.mli destination_repr.ml
    operation_repr.mli operation_repr.ml
    manager_repr.mli manager_repr.ml
@@ -557,6 +557,7 @@ include Tezos_raw_protocol_alpha.Main
    Cache_memory_helpers
    Contract_repr
    Indexable
+   Entrypoint_repr
    Tx_rollup_l2_address
    Tx_rollup_repr
    Tx_rollup_state_repr
@@ -565,7 +566,6 @@ include Tezos_raw_protocol_alpha.Main
    Tx_rollup_commitments_repr
    Vote_repr
    Block_header_repr
-   Entrypoint_repr
    Destination_repr
    Operation_repr
    Manager_repr
@@ -754,6 +754,7 @@ include Tezos_raw_protocol_alpha.Main
    cache_memory_helpers.ml
    contract_repr.mli contract_repr.ml
    indexable.mli indexable.ml
+   entrypoint_repr.mli entrypoint_repr.ml
    tx_rollup_l2_address.mli tx_rollup_l2_address.ml
    tx_rollup_repr.mli tx_rollup_repr.ml
    tx_rollup_state_repr.mli tx_rollup_state_repr.ml
@@ -762,7 +763,6 @@ include Tezos_raw_protocol_alpha.Main
    tx_rollup_commitments_repr.mli tx_rollup_commitments_repr.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
-   entrypoint_repr.mli entrypoint_repr.ml
    destination_repr.mli destination_repr.ml
    operation_repr.mli operation_repr.ml
    manager_repr.mli manager_repr.ml
