@@ -33,6 +33,20 @@ let get_prev_level ctxt tx_rollup level =
   Tx_rollup_inbox_storage.get_adjacent_levels ctxt level tx_rollup
   >|=? fun (ctxt, predecessor_level, _) -> (ctxt, predecessor_level)
 
+(* This indicates a programming error. *)
+type error += (*`Temporary*) Commitment_bond_negative of int
+
+let adjust_commitment_bond ctxt tx_rollup pkh delta =
+  let bond_key = (tx_rollup, pkh) in
+  Storage.Tx_rollup.Commitment_bond.find ctxt bond_key
+  >>=? fun (ctxt, commitment) ->
+  let count =
+    match commitment with Some count -> count + delta | None -> delta
+  in
+  fail_when Compare.Int.(count < 0) (Commitment_bond_negative count)
+  >>=? fun () ->
+  Storage.Tx_rollup.Commitment_bond.add ctxt bond_key count >|=? just_ctxt
+
 let check_commitment_predecessor_hash ctxt tx_rollup
     (commitment : Tx_rollup_commitment_repr.t) =
   let level = commitment.level in
@@ -70,7 +84,8 @@ let add_commitment ctxt tx_rollup pkh (commitment : Tx_rollup_commitment_repr.t)
   let submitted : Tx_rollup_commitment_repr.Submitted_commitment.t =
     {commitment; committer = pkh; submitted_at = current_level}
   in
-  Storage.Tx_rollup.Commitment.add ctxt key submitted >|=? just_ctxt
+  Storage.Tx_rollup.Commitment.add ctxt key submitted >>=? fun (ctxt, _, _) ->
+  adjust_commitment_bond ctxt tx_rollup pkh 1
 
 let get_commitment :
     Raw_context.t ->
@@ -84,3 +99,21 @@ let get_commitment :
   match state with
   | None -> fail @@ Tx_rollup_state_storage.Tx_rollup_does_not_exist tx_rollup
   | Some _ -> Storage.Tx_rollup.Commitment.find ctxt (level, tx_rollup)
+
+let pending_bonded_commitments :
+    Raw_context.t ->
+    Tx_rollup_repr.t ->
+    Signature.public_key_hash ->
+    (Raw_context.t * int) tzresult Lwt.t =
+ fun ctxt tx_rollup pkh ->
+  Storage.Tx_rollup.Commitment_bond.find ctxt (tx_rollup, pkh)
+  >|=? fun (ctxt, pending) -> (ctxt, Option.value ~default:0 pending)
+
+let has_bond :
+    Raw_context.t ->
+    Tx_rollup_repr.t ->
+    Signature.public_key_hash ->
+    (Raw_context.t * bool) tzresult Lwt.t =
+ fun ctxt tx_rollup pkh ->
+  Storage.Tx_rollup.Commitment_bond.find ctxt (tx_rollup, pkh)
+  >|=? fun (ctxt, pending) -> (ctxt, Option.is_some pending)

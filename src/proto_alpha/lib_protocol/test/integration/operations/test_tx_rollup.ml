@@ -3,6 +3,7 @@
 (* Open Source License                                                       *)
 (* Copyright (c) 2021 Marigold <contact@marigold.dev>                        *)
 (* Copyright (c) 2021 Nomadic Labs <contact@nomadic-labs.com>                *)
+(* Copyright (c) 2022 Oxhead Alpha <info@oxheadalpha.com>                    *)
 (*                                                                           *)
 (* Permission is hereby granted, free of charge, to any person obtaining a   *)
 (* copy of this software and associated documentation files (the "Software"),*)
@@ -198,6 +199,59 @@ let public_key_hash_exn contract =
   match Contract.is_implicit contract with
   | None -> assert false
   | Some public_key_hash -> public_key_hash
+
+(* Make a valid commitment for a batch.  TODO/TORU: roots are still
+   wrong, of course, until we get Merkle proofs*)
+let make_commitment_for_batch i level tx_rollup =
+  let ctxt = Incremental.alpha_ctxt i in
+  wrap
+    (Alpha_context.Tx_rollup_inbox.messages
+       ctxt
+       ~level:(`Level level)
+       tx_rollup)
+  >>=? fun (ctxt, messages) ->
+  List.init ~when_negative_length:[] (List.length messages) (fun i ->
+      let batch : Tx_rollup_commitment.batch_commitment =
+        {root = Bytes.make 20 (Char.chr i)}
+      in
+      batch)
+  >>?= fun batches ->
+  wrap (Alpha_context.Tx_rollup_inbox.get_adjacent_levels ctxt level tx_rollup)
+  >>=? fun (ctxt, predecessor, _successor) ->
+  (match predecessor with
+  | None -> return_none
+  | Some predecessor_level -> (
+      wrap
+        (Lwt.return @@ Raw_level.of_int32 (Raw_level.to_int32 predecessor_level))
+      >>=? fun predecessor_level ->
+      wrap
+        (Tx_rollup_commitment.get_commitment ctxt tx_rollup predecessor_level)
+      >|=? function
+      | (_, None) -> None
+      | (_, Some {commitment; _}) -> Some (Tx_rollup_commitment.hash commitment)
+      ))
+  >>=? fun predecessor ->
+  let commitment : Tx_rollup_commitment.t = {level; batches; predecessor} in
+  return commitment
+
+let check_bond ctxt tx_rollup contract count =
+  let pkh = public_key_hash_exn contract in
+  wrap (Tx_rollup_commitment.pending_bonded_commitments ctxt tx_rollup pkh)
+  >>=? fun (_, pending) ->
+  Alcotest.(check int "Pending commitment count correct" count pending) ;
+  return ()
+
+let rec bake_until i top =
+  let level = Incremental.level i in
+  if level >= top then return i
+  else
+    Incremental.finalize_block i >>=? fun b ->
+    Incremental.begin_construction b >>=? fun i -> bake_until i top
+
+let assert_retired retired =
+  match retired with
+  | `Retired -> return_unit
+  | _ -> failwith "Expected retired"
 
 (** ---- TESTS -------------------------------------------------------------- *)
 
@@ -910,7 +964,7 @@ let test_commitment_duplication () =
   let ctxt = Incremental.alpha_ctxt i in
   wrap (Tx_rollup_commitment.get_commitment ctxt tx_rollup level)
   >>=? fun (_, commitment_opt) ->
-  match commitment_opt with
+  (match commitment_opt with
   | None -> assert false
   | Some {commitment = expected_commitment; committer; submitted_at} ->
       Alcotest.(
@@ -919,10 +973,11 @@ let test_commitment_duplication () =
       Alcotest.(check public_key_hash_testable "Committer" pkh1 committer) ;
 
       Alcotest.(
-        check raw_level_testable "Submitted" submitted_level submitted_at) ;
-      return () >>=? fun () ->
-      ignore i ;
-      return ()
+        check raw_level_testable "Submitted" submitted_level submitted_at)) ;
+  check_bond ctxt tx_rollup contract1 1 >>=? fun () ->
+  check_bond ctxt tx_rollup contract2 0 >>=? fun () ->
+  ignore i ;
+  return ()
 
 let make_transactions_in tx_rollup contract blocks b =
   let contents = "batch " in
