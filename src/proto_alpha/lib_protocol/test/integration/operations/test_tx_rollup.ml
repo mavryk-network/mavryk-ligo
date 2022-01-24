@@ -248,6 +248,11 @@ let rec bake_until i top =
     Incremental.finalize_block i >>=? fun b ->
     Incremental.begin_construction b >>=? fun i -> bake_until i top
 
+let assert_retired retired =
+  match retired with
+  | `Retired -> return_unit
+  | _ -> failwith "Expected retired"
+
 (** ---- TESTS -------------------------------------------------------------- *)
 
 (** [test_origination] originates a transaction rollup and checks that
@@ -1094,23 +1099,30 @@ let test_commitment_retire () =
     (Tx_rollup_commitment.Internal_for_tests.retire_rollup_level
        (Incremental.alpha_ctxt i)
        tx_rollup
-       level)
-  >>= fun res ->
-  Assert.proto_error ~loc:__LOC__ res (fun e ->
-      e = Tx_rollup_commitment.Retire_uncommitted_level level)
+       level
+       (raw_level @@ Incremental.level i))
+  >>=? fun (_ctxt, retired) ->
+  (match retired with
+  | `No_commitment -> return_unit
+  | _ -> failwith "Expected no commitment")
   >>=? fun () ->
   (* Now, make a commitment *)
   make_commitment_for_batch i level tx_rollup >>=? fun commitment ->
   Op.tx_rollup_commit (I i) contract1 tx_rollup commitment >>=? fun op ->
   Incremental.add_operation i op >>=? fun i ->
+  let commitment_submit_level =
+    (Level.current (Incremental.alpha_ctxt i)).level
+  in
   check_bond (Incremental.alpha_ctxt i) tx_rollup contract1 1 >>=? fun () ->
   (* We can retire this level *)
   wrap
     (Tx_rollup_commitment.Internal_for_tests.retire_rollup_level
        (Incremental.alpha_ctxt i)
        tx_rollup
-       level)
-  >>=? fun ctxt ->
+       level
+       commitment_submit_level)
+  >>=? fun (ctxt, retired) ->
+  assert_retired retired >>=? fun () ->
   check_bond ctxt tx_rollup contract1 0 >>=? fun () ->
   ignore i ;
   return ()

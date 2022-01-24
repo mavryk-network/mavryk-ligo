@@ -2208,11 +2208,19 @@ module Tx_rollup_commitment : sig
     Signature.public_key_hash ->
     (context * bool) tzresult Lwt.t
 
+  val finalize_pending_commitments :
+    context -> Tx_rollup.t -> Raw_level.t -> context tzresult Lwt.t
+
   module Internal_for_tests : sig
     (** See [Tx_rollup_commitments_storage.retire_rollup_level]
         for documentation *)
     val retire_rollup_level :
-      context -> Tx_rollup.t -> Raw_level.t -> context tzresult Lwt.t
+      context ->
+      Tx_rollup.t ->
+      Raw_level.t ->
+      Raw_level.t ->
+      (context * [> `No_commitment | `Commitment_too_late | `Retired]) tzresult
+      Lwt.t
   end
 end
 

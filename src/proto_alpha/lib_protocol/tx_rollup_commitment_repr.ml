@@ -96,16 +96,6 @@ let () =
     (obj1 (req "level" Raw_level_repr.encoding))
     (function Level_already_has_commitment level -> Some level | _ -> None)
     (fun level -> Level_already_has_commitment level) ;
-  (* Retire_uncommitted_level *)
-  register_error_kind
-    `Permanent
-  ~id:"tx_rollup_retire_uncommitted_level"
-  ~title:"Tried to retire a rollup level with no commitment"
-  ~description:
-    "An attempt was made to retire a rollup level with no commitment"
-  (obj1 (req "level" Raw_level_repr.encoding))
-  (function Retire_uncommitted_level level -> Some level | _ -> None)
-  (fun level -> Retire_uncommitted_level level);
   (* Too_many_unfinalized_levels *)
   register_error_kind
     `Temporary

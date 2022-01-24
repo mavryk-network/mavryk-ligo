@@ -29,6 +29,10 @@ let just_ctxt (ctxt, _, _) = ctxt
 
 open Tx_rollup_commitment_repr
 
+let get_next_level ctxt tx_rollup level =
+  Tx_rollup_inbox_storage.get_adjacent_levels ctxt level tx_rollup
+  >|=? fun (ctxt, _, successor_level) -> (ctxt, successor_level)
+
 let get_prev_level ctxt tx_rollup level =
   Tx_rollup_inbox_storage.get_adjacent_levels ctxt level tx_rollup
   >|=? fun (ctxt, predecessor_level, _) -> (ctxt, predecessor_level)
@@ -91,13 +95,20 @@ let retire_rollup_level :
     Raw_context.t ->
     Tx_rollup_repr.t ->
     Raw_level_repr.t ->
-    Raw_context.t tzresult Lwt.t =
- fun ctxt tx_rollup level ->
+    Raw_level_repr.t ->
+    (Raw_context.t * [> `No_commitment | `Commitment_too_late | `Retired])
+    tzresult
+    Lwt.t =
+ fun ctxt tx_rollup level last_level_to_finalize ->
   let key = (level, tx_rollup) in
   Storage.Tx_rollup.Commitment.find ctxt key >>=? function
-  | (_, None) -> fail (Retire_uncommitted_level level)
+  | (_, None) -> return (ctxt, `No_commitment)
   | (ctxt, Some accepted) ->
-      adjust_commitment_bond ctxt tx_rollup accepted.committer (-1)
+      if Raw_level_repr.(accepted.submitted_at > last_level_to_finalize) then
+        return (ctxt, `Commitment_too_late)
+      else
+        adjust_commitment_bond ctxt tx_rollup accepted.committer (-1)
+        >>=? fun ctxt -> return (ctxt, `Retired)
 
 let get_commitment :
     Raw_context.t ->
@@ -129,3 +140,41 @@ let has_bond :
  fun ctxt tx_rollup pkh ->
   Storage.Tx_rollup.Commitment_bond.find ctxt (tx_rollup, pkh)
   >|=? fun (ctxt, pending) -> (ctxt, Option.is_some pending)
+
+let finalize_pending_commitments ctxt tx_rollup last_level_to_finalize =
+  Tx_rollup_state_storage.get ctxt tx_rollup >>=? fun (ctxt, state) ->
+  let first_unfinalized_level =
+    Tx_rollup_state_repr.first_unfinalized_level state
+  in
+  match first_unfinalized_level with
+  | None -> return ctxt
+  | Some first_unfinalized_level ->
+      let rec finalize_level ctxt level top finalized_count =
+        if Raw_level_repr.(level > top) then
+          return (ctxt, finalized_count, Some level)
+        else
+          retire_rollup_level ctxt tx_rollup level last_level_to_finalize
+          >>=? fun (ctxt, finalized) ->
+          match finalized with
+          | `Retired -> (
+              get_next_level ctxt tx_rollup level >>=? fun (ctxt, next_level) ->
+              match next_level with
+              | None -> return (ctxt, 0, None)
+              | Some next_level ->
+                  (finalize_level [@tailcall])
+                    ctxt
+                    next_level
+                    top
+                    (finalized_count + 1))
+          | _ -> return (ctxt, finalized_count, Some level)
+      in
+      finalize_level ctxt first_unfinalized_level last_level_to_finalize 0
+      >>=? fun (ctxt, finalized_count, first_unfinalized_level) ->
+      let new_state =
+        Tx_rollup_state_repr.update_after_finalize
+          state
+          first_unfinalized_level
+          finalized_count
+      in
+      Storage.Tx_rollup.State.add ctxt tx_rollup new_state
+      >>=? fun (ctxt, _, _) -> return ctxt
