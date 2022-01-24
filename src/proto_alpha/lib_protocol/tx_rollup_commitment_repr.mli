@@ -31,7 +31,8 @@ type error += (* `Temporary *) Missing_commitment_predecessor
 
 type error += (* `Branch *) Wrong_batch_count
 
-type error += (* `Temporary *) Commitment_too_early
+type error +=
+  | (* `Temporary *) Commitment_too_early of Raw_level_repr.t * Raw_level_repr.t
 
 type error += (* `Temporary *) Level_already_has_commitment of Raw_level_repr.t
 

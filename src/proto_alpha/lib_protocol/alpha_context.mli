@@ -2166,7 +2166,7 @@ module Tx_rollup_commitment : sig
 
   type error += Wrong_batch_count
 
-  type error += Commitment_too_early
+  type error += Commitment_too_early of Raw_level.t * Raw_level.t
 
   type error += Level_already_has_commitment of Raw_level.t
 
