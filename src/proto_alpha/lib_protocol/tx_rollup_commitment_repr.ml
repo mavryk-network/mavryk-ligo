@@ -39,6 +39,8 @@ type error += (* `Temporary *) Level_already_has_commitment of Raw_level_repr.t
 type error += (* `Branch *)
               Retire_uncommitted_level of Raw_level_repr.t
 
+type error += (* `Temporary *) Too_many_unfinalized_levels
+
 let () =
   let open Data_encoding in
   (* Wrong_commitment_predecessor_level *)
@@ -97,13 +99,24 @@ let () =
   (* Retire_uncommitted_level *)
   register_error_kind
     `Permanent
-    ~id:"tx_rollup_retire_uncommitted_level"
-    ~title:"Tried to retire a rollup level with no commitment"
+  ~id:"tx_rollup_retire_uncommitted_level"
+  ~title:"Tried to retire a rollup level with no commitment"
+  ~description:
+    "An attempt was made to retire a rollup level with no commitment"
+  (obj1 (req "level" Raw_level_repr.encoding))
+  (function Retire_uncommitted_level level -> Some level | _ -> None)
+  (fun level -> Retire_uncommitted_level level);
+  (* Too_many_unfinalized_levels *)
+  register_error_kind
+    `Temporary
+    ~id:"tx_rollup_too_many_unfinalized_levels"
+    ~title:"This rollup hasn't had a commitment in too long"
     ~description:
-      "An attempt was made to retire a rollup level with no commitment"
-    (obj1 (req "level" Raw_level_repr.encoding))
-    (function Retire_uncommitted_level level -> Some level | _ -> None)
-    (fun level -> Retire_uncommitted_level level)
+      "This rollup hasn't a commitment in too long. We don't allow new \
+       messages to keep commitment gas reasonable."
+    empty
+    (function Too_many_unfinalized_levels -> Some () | _ -> None)
+    (fun () -> Too_many_unfinalized_levels)
 
 module Commitment_hash = struct
   let commitment_hash = "\017\249\195\013" (* toc1(54) *)

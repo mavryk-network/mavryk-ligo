@@ -2026,6 +2026,9 @@ module Tx_rollup_state : sig
 
   val last_inbox_level : t -> Raw_level.t option
 
+  val first_unfinalized_level :
+    context -> Tx_rollup.t -> (context * Raw_level.t option) tzresult Lwt.t
+
   type error +=
     | Tx_rollup_already_exists of Tx_rollup.t
     | Tx_rollup_does_not_exist of Tx_rollup.t
@@ -2177,6 +2180,8 @@ module Tx_rollup_commitment : sig
   type error += Level_already_has_commitment of Raw_level.t
 
   type error += Retire_uncommitted_level of Raw_level.t
+
+  type error += Too_many_unfinalized_levels
 
   val add_commitment :
     context ->
