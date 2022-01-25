@@ -1,7 +1,7 @@
 (*****************************************************************************)
 (*                                                                           *)
 (* Open Source License                                                       *)
-(* Copyright (c) 2021 Nomadic Labs, <contact@nomadic-labs.com>               *)
+(* Copyright (c) 2022 Nomadic Labs, <contact@nomadic-labs.com>               *)
 (*                                                                           *)
 (* Permission is hereby granted, free of charge, to any person obtaining a   *)
 (* copy of this software and associated documentation files (the "Software"),*)
@@ -23,49 +23,64 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_rpc
-open Tezos_rpc_http
-open Tezos_rpc_http_server
+module Simple = struct
+  include Internal_event.Simple
 
-let register_sc_rollup_address configuration dir =
-  RPC_directory.register0
-    dir
-    (Sc_rollup_services.sc_rollup_address ())
-    (fun () () -> return @@ configuration.Configuration.sc_rollup_address)
+  let section = ["sc_rollup_node"; "layer_1"]
 
-let register_current_tezos_head dir =
-  RPC_directory.register0
-    dir
-    (Sc_rollup_services.current_tezos_head ())
-    (fun () () -> Layer1.current_head_hash () >>= return)
+  let starting =
+    declare_0
+      ~section
+      ~name:"sc_rollup_node_layer_1_starting"
+      ~msg:"Starting the layer 1 tracker in smart contract rollup node"
+      ~level:Notice
+      ()
 
-let register_current_tezos_level dir =
-  RPC_directory.register0
-    dir
-    (Sc_rollup_services.current_tezos_level ())
-    (fun () () -> Layer1.current_level () >>= return)
+  let stopping =
+    declare_0
+      ~section
+      ~name:"sc_rollup_node_layer_1_stopping"
+      ~msg:"Stopping the layer 1 tracker smart contract rollup node"
+      ~level:Notice
+      ()
 
-let register configuration =
-  RPC_directory.empty
-  |> register_sc_rollup_address configuration
-  |> register_current_tezos_head
+  let setting_new_head =
+    declare_2
+      ~section
+      ~name:"sc_rollup_node_layer_1_new_head"
+      ~msg:"Setting layer 1 head to {hash} at level {level}"
+      ~level:Notice
+      ("hash", Block_hash.encoding)
+      ("level", Data_encoding.int32)
 
-let start configuration =
-  let Configuration.{rpc_addr; rpc_port; _} = configuration in
-  let rpc_addr = P2p_addr.of_string_exn rpc_addr in
-  let host = Ipaddr.V6.to_string rpc_addr in
-  let dir = register configuration in
-  let node = `TCP (`Port rpc_port) in
-  let acl = RPC_server.Acl.default rpc_addr in
-  Lwt.catch
-    (fun () ->
-      RPC_server.launch
-        ~media_types:Media_type.all_media_types
-        ~host
-        ~acl
-        node
-        dir
-      >>= return)
-    fail_with_exn
+  let rollback =
+    declare_2
+      ~section
+      ~name:"sc_rollup_node_layer_1_rollback"
+      ~msg:"Rolling back layer 1 head to {hash} at level {level}"
+      ~level:Notice
+      ("hash", Block_hash.encoding)
+      ("level", Data_encoding.int32)
 
-let shutdown = RPC_server.shutdown
+  let reacting_to_reorganization =
+    declare_2
+      ~section
+      ~name:"sc_rollup_node_layer_1_reorganization"
+      ~msg:
+        "Reacting to layer 1 reorganization: rollback to {rollback_hash}, \
+         process {new_blocks}"
+      ~level:Notice
+      ("rollback_hash", Block_hash.encoding)
+      ("new_blocks", Data_encoding.list Block_hash.encoding)
+end
+
+let starting = Simple.(emit starting)
+
+let stopping = Simple.(emit stopping)
+
+let setting_new_head hash level = Simple.(emit setting_new_head (hash, level))
+
+let reacting_to_reorganization h hs =
+  Simple.(emit reacting_to_reorganization (h, hs))
+
+let rollback h hs = Simple.(emit rollback (h, hs))

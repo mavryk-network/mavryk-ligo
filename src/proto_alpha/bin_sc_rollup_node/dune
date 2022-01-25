@@ -19,8 +19,13 @@
             tezos-rpc
             tezos-rpc-http
             tezos-rpc-http-server
+            tezos-shell-services
             tezos-sc-rollup-alpha
-            )
+            data-encoding
+            irmin-pack
+            irmin
+            ringo
+            ringo-lwt)
  (flags (:standard -open Tezos_base__TzPervasives
                    -open Tezos_client_commands
                    -open Tezos_stdlib_unix

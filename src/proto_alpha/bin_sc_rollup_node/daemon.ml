@@ -24,11 +24,19 @@
 (*****************************************************************************)
 
 (* For the moment, the daemon does nothing. *)
-let daemonize () = Lwt_utils.never_ending ()
 
-let install_finalizer rpc_server =
+let on_layer_1_chain_event _ _ _ = Lwt.return ()
+
+let daemonize cctxt configuration layer_1_chain_events =
+  Lwt.no_cancel
+  @@ Lwt_stream.iter_s
+       (on_layer_1_chain_event cctxt configuration)
+       layer_1_chain_events
+
+let install_finalizer configuration rpc_server =
   Lwt_exit.register_clean_up_callback ~loc:__LOC__ @@ fun exit_status ->
   RPC_server.shutdown rpc_server >>= fun () ->
+  Store.close configuration >>= fun () ->
   Event.shutdown_node exit_status >>= Internal_event_unix.close
 
 let run ~data_dir (cctxt : Protocol_client_context.full) =
@@ -36,9 +44,11 @@ let run ~data_dir (cctxt : Protocol_client_context.full) =
     Event.starting_node () >>= fun () ->
     Configuration.load ~data_dir >>=? fun configuration ->
     let Configuration.{rpc_addr; rpc_port; _} = configuration in
-    Layer1.start configuration cctxt >>=? fun () ->
+    Store.load configuration >>=? fun () ->
+    Layer1.start configuration cctxt >>=? fun tezos_heads ->
     RPC_server.start configuration >>=? fun rpc_server ->
-    let _ = install_finalizer rpc_server in
-    Event.node_is_ready ~rpc_addr ~rpc_port >>= daemonize
+    let _ = install_finalizer configuration rpc_server in
+    Event.node_is_ready ~rpc_addr ~rpc_port >>= fun () ->
+    daemonize cctxt configuration tezos_heads >>= return
   in
-  Lwt.catch start fail_with_exn
+  start ()

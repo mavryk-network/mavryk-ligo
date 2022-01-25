@@ -33,3 +33,17 @@ let sc_rollup_address () =
     ~query:RPC_query.empty
     ~output:Sc_rollup.Address.encoding
     RPC_path.(open_root / "sc_rollup_address")
+
+let current_tezos_head () =
+  RPC_service.get_service
+    ~description:"Tezos head known to the smart-contract rollup node"
+    ~query:RPC_query.empty
+    ~output:(Data_encoding.option Block_hash.encoding)
+    RPC_path.(open_root / "tezos_head")
+
+let current_tezos_level () =
+  RPC_service.get_service
+    ~description:"Tezos level known to the smart-contract rollup node"
+    ~query:RPC_query.empty
+    ~output:(Data_encoding.option Data_encoding.int32)
+    RPC_path.(open_root / "tezos_level")
