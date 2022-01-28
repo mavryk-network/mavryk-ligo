@@ -891,16 +891,16 @@ module Public_key_hash = struct
     match key with
     | Ed25519 h -> (
         match Path_Ed25519.to_path h l with
-        | [s] -> ["ed25519"; s]
-        | _ -> assert false)
+        | rest -> "ed25519" :: rest
+        )
     | Secp256k1 h -> (
         match Path_Secp256k1.to_path h l with
-        | [s] -> ["secp256k1"; s]
-        | _ -> assert false)
+        | rest -> "secp256k1" :: rest
+        )
     | P256 h -> (
         match Path_P256.to_path h l with
-        | [s] -> ["p256"; s]
-        | _ -> assert false)
+        | rest -> "p256" :: rest
+        )
 
   let of_path : _ -> public_key_hash option = function
     | "ed25519" :: rest -> (
