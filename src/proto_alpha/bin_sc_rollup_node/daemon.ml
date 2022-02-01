@@ -25,13 +25,11 @@
 
 (* For the moment, the daemon does nothing. *)
 
-let on_layer_1_chain_event _ _ _ = Lwt.return ()
+let on_layer_1_chain_event cctxt chain_event = Inbox.update cctxt chain_event
 
-let daemonize cctxt configuration layer_1_chain_events =
+let daemonize cctxt layer_1_chain_events =
   Lwt.no_cancel
-  @@ Lwt_stream.iter_s
-       (on_layer_1_chain_event cctxt configuration)
-       layer_1_chain_events
+  @@ Lwt_stream.iter_s (on_layer_1_chain_event cctxt) layer_1_chain_events
 
 let install_finalizer configuration rpc_server =
   Lwt_exit.register_clean_up_callback ~loc:__LOC__ @@ fun exit_status ->
@@ -43,12 +41,14 @@ let run ~data_dir (cctxt : Protocol_client_context.full) =
   let start () =
     Event.starting_node () >>= fun () ->
     Configuration.load ~data_dir >>=? fun configuration ->
-    let Configuration.{rpc_addr; rpc_port; _} = configuration in
+    let open Configuration in
+    let {rpc_addr; rpc_port; sc_rollup_address; _} = configuration in
     Store.load configuration >>=? fun () ->
     Layer1.start configuration cctxt >>=? fun tezos_heads ->
+    Inbox.start sc_rollup_address >>= fun () ->
     RPC_server.start configuration >>=? fun rpc_server ->
     let _ = install_finalizer configuration rpc_server in
     Event.node_is_ready ~rpc_addr ~rpc_port >>= fun () ->
-    daemonize cctxt configuration tezos_heads >>= return
+    daemonize cctxt tezos_heads >>= return
   in
   start ()

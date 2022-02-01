@@ -45,10 +45,19 @@ let register_current_tezos_level dir =
     (Sc_rollup_services.current_tezos_level ())
     (fun () () -> Layer1.current_level () >>= return)
 
+let register_current_inbox dir =
+  RPC_directory.opt_register0
+    dir
+    (Sc_rollup_services.current_inbox ())
+    (fun () () ->
+      Layer1.current_head_hash () >>= function
+      | Some head_hash -> Inbox.inbox_of_hash head_hash >>= return_some
+      | None -> return None)
+
 let register configuration =
   RPC_directory.empty
   |> register_sc_rollup_address configuration
-  |> register_current_tezos_head
+  |> register_current_tezos_head |> register_current_inbox
 
 let start configuration =
   let Configuration.{rpc_addr; rpc_port; _} = configuration in
