@@ -1811,6 +1811,10 @@ module Sc_rollup : sig
     val encoding : t Data_encoding.encoding
 
     val pp : Format.formatter -> t -> unit
+
+    val empty : t
+
+    val add_messages_uncarbonated : string list -> Raw_level_repr.t -> t -> t
   end
 
   val rpc_arg : t RPC_arg.t

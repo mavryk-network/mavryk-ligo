@@ -60,7 +60,12 @@ end
 module Sc_rollup = struct
   include Sc_rollup_repr
   include Sc_rollup_storage
-  module Inbox = Sc_rollup_inbox
+
+  module Inbox = struct
+    include Sc_rollup_inbox
+
+    let add_messages_uncarbonated = add_messages
+  end
 end
 
 module Entrypoint = Entrypoint_repr
