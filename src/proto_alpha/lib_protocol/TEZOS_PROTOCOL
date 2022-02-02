@@ -60,6 +60,7 @@
         "Lazy_storage_kind",
         "Receipt_repr",
         "Migration_repr",
+        "Tick_repr",
 
         "Raw_context_intf",
         "Raw_context",
