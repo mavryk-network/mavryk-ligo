@@ -107,11 +107,6 @@ let opt_register2 ~chunked s f =
       f context a1 a2 q i)
 
 let get_rpc_services () =
-  let desc = Alpha_context.description in
-  let desc_str = Format.asprintf "%a" Storage_description.pp desc in
-  let () =
-    Hack.printf "\n\n!!!!!! Generating service desc: \n%s\n\n" desc_str
-  in
   let p =
     RPC_directory.map
       (fun c ->
@@ -119,13 +114,7 @@ let get_rpc_services () =
         | Error t ->
             raise (Failure (Format.asprintf "%a" Error_monad.pp_trace t))
         | Ok c -> c.context)
-      (Storage_description.build_directory desc)
-  in
-  let () =
-    Logging.(log_string Notice "LOG LOG")
-    (*
-    failwith "HAHA"
-    *)
+      (Storage_description.build_directory Alpha_context.description)
   in
   RPC_directory.register_dynamic_directory
     !rpc_services
