@@ -164,6 +164,7 @@ type parametric = {
   tx_rollup_hard_size_limit_per_message : int;
   sc_rollup_enable : bool;
   sc_rollup_origination_size : int;
+  sc_rollup_challenge_window : int;
 }
 
 let parametric_encoding =
@@ -210,8 +211,9 @@ let parametric_encoding =
                     c.tx_rollup_origination_size,
                     c.tx_rollup_hard_size_limit_per_inbox,
                     c.tx_rollup_hard_size_limit_per_message ),
-                  (c.sc_rollup_enable, c.sc_rollup_origination_size) ) ) ) ) )
-      ))
+                  ( c.sc_rollup_enable,
+                    c.sc_rollup_origination_size,
+                    c.sc_rollup_challenge_window ) ) ) ) ) ) ))
     (fun ( ( preserved_cycles,
              blocks_per_cycle,
              blocks_per_commitment,
@@ -252,7 +254,9 @@ let parametric_encoding =
                        tx_rollup_origination_size,
                        tx_rollup_hard_size_limit_per_inbox,
                        tx_rollup_hard_size_limit_per_message ),
-                     (sc_rollup_enable, sc_rollup_origination_size) ) ) ) ) ) ) ->
+                     ( sc_rollup_enable,
+                       sc_rollup_origination_size,
+                       sc_rollup_challenge_window ) ) ) ) ) ) ) ->
       {
         preserved_cycles;
         blocks_per_cycle;
@@ -296,6 +300,7 @@ let parametric_encoding =
         tx_rollup_hard_size_limit_per_message;
         sc_rollup_enable;
         sc_rollup_origination_size;
+        sc_rollup_challenge_window;
       })
     (merge_objs
        (obj9
@@ -355,9 +360,10 @@ let parametric_encoding =
                          (req "tx_rollup_origination_size" int31)
                          (req "tx_rollup_hard_size_limit_per_inbox" int31)
                          (req "tx_rollup_hard_size_limit_per_message" int31))
-                      (obj2
+                      (obj3
                          (req "sc_rollup_enable" bool)
-                         (req "sc_rollup_origination_size" int31))))))))
+                         (req "sc_rollup_origination_size" int31)
+                         (req "sc_rollup_challenge_window" int31))))))))
 
 type t = {fixed : fixed; parametric : parametric}
 

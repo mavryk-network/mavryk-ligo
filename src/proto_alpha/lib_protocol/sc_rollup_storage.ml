@@ -391,10 +391,10 @@ let refine_stake ctxt rollup level staker commitment =
   in
   traverse
 
-(* TODO this should be a protocol constant, OR a SCORU-specific configuration *)
-let refutation_deadline_blocks = 2000
-
 let finalize_commitment ctxt rollup level new_lfc =
+  let refutation_deadline_blocks =
+    Constants_storage.sc_rollup_challenge_window ctxt
+  in
   let* (old_lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (new_lfc_commitment, ctxt) = get_commitment ctxt rollup new_lfc in
   let* (ctxt, new_lfc_added) =

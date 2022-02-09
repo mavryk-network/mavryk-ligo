@@ -884,6 +884,9 @@ let prepare_first_block ~level ~timestamp ctxt =
             sc_rollup_enable = false;
             (* The following value is chosen to prevent spam. *)
             sc_rollup_origination_size = 6_314;
+            (* One week, assuming a 30s block interval. *)
+            sc_rollup_challenge_window =
+              20_160 (* Change default_parameters.ml too? *);
           }
       in
       add_constants ctxt constants >>= fun ctxt -> return ctxt)

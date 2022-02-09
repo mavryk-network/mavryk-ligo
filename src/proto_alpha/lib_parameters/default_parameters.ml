@@ -107,6 +107,8 @@ let constants_mainnet =
     sc_rollup_enable = false;
     (* The following value is chosen to prevent spam. *)
     sc_rollup_origination_size = 6_314;
+    (* One week, assuming a 30s block interval. *)
+    sc_rollup_challenge_window = 20_160 (* Change raw_context.ml too? *);
   }
 
 let constants_sandbox =

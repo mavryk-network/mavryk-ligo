@@ -782,6 +782,7 @@ module Constants : sig
     tx_rollup_hard_size_limit_per_message : int;
     sc_rollup_enable : bool;
     sc_rollup_origination_size : int;
+    sc_rollup_challenge_window : int;
   }
 
   module Generated : sig

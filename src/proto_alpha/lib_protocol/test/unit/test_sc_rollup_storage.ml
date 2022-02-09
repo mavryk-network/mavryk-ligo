@@ -248,7 +248,7 @@ let test_deposit_then_refine () =
 let test_finalize () =
   let* ctxt = new_context ~limit:1_000_000_000 in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_2000 = Raw_level_repr.add level_0 2000 in
+  let level_after = Raw_level_repr.add level_0 20_160 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -275,14 +275,14 @@ let test_finalize () =
        Sc_rollup_storage.refine_stake ctxt rollup level_0 staker commitment
      in
      let* ((), ctxt) =
-       Sc_rollup_storage.finalize_commitment ctxt rollup level_2000 c1
+       Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
      in
      consume ctxt
 
 let test_finalize_fail_too_recent () =
   let* ctxt = new_context ~limit:1_000_000_000 in
   let level = (Raw_context.current_level ctxt).level in
-  let level_1999 = Raw_level_repr.add level 1999 in
+  let level_1999 = Raw_level_repr.add level 20_159 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -393,7 +393,7 @@ let test_stake_on_existing_node () =
 let test_finalize_with_two_stakers () =
   let* ctxt = new_context ~limit:1_000_000_000 in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_2000 = Raw_level_repr.add level_0 2000 in
+  let level_after = Raw_level_repr.add level_0 20_160 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -438,14 +438,14 @@ let test_finalize_with_two_stakers () =
        Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
      in
      let* ((), ctxt) =
-       Sc_rollup_storage.finalize_commitment ctxt rollup level_2000 c1
+       Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
      in
      consume ctxt
 
 let test_can_remove_staker () =
   let* ctxt = new_context ~limit:1_000_000_000 in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_2000 = Raw_level_repr.add level_0 2000 in
+  let level_after = Raw_level_repr.add level_0 20_160 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -491,14 +491,14 @@ let test_can_remove_staker () =
      in
      let* ((), ctxt) = Sc_rollup_storage.remove_staker ctxt rollup staker1 in
      let* ((), ctxt) =
-       Sc_rollup_storage.finalize_commitment ctxt rollup level_2000 c1
+       Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
      in
      consume ctxt
 
 let test_can_remove_staker2 () =
   let* ctxt = new_context ~limit:1_000_000_000 in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_2000 = Raw_level_repr.add level_0 2000 in
+  let level_after = Raw_level_repr.add level_0 20_160 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -544,7 +544,7 @@ let test_can_remove_staker2 () =
      in
      let* ((), ctxt) = Sc_rollup_storage.remove_staker ctxt rollup staker2 in
      let* ((), ctxt) =
-       Sc_rollup_storage.finalize_commitment ctxt rollup level_2000 c1
+       Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
      in
      consume ctxt
 
@@ -603,7 +603,7 @@ let test_removed_staker_can_not_withdraw () =
 let test_no_finalization_on_conflict () =
   let* ctxt = new_context ~limit:1_000_000_000 in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_2000 = Raw_level_repr.add level_0 2000 in
+  let level_after = Raw_level_repr.add level_0 2000 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -649,7 +649,7 @@ let test_no_finalization_on_conflict () =
      in
      assert_fails_with
        ~loc:__LOC__
-       (Sc_rollup_storage.finalize_commitment ctxt rollup level_2000 c1)
+       (Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1)
        "Attempted to finalize a disputed commitment."
 
 let test_finds_conflict_point_at_lfc () =

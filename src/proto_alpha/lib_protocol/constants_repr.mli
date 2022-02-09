@@ -129,6 +129,7 @@ type parametric = {
   tx_rollup_hard_size_limit_per_message : int;
   sc_rollup_enable : bool;
   sc_rollup_origination_size : int;
+  sc_rollup_challenge_window : int;
 }
 
 val parametric_encoding : parametric Data_encoding.encoding
@@ -207,7 +208,7 @@ end
     subcache, a parametric constant can be used to change the limit
     (see {parametric}).
 
-    The number of subcaches and the limits for all those subcaches form 
+    The number of subcaches and the limits for all those subcaches form
     together what is called the [cache_layout]. *)
 val cache_layout_size : int
 
