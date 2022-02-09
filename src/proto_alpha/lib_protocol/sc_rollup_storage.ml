@@ -305,12 +305,10 @@ let deallocate (ctxt : Raw_context.t) (rollup : Sc_rollup_repr.t)
     return ctxt
 
 let increase_stake_count ctxt rollup node =
-  Hack.printf "\n<< inc  %a >>\n" Commitment_hash.pp node ;
   let* (_, ctxt) = with_stake_count ctxt rollup node Int32.succ in
   return ctxt
 
 let decrease_stake_count ctxt rollup node =
-  Hack.printf "\n<< dec  %a >>\n" Commitment_hash.pp node ;
   let* (new_count, ctxt) = with_stake_count ctxt rollup node Int32.pred in
   if Compare.Int32.(new_count <= 0l) then deallocate ctxt rollup node
   else return ctxt
@@ -345,8 +343,6 @@ let withdraw_stake ctxt rollup staker =
 
 let refine_stake ctxt rollup _level staker commitment =
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
-  Hack.printf "\n<< zero %a >>\n" Commitment_hash.pp Commitment_hash.zero ;
-  Hack.printf "\n<< lfc  %a >>\n" Commitment_hash.pp lfc ;
   let* (ctxt, staked_on) = find_staker ctxt rollup staker in
   let new_hash = Commitment.hash commitment in
   let traverse =
@@ -393,12 +389,6 @@ let finalize_commitment ctxt rollup level new_lfc =
       let* (new_lfc_stake_count, ctxt) =
         get_commitment_stake_count ctxt rollup new_lfc
       in
-      Hack.printf
-        "\n<< %ld %ld-%a >>\n"
-        total_staker_count
-        new_lfc_stake_count
-        Commitment_hash.pp
-        new_lfc ;
       if Compare.Int32.(total_staker_count <> new_lfc_stake_count) then
         fail Sc_rollup_disputed
       else if
