@@ -828,4 +828,10 @@ module Sc_rollup : sig
       with type key = Sc_rollup_repr.Commitment_hash.t
        and type value = int32
        and type t = Raw_context.t * Sc_rollup_repr.t
+
+  module Commitment_added :
+    Non_iterable_indexed_carbonated_data_storage
+      with type key = Sc_rollup_repr.Commitment_hash.t
+       and type value = Raw_level_repr.t
+       and type t = Raw_context.t * Sc_rollup_repr.t
 end

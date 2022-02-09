@@ -1790,4 +1790,17 @@ module Sc_rollup = struct
 
            let encoding = Data_encoding.int32
          end)
+
+  module Commitment_added =
+    Make_indexed_carbonated_data_storage
+      (Make_subcontext (Registered) (Indexed_context.Raw_context)
+         (struct
+           let name = ["commitment_added"]
+         end))
+         (Make_index (Sc_rollup_repr.Commitment_hash_index))
+         (struct
+           type t = Raw_level_repr.t
+
+           let encoding = Raw_level_repr.encoding
+         end)
 end

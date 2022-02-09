@@ -268,6 +268,8 @@ let get_predecessor ctxt rollup node =
 
 (* TODO invariant: the challenge deadline of the LFC has passed *)
 
+(* TODO invariant: commitment_added is defined for each commtiment *)
+
 let find_staker ctxt rollup staker =
   let* (ctxt, res) = Store.Stakers.find (ctxt, rollup) staker in
   match res with
@@ -294,11 +296,26 @@ let with_stake_count ctxt rollup node f =
   in
   return (new_count, ctxt)
 
+let set_commitment_added ctxt rollup node new_value =
+  let* (ctxt, res) = Store.Commitment_added.find (ctxt, rollup) node in
+  let new_value =
+    match res with
+    | None -> new_value
+    | Some old_value -> Raw_level_repr.min old_value new_value
+  in
+  let* (ctxt, _, _) =
+    Store.Commitment_added.add (ctxt, rollup) node new_value
+  in
+  return ctxt
+
 let deallocate (ctxt : Raw_context.t) (rollup : Sc_rollup_repr.t)
     (node : Commitment_hash.t) : Raw_context.t tzresult Lwt.t =
   if Commitment_hash.(node = zero) then return ctxt
   else
     let* (ctxt, _) = Store.Commitments.remove_existing (ctxt, rollup) node in
+    let* (ctxt, _) =
+      Store.Commitment_added.remove_existing (ctxt, rollup) node
+    in
     let* (ctxt, _) =
       Store.Commitment_stake_count.remove_existing (ctxt, rollup) node
     in
@@ -341,7 +358,7 @@ let withdraw_stake ctxt rollup staker =
         return ((), ctxt)
       else fail Sc_rollup_not_staked_on_final
 
-let refine_stake ctxt rollup _level staker commitment =
+let refine_stake ctxt rollup level staker commitment =
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (ctxt, staked_on) = find_staker ctxt rollup staker in
   let new_hash = Commitment.hash commitment in
@@ -356,6 +373,7 @@ let refine_stake ctxt rollup _level staker commitment =
         let* (ctxt, _, _) =
           Store.Commitments.add (ctxt, rollup) new_hash commitment
         in
+        let* ctxt = set_commitment_added ctxt rollup new_hash level in
         let* (ctxt, _) = Store.Stakers.update (ctxt, rollup) staker new_hash in
         let* ctxt = increase_stake_count ctxt rollup new_hash in
         return (new_hash, ctxt) (* See WARNING above. *)
@@ -374,11 +392,14 @@ let refine_stake ctxt rollup _level staker commitment =
   traverse
 
 (* TODO this should be a protocol constant, OR a SCORU-specific configuration *)
-let refutation_deadline_blocks = 1024
+let refutation_deadline_blocks = 2000
 
 let finalize_commitment ctxt rollup level new_lfc =
   let* (old_lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (new_lfc_commitment, ctxt) = get_commitment ctxt rollup new_lfc in
+  let* (ctxt, new_lfc_added) =
+    Store.Commitment_added.get (ctxt, rollup) new_lfc
+  in
   if Commitment_hash.(new_lfc_commitment.predecessor <> old_lfc) then
     fail Sc_rollup_parent_not_final
   else
@@ -392,9 +413,7 @@ let finalize_commitment ctxt rollup level new_lfc =
       if Compare.Int32.(total_staker_count <> new_lfc_stake_count) then
         fail Sc_rollup_disputed
       else if
-        (* TODO FIXME: not inbox level, should oldest known addition in separate table! *)
-        Raw_level_repr.(
-          level < add new_lfc_commitment.inbox_level refutation_deadline_blocks)
+        Raw_level_repr.(level < add new_lfc_added refutation_deadline_blocks)
       then fail Sc_rollup_too_recent
       else
         (* update LFC *)
