@@ -73,17 +73,14 @@ val kind :
 
 (** [add_message context rollup msg] adds [msg] to [rollup]'s inbox.
 
-    This function is carbonated and returns the updated context as well as
-    the size diff. *)
+    This function returns the updated context as well as the size diff. *)
 val add_messages :
   Raw_context.t ->
   Sc_rollup_repr.t ->
   string list ->
   (Sc_rollup_inbox.t * Z.t * Raw_context.t) tzresult Lwt.t
 
-(** [inbox context rollup] returns the current state of the inbox.
-
-    This function is carbonated. *)
+(** [inbox context rollup] returns the current state of the inbox. *)
 val inbox :
   Raw_context.t ->
   Sc_rollup_repr.t ->
@@ -103,9 +100,7 @@ val inbox :
     This should usually be followed by [refine_stake] to stake on a
     specific commitment.
 
-    This function does not authenticate the staker.
-
-    This function is carbonated. *)
+    This function does not authenticate the staker. *)
 val deposit_stake :
   Raw_context.t ->
   Sc_rollup_repr.t ->
@@ -124,9 +119,7 @@ val deposit_stake :
     By design, the operation wrapping this should {i not} be authenticated,
     as it may be necessary for nodes on the honest branch to refund stakers on
     the LFC. They must do so by using [withdraw_stake] as they are implicitly
-    staked on the LFC and can not dispute it.
-
-    This function is carbonated. *)
+    staked on the LFC and can not dispute it. *)
 val withdraw_stake :
   Raw_context.t ->
   Sc_rollup_repr.t ->
@@ -154,9 +147,7 @@ val withdraw_stake :
       {li [Sc_rollup_unknown_commitment] if the parent of the given commitment does not exist}
     }
 
-    This function does not authenticate the staker.
-
-    This function is carbonated. *)
+    This function does not authenticate the staker. *)
 val refine_stake :
   Raw_context.t ->
   Sc_rollup_repr.t ->
@@ -173,9 +164,7 @@ val refine_stake :
 
     May fail with:
     {ul
-      {li [Sc_rollup_does_not_exist] if [rollup] does not exist}
-
-    This function is carbonated. *)
+      {li [Sc_rollup_does_not_exist] if [rollup] does not exist} *)
 val last_final_commitment :
   Raw_context.t ->
   Sc_rollup_repr.t ->
@@ -196,9 +185,7 @@ val last_final_commitment :
       {li [Sc_rollup_too_recent] if [commitment] has not passed its deadline}
       {li [Sc_rollup_no_stakers] if there are zero stakers}
       {li [Sc_rollup_disputed] if at least one staker is not staked on [commitment]}
-    }
-
-    This function is carbonated. *)
+    } *)
 val finalize_commitment :
   Raw_context.t ->
   Sc_rollup_repr.t ->
@@ -217,9 +204,7 @@ type conflict_point =
     {ul
       {li [Sc_rollup_does_not_exist] if [rollup] does not exist}
       {li [Sc_rollup_no_conflict] if [staker1] is staked on an ancestor of the commitment staked on by [staker2], or vice versa}
-    }
-
-    This function is carbonated. *)
+    } *)
 val get_conflict_point :
   Raw_context.t ->
   Sc_rollup_repr.t ->
@@ -232,9 +217,7 @@ val get_conflict_point :
     May fail with:
     {ul
       {li [Sc_rollup_unknown_commitment] if [commitment] does not exist}
-    }
-
-    This function is carbonated. *)
+    } *)
 val get_commitment :
   Raw_context.t ->
   Sc_rollup_repr.t ->
@@ -253,9 +236,7 @@ val get_commitment :
       {li [Sc_rollup_does_not_exist] if [rollup] does not exist}
       {li [Sc_rollup_not_staked] if [staker] is not staked}
       {li [Sc_rollup_remove_final] if [staker] is staked on a finalized commitment}
-    }
-
-    This function is carbonated. *)
+    } *)
 val remove_staker :
   Raw_context.t ->
   Sc_rollup_repr.t ->
