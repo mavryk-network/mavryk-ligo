@@ -114,13 +114,3 @@ poetry install
 poetry run pylint b58_prefix.py --disable=missing-docstring --disable=invalid-name
 poetry run pytest test_b58_prefix.py -v
 ```
-
-## Nix setup
-
-You can optionally use Nix to set up poetry:
-
-```
-nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/fd0784859b65cc334e52f3df82d71470ab012b3b.tar.gz -p poetry
-```
-
-Then use `poetry` as described above.
