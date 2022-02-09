@@ -1763,7 +1763,32 @@ end
 
 (** See {!Sc_rollup_storage} and {!Sc_rollup_repr}. *)
 module Sc_rollup : sig
-  (* TODO expose errors *)
+  type error +=
+    | (* `Temporary *)
+        Sc_rollup_does_not_exist of Sc_rollup_repr.t
+    | (* `Temporary *)
+        Sc_rollup_already_staked
+    | (* `Temporary *)
+        Sc_rollup_not_staked_on_final
+    | (* `Temporary *)
+        Sc_rollup_staker_backtracked
+    | (* `Temporary *)
+        Sc_rollup_unknown_commitment of
+        Sc_rollup_repr.Commitment_hash.t
+    | (* `Temporary *)
+        Sc_rollup_parent_not_final
+    | (* `Temporary *)
+        Sc_rollup_too_recent
+    | (* `Temporary *)
+        Sc_rollup_no_stakers
+    | (* `Temporary *)
+        Sc_rollup_disputed
+    | (* `Temporary *)
+        Sc_rollup_no_conflict
+    | (* `Temporary *)
+        Sc_rollup_not_staked
+    | (* `Temporary *)
+        Sc_rollup_remove_final
 
   module PVM : sig
     type boot_sector
