@@ -351,21 +351,22 @@ let refine_stake ctxt rollup _level staker commitment =
   let new_hash = Commitment.hash commitment in
   let traverse =
     let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
+      (* WARNING: Do NOT reorder this sequence of ifs.
+         we must check for staked_on before LFC, since refining
+         from the LFC to another commit is a valid operation. *)
       if Commitment_hash.(node = staked_on) then
-        (* Note we must check for staked_on before LFC: refining
-           from the LFC to another commit is a valid operation. *)
-        (* Previously staked commit found *)
-        (* Insert new commitment if not existing *)
+        (* Previously staked commit found:
+           Insert new commitment if not existing *)
         let* (ctxt, _, _) =
           Store.Commitments.add (ctxt, rollup) new_hash commitment
         in
         let* (ctxt, _) = Store.Stakers.update (ctxt, rollup) staker new_hash in
         let* ctxt = increase_stake_count ctxt rollup new_hash in
-        return (new_hash, ctxt)
+        return (new_hash, ctxt) (* See WARNING above. *)
       else if Commitment_hash.(node = lfc) then
         (* We reached the LFC, but [staker] is not staked directly on it.
-           Thus, we backtracked.
-           Note everyone is staked in indirectly on the LFC. *)
+           Thus, we backtracked. Note that everyone is staked in indirectly on
+           the LFC. *)
         fail Sc_rollup_staker_backtracked
       else
         let* (pred, ctxt) = get_predecessor ctxt rollup node in
