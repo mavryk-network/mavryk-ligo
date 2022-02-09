@@ -764,10 +764,6 @@ struct
   module RPC_query = RPC_query
   module RPC_service = RPC_service
 
-  module Hack = struct
-    let printf = Format.printf
-  end
-
   module RPC_answer = struct
     type 'o t =
       [ `Ok of 'o (* 200 *)
