@@ -673,19 +673,12 @@ let test_finds_conflict_point_at_lfc () =
      in
      if left = c1 && right = c2 then consume ctxt else assert false
 
-(* TODO test we can extract conflict point *beneath* LFC *)
-(* TODO test get_conflict_point with either or both stakers being on LFC *)
-(* TODO test get_conflict_point with either or both stakers being on LFC when SCORU is in pre-boot state *)
-(* TODO test finalization consumes inbox *)
-(* TODO mutation test *)
-
 let tests =
   [
     Tztest.tztest
       "deposit to missing rollup fails"
       `Quick
       test_deposit_to_missing_rollup;
-    (* TODO check ALL storage methods fail on non-existing rollup *)
     Tztest.tztest
       "deposit to existing rollup"
       `Quick
@@ -696,7 +689,7 @@ let tests =
       `Quick
       test_withdraw_when_not_staked;
     Tztest.tztest "withdrawing twice fails" `Quick test_withdrawing_twice;
-    Tztest.tztest "deposit and refine" `Quick test_deposit_then_refine;
+    Tztest.tztest "stake on new node" `Quick test_deposit_then_refine;
     Tztest.tztest "stake on existing node" `Quick test_stake_on_existing_node;
     Tztest.tztest
       "withdrawal fails when not staked on LFC"
@@ -733,12 +726,18 @@ let tests =
       "removing staker from the LFC fails"
       `Quick
       test_removing_staker_from_lfc_fails;
+    (* TODO check ALL storage methods fail on non-existing rollup *)
+    (* TODO test we can extract conflict point *beneath* LFC *)
+    (* TODO test get_conflict_point with either or both stakers being on LFC *)
+    (* TODO test get_conflict_point with either or both stakers being on LFC when SCORU is in pre-boot state *)
+    (* TODO test finalization consumes inbox *)
+    (* TODO mutation test *)
+    (* TODO check staker can not backtrack *)
     (* TODO test for memory leaks *)
-    (* TODO add test showing that "concurrent" insertion with refine_stake is OK *)
+    (* TODO add test showing that "concurrent" insertion with refine_stake is OK, e.g. no races on who inserts first *)
     (* TODO test that we fail gracefully if remove_staker is called
        for a staker staked on LFC. It should not be possible to
        force unstaking from the LFC, instead other nodes should
        refund stakers who refuse to refine from the LFC.
     *)
-    (* TODO other tests from spec.ts, line 530 *)
   ]
