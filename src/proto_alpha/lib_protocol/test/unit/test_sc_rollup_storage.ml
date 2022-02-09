@@ -45,53 +45,24 @@ let assert_fails_with :
   k >>= function
   | Ok _ -> Stdlib.failwith "Expected failure"
   | Error err ->
-      (* TODO use derived equality on errors, or at least comparison of registered id, rather than description equality *)
       let str : string =
         Format.asprintf "%a" Environment.Error_monad.pp_trace err
       in
       if Stdlib.(str = "Error:\n  " ^ msg ^ "\n") then Lwt.return (Ok ())
-        (* TODO say what was expected *)
       else Stdlib.failwith @@ "Failed with wrong error message, got: " ^ str
 
-(* TODO use this *)
-let assert_fails_with2 ~loc (k : 'b Lwt.t)
-    (error : Environment.Error_monad.error) : (unit, 'a) result Lwt.t =
-  k >>= function
-  | Ok _ -> Stdlib.failwith "Expected failure"
-  | Error err ->
-      let actual_str : string =
-        Format.asprintf "%a" Environment.Error_monad.pp_trace err
-      in
-      let expected_str : string =
-        Format.asprintf
-          "%a"
-          Environment.Error_monad.pp_trace
-          (Environment.Error_monad.trace_of_error error)
-      in
-      Assert.equal_string ~loc actual_str expected_str
-
-(* TODO use default_raw_context instead of new_context
-   See
- https://gitlab.com/tezos/tezos/-/merge_requests/4276/diffs#bfd07d868be6a3674a52987cc801d6ae576f542e
-  *)
-let new_context ~limit =
+let new_context =
   let* (b, _contracts) = Context.init 1 in
   Incremental.begin_construction b >|=? fun inc ->
   let state = Incremental.validation_state inc in
-  let _ = limit in
   let ctxt = state.ctxt in
-  (*
-  let ctxt =
-    Alpha_context.Gas.set_limit ctxt (Saturation_repr.safe_int limit)
-  in
-  *)
   let ctxt = Alpha_context.Origination_nonce.init ctxt Operation_hash.zero in
   Alpha_context.Internal_for_tests.to_raw ctxt
 
 let consume _ctxt = return ()
 
 let test_deposit_to_missing_rollup () =
-  let* ctxt = new_context ~limit:1_000_000 in
+  let* ctxt = new_context in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@
   let rollup = Sc_rollup_repr.Address.hash_bytes [] in
@@ -102,7 +73,7 @@ let test_deposit_to_missing_rollup () =
     "Rollup scr1Ew52VCdi6nF1JuokRGMqfmSeiAEXymW2m does not exist"
 
 let test_initial_state_is_pre_boot () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -115,7 +86,7 @@ let test_initial_state_is_pre_boot () =
      else assert false
 
 let test_deposit_to_existing_rollup () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -131,7 +102,7 @@ let test_deposit_to_existing_rollup () =
      consume ctxt
 
 let test_removing_staker_from_lfc_fails () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -150,7 +121,7 @@ let test_removing_staker_from_lfc_fails () =
        "Can not remove a final commitment."
 
 let test_deposit_then_withdraw () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -167,7 +138,7 @@ let test_deposit_then_withdraw () =
      consume ctxt
 
 let test_withdraw_when_not_staked () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -185,7 +156,7 @@ let test_withdraw_when_not_staked () =
        "Unknown staker."
 
 let test_withdrawing_twice () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
@@ -204,7 +175,6 @@ let test_withdrawing_twice () =
        (Sc_rollup_storage.withdraw_stake ctxt rollup staker)
        "Unknown staker."
 
-(* TODO move to lib_base, not exposed in Proto *)
 let number_of_messages_exn n =
   match Sc_rollup_repr.Number_of_messages.of_int32 n with
   | Some x -> x
@@ -216,7 +186,7 @@ let number_of_ticks_exn n =
   | None -> Stdlib.failwith "Bad Number_of_ticks"
 
 let test_deposit_then_refine () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
@@ -246,7 +216,7 @@ let test_deposit_then_refine () =
      consume ctxt
 
 let test_finalize () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 20_160 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
@@ -280,7 +250,7 @@ let test_finalize () =
      consume ctxt
 
 let test_finalize_fail_too_recent () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
   let level_1999 = Raw_level_repr.add level 20_159 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
@@ -320,7 +290,7 @@ let test_finalize_fail_too_recent () =
        "Attempted to finalize a commitment before its refutation deadline."
 
 let test_withdrawal_fails_when_not_staked_on_lfc () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
@@ -353,7 +323,7 @@ let test_withdrawal_fails_when_not_staked_on_lfc () =
        "Attempted to withdraw while not staked on a final node."
 
 let test_stake_on_existing_node () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
@@ -391,7 +361,7 @@ let test_stake_on_existing_node () =
      consume ctxt
 
 let test_finalize_with_two_stakers () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 20_160 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
@@ -443,7 +413,7 @@ let test_finalize_with_two_stakers () =
      consume ctxt
 
 let test_can_remove_staker () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 20_160 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
@@ -496,7 +466,7 @@ let test_can_remove_staker () =
      consume ctxt
 
 let test_can_remove_staker2 () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 20_160 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
@@ -549,7 +519,7 @@ let test_can_remove_staker2 () =
      consume ctxt
 
 let test_removed_staker_can_not_withdraw () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
@@ -601,7 +571,7 @@ let test_removed_staker_can_not_withdraw () =
        "Unknown staker."
 
 let test_no_finalization_on_conflict () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 2000 in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
@@ -653,7 +623,7 @@ let test_no_finalization_on_conflict () =
        "Attempted to finalize a disputed commitment."
 
 let test_finds_conflict_point_at_lfc () =
-  let* ctxt = new_context ~limit:1_000_000_000 in
+  let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   Lwt.map (fun x -> Environment.wrap_tzresult x)
   @@ let* (rollup, _size, ctxt) =
