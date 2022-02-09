@@ -73,6 +73,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_message_repr.mli tx_rollup_message_repr.ml
    tx_rollup_inbox_repr.mli tx_rollup_inbox_repr.ml
    tx_rollup_commitments_repr.mli tx_rollup_commitments_repr.ml
+   bond_id_repr.mli bond_id_repr.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
    entrypoint_repr.mli entrypoint_repr.ml
@@ -104,6 +105,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    contract_delegate_storage.mli contract_delegate_storage.ml
    sapling_storage.ml
    lazy_storage_diff.mli lazy_storage_diff.ml
+   frozen_bonds_storage.mli frozen_bonds_storage.ml
    contract_storage.mli contract_storage.ml
    commitment_storage.mli commitment_storage.ml
    token.mli token.ml
@@ -228,6 +230,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_message_repr.mli tx_rollup_message_repr.ml
    tx_rollup_inbox_repr.mli tx_rollup_inbox_repr.ml
    tx_rollup_commitments_repr.mli tx_rollup_commitments_repr.ml
+   bond_id_repr.mli bond_id_repr.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
    entrypoint_repr.mli entrypoint_repr.ml
@@ -259,6 +262,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    contract_delegate_storage.mli contract_delegate_storage.ml
    sapling_storage.ml
    lazy_storage_diff.mli lazy_storage_diff.ml
+   frozen_bonds_storage.mli frozen_bonds_storage.ml
    contract_storage.mli contract_storage.ml
    commitment_storage.mli commitment_storage.ml
    token.mli token.ml
@@ -383,6 +387,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_message_repr.mli tx_rollup_message_repr.ml
    tx_rollup_inbox_repr.mli tx_rollup_inbox_repr.ml
    tx_rollup_commitments_repr.mli tx_rollup_commitments_repr.ml
+   bond_id_repr.mli bond_id_repr.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
    entrypoint_repr.mli entrypoint_repr.ml
@@ -414,6 +419,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    contract_delegate_storage.mli contract_delegate_storage.ml
    sapling_storage.ml
    lazy_storage_diff.mli lazy_storage_diff.ml
+   frozen_bonds_storage.mli frozen_bonds_storage.ml
    contract_storage.mli contract_storage.ml
    commitment_storage.mli commitment_storage.ml
    token.mli token.ml
@@ -560,6 +566,7 @@ include Tezos_raw_protocol_alpha.Main
    Tx_rollup_message_repr
    Tx_rollup_inbox_repr
    Tx_rollup_commitments_repr
+   Bond_id_repr
    Vote_repr
    Block_header_repr
    Entrypoint_repr
@@ -591,6 +598,7 @@ include Tezos_raw_protocol_alpha.Main
    Contract_delegate_storage
    Sapling_storage
    Lazy_storage_diff
+   Frozen_bonds_storage
    Contract_storage
    Commitment_storage
    Token
@@ -756,6 +764,7 @@ include Tezos_raw_protocol_alpha.Main
    tx_rollup_message_repr.mli tx_rollup_message_repr.ml
    tx_rollup_inbox_repr.mli tx_rollup_inbox_repr.ml
    tx_rollup_commitments_repr.mli tx_rollup_commitments_repr.ml
+   bond_id_repr.mli bond_id_repr.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
    entrypoint_repr.mli entrypoint_repr.ml
@@ -787,6 +796,7 @@ include Tezos_raw_protocol_alpha.Main
    contract_delegate_storage.mli contract_delegate_storage.ml
    sapling_storage.ml
    lazy_storage_diff.mli lazy_storage_diff.ml
+   frozen_bonds_storage.mli frozen_bonds_storage.ml
    contract_storage.mli contract_storage.ml
    commitment_storage.mli commitment_storage.ml
    token.mli token.ml
