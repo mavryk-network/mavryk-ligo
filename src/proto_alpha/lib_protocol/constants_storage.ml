@@ -172,3 +172,7 @@ let sc_rollup_enable c =
 let sc_rollup_origination_size c =
   let constants = Raw_context.constants c in
   constants.sc_rollup_origination_size
+
+let sc_rollup_max_available_messages c =
+  let constants = Raw_context.constants c in
+  constants.sc_rollup_max_available_messages

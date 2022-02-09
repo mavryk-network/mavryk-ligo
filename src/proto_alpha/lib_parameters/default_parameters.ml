@@ -107,6 +107,8 @@ let constants_mainnet =
     sc_rollup_enable = false;
     (* The following value is chosen to prevent spam. *)
     sc_rollup_origination_size = 6_314;
+    (* The following value is chosen to limit the length of inbox refutation proofs. *)
+    sc_rollup_max_available_messages = 1_000_000;
   }
 
 let constants_sandbox =

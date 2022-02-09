@@ -796,6 +796,7 @@ module Constants : sig
     tx_rollup_hard_size_limit_per_message : int;
     sc_rollup_enable : bool;
     sc_rollup_origination_size : int;
+    sc_rollup_max_available_messages : int;
   }
 
   module Generated : sig
@@ -888,6 +889,8 @@ module Constants : sig
   val sc_rollup_enable : context -> bool
 
   val sc_rollup_origination_size : context -> int
+
+  val sc_rollup_max_available_messages : context -> int
 
   (** All constants: fixed and parametric *)
   type t = private {fixed : fixed; parametric : parametric}
