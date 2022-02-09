@@ -111,6 +111,8 @@ module Commitment : sig
   }
 
   val encoding : t Data_encoding.t
+
+  val hash : t -> Commitment_hash.t
 end
 
 (** A smart contract rollup is identified by its address. *)

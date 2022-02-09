@@ -348,12 +348,7 @@ let refine_stake ctxt rollup _level staker commitment =
   Hack.printf "\n<< zero %a >>\n" Commitment_hash.pp Commitment_hash.zero ;
   Hack.printf "\n<< lfc  %a >>\n" Commitment_hash.pp lfc ;
   let* (ctxt, staked_on) = find_staker ctxt rollup staker in
-  let new_hash : Commitment_hash.t =
-    let commitment_bytes =
-      Data_encoding.Binary.to_bytes_exn Commitment.encoding commitment
-    in
-    Commitment_hash.hash_bytes [commitment_bytes]
-  in
+  let new_hash = Commitment.hash commitment in
   let traverse =
     let rec go (node : Commitment_hash.t) (visited : Commitment_hash.t list)
         (ctxt : Raw_context.t) =

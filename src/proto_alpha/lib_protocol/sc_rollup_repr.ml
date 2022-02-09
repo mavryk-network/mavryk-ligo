@@ -278,6 +278,12 @@ module Commitment = struct
          (req "predecessor" Commitment_hash.encoding)
          (req "number_of_messages" Number_of_messages.encoding)
          (req "number_of_ticks" Number_of_ticks.encoding))
+
+  let hash commitment =
+    let commitment_bytes =
+      Data_encoding.Binary.to_bytes_exn encoding commitment
+    in
+    Commitment_hash.hash_bytes [commitment_bytes]
 end
 
 module Kind = struct
