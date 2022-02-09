@@ -350,8 +350,7 @@ let refine_stake ctxt rollup _level staker commitment =
   let* (ctxt, staked_on) = find_staker ctxt rollup staker in
   let new_hash = Commitment.hash commitment in
   let traverse =
-    let rec go (node : Commitment_hash.t) (visited : Commitment_hash.t list)
-        (ctxt : Raw_context.t) =
+    let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
       if Commitment_hash.(node = staked_on) then
         (* Note we must check for staked_on before LFC: refining
            from the LFC to another commit is a valid operation. *)
@@ -361,13 +360,7 @@ let refine_stake ctxt rollup _level staker commitment =
           Store.Commitments.add (ctxt, rollup) new_hash commitment
         in
         let* (ctxt, _) = Store.Stakers.update (ctxt, rollup) staker new_hash in
-        let* ctxt =
-          List.fold_left_es
-            (fun ctxt node -> increase_stake_count ctxt rollup node)
-            ctxt
-            (* Do NOT include node here, we're already staked on that *)
-            (new_hash :: visited)
-        in
+        let* ctxt = increase_stake_count ctxt rollup new_hash in
         return (new_hash, ctxt)
       else if Commitment_hash.(node = lfc) then
         (* We reached the LFC, but [staker] is not staked directly on it.
@@ -376,9 +369,10 @@ let refine_stake ctxt rollup _level staker commitment =
         fail Sc_rollup_staker_backtracked
       else
         let* (pred, ctxt) = get_predecessor ctxt rollup node in
-        (go [@ocaml.tailcall]) pred (node :: visited) ctxt
+        let* ctxt = increase_stake_count ctxt rollup node in
+        (go [@ocaml.tailcall]) pred ctxt
     in
-    go Sc_rollup_repr.Commitment.(commitment.predecessor) [] ctxt
+    go Sc_rollup_repr.Commitment.(commitment.predecessor) ctxt
   in
   traverse
 
