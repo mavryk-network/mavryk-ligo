@@ -253,7 +253,7 @@ let find_staker ctxt rollup staker =
   | None -> fail Sc_rollup_not_staked
   | Some branch -> return (ctxt, branch)
 
-let with_staker_size ctxt rollup f =
+let modify_staker_size ctxt rollup f =
   let* (ctxt, maybe_count) = Store.Stakers_size.find ctxt rollup in
   let count = Option.value ~default:0l maybe_count in
   let* (ctxt, _, _) = Store.Stakers_size.add ctxt rollup (f count) in
@@ -265,7 +265,7 @@ let get_commitment_stake_count ctxt rollup node =
   in
   return (Option.value ~default:0l maybe_staked_on_commitment, ctxt)
 
-let with_stake_count ctxt rollup node f =
+let modify_stake_count ctxt rollup node f =
   let* (count, ctxt) = get_commitment_stake_count ctxt rollup node in
   let new_count = f count in
   let* (ctxt, _, _) =
@@ -299,11 +299,11 @@ let deallocate (ctxt : Raw_context.t) (rollup : Sc_rollup_repr.t)
     return ctxt
 
 let increase_stake_count ctxt rollup node =
-  let* (_, ctxt) = with_stake_count ctxt rollup node Int32.succ in
+  let* (_, ctxt) = modify_stake_count ctxt rollup node Int32.succ in
   return ctxt
 
 let decrease_stake_count ctxt rollup node =
-  let* (new_count, ctxt) = with_stake_count ctxt rollup node Int32.pred in
+  let* (new_count, ctxt) = modify_stake_count ctxt rollup node Int32.pred in
   if Compare.Int32.(new_count <= 0l) then deallocate ctxt rollup node
   else return ctxt
 
@@ -316,7 +316,7 @@ let deposit_stake ctxt rollup staker =
          We should lock stake here, and fail if there aren't enough funds.
       *)
       let* (ctxt, _) = Store.Stakers.init (ctxt, rollup) staker lfc in
-      let* ctxt = with_staker_size ctxt rollup Int32.succ in
+      let* ctxt = modify_staker_size ctxt rollup Int32.succ in
       return ((), ctxt)
   | Some _ -> fail Sc_rollup_already_staked
 
@@ -331,7 +331,7 @@ let withdraw_stake ctxt rollup staker =
            We should refund stake here.
         *)
         let* (ctxt, _) = Store.Stakers.remove_existing (ctxt, rollup) staker in
-        let* ctxt = with_staker_size ctxt rollup Int32.pred in
+        let* ctxt = modify_staker_size ctxt rollup Int32.pred in
         return ((), ctxt)
       else fail Sc_rollup_not_staked_on_final
 
@@ -480,7 +480,7 @@ let remove_staker ctxt rollup staker =
       if Commitment_hash.(staked_on = lfc) then fail Sc_rollup_remove_final
       else
         let* (ctxt, _) = Store.Stakers.remove_existing (ctxt, rollup) staker in
-        let* ctxt = with_staker_size ctxt rollup Int32.pred in
+        let* ctxt = modify_staker_size ctxt rollup Int32.pred in
         let traverse =
           let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
             if Commitment_hash.(node = lfc) then return ((), ctxt)
