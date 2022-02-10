@@ -307,21 +307,12 @@ let delegate_participated_enough ctxt delegate =
   Storage.Contract.Missed_endorsements.find ctxt delegate >>=? function
   | None -> return_true
   | Some missed_endorsements ->
-      Logging.log
-        Error
-        "  [distribute_endo_rewards] remaining_slots = %d@."
-        missed_endorsements.remaining_slots ;
       return Compare.Int.(missed_endorsements.remaining_slots >= 0)
 
 let delegate_has_revealed_nonces delegate unrevelead_nonces_set =
   not (Signature.Public_key_hash.Set.mem delegate unrevelead_nonces_set)
 
 let distribute_endorsing_rewards ctxt last_cycle unrevealed_nonces =
-  Logging.log
-    Error
-    "\n[distribute_endo_rewards] for cycle %a@."
-    Cycle_repr.pp
-    last_cycle ;
   let set = ref Signature.Public_key_hash.Set.empty in
   let endorsing_reward_per_slot =
     Constants_storage.endorsing_reward_per_slot ctxt
@@ -350,14 +341,6 @@ let distribute_endorsing_rewards ctxt last_cycle unrevealed_nonces =
         ~active_stake
       >>?= fun expected_slots ->
       let rewards = Tez_repr.mul_exn endorsing_reward_per_slot expected_slots in
-      Logging.log
-        Error
-        "  [distribute_endo_rewards] %a\tsufficient_participation: %b, \
-         has_revealed_nonces: %b@."
-        Signature.Public_key_hash.pp_short
-        delegate
-        sufficient_participation
-        has_revealed_nonces ;
       (if sufficient_participation && has_revealed_nonces then
        (* Sufficient participation: we pay the rewards *)
        Token.transfer

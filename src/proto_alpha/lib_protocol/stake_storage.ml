@@ -171,11 +171,6 @@ let snapshot ctxt =
   Storage.Stake.Active_delegate_with_one_roll.snapshot ctxt index
 
 let select_distribution_for_cycle ctxt cycle pubkey set =
-  Logging.log
-    Error
-    "\n[select_distribution_for_cycle] for cycle %a@."
-    Cycle_repr.pp
-    cycle ;
   Storage.Stake.Last_snapshot.get ctxt >>=? fun max_index ->
   Storage.Seed.For_cycle.get ctxt cycle >>=? fun seed ->
   let rd = Seed_repr.initialize_new seed [Bytes.of_string "stake_snapshot"] in
@@ -192,14 +187,8 @@ let select_distribution_for_cycle ctxt cycle pubkey set =
          ~order:`Sorted
          ~init:([], Tez_repr.zero)
          ~f:(fun delegate () (acc, total_stake) ->
-           if Signature.Public_key_hash.Set.mem delegate set then (
-             Logging.log
-               Error
-               "  [select_distribution_for_cycle] %a is desactivated, do not \
-                consider it@."
-               Signature.Public_key_hash.pp_short
-               delegate ;
-             return (acc, total_stake))
+           if Signature.Public_key_hash.Set.mem delegate set then
+             return (acc, total_stake)
            else
              Storage.Stake.Staking_balance.Snapshot.get ctxt (index, delegate)
              >>=? fun staking_balance ->
@@ -243,11 +232,6 @@ let select_distribution_for_cycle ctxt cycle pubkey set =
                Tez_repr.min stake_to_consider max_staking_capacity
              in
              Tez_repr.(total_stake +? stake_for_cycle) >>?= fun total_stake ->
-             Logging.log
-               Error
-               "  [select_distribution_for_cycle] %a is considered@."
-               Signature.Public_key_hash.pp_short
-               delegate ;
              return ((delegate, stake_for_cycle) :: acc, total_stake))
        >>=? fun (stakes, total_stake) ->
        let stakes =
