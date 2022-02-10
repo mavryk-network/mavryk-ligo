@@ -247,18 +247,6 @@ let get_predecessor ctxt rollup node =
   let* (commitment, ctxt) = get_commitment ctxt rollup node in
   return (commitment.predecessor, ctxt)
 
-(* TODO invariant: stakers_size is the size of stakers *)
-
-(* TODO invariant: commitment stake count describes the number of stakers per commit *)
-
-(* TODO invariant: all commitments have at least once staker *)
-
-(* TODO invariant: everyone is implicitly staked on the LFC *)
-
-(* TODO invariant: the challenge deadline of the LFC has passed *)
-
-(* TODO invariant: commitment_added is defined for each commtiment *)
-
 let find_staker ctxt rollup staker =
   let* (ctxt, res) = Store.Stakers.find (ctxt, rollup) staker in
   match res with
