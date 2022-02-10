@@ -35,21 +35,20 @@ open Protocol
 open Lwt_result_syntax
 
 let assert_fails_with :
-    type a b.
+    type a.
     loc:string ->
-    b Environment.Error_monad.tzresult Lwt.t ->
+    a Environment.Error_monad.tzresult Lwt.t ->
     string ->
-    (unit, a) result Lwt.t =
+    unit tzresult Lwt.t =
  fun ~loc k msg ->
-  let _ = loc in
+  let expected_error_msg = "Error:\n  " ^ msg ^ "\n" in
   k >>= function
   | Ok _ -> Stdlib.failwith "Expected failure"
   | Error err ->
-      let str : string =
+      let actual_error_msg : string =
         Format.asprintf "%a" Environment.Error_monad.pp_trace err
       in
-      if Stdlib.(str = "Error:\n  " ^ msg ^ "\n") then Lwt.return (Ok ())
-      else Stdlib.failwith @@ "Failed with wrong error message, got: " ^ str
+      Assert.equal_string ~loc expected_error_msg actual_error_msg
 
 let new_context =
   let* (b, _contracts) = Context.init 1 in
@@ -61,10 +60,10 @@ let new_context =
 
 let consume _ctxt = return ()
 
+let lift k = Lwt.map (fun x -> Environment.wrap_tzresult x) k
+
 let test_deposit_to_missing_rollup () =
   let* ctxt = new_context in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@
   let rollup = Sc_rollup_repr.Address.hash_bytes [] in
   let staker = Sc_rollup_repr.Staker.zero in
   assert_fails_with
@@ -74,20 +73,22 @@ let test_deposit_to_missing_rollup () =
 
 let test_initial_state_is_pre_boot () =
   let* ctxt = new_context in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@ let* (rollup, _size, ctxt) =
-       Sc_rollup_storage.originate
+  let* (rollup, _size, ctxt) =
+    lift
+    @@ Sc_rollup_storage.originate
          ctxt
          ~kind:Example_arith
          ~boot_sector:(Sc_rollup_repr.PVM.boot_sector_of_string "")
-     in
-     let* (lfc, ctxt) = Sc_rollup_storage.last_final_commitment ctxt rollup in
-     if lfc = Sc_rollup_repr.Commitment_hash.zero then consume ctxt
-     else assert false
+  in
+  let* (lfc, ctxt) =
+    lift @@ Sc_rollup_storage.last_final_commitment ctxt rollup
+  in
+  if lfc = Sc_rollup_repr.Commitment_hash.zero then consume ctxt
+  else assert false
 
 let test_deposit_to_existing_rollup () =
   let* ctxt = new_context in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -103,26 +104,26 @@ let test_deposit_to_existing_rollup () =
 
 let test_removing_staker_from_lfc_fails () =
   let* ctxt = new_context in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@ let* (rollup, _size, ctxt) =
-       Sc_rollup_storage.originate
+  let* (rollup, _size, ctxt) =
+    lift
+    @@ Sc_rollup_storage.originate
          ctxt
          ~kind:Example_arith
          ~boot_sector:(Sc_rollup_repr.PVM.boot_sector_of_string "")
-     in
-     let staker =
-       Signature.Public_key_hash.of_b58check_exn
-         "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
-     in
-     let* (_, ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker in
-     assert_fails_with
-       ~loc:__LOC__
-       (Sc_rollup_storage.remove_staker ctxt rollup staker)
-       "Can not remove a final commitment."
+  in
+  let staker =
+    Signature.Public_key_hash.of_b58check_exn
+      "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let* (_, ctxt) = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.remove_staker ctxt rollup staker)
+    "Can not remove a final commitment."
 
 let test_deposit_then_withdraw () =
   let* ctxt = new_context in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -139,41 +140,45 @@ let test_deposit_then_withdraw () =
 
 let test_withdraw_when_not_staked () =
   let* ctxt = new_context in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@ let* (rollup, _size, ctxt) =
-       Sc_rollup_storage.originate
+  let* (rollup, _size, ctxt) =
+    lift
+    @@ Sc_rollup_storage.originate
          ctxt
          ~kind:Example_arith
          ~boot_sector:(Sc_rollup_repr.PVM.boot_sector_of_string "")
-     in
-     let staker =
-       Signature.Public_key_hash.of_b58check_exn
-         "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
-     in
-     assert_fails_with
-       ~loc:__LOC__
-       (Sc_rollup_storage.withdraw_stake ctxt rollup staker)
-       "Unknown staker."
+  in
+  let staker =
+    Signature.Public_key_hash.of_b58check_exn
+      "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.withdraw_stake ctxt rollup staker)
+    "Unknown staker."
 
 let test_withdrawing_twice () =
   let* ctxt = new_context in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@ let* (rollup, _size, ctxt) =
-       Sc_rollup_storage.originate
+  let* (rollup, _size, ctxt) =
+    lift
+    @@ Sc_rollup_storage.originate
          ctxt
          ~kind:Example_arith
          ~boot_sector:(Sc_rollup_repr.PVM.boot_sector_of_string "")
-     in
-     let staker =
-       Signature.Public_key_hash.of_b58check_exn
-         "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
-     in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker in
-     let* ((), ctxt) = Sc_rollup_storage.withdraw_stake ctxt rollup staker in
-     assert_fails_with
-       ~loc:__LOC__
-       (Sc_rollup_storage.withdraw_stake ctxt rollup staker)
-       "Unknown staker."
+  in
+  let staker =
+    Signature.Public_key_hash.of_b58check_exn
+      "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.withdraw_stake ctxt rollup staker
+  in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.withdraw_stake ctxt rollup staker)
+    "Unknown staker."
 
 let number_of_messages_exn n =
   match Sc_rollup_repr.Number_of_messages.of_int32 n with
@@ -188,7 +193,7 @@ let number_of_ticks_exn n =
 let test_deposit_then_refine () =
   let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -219,7 +224,7 @@ let test_finalize () =
   let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 20_160 in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -253,79 +258,84 @@ let test_finalize_fail_too_recent () =
   let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
   let level_1999 = Raw_level_repr.add level 20_159 in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@ let* (rollup, _size, ctxt) =
-       Sc_rollup_storage.originate
+  let* (rollup, _size, ctxt) =
+    lift
+    @@ Sc_rollup_storage.originate
          ctxt
          ~kind:Example_arith
          ~boot_sector:(Sc_rollup_repr.PVM.boot_sector_of_string "")
-     in
-     let staker =
-       Sc_rollup_repr.Staker.of_b58check_exn
-         "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
-     in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker in
-     let commitment =
-       Sc_rollup_repr.Commitment.
-         {
-           predecessor = Sc_rollup_repr.Commitment_hash.zero;
-           inbox_level = Raw_level_repr.of_int32_exn 125l;
-           number_of_messages = number_of_messages_exn 3l;
-           number_of_ticks = number_of_ticks_exn 1232909l;
-           compressed_state = Sc_rollup_repr.State_hash.zero;
-         }
-     in
-     let* (c1, ctxt) =
-       Sc_rollup_storage.refine_stake ctxt rollup level staker commitment
-     in
-     let* () =
-       assert_fails_with
-         ~loc:__LOC__
-         (Sc_rollup_storage.finalize_commitment ctxt rollup level c1)
-         "Attempted to finalize a commitment before its refutation deadline."
-     in
-     assert_fails_with
-       ~loc:__LOC__
-       (Sc_rollup_storage.finalize_commitment ctxt rollup level_1999 c1)
-       "Attempted to finalize a commitment before its refutation deadline."
+  in
+  let staker =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker
+  in
+  let commitment =
+    Sc_rollup_repr.Commitment.
+      {
+        predecessor = Sc_rollup_repr.Commitment_hash.zero;
+        inbox_level = Raw_level_repr.of_int32_exn 125l;
+        number_of_messages = number_of_messages_exn 3l;
+        number_of_ticks = number_of_ticks_exn 1232909l;
+        compressed_state = Sc_rollup_repr.State_hash.zero;
+      }
+  in
+  let* (c1, ctxt) =
+    lift @@ Sc_rollup_storage.refine_stake ctxt rollup level staker commitment
+  in
+  let* () =
+    assert_fails_with
+      ~loc:__LOC__
+      (Sc_rollup_storage.finalize_commitment ctxt rollup level c1)
+      "Attempted to finalize a commitment before its refutation deadline."
+  in
+  let* () =
+    assert_fails_with
+      ~loc:__LOC__
+      (Sc_rollup_storage.finalize_commitment ctxt rollup level_1999 c1)
+      "Attempted to finalize a commitment before its refutation deadline."
+  in
+  consume ctxt
 
 let test_withdrawal_fails_when_not_staked_on_lfc () =
   let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@ let* (rollup, _size, ctxt) =
-       Sc_rollup_storage.originate
+  let* (rollup, _size, ctxt) =
+    lift
+    @@ Sc_rollup_storage.originate
          ctxt
          ~kind:Example_arith
          ~boot_sector:(Sc_rollup_repr.PVM.boot_sector_of_string "")
-     in
-     let staker =
-       Sc_rollup_repr.Staker.of_b58check_exn
-         "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
-     in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker in
-     let commitment =
-       Sc_rollup_repr.Commitment.
-         {
-           predecessor = Sc_rollup_repr.Commitment_hash.zero;
-           inbox_level = Raw_level_repr.of_int32_exn 125l;
-           number_of_messages = number_of_messages_exn 3l;
-           number_of_ticks = number_of_ticks_exn 1232909l;
-           compressed_state = Sc_rollup_repr.State_hash.zero;
-         }
-     in
-     let* (_node, ctxt) =
-       Sc_rollup_storage.refine_stake ctxt rollup level staker commitment
-     in
-     assert_fails_with
-       ~loc:__LOC__
-       (Sc_rollup_storage.withdraw_stake ctxt rollup staker)
-       "Attempted to withdraw while not staked on a final node."
+  in
+  let staker =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker
+  in
+  let commitment =
+    Sc_rollup_repr.Commitment.
+      {
+        predecessor = Sc_rollup_repr.Commitment_hash.zero;
+        inbox_level = Raw_level_repr.of_int32_exn 125l;
+        number_of_messages = number_of_messages_exn 3l;
+        number_of_ticks = number_of_ticks_exn 1232909l;
+        compressed_state = Sc_rollup_repr.State_hash.zero;
+      }
+  in
+  let* (_node, ctxt) =
+    lift @@ Sc_rollup_storage.refine_stake ctxt rollup level staker commitment
+  in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.withdraw_stake ctxt rollup staker)
+    "Attempted to withdraw while not staked on a final node."
 
 let test_stake_on_existing_node () =
   let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -364,7 +374,7 @@ let test_finalize_with_two_stakers () =
   let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 20_160 in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -416,7 +426,7 @@ let test_can_remove_staker () =
   let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 20_160 in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -469,7 +479,7 @@ let test_can_remove_staker2 () =
   let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 20_160 in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -521,111 +531,121 @@ let test_can_remove_staker2 () =
 let test_removed_staker_can_not_withdraw () =
   let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@ let* (rollup, _size, ctxt) =
-       Sc_rollup_storage.originate
+  let* (rollup, _size, ctxt) =
+    lift
+    @@ Sc_rollup_storage.originate
          ctxt
          ~kind:Example_arith
          ~boot_sector:(Sc_rollup_repr.PVM.boot_sector_of_string "")
-     in
-     let staker1 =
-       Sc_rollup_repr.Staker.of_b58check_exn
-         "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
-     in
-     let staker2 =
-       Sc_rollup_repr.Staker.of_b58check_exn
-         "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
-     in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
-     let commitment1 =
-       Sc_rollup_repr.Commitment.
-         {
-           predecessor = Sc_rollup_repr.Commitment_hash.zero;
-           inbox_level = Raw_level_repr.of_int32_exn 125l;
-           number_of_messages = number_of_messages_exn 3l;
-           number_of_ticks = number_of_ticks_exn 1232909l;
-           compressed_state = Sc_rollup_repr.State_hash.zero;
-         }
-     in
-     let* (c1, ctxt) =
-       Sc_rollup_storage.refine_stake ctxt rollup level_0 staker1 commitment1
-     in
-     let commitment2 =
-       Sc_rollup_repr.Commitment.
-         {
-           predecessor = c1;
-           inbox_level = Raw_level_repr.of_int32_exn 1l;
-           number_of_messages = number_of_messages_exn 3l;
-           number_of_ticks = number_of_ticks_exn 1232909l;
-           compressed_state = Sc_rollup_repr.State_hash.zero;
-         }
-     in
-     let* (_node, ctxt) =
-       Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
-     in
-     let* ((), ctxt) = Sc_rollup_storage.remove_staker ctxt rollup staker2 in
-     assert_fails_with
-       ~loc:__LOC__
-       (Sc_rollup_storage.withdraw_stake ctxt rollup staker2)
-       "Unknown staker."
+  in
+  let staker1 =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let staker2 =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker1
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker2
+  in
+  let commitment1 =
+    Sc_rollup_repr.Commitment.
+      {
+        predecessor = Sc_rollup_repr.Commitment_hash.zero;
+        inbox_level = Raw_level_repr.of_int32_exn 125l;
+        number_of_messages = number_of_messages_exn 3l;
+        number_of_ticks = number_of_ticks_exn 1232909l;
+        compressed_state = Sc_rollup_repr.State_hash.zero;
+      }
+  in
+  let* (c1, ctxt) =
+    lift
+    @@ Sc_rollup_storage.refine_stake ctxt rollup level_0 staker1 commitment1
+  in
+  let commitment2 =
+    Sc_rollup_repr.Commitment.
+      {
+        predecessor = c1;
+        inbox_level = Raw_level_repr.of_int32_exn 1l;
+        number_of_messages = number_of_messages_exn 3l;
+        number_of_ticks = number_of_ticks_exn 1232909l;
+        compressed_state = Sc_rollup_repr.State_hash.zero;
+      }
+  in
+  let* (_node, ctxt) =
+    lift
+    @@ Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.remove_staker ctxt rollup staker2
+  in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.withdraw_stake ctxt rollup staker2)
+    "Unknown staker."
 
 let test_no_finalization_on_conflict () =
   let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
   let level_after = Raw_level_repr.add level_0 2000 in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
-  @@ let* (rollup, _size, ctxt) =
-       Sc_rollup_storage.originate
+  let* (rollup, _size, ctxt) =
+    lift
+    @@ Sc_rollup_storage.originate
          ctxt
          ~kind:Example_arith
          ~boot_sector:(Sc_rollup_repr.PVM.boot_sector_of_string "")
-     in
-     let staker1 =
-       Sc_rollup_repr.Staker.of_b58check_exn
-         "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
-     in
-     let staker2 =
-       Sc_rollup_repr.Staker.of_b58check_exn
-         "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
-     in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
-     let commitment1 =
-       Sc_rollup_repr.Commitment.
-         {
-           predecessor = Sc_rollup_repr.Commitment_hash.zero;
-           inbox_level = Raw_level_repr.of_int32_exn 125l;
-           number_of_messages = number_of_messages_exn 3l;
-           number_of_ticks = number_of_ticks_exn 1232909l;
-           compressed_state = Sc_rollup_repr.State_hash.zero;
-         }
-     in
-     let* (c1, ctxt) =
-       Sc_rollup_storage.refine_stake ctxt rollup level_0 staker1 commitment1
-     in
-     let commitment2 =
-       Sc_rollup_repr.Commitment.
-         {
-           predecessor = Sc_rollup_repr.Commitment_hash.zero;
-           inbox_level = Raw_level_repr.of_int32_exn 1l;
-           number_of_messages = number_of_messages_exn 3l;
-           number_of_ticks = number_of_ticks_exn 1232909l;
-           compressed_state = Sc_rollup_repr.State_hash.zero;
-         }
-     in
-     let* (_node, ctxt) =
-       Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
-     in
-     assert_fails_with
-       ~loc:__LOC__
-       (Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1)
-       "Attempted to finalize a disputed commitment."
+  in
+  let staker1 =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let staker2 =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker1
+  in
+  let* ((), ctxt) =
+    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker2
+  in
+  let commitment1 =
+    Sc_rollup_repr.Commitment.
+      {
+        predecessor = Sc_rollup_repr.Commitment_hash.zero;
+        inbox_level = Raw_level_repr.of_int32_exn 125l;
+        number_of_messages = number_of_messages_exn 3l;
+        number_of_ticks = number_of_ticks_exn 1232909l;
+        compressed_state = Sc_rollup_repr.State_hash.zero;
+      }
+  in
+  let* (c1, ctxt) =
+    lift
+    @@ Sc_rollup_storage.refine_stake ctxt rollup level_0 staker1 commitment1
+  in
+  let commitment2 =
+    Sc_rollup_repr.Commitment.
+      {
+        predecessor = Sc_rollup_repr.Commitment_hash.zero;
+        inbox_level = Raw_level_repr.of_int32_exn 1l;
+        number_of_messages = number_of_messages_exn 3l;
+        number_of_ticks = number_of_ticks_exn 1232909l;
+        compressed_state = Sc_rollup_repr.State_hash.zero;
+      }
+  in
+  let* (_node, ctxt) =
+    lift
+    @@ Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
+  in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1)
+    "Attempted to finalize a disputed commitment."
 
 let test_finds_conflict_point_at_lfc () =
   let* ctxt = new_context in
   let level_0 = (Raw_context.current_level ctxt).level in
-  Lwt.map (fun x -> Environment.wrap_tzresult x)
+  lift
   @@ let* (rollup, _size, ctxt) =
        Sc_rollup_storage.originate
          ctxt
@@ -726,18 +746,19 @@ let tests =
       "removing staker from the LFC fails"
       `Quick
       test_removing_staker_from_lfc_fails;
-    (* TODO check ALL storage methods fail on non-existing rollup *)
-    (* TODO test we can extract conflict point *beneath* LFC *)
-    (* TODO test get_conflict_point with either or both stakers being on LFC *)
-    (* TODO test get_conflict_point with either or both stakers being on LFC when SCORU is in pre-boot state *)
-    (* TODO test finalization consumes inbox *)
-    (* TODO mutation test *)
-    (* TODO check staker can not backtrack *)
-    (* TODO test for memory leaks *)
-    (* TODO add test showing that "concurrent" insertion with refine_stake is OK, e.g. no races on who inserts first *)
-    (* TODO test that we fail gracefully if remove_staker is called
-       for a staker staked on LFC. It should not be possible to
-       force unstaking from the LFC, instead other nodes should
-       refund stakers who refuse to refine from the LFC.
-    *)
   ]
+
+(* TODO check ALL storage methods fail on non-existing rollup *)
+(* TODO test we can extract conflict point *beneath* LFC *)
+(* TODO test get_conflict_point with either or both stakers being on LFC *)
+(* TODO test get_conflict_point with either or both stakers being on LFC when SCORU is in pre-boot state *)
+(* TODO test finalization consumes inbox *)
+(* TODO mutation test *)
+(* TODO check staker can not backtrack *)
+(* TODO test for memory leaks *)
+(* TODO add test showing that "concurrent" insertion with refine_stake is OK, e.g. no races on who inserts first *)
+(* TODO test that we fail gracefully if remove_staker is called
+   for a staker staked on LFC. It should not be possible to
+   force unstaking from the LFC, instead other nodes should
+   refund stakers who refuse to refine from the LFC.
+*)
