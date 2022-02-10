@@ -689,17 +689,6 @@ let tests =
       test_removing_staker_from_lfc_fails;
   ]
 
-(* TODO check ALL storage methods fail on non-existing rollup *)
-(* TODO test we can extract conflict point *beneath* LFC *)
-(* TODO test get_conflict_point with either or both stakers being on LFC *)
-(* TODO test get_conflict_point with either or both stakers being on LFC when SCORU is in pre-boot state *)
-(* TODO test finalization consumes inbox *)
-(* TODO mutation test *)
-(* TODO check staker can not backtrack *)
-(* TODO test for memory leaks *)
-(* TODO add test showing that "concurrent" insertion with refine_stake is OK, e.g. no races on who inserts first *)
-(* TODO test that we fail gracefully if remove_staker is called
-   for a staker staked on LFC. It should not be possible to
-   force unstaking from the LFC, instead other nodes should
-   refund stakers who refuse to refine from the LFC.
-*)
+(* FIXME: https://gitlab.com/tezos/tezos/-/issues/2460
+   Further tests to be added.
+   *)
