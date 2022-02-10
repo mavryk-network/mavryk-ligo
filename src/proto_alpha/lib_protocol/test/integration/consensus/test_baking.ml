@@ -464,7 +464,7 @@ let test_committee_sampling () =
     10_000
     [(792_000_000_000L, (9_830, 9_970)); (8_000_000_000L, (40, 160))]
 
-let test_pouet () =
+let _test_pouet () =
   let constants =
     {
       Default_parameters.constants_test with
@@ -578,5 +578,5 @@ let tests =
       `Quick
       (test_enough_active_stake_to_bake ~has_active_stake:false);
     Tztest.tztest "test committee sampling" `Quick test_committee_sampling;
-    Tztest.tztest "pouet" `Quick test_pouet;
+    (* Tztest.tztest "pouet" `Quick test_pouet; *)
   ]
