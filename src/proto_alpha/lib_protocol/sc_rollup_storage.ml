@@ -40,7 +40,6 @@ type error +=
       Sc_rollup_repr.Commitment_hash.t
 
 let () =
-  (* Sc_rollup_already_staked *)
   let description = "Already staked." in
   register_error_kind
     `Temporary
@@ -51,7 +50,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_already_staked -> Some () | _ -> None)
     (fun () -> Sc_rollup_already_staked) ;
-  (* Sc_rollup_disputed *)
   let description = "Attempted to finalize a disputed commitment." in
   register_error_kind
     `Temporary
@@ -62,7 +60,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_disputed -> Some () | _ -> None)
     (fun () -> Sc_rollup_disputed) ;
-  (* Sc_rollup_does_not_exist *)
   let description = "Attempted to use a rollup that has not been originated." in
   register_error_kind
     `Temporary
@@ -74,7 +71,6 @@ let () =
     Data_encoding.(obj1 (req "rollup" Sc_rollup_repr.encoding))
     (function Sc_rollup_does_not_exist x -> Some x | _ -> None)
     (fun x -> Sc_rollup_does_not_exist x) ;
-  (* Sc_rollup_no_conflict *)
   let description = "No conflict." in
   register_error_kind
     `Temporary
@@ -85,7 +81,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_no_conflict -> Some () | _ -> None)
     (fun () -> Sc_rollup_no_conflict) ;
-  (* Sc_rollup_no_stakers *)
   let description = "No stakers." in
   register_error_kind
     `Temporary
@@ -107,7 +102,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_not_staked -> Some () | _ -> None)
     (fun () -> Sc_rollup_not_staked) ;
-  (* Sc_rollup_not_staked_on_final *)
   let description = "Attempted to withdraw while not staked on a final node." in
   register_error_kind
     `Temporary
@@ -118,7 +112,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_not_staked_on_final -> Some () | _ -> None)
     (fun () -> Sc_rollup_not_staked_on_final) ;
-  (* Sc_rollup_parent_not_final *)
   let description = "Parent not final." in
   register_error_kind
     `Temporary
@@ -129,7 +122,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_parent_not_final -> Some () | _ -> None)
     (fun () -> Sc_rollup_parent_not_final) ;
-  (* Sc_rollup_remove_final *)
   let description = "Can not remove a final commitment." in
   register_error_kind
     `Temporary
@@ -140,7 +132,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_remove_final -> Some () | _ -> None)
     (fun () -> Sc_rollup_remove_final) ;
-  (* Sc_rollup_staker_backtracked *)
   let description = "Staker backtracked." in
   register_error_kind
     `Temporary
@@ -151,7 +142,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_staker_backtracked -> Some () | _ -> None)
     (fun () -> Sc_rollup_staker_backtracked) ;
-  (* Sc_rollup_too_recent *)
   let description =
     "Attempted to finalize a commitment before its refutation deadline."
   in
@@ -164,7 +154,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_too_recent -> Some () | _ -> None)
     (fun () -> Sc_rollup_too_recent) ;
-  (* Sc_rollup_unknown_commitment of *)
   let description = "Unknown commitment." in
   register_error_kind
     `Temporary
