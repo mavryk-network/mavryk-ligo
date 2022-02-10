@@ -106,7 +106,7 @@ let check_batch_in_inbox :
     context and [n] contracts. *)
 let context_init n =
   Context.init
-    ~consensus_threshold:0
+    ~no_endorsing:true
     ~tx_rollup_enable:true
     ~endorsing_reward_per_slot:Tez.zero
     ~baking_reward_bonus_per_slot:Tez.zero

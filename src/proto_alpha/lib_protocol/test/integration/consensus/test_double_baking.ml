@@ -93,7 +93,7 @@ let double_baking ctxt ?(correct_order = true) bh1 bh2 =
 (** Simple scenario where two blocks are baked by a same baker and
     exposed by a double baking evidence operation. *)
 let test_valid_double_baking_evidence () =
-  Context.init ~consensus_threshold:0 2 >>=? fun (genesis, contracts) ->
+  Context.init ~no_endorsing:true 2 >>=? fun (genesis, contracts) ->
   Context.get_constants (B genesis)
   >>=? fun Constants.{parametric = {double_baking_punishment; _}; _} ->
   get_first_different_bakers (B genesis) >>=? fun (baker1, baker2) ->
@@ -120,7 +120,7 @@ let test_valid_double_baking_evidence () =
    baking evidence (and not the block producer, if different) receives
    the reward. *)
 let test_payload_producer_gets_evidence_rewards () =
-  Context.init ~consensus_threshold:0 10 >>=? fun (genesis, contracts) ->
+  Context.init ~no_endorsing:true 10 >>=? fun (genesis, contracts) ->
   Context.get_constants (B genesis)
   >>=? fun Constants.
              {
@@ -206,7 +206,7 @@ let test_same_blocks () =
 (** Check that an double baking operation that is invalid due to
    incorrect ordering of the block headers fails. *)
 let test_incorrect_order () =
-  Context.init ~consensus_threshold:0 2 >>=? fun (genesis, contracts) ->
+  Context.init ~no_endorsing:true 2 >>=? fun (genesis, contracts) ->
   block_fork ~policy:(By_round 0) contracts genesis >>=? fun (blk_a, blk_b) ->
   double_baking (B genesis) ~correct_order:false blk_a.header blk_b.header
   |> fun operation ->
@@ -218,7 +218,7 @@ let test_incorrect_order () =
 (** Check that a double baking operation exposing two blocks with
     different levels fails. *)
 let test_different_levels () =
-  Context.init ~consensus_threshold:0 2 >>=? fun (b, contracts) ->
+  Context.init ~no_endorsing:true 2 >>=? fun (b, contracts) ->
   block_fork ~policy:(By_round 0) contracts b >>=? fun (blk_a, blk_b) ->
   Block.bake blk_b >>=? fun blk_b_2 ->
   double_baking (B blk_a) blk_a.header blk_b_2.header |> fun operation ->
@@ -230,7 +230,7 @@ let test_different_levels () =
 (** Check that a double baking operation exposing two yet-to-be-baked
     blocks fails. *)
 let test_too_early_double_baking_evidence () =
-  Context.init ~consensus_threshold:0 2 >>=? fun (genesis, contracts) ->
+  Context.init ~no_endorsing:true 2 >>=? fun (genesis, contracts) ->
   Block.bake_until_cycle_end genesis >>=? fun b ->
   block_fork ~policy:(By_round 0) contracts b >>=? fun (blk_a, blk_b) ->
   double_baking (B b) blk_a.header blk_b.header |> fun operation ->
@@ -242,7 +242,7 @@ let test_too_early_double_baking_evidence () =
 (** Check that after [max_slashing_period * blocks_per_cycle + 1] blocks -- corresponding to 2 cycles
    --, it is not possible to create a double baking operation anymore. *)
 let test_too_late_double_baking_evidence () =
-  Context.init ~consensus_threshold:0 2 >>=? fun (b, contracts) ->
+  Context.init ~no_endorsing:true 2 >>=? fun (b, contracts) ->
   Context.get_constants (B b)
   >>=? fun Constants.{parametric = {max_slashing_period; _}; _} ->
   block_fork ~policy:(By_round 0) contracts b >>=? fun (blk_a, blk_b) ->
@@ -257,7 +257,7 @@ let test_too_late_double_baking_evidence () =
    -- corresponding to 2 cycles --, it is still possible to create a
    double baking operation. *)
 let test_just_in_time_double_baking_evidence () =
-  Context.init ~consensus_threshold:0 2 >>=? fun (b, contracts) ->
+  Context.init ~no_endorsing:true 2 >>=? fun (b, contracts) ->
   Context.get_constants (B b)
   >>=? fun Constants.{parametric = {blocks_per_cycle; _}; _} ->
   block_fork ~policy:(By_round 0) contracts b >>=? fun (blk_a, blk_b) ->
@@ -319,7 +319,7 @@ let test_wrong_signer () =
 (** an evidence can only be accepted once (this also means that the
    same evidence doesn't lead to slashing the offender twice) *)
 let test_double_evidence () =
-  Context.init ~consensus_threshold:0 3 >>=? fun (blk, contracts) ->
+  Context.init ~no_endorsing:true 3 >>=? fun (blk, contracts) ->
   block_fork contracts blk >>=? fun (blk_a, blk_b) ->
   Block.bake_until_cycle_end blk_a >>=? fun blk ->
   double_baking (B blk) blk_a.header blk_b.header |> fun evidence ->

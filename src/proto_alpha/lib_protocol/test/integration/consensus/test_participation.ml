@@ -67,7 +67,10 @@ let bake_and_endorse_once (b_pred, b_cur) baker endorser =
 *)
 let test_participation ~sufficient_participation () =
   let n_accounts = 2 in
-  Context.init ~consensus_threshold:1 n_accounts >>=? fun (b0, accounts) ->
+  let constants =
+    {Default_parameters.constants_test with consensus_threshold = 1}
+  in
+  Context.init_with_constants constants n_accounts >>=? fun (b0, accounts) ->
   Context.get_constants (B b0) >>=? fun csts ->
   let blocks_per_cycle = Int32.to_int csts.parametric.blocks_per_cycle in
   let mpr = csts.parametric.minimal_participation_ratio in
@@ -125,7 +128,10 @@ let test_participation ~sufficient_participation () =
    non-participating account. *)
 let test_participation_rpc () =
   let n_accounts = 2 in
-  Context.init ~consensus_threshold:1 n_accounts >>=? fun (b0, accounts) ->
+  let constants =
+    {Default_parameters.constants_test with consensus_threshold = 1}
+  in
+  Context.init_with_constants constants n_accounts >>=? fun (b0, accounts) ->
   let (account1, account2) =
     match accounts with a1 :: a2 :: _ -> (a1, a2) | _ -> assert false
   in

@@ -860,7 +860,7 @@ module ConcreteBaseMachine :
     let (n, initial_balances) = initial_xtz_repartition accounts_balances in
     Context.init
       n
-      ~consensus_threshold:0
+      ~no_endorsing:true
       ~initial_balances
       ~cost_per_byte:Tez.zero
       ~endorsing_reward_per_slot:Tez.zero

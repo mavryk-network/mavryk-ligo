@@ -28,7 +28,17 @@ let make_simple blocks =
     if n <= 0 then return pred
     else Block.bake pred >>=? fun block -> loop block (n - 1)
   in
-  Context.init ~consensus_threshold:0 5 >>=? fun (genesis, _) ->
+  let constants =
+    {
+      Default_parameters.constants_test with
+      consensus_threshold = 0;
+      minimal_participation_ratio = {numerator = 0; denominator = 1};
+      blocks_per_commitment =
+        Int32.succ Default_parameters.constants_test.blocks_per_cycle
+        (* so no commitments expected *);
+    }
+  in
+  Context.init_with_constants constants 5 >>=? fun (genesis, _) ->
   loop genesis blocks
 
 type args = {blocks : int; accounts : int}
