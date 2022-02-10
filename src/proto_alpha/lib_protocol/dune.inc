@@ -72,7 +72,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_state_repr.mli tx_rollup_state_repr.ml
    tx_rollup_message_repr.mli tx_rollup_message_repr.ml
    tx_rollup_inbox_repr.mli tx_rollup_inbox_repr.ml
-   roll_repr_legacy.mli roll_repr_legacy.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
    entrypoint_repr.mli entrypoint_repr.ml
@@ -97,7 +96,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    level_storage.mli level_storage.ml
    nonce_storage.mli nonce_storage.ml
    seed_storage.mli seed_storage.ml
-   roll_storage_legacy.mli roll_storage_legacy.ml
    contract_manager_storage.mli contract_manager_storage.ml
    delegate_activation_storage.mli delegate_activation_storage.ml
    frozen_deposits_storage.mli frozen_deposits_storage.ml
@@ -223,7 +221,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_state_repr.mli tx_rollup_state_repr.ml
    tx_rollup_message_repr.mli tx_rollup_message_repr.ml
    tx_rollup_inbox_repr.mli tx_rollup_inbox_repr.ml
-   roll_repr_legacy.mli roll_repr_legacy.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
    entrypoint_repr.mli entrypoint_repr.ml
@@ -248,7 +245,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    level_storage.mli level_storage.ml
    nonce_storage.mli nonce_storage.ml
    seed_storage.mli seed_storage.ml
-   roll_storage_legacy.mli roll_storage_legacy.ml
    contract_manager_storage.mli contract_manager_storage.ml
    delegate_activation_storage.mli delegate_activation_storage.ml
    frozen_deposits_storage.mli frozen_deposits_storage.ml
@@ -374,7 +370,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    tx_rollup_state_repr.mli tx_rollup_state_repr.ml
    tx_rollup_message_repr.mli tx_rollup_message_repr.ml
    tx_rollup_inbox_repr.mli tx_rollup_inbox_repr.ml
-   roll_repr_legacy.mli roll_repr_legacy.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
    entrypoint_repr.mli entrypoint_repr.ml
@@ -399,7 +394,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    level_storage.mli level_storage.ml
    nonce_storage.mli nonce_storage.ml
    seed_storage.mli seed_storage.ml
-   roll_storage_legacy.mli roll_storage_legacy.ml
    contract_manager_storage.mli contract_manager_storage.ml
    delegate_activation_storage.mli delegate_activation_storage.ml
    frozen_deposits_storage.mli frozen_deposits_storage.ml
@@ -547,7 +541,6 @@ include Tezos_raw_protocol_alpha.Main
    Tx_rollup_state_repr
    Tx_rollup_message_repr
    Tx_rollup_inbox_repr
-   Roll_repr_legacy
    Vote_repr
    Block_header_repr
    Entrypoint_repr
@@ -572,7 +565,6 @@ include Tezos_raw_protocol_alpha.Main
    Level_storage
    Nonce_storage
    Seed_storage
-   Roll_storage_legacy
    Contract_manager_storage
    Delegate_activation_storage
    Frozen_deposits_storage
@@ -739,7 +731,6 @@ include Tezos_raw_protocol_alpha.Main
    tx_rollup_state_repr.mli tx_rollup_state_repr.ml
    tx_rollup_message_repr.mli tx_rollup_message_repr.ml
    tx_rollup_inbox_repr.mli tx_rollup_inbox_repr.ml
-   roll_repr_legacy.mli roll_repr_legacy.ml
    vote_repr.mli vote_repr.ml
    block_header_repr.mli block_header_repr.ml
    entrypoint_repr.mli entrypoint_repr.ml
@@ -764,7 +755,6 @@ include Tezos_raw_protocol_alpha.Main
    level_storage.mli level_storage.ml
    nonce_storage.mli nonce_storage.ml
    seed_storage.mli seed_storage.ml
-   roll_storage_legacy.mli roll_storage_legacy.ml
    contract_manager_storage.mli contract_manager_storage.ml
    delegate_activation_storage.mli delegate_activation_storage.ml
    frozen_deposits_storage.mli frozen_deposits_storage.ml
