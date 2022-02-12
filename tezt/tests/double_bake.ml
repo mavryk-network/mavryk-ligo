@@ -95,36 +95,37 @@ let wait_for_denunciation_injection node client oph_promise =
   let* mempool = RPC.get_mempool_pending_operations client in
   if is_operation_in_applied_mempool mempool oph then some oph else none
 
-(* This tests aims to detect a double baking evidence with an accuser. The
-   scenario is the following:
+(* This tests aims to detect a double baking evidence with an
+   accuser. The scenario is the following:
 
-   1. Node 1 activates a protocol, and bakes validators_selection_offset blocks
-   (this is because for a double-signing operation to be valid, the
-   double-signer must have some frozen balance (see the call of
-   Unrequired_double_x_evidence in apply.ml) while in Tenderbake, for the first
-   validators_selection_offset levels, no deposit is taken (see
-   [handle_deposits] in apply.ml.
+   1. Run Node 1 and Node 2, connect Node 1 to Node 2 and bake the
+   activation block. Terminate Node 2.
 
-   2. Node 2 catches up with Node 1,
+   2. Node 1 bakes three blocks with bootstrap1 key. Node 1 is
+   terminated.
 
-   3. Node 2 is terminated. Then, Node 1 bakes two blocks from level 1 with
-   bootstrap1 key,
+   3. Then, Node 2 is restarted and bakes two blocks from level 1; the
+   first one with the bootstrap2 key and the second one with the
+   bootstrap1 key. Thus, the block at level 3 is double baked (and we
+   ensure that the double baked blocks are different as they emanate
+   from two distinct branches),
 
-   4. Node 1 is terminated. Then, Node 2 is restarted and bakes two blocks from
-   level 1; the first one with the bootstrap2 key and the second one with the
-   bootstrap1 key. Thus, the block at level 3 is double baked (and we ensure
-   that the double baked blocks are different as they emanate from two distinct
-   branches),
+   4. Node 3 is run with its accuser. we bake one block and wait for
+   the accuser to be ready.
 
-   5. Node 1 came back in the dance,
+   5. We connect Node 3 with Node 2. We wait Node 3 to catch up. The
+   accuser have seen one block at level 3 baked by bootstrap1.
 
-   6. Node 3 is run along with its accuser and catches up. The accuser must
-   detect the double baking evidence and generate an operation accordingly,
+   6. Node 1 is run and connected to Node 3. We wait for Node 3 to
+   catch up. Because Node 1 branch is longer, Node 3 needs to switch
+   from its current branch to the Node 1 branch. This way, we ensure
+   that Node 3 will revalidate a block at level 3 from Node 1's
+   branch. Consequently, the accuser will see a second block at level
+   3 baked by bootstrap1.
 
-   7. A block is baked.
+   7. A block is baked with the accusation operation.
 
-   The test is successful if the double baking evidence can be found in the last
-   baked block. *)
+   8. Check the denunciation is in the last block. *)
 let double_bake =
   Protocol.register_test
     ~__FILE__
@@ -135,7 +136,20 @@ let double_bake =
          @@ Sys.getenv_opt "TEZOS_ACCUSER_DELAY"))
     ~tags:["double"; "baking"; "accuser"; "node"]
   @@ fun protocol ->
-  (* Step 1 and 2 *)
+  let log_step counter msg =
+    let color = Log.Color.(bold ++ FG.blue) in
+    let prefix = "step" ^ string_of_int counter in
+    Log.info ~color ~prefix msg
+  in
+  (* common_ancestor is only the activation block. *)
+  let common_ancestor = 1 in
+  let node_2_branch_size = 2 in
+  let node_1_branch_size = node_2_branch_size + 1 in
+  let node_3_first_catch_up_level = common_ancestor + node_2_branch_size in
+  let node_3_second_catch_up_level = common_ancestor + node_1_branch_size in
+  let node_3_final_level = node_3_second_catch_up_level + 1 in
+
+  log_step 1 "Activate protocol for Node 1 and Node 2. Terminate Node 2." ;
   (* Note: we start all nodes with [--private] to prevent the [connect address]
      command from [node_2] to [node_3] from failing due to an "already connected"
      error that could otherwise non-deterministically occur due to P2P propagation.
@@ -148,21 +162,21 @@ let double_bake =
   and* () = Client.Admin.trust_address client_2 ~peer:node_1 in
   let* () = Client.Admin.connect_address client_1 ~peer:node_2 in
   let* () = Client.activate_protocol ~protocol client_1 in
-  Log.info "Activated protocol." ;
   let bootstrap1_key = Constant.bootstrap1.alias in
   let bootstrap2_key = Constant.bootstrap2.alias in
-  let common_ancestor = 0 in
-  let* _ = Node.wait_for_level node_1 (common_ancestor + 1)
-  and* _ = Node.wait_for_level node_2 (common_ancestor + 1) in
-  Log.info "Both nodes are at level %d." (common_ancestor + 1) ;
-  (* Step 3 *)
+  let* _ = Node.wait_for_level node_1 common_ancestor
+  and* _ = Node.wait_for_level node_2 common_ancestor in
   let* () = Node.terminate node_2 in
+
+  log_step 2 "Bake %d blocks on Node 1 and terminate Node 1." node_1_branch_size ;
   (* Craft a branch of size 2, baked by bootstrap1 *)
   let* () = Client.bake_for ~keys:[bootstrap1_key] client_1 in
   let* () = Client.bake_for ~keys:[bootstrap1_key] client_1 in
-  let* _ = Node.wait_for_level node_1 (common_ancestor + 3) in
-  (* Step 4 *)
+  let* () = Client.bake_for ~keys:[bootstrap1_key] client_1 in
+  let* _ = Node.wait_for_level node_1 (common_ancestor + node_1_branch_size) in
   let* () = Node.terminate node_1 in
+
+  log_step 3 "Run Node 2 and bake %d blocks" node_2_branch_size ;
   let* () = Node.run node_2 [Synchronisation_threshold 0] in
   let* () = Node.wait_for_ready node_2 in
   (* Craft a branch of size 2, the first block is baked by bootstrap2 *)
@@ -170,35 +184,46 @@ let double_bake =
   (* The second block is double baked by bootstrap1 to simulate a
      double bake *)
   let* () = Client.bake_for ~keys:[bootstrap1_key] client_2 in
-  let* _ = Node.wait_for_level node_2 (common_ancestor + 3) in
-  (* Step 5 *)
-  let* () = Node.run node_1 [Synchronisation_threshold 0] in
-  let* () = Node.wait_for_ready node_1 in
-  (* Step 6 *)
+  let* _ = Node.wait_for_level node_2 (common_ancestor + node_2_branch_size) in
+
+  log_step 4 "Run Node 3, bake one block and wait for the accuser to be ready." ;
   let* node_3 = Node.init [Synchronisation_threshold 0; Private_mode] in
   let* client_3 = Client.init ~endpoint:(Node node_3) () in
   let* accuser_3 = Accuser.init ~protocol node_3 in
+  let* () = Client.activate_protocol ~protocol client_3 in
+  let* _ = Node.wait_for_level node_3 1 in
+  (* We bake one block to ensure the accuser daemon receives a
+     block. Indeed, there is a strange behavior in the accuser which makes *)
+  let* () = Accuser.wait_for_ready accuser_3 in
   let denunciation = wait_for_denunciation accuser_3 in
   let denunciation_injection =
     wait_for_denunciation_injection node_3 client_3 denunciation
   in
-  let* () = Client.Admin.trust_address client_1 ~peer:node_3
-  and* () = Client.Admin.trust_address client_3 ~peer:node_1
-  and* () = Client.Admin.trust_address client_2 ~peer:node_3
+
+  log_step 5 "Connect Node 3 with Node 2 and wait for Node 3 to catch up." ;
+  let* () = Client.Admin.trust_address client_2 ~peer:node_3
   and* () = Client.Admin.trust_address client_3 ~peer:node_2 in
-  let* () = Client.Admin.connect_address client_1 ~peer:node_3
-  and* () = Client.Admin.connect_address client_2 ~peer:node_3 in
-  let* level = Node.wait_for_level node_3 (common_ancestor + 2) in
+  let* () = Client.Admin.connect_address client_2 ~peer:node_3 in
+  let* _ = Node.wait_for_level node_3 node_3_first_catch_up_level in
+
+  log_step 6 "Run and connect Node 1 to Node 3. Wait for Node 3 to catch up." ;
+  let* () = Node.run node_1 [Synchronisation_threshold 0] in
+  let* () = Node.wait_for_ready node_1 in
+  let* () = Client.Admin.trust_address client_1 ~peer:node_3
+  and* () = Client.Admin.trust_address client_3 ~peer:node_1 in
+  let* () = Client.Admin.connect_address client_1 ~peer:node_3 in
+  let* _ = Node.wait_for_level node_3 node_3_second_catch_up_level in
   (* Ensure that the denunciation was emitted by the accuser *)
-  Log.info "Level of node3 is %d, waiting for denunciation operation..." level ;
   let* denunciation_oph = denunciation in
   (* Ensure that the denunciation is in node_3's mempool *)
   let* _ = denunciation_injection in
-  (* Step 7 *)
+
+  log_step 7 "Bake a block on Node 3 and wait for everybody to catch up." ;
   let* () = Client.bake_for ~keys:[bootstrap1_key] client_3 in
-  let* _ = Node.wait_for_level node_1 (common_ancestor + 4)
-  and* _ = Node.wait_for_level node_2 (common_ancestor + 4)
-  and* _ = Node.wait_for_level node_3 (common_ancestor + 4) in
+  let* _ = Node.wait_for_level node_1 node_3_final_level
+  and* _ = Node.wait_for_level node_2 node_3_final_level
+  and* _ = Node.wait_for_level node_3 node_3_final_level in
+  log_step 8 "Check denunciation is in the last block." ;
   (* Getting the operations of the current head *)
   let* ops = RPC.get_operations client_1 in
   let* () = Accuser.terminate accuser_3 in
