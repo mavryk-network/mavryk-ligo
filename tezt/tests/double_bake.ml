@@ -177,7 +177,7 @@ let double_bake =
   let* () = Node.terminate node_1 in
 
   log_step 3 "Run Node 2 and bake %d blocks" node_2_branch_size ;
-  let* () = Node.run node_2 [Synchronisation_threshold 0] in
+  let* () = Node.run node_2 [Synchronisation_threshold 0; Private_mode] in
   let* () = Node.wait_for_ready node_2 in
   (* Craft a branch of size 2, the first block is baked by bootstrap2 *)
   let* () = Client.bake_for ~keys:[bootstrap2_key] client_2 in
@@ -207,7 +207,7 @@ let double_bake =
   let* _ = Node.wait_for_level node_3 node_3_first_catch_up_level in
 
   log_step 6 "Run and connect Node 1 to Node 3. Wait for Node 3 to catch up." ;
-  let* () = Node.run node_1 [Synchronisation_threshold 0] in
+  let* () = Node.run node_1 [Synchronisation_threshold 0; Private_mode] in
   let* () = Node.wait_for_ready node_1 in
   let* () = Client.Admin.trust_address client_1 ~peer:node_3
   and* () = Client.Admin.trust_address client_3 ~peer:node_1 in
