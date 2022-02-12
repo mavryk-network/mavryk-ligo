@@ -190,11 +190,6 @@ let double_bake =
   let* node_3 = Node.init [Synchronisation_threshold 0; Private_mode] in
   let* client_3 = Client.init ~endpoint:(Node node_3) () in
   let* accuser_3 = Accuser.init ~protocol node_3 in
-  let* () = Client.activate_protocol ~protocol client_3 in
-  let* _ = Node.wait_for_level node_3 1 in
-  (* We bake one block to ensure the accuser daemon receives a
-     block. Indeed, there is a strange behavior in the accuser which makes *)
-  let* () = Accuser.wait_for_ready accuser_3 in
   let denunciation = wait_for_denunciation accuser_3 in
   let denunciation_injection =
     wait_for_denunciation_injection node_3 client_3 denunciation
