@@ -127,8 +127,6 @@ module Accuser = struct
         Protocol.hash
         delay
       >>= fun () ->
-      Lwt_unix.sleep delay >>= fun () ->
-      cctxt#message "Delay over." >>= fun () ->
       Client_baking_blocks.monitor_valid_blocks
         ~next_protocols:(Some [Protocol.hash])
         cctxt
