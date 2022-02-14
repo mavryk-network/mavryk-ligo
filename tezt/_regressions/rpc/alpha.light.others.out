@@ -33,7 +33,7 @@ protocol of light mode unspecified, using the node's protocol: ProtoGenesisGenes
   "tx_rollup_enable": false, "tx_rollup_origination_size": 60000,
   "tx_rollup_hard_size_limit_per_inbox": 100000,
   "tx_rollup_hard_size_limit_per_message": 5000, "sc_rollup_enable": false,
-  "sc_rollup_origination_size": 6314 }
+  "sc_rollup_origination_size": 6314, "sc_rollup_challenge_window": 20160 }
 
 ./tezos-client --mode light rpc get /chains/main/blocks/head/helpers/baking_rights
 protocol of light mode unspecified, using the node's protocol: ProtoGenesisGenesisGenesisGenesisGenesisGenesk612im
