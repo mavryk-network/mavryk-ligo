@@ -1969,9 +1969,14 @@ curl -s 'http://localhost:[PORT]/describe/chains/main/mempool?recurse=yes'
                                         "type": "null"
                                       }
                                     ]
+                                  },
+                                  "inbox_hash": {
+                                    "type": "string",
+                                    "pattern": "^([a-zA-Z0-9][a-zA-Z0-9])*$"
                                   }
                                 },
                                 "required": [
+                                  "inbox_hash",
                                   "predecessor",
                                   "batches",
                                   "level"
@@ -2614,6 +2619,21 @@ curl -s 'http://localhost:[PORT]/describe/chains/main/mempool?recurse=yes'
                               },
                               "data_kind": {
                                 "kind": "Dynamic"
+                              },
+                              "kind": "named"
+                            },
+                            {
+                              "kind": "dyn",
+                              "num_fields": 1,
+                              "size": "Uint30"
+                            },
+                            {
+                              "name": "inbox_hash",
+                              "layout": {
+                                "kind": "Bytes"
+                              },
+                              "data_kind": {
+                                "kind": "Variable"
                               },
                               "kind": "named"
                             }
@@ -7224,9 +7244,14 @@ curl -s 'http://localhost:[PORT]/describe/chains/main/mempool?recurse=yes'
                                         "type": "null"
                                       }
                                     ]
+                                  },
+                                  "inbox_hash": {
+                                    "type": "string",
+                                    "pattern": "^([a-zA-Z0-9][a-zA-Z0-9])*$"
                                   }
                                 },
                                 "required": [
+                                  "inbox_hash",
                                   "predecessor",
                                   "batches",
                                   "level"
