@@ -106,7 +106,7 @@ val deposit_stake :
   Raw_context.t ->
   Sc_rollup_repr.t ->
   Sc_rollup_repr.Staker.t ->
-  (unit * Raw_context.t) tzresult Lwt.t
+  Raw_context.t tzresult Lwt.t
 
 (** [withdraw_stake context rollup staker] removes [staker] and returns
     any deposit previously frozen by [deposit_stake].
@@ -125,7 +125,7 @@ val withdraw_stake :
   Raw_context.t ->
   Sc_rollup_repr.t ->
   Sc_rollup_repr.Staker.t ->
-  (unit * Raw_context.t) tzresult Lwt.t
+  Raw_context.t tzresult Lwt.t
 
 (** [refine_stake context rollup level staker commitment] moves the stake of
     [staker] to [commitment]. Because we do not assume any form of coordination
@@ -192,7 +192,7 @@ val finalize_commitment :
   Sc_rollup_repr.t ->
   Raw_level_repr.t ->
   Sc_rollup_repr.Commitment_hash.t ->
-  (unit * Raw_context.t) tzresult Lwt.t
+  Raw_context.t tzresult Lwt.t
 
 type conflict_point =
   Sc_rollup_repr.Commitment_hash.t * Sc_rollup_repr.Commitment_hash.t
@@ -242,4 +242,4 @@ val remove_staker :
   Raw_context.t ->
   Sc_rollup_repr.t ->
   Sc_rollup_repr.Staker.t ->
-  (unit * Raw_context.t) tzresult Lwt.t
+  Raw_context.t tzresult Lwt.t

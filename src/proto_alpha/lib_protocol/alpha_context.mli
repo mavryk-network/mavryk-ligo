@@ -1834,13 +1834,13 @@ module Sc_rollup : sig
     context ->
     Sc_rollup_repr.t ->
     Sc_rollup_repr.Staker.t ->
-    (unit * context) tzresult Lwt.t
+    context tzresult Lwt.t
 
   val withdraw_stake :
     context ->
     Sc_rollup_repr.t ->
     Sc_rollup_repr.Staker.t ->
-    (unit * context) tzresult Lwt.t
+    context tzresult Lwt.t
 
   val refine_stake :
     context ->
@@ -1855,7 +1855,7 @@ module Sc_rollup : sig
     Sc_rollup_repr.t ->
     Raw_level.t ->
     Sc_rollup_repr.Commitment_hash.t ->
-    (unit * context) tzresult Lwt.t
+    context tzresult Lwt.t
 
   type conflict_point =
     Sc_rollup_repr.Commitment_hash.t * Sc_rollup_repr.Commitment_hash.t
@@ -1877,7 +1877,7 @@ module Sc_rollup : sig
     context ->
     Sc_rollup_repr.t ->
     Sc_rollup_repr.Staker.t ->
-    (unit * context) tzresult Lwt.t
+    context tzresult Lwt.t
 end
 
 module Block_payload : sig

@@ -116,7 +116,7 @@ let test_deposit_to_existing_rollup () =
        Signature.Public_key_hash.of_b58check_exn
          "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
      in
-     let* (_, ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker in
      assert_true ctxt
 
 let test_removing_staker_from_lfc_fails () =
@@ -126,7 +126,7 @@ let test_removing_staker_from_lfc_fails () =
     Signature.Public_key_hash.of_b58check_exn
       "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
   in
-  let* (_, ctxt) = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
   assert_fails_with
     ~loc:__LOC__
     (Sc_rollup_storage.remove_staker ctxt rollup staker)
@@ -140,8 +140,8 @@ let test_deposit_then_withdraw () =
        Signature.Public_key_hash.of_b58check_exn
          "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
      in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker in
-     let* ((), ctxt) = Sc_rollup_storage.withdraw_stake ctxt rollup staker in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker in
+     let* ctxt = Sc_rollup_storage.withdraw_stake ctxt rollup staker in
      assert_true ctxt
 
 let test_withdraw_when_not_staked () =
@@ -163,12 +163,8 @@ let test_withdrawing_twice () =
     Signature.Public_key_hash.of_b58check_exn
       "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
   in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker
-  in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.withdraw_stake ctxt rollup staker
-  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
+  let* ctxt = lift @@ Sc_rollup_storage.withdraw_stake ctxt rollup staker in
   assert_fails_with
     ~loc:__LOC__
     (Sc_rollup_storage.withdraw_stake ctxt rollup staker)
@@ -193,7 +189,7 @@ let test_deposit_then_refine () =
        Sc_rollup_repr.Staker.of_b58check_exn
          "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
      in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker in
      let commitment =
        Sc_rollup_repr.Commitment.
          {
@@ -219,7 +215,7 @@ let test_finalize () =
        Sc_rollup_repr.Staker.of_b58check_exn
          "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
      in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker in
      let commitment =
        Sc_rollup_repr.Commitment.
          {
@@ -233,7 +229,7 @@ let test_finalize () =
      let* (c1, ctxt) =
        Sc_rollup_storage.refine_stake ctxt rollup level_0 staker commitment
      in
-     let* ((), ctxt) =
+     let* ctxt =
        Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
      in
      assert_true ctxt
@@ -246,9 +242,7 @@ let test_finalize_fail_too_recent () =
   let staker =
     Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
   in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker
-  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
   let commitment =
     Sc_rollup_repr.Commitment.
       {
@@ -283,9 +277,7 @@ let test_withdrawal_fails_when_not_staked_on_lfc () =
   let staker =
     Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
   in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker
-  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
   let commitment =
     Sc_rollup_repr.Commitment.
       {
@@ -317,8 +309,8 @@ let test_stake_on_existing_node () =
        Sc_rollup_repr.Staker.of_b58check_exn
          "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
      in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
      let commitment =
        Sc_rollup_repr.Commitment.
          {
@@ -351,8 +343,8 @@ let test_finalize_with_two_stakers () =
        Sc_rollup_repr.Staker.of_b58check_exn
          "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
      in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
      let commitment1 =
        Sc_rollup_repr.Commitment.
          {
@@ -379,7 +371,7 @@ let test_finalize_with_two_stakers () =
      let* (_node, ctxt) =
        Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
      in
-     let* ((), ctxt) =
+     let* ctxt =
        Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
      in
      assert_true ctxt
@@ -398,8 +390,8 @@ let test_can_remove_staker () =
        Sc_rollup_repr.Staker.of_b58check_exn
          "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
      in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
      let commitment1 =
        Sc_rollup_repr.Commitment.
          {
@@ -426,8 +418,8 @@ let test_can_remove_staker () =
      let* (_node, ctxt) =
        Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
      in
-     let* ((), ctxt) = Sc_rollup_storage.remove_staker ctxt rollup staker1 in
-     let* ((), ctxt) =
+     let* ctxt = Sc_rollup_storage.remove_staker ctxt rollup staker1 in
+     let* ctxt =
        Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
      in
      assert_true ctxt
@@ -446,8 +438,8 @@ let test_can_remove_staker2 () =
        Sc_rollup_repr.Staker.of_b58check_exn
          "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
      in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
      let commitment1 =
        Sc_rollup_repr.Commitment.
          {
@@ -474,8 +466,8 @@ let test_can_remove_staker2 () =
      let* (_node, ctxt) =
        Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
      in
-     let* ((), ctxt) = Sc_rollup_storage.remove_staker ctxt rollup staker2 in
-     let* ((), ctxt) =
+     let* ctxt = Sc_rollup_storage.remove_staker ctxt rollup staker2 in
+     let* ctxt =
        Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
      in
      assert_true ctxt
@@ -490,12 +482,8 @@ let test_removed_staker_can_not_withdraw () =
   let staker2 =
     Sc_rollup_repr.Staker.of_b58check_exn "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
   in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker1
-  in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker2
-  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
   let commitment1 =
     Sc_rollup_repr.Commitment.
       {
@@ -524,9 +512,7 @@ let test_removed_staker_can_not_withdraw () =
     lift
     @@ Sc_rollup_storage.refine_stake ctxt rollup level_0 staker2 commitment2
   in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.remove_staker ctxt rollup staker2
-  in
+  let* ctxt = lift @@ Sc_rollup_storage.remove_staker ctxt rollup staker2 in
   assert_fails_with
     ~loc:__LOC__
     (Sc_rollup_storage.withdraw_stake ctxt rollup staker2)
@@ -543,12 +529,8 @@ let test_no_finalization_on_conflict () =
   let staker2 =
     Sc_rollup_repr.Staker.of_b58check_exn "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
   in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker1
-  in
-  let* ((), ctxt) =
-    lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker2
-  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
   let commitment1 =
     Sc_rollup_repr.Commitment.
       {
@@ -595,8 +577,8 @@ let test_finds_conflict_point_at_lfc () =
        Sc_rollup_repr.Staker.of_b58check_exn
          "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
      in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
-     let* ((), ctxt) = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
+     let* ctxt = Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
      let commitment1 =
        Sc_rollup_repr.Commitment.
          {

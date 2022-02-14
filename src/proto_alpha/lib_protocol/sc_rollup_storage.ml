@@ -318,7 +318,7 @@ let deposit_stake ctxt rollup staker =
       *)
       let* (ctxt, _) = Store.Stakers.init (ctxt, rollup) staker lfc in
       let* ctxt = modify_staker_size ctxt rollup Int32.succ in
-      return ((), ctxt)
+      return ctxt
   | Some _ -> fail Sc_rollup_already_staked
 
 let withdraw_stake ctxt rollup staker =
@@ -333,7 +333,7 @@ let withdraw_stake ctxt rollup staker =
         *)
         let* (ctxt, _) = Store.Stakers.remove_existing (ctxt, rollup) staker in
         let* ctxt = modify_staker_size ctxt rollup Int32.pred in
-        return ((), ctxt)
+        return ctxt
       else fail Sc_rollup_not_staked_on_final
 
 let refine_stake ctxt rollup level staker commitment =
@@ -414,7 +414,7 @@ let finalize_commitment ctxt rollup level new_lfc =
         let* (ctxt, _size) =
           Store.Commitments.remove_existing (ctxt, rollup) new_lfc
         in
-        return ((), ctxt)
+        return ctxt
 
 module Successor_map = Map.Make (Sc_rollup_repr.Commitment_hash)
 
@@ -484,7 +484,7 @@ let remove_staker ctxt rollup staker =
         let* ctxt = modify_staker_size ctxt rollup Int32.pred in
         let traverse =
           let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
-            if Commitment_hash.(node = lfc) then return ((), ctxt)
+            if Commitment_hash.(node = lfc) then return ctxt
             else
               let* (pred, ctxt) = get_predecessor ctxt rollup node in
               let* ctxt = decrease_stake_count ctxt rollup node in
