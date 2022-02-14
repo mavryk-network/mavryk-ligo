@@ -41,7 +41,7 @@ let lift k = Lwt.map Environment.wrap_tzresult k
 
     By convention, context is passed linearly as [ctxt].  This takes a context
     argument to allow this.
-    *)
+*)
 let assert_true _ctxt = return ()
 
 (** Assert that the computation fails with the given message. *)
