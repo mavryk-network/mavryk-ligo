@@ -130,7 +130,7 @@ let test_removing_staker_from_lfc_fails () =
   assert_fails_with
     ~loc:__LOC__
     (Sc_rollup_storage.remove_staker ctxt rollup staker)
-    "Can not remove a final commitment."
+    "Cannot remove a final commitment."
 
 let test_deposit_then_withdraw () =
   let* ctxt = new_context in
