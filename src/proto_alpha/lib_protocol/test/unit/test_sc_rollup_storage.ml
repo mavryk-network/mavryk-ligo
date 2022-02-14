@@ -45,13 +45,7 @@ let lift k = Lwt.map Environment.wrap_tzresult k
 let assert_true _ctxt = return ()
 
 (** Assert that the computation fails with the given message. *)
-let assert_fails_with :
-    type a.
-    loc:string ->
-    a Environment.Error_monad.tzresult Lwt.t ->
-    string ->
-    unit tzresult Lwt.t =
- fun ~loc k msg ->
+let assert_fails_with ~loc k msg =
   let expected_error_msg = "Error:\n  " ^ msg ^ "\n" in
   k >>= function
   | Ok _ -> Stdlib.failwith "Expected failure"
