@@ -274,12 +274,14 @@ let modify_stake_count ctxt rollup node f =
   in
   return (new_count, ctxt)
 
+(** [set_commitment_added ctxt rollup node current] sets the commitment
+    addition time of [node] to [current] iff the commitment time was
+    not previously set, and leaves it unchanged otherwise.
+ *)
 let set_commitment_added ctxt rollup node new_value =
   let* (ctxt, res) = Store.Commitment_added.find (ctxt, rollup) node in
   let new_value =
-    match res with
-    | None -> new_value
-    | Some old_value -> Raw_level_repr.min old_value new_value
+    match res with None -> new_value | Some old_value -> old_value
   in
   let* (ctxt, _, _) =
     Store.Commitment_added.add (ctxt, rollup) node new_value

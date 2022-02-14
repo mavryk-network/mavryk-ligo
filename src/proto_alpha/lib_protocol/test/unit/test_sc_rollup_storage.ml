@@ -270,6 +270,42 @@ let test_finalize_fail_too_recent () =
   in
   assert_true ctxt
 
+let test_finalize_deadline_uses_oldest_add_time () =
+  let* ctxt = new_context in
+  let level_0 = (Raw_context.current_level ctxt).level in
+  let level_after = Raw_level_repr.add level_0 20_160 in
+  let* (rollup, ctxt) = lift @@ new_sc_rollup ctxt in
+  let staker1 =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let staker2 =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo"
+  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker1 in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker2 in
+  let commitment =
+    Sc_rollup_repr.Commitment.
+      {
+        predecessor = Sc_rollup_repr.Commitment_hash.zero;
+        inbox_level = Raw_level_repr.of_int32_exn 125l;
+        number_of_messages = number_of_messages_exn 3l;
+        number_of_ticks = number_of_ticks_exn 1232909l;
+        compressed_state = Sc_rollup_repr.State_hash.zero;
+      }
+  in
+  let* (c1, ctxt) =
+    lift
+    @@ Sc_rollup_storage.refine_stake ctxt rollup level_0 staker1 commitment
+  in
+  let* (c2, ctxt) =
+    lift
+    @@ Sc_rollup_storage.refine_stake ctxt rollup level_after staker2 commitment
+  in
+  let* ctxt =
+    lift @@ Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1
+  in
+  assert_commitment_hash_equal ~loc:__LOC__ ctxt c1 c2
+
 let test_withdrawal_fails_when_not_staked_on_lfc () =
   let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
@@ -641,6 +677,10 @@ let tests =
       "finalize fails when too recent"
       `Quick
       test_finalize_fail_too_recent;
+    Tztest.tztest
+      "finalize deadline uses oldest add time"
+      `Quick
+      test_finalize_deadline_uses_oldest_add_time;
     Tztest.tztest
       "finalize with two stakers"
       `Quick
