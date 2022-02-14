@@ -251,7 +251,7 @@ let find_staker ctxt rollup staker =
   let* (ctxt, res) = Store.Stakers.find (ctxt, rollup) staker in
   match res with
   | None -> fail Sc_rollup_not_staked
-  | Some branch -> return (ctxt, branch)
+  | Some branch -> return (branch, ctxt)
 
 let modify_staker_size ctxt rollup f =
   let* (ctxt, maybe_count) = Store.Stakers_size.find ctxt rollup in
@@ -337,7 +337,7 @@ let withdraw_stake ctxt rollup staker =
 
 let refine_stake ctxt rollup level staker commitment =
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
-  let* (ctxt, staked_on) = find_staker ctxt rollup staker in
+  let* (staked_on, ctxt) = find_staker ctxt rollup staker in
   let new_hash = Commitment.hash commitment in
   let traverse =
     let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
@@ -424,8 +424,8 @@ type successor_map = Sc_rollup_repr.Commitment_hash.t Successor_map.t
 
 let get_conflict_point ctxt rollup staker1 staker2 =
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
-  let* (ctxt, staker1_branch) = find_staker ctxt rollup staker1 in
-  let* (ctxt, staker2_branch) = find_staker ctxt rollup staker2 in
+  let* (staker1_branch, ctxt) = find_staker ctxt rollup staker1 in
+  let* (staker2_branch, ctxt) = find_staker ctxt rollup staker2 in
   (* Build a map from commitments on the staker1 branch to their direct
      successor on this branch. *)
   (* let rec staker1_commitments map commitment_hash *)
