@@ -218,7 +218,7 @@ let add_messages ctxt rollup messages =
 (** Try to consume n messages.
 
     Returns [Some new_inbox] if successful.
-    Returns [None] if there are strictly less than [n] message available
+    Returns [None] if there are strictly less than [n] messages available
     in the inbox. *)
 let consume_n_messages ctxt rollup n =
   let* (ctxt, inbox) = Storage.Sc_rollup.Inbox.get ctxt rollup in
