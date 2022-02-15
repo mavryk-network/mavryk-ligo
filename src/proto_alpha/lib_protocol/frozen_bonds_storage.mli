@@ -28,7 +28,7 @@
     deposit. *)
 
 (** This error is raised when [spend_only_call_from_token] is called with an
-    amount that is less than the deposit associated to the given contract and
+    amount that is not equal to the deposit associated to the given contract and
     bond id. *)
 type error +=
   | (* `Permanent *)
