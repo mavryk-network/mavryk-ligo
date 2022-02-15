@@ -133,6 +133,10 @@ val withdraw_stake :
     commitments and {i staking on existing commitments}.  The storage of
     commitments is content-addressable to minimize storage duplication.
 
+    [level] should be the current Tezos block level. This must be monotonically
+    increasing in subsequent calls to [refine_stake] and [finalize_commitment],
+    or behavior is undefined.
+
     The first time a commitment hash is staked on, it is assigned a deadline,
     which is counted in Tezos blocks (levels). Further stakes on the block does
     not affect the deadline. The commitment can not be finalized before the
@@ -173,6 +177,10 @@ val last_final_commitment :
 
 (** [finalize_commitment context rollup commitment] finalizes the given
     commitment.
+
+    [level] should be the current Tezos block level. This must be monotonically
+    increasing in subsequent calls to [refine_stake] and [finalize_commitment],
+    or behavior is undefined.
 
     If successful, [last_final_commitment] is set to the given [commitment] and
     the appropriate amount of inbox messages is consumed. Stakers directly
