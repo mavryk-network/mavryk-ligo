@@ -141,7 +141,7 @@ val withdraw_stake :
     which is counted in Tezos blocks (levels). Further stakes on the block does
     not affect the deadline. The commitment can not be finalized before the
     deadline has expired. Note that if a commitment is removed due to disputes
-    and then re-entered, a new deadline may be assigned. Assuming one honest
+    and then re-entered, a later deadline may be assigned. Assuming one honest
     staker is always available, this only affects invalid commitments.
 
     May fail with:
@@ -182,9 +182,16 @@ val last_final_commitment :
     increasing in subsequent calls to [refine_stake] and [finalize_commitment],
     or behavior is undefined.
 
+    For finalization to succeed, the following must hold:
+    {ol
+      {li The deadline for [commitment] must have passed.}
+      {li The predecessor of [commitment] must be the Last Final Commitment.}
+      {li There must be at least one staker.}
+      {li All stakers must be indirectly staked on [commitment].}
+    }
+
     If successful, [last_final_commitment] is set to the given [commitment] and
-    the appropriate amount of inbox messages is consumed. Stakers directly
-    staked on the last final commitment become staked on [commitment].
+    the appropriate amount of inbox messages is consumed.
 
     May fail with:
     {ul
