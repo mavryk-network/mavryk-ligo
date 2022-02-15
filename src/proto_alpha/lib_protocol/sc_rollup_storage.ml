@@ -333,7 +333,7 @@ let withdraw_stake ctxt rollup staker =
   match res with
   | None -> fail Sc_rollup_not_staked
   | Some staked_on_commitment ->
-      if Sc_rollup_repr.Commitment_hash.(staked_on_commitment = lfc) then
+      if Commitment_hash.(staked_on_commitment = lfc) then
         (* TODO: https://gitlab.com/tezos/tezos/-/issues/2449
            We should refund stake here.
         *)
@@ -375,7 +375,7 @@ let refine_stake ctxt rollup level staker commitment =
         let* ctxt = increase_stake_count ctxt rollup node in
         (go [@ocaml.tailcall]) pred ctxt
     in
-    go Sc_rollup_repr.Commitment.(commitment.predecessor) ctxt
+    go Commitment.(commitment.predecessor) ctxt
   in
   traverse
 
@@ -426,12 +426,11 @@ let finalize_commitment ctxt rollup level new_lfc =
         in
         return ctxt
 
-module Successor_map = Map.Make (Sc_rollup_repr.Commitment_hash)
+module Successor_map = Map.Make (Commitment_hash)
 
-type conflict_point =
-  Sc_rollup_repr.Commitment_hash.t * Sc_rollup_repr.Commitment_hash.t
+type conflict_point = Commitment_hash.t * Commitment_hash.t
 
-type successor_map = Sc_rollup_repr.Commitment_hash.t Successor_map.t
+type successor_map = Commitment_hash.t Successor_map.t
 
 let get_conflict_point ctxt rollup staker1 staker2 =
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
