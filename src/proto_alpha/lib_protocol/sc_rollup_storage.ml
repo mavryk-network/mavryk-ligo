@@ -173,14 +173,19 @@ let () =
     (fun x -> Sc_rollup_unknown_commitment x) ;
   ()
 
-(* Note: this should be replaced with Lwt_tzresult_syntax once it is available *)
-let ( let* ) = ( >>=? )
+(** To be removed once [Lwt_result_syntax] is in the environment. *)
+module Lwt_result_syntax = struct
+  let ( let* ) = ( >>=? )
+
+  let return = return
+end
 
 module Store = Storage.Sc_rollup
 module Commitment = Sc_rollup_repr.Commitment
 module Commitment_hash = Sc_rollup_repr.Commitment_hash
 
 let originate ctxt ~kind ~boot_sector =
+  let open Lwt_result_syntax in
   Raw_context.increment_origination_nonce ctxt >>?= fun (ctxt, nonce) ->
   Sc_rollup_repr.Address.from_nonce nonce >>?= fun address ->
   Storage.Sc_rollup.PVM_kind.add ctxt address kind >>= fun ctxt ->
@@ -221,6 +226,7 @@ let add_messages ctxt rollup messages =
     Returns [None] if there are strictly less than [n] messages available
     in the inbox. *)
 let consume_n_messages ctxt rollup n =
+  let open Lwt_result_syntax in
   let* (ctxt, inbox) = Storage.Sc_rollup.Inbox.get ctxt rollup in
   match Sc_rollup_inbox.consume_n_messages n inbox with
   | None -> return (inbox, ctxt)
@@ -229,32 +235,38 @@ let consume_n_messages ctxt rollup n =
       return (inbox, ctxt)
 
 let inbox ctxt rollup =
+  let open Lwt_result_syntax in
   let* (ctxt, res) = Storage.Sc_rollup.Inbox.get ctxt rollup in
   return (res, ctxt)
 
 let last_final_commitment ctxt rollup =
+  let open Lwt_result_syntax in
   let* (ctxt, res) = Store.Last_final_commitment.find ctxt rollup in
   match res with
   | None -> fail (Sc_rollup_does_not_exist rollup)
   | Some lfc -> return (lfc, ctxt)
 
 let get_commitment ctxt rollup commitment =
+  let open Lwt_result_syntax in
   let* (ctxt, res) = Store.Commitments.find (ctxt, rollup) commitment in
   match res with
   | None -> fail (Sc_rollup_unknown_commitment commitment)
   | Some commitment -> return (commitment, ctxt)
 
 let get_predecessor ctxt rollup node =
+  let open Lwt_result_syntax in
   let* (commitment, ctxt) = get_commitment ctxt rollup node in
   return (commitment.predecessor, ctxt)
 
 let find_staker ctxt rollup staker =
+  let open Lwt_result_syntax in
   let* (ctxt, res) = Store.Stakers.find (ctxt, rollup) staker in
   match res with
   | None -> fail Sc_rollup_not_staked
   | Some branch -> return (branch, ctxt)
 
 let modify_staker_size ctxt rollup f =
+  let open Lwt_result_syntax in
   let* (ctxt, maybe_count) = Store.Stakers_size.find ctxt rollup in
   let count = Option.value ~default:0l maybe_count in
   let* (ctxt, _size_diff, _was_bound) =
@@ -263,12 +275,14 @@ let modify_staker_size ctxt rollup f =
   return ctxt
 
 let get_commitment_stake_count ctxt rollup node =
+  let open Lwt_result_syntax in
   let* (ctxt, maybe_staked_on_commitment) =
     Store.Commitment_stake_count.find (ctxt, rollup) node
   in
   return (Option.value ~default:0l maybe_staked_on_commitment, ctxt)
 
 let modify_stake_count ctxt rollup node f =
+  let open Lwt_result_syntax in
   let* (count, ctxt) = get_commitment_stake_count ctxt rollup node in
   let new_count = f count in
   let* (ctxt, _size_diff, _was_bound) =
@@ -281,6 +295,7 @@ let modify_stake_count ctxt rollup node f =
     not previously set, and leaves it unchanged otherwise.
  *)
 let set_commitment_added ctxt rollup node new_value =
+  let open Lwt_result_syntax in
   let* (ctxt, res) = Store.Commitment_added.find (ctxt, rollup) node in
   let new_value =
     match res with None -> new_value | Some old_value -> old_value
@@ -292,6 +307,7 @@ let set_commitment_added ctxt rollup node new_value =
 
 let deallocate (ctxt : Raw_context.t) (rollup : Sc_rollup_repr.t)
     (node : Commitment_hash.t) : Raw_context.t tzresult Lwt.t =
+  let open Lwt_result_syntax in
   if Commitment_hash.(node = zero) then return ctxt
   else
     let* (ctxt, _size_freed) =
@@ -306,15 +322,18 @@ let deallocate (ctxt : Raw_context.t) (rollup : Sc_rollup_repr.t)
     return ctxt
 
 let increase_stake_count ctxt rollup node =
+  let open Lwt_result_syntax in
   let* (_new_count, ctxt) = modify_stake_count ctxt rollup node Int32.succ in
   return ctxt
 
 let decrease_stake_count ctxt rollup node =
+  let open Lwt_result_syntax in
   let* (new_count, ctxt) = modify_stake_count ctxt rollup node Int32.pred in
   if Compare.Int32.(new_count <= 0l) then deallocate ctxt rollup node
   else return ctxt
 
 let deposit_stake ctxt rollup staker =
+  let open Lwt_result_syntax in
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (ctxt, res) = Store.Stakers.find (ctxt, rollup) staker in
   match res with
@@ -328,6 +347,7 @@ let deposit_stake ctxt rollup staker =
   | Some _ -> fail Sc_rollup_already_staked
 
 let withdraw_stake ctxt rollup staker =
+  let open Lwt_result_syntax in
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (ctxt, res) = Store.Stakers.find (ctxt, rollup) staker in
   match res with
@@ -345,6 +365,7 @@ let withdraw_stake ctxt rollup staker =
       else fail Sc_rollup_not_staked_on_final
 
 let refine_stake ctxt rollup level staker commitment =
+  let open Lwt_result_syntax in
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (staked_on, ctxt) = find_staker ctxt rollup staker in
   let new_hash = Commitment.hash commitment in
@@ -380,6 +401,7 @@ let refine_stake ctxt rollup level staker commitment =
   traverse
 
 let finalize_commitment ctxt rollup level new_lfc =
+  let open Lwt_result_syntax in
   let refutation_deadline_blocks =
     Constants_storage.sc_rollup_challenge_window ctxt
   in
@@ -433,6 +455,7 @@ type conflict_point = Commitment_hash.t * Commitment_hash.t
 type successor_map = Commitment_hash.t Successor_map.t
 
 let get_conflict_point ctxt rollup staker1 staker2 =
+  let open Lwt_result_syntax in
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (staker1_branch, ctxt) = find_staker ctxt rollup staker1 in
   let* (staker2_branch, ctxt) = find_staker ctxt rollup staker2 in
@@ -482,6 +505,7 @@ let get_conflict_point ctxt rollup staker1 staker2 =
     traverse_staker2
 
 let remove_staker ctxt rollup staker =
+  let open Lwt_result_syntax in
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (ctxt, res) = Store.Stakers.find (ctxt, rollup) staker in
   match res with
