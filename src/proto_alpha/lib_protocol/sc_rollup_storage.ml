@@ -383,17 +383,17 @@ let finalize_commitment ctxt rollup level new_lfc =
   let refutation_deadline_blocks =
     Constants_storage.sc_rollup_challenge_window ctxt
   in
-  let* (old_lfc, ctxt) = last_final_commitment ctxt rollup in
-  let* (new_lfc_commitment, ctxt) = get_commitment ctxt rollup new_lfc in
-  let* (ctxt, new_lfc_added) =
-    Store.Commitment_added.get (ctxt, rollup) new_lfc
-  in
-  if Commitment_hash.(new_lfc_commitment.predecessor <> old_lfc) then
-    fail Sc_rollup_parent_not_final
+  (* get is safe, as Stakers_size is initialized on origination *)
+  let* (ctxt, total_staker_count) = Store.Stakers_size.get ctxt rollup in
+  if Compare.Int32.(total_staker_count <= 0l) then fail Sc_rollup_no_stakers
   else
-    (* get is safe, as Stakers_size is initialized on origination *)
-    let* (ctxt, total_staker_count) = Store.Stakers_size.get ctxt rollup in
-    if Compare.Int32.(total_staker_count <= 0l) then fail Sc_rollup_no_stakers
+    let* (old_lfc, ctxt) = last_final_commitment ctxt rollup in
+    let* (new_lfc_commitment, ctxt) = get_commitment ctxt rollup new_lfc in
+    let* (ctxt, new_lfc_added) =
+      Store.Commitment_added.get (ctxt, rollup) new_lfc
+    in
+    if Commitment_hash.(new_lfc_commitment.predecessor <> old_lfc) then
+      fail Sc_rollup_parent_not_final
     else
       let* (new_lfc_stake_count, ctxt) =
         get_commitment_stake_count ctxt rollup new_lfc

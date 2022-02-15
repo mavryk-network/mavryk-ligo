@@ -247,6 +247,34 @@ let test_finalize () =
      in
      assert_true ctxt
 
+let test_finalize_with_zero_stakers_fails () =
+  let* ctxt = new_context in
+  let level_0 = (Raw_context.current_level ctxt).level in
+  let level_after = Raw_level_repr.add level_0 20_160 in
+  let* (rollup, ctxt) = lift @@ new_sc_rollup ctxt in
+  let staker =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
+  let commitment =
+    Sc_rollup_repr.Commitment.
+      {
+        predecessor = Sc_rollup_repr.Commitment_hash.zero;
+        inbox_level = Raw_level_repr.of_int32_exn 125l;
+        number_of_messages = number_of_messages_exn 3l;
+        number_of_ticks = number_of_ticks_exn 1232909l;
+        compressed_state = Sc_rollup_repr.State_hash.zero;
+      }
+  in
+  let* (c1, ctxt) =
+    lift @@ Sc_rollup_storage.refine_stake ctxt rollup level_0 staker commitment
+  in
+  let* ctxt = lift @@ Sc_rollup_storage.remove_staker ctxt rollup staker in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1)
+    "No stakers."
+
 let test_finalize_fail_too_recent () =
   let* ctxt = new_context in
   let level = (Raw_context.current_level ctxt).level in
@@ -671,6 +699,10 @@ let tests =
       test_deposit_to_existing_rollup;
     Tztest.tztest "can not deposit twice" `Quick test_can_not_stake_twice;
     Tztest.tztest "deposit, then withdraw" `Quick test_deposit_then_withdraw;
+    Tztest.tztest
+      "finalize with zero stakers fails"
+      `Quick
+      test_finalize_with_zero_stakers_fails;
     Tztest.tztest
       "withdrawing when not staked fails"
       `Quick
