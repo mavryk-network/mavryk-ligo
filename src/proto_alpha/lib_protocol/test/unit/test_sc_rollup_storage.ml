@@ -144,6 +144,19 @@ let test_deposit_then_withdraw () =
      let* ctxt = Sc_rollup_storage.withdraw_stake ctxt rollup staker in
      assert_true ctxt
 
+let test_can_not_stake_twice () =
+  let* ctxt = new_context in
+  let* (rollup, ctxt) = lift @@ new_sc_rollup ctxt in
+  let staker =
+    Signature.Public_key_hash.of_b58check_exn
+      "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.deposit_stake ctxt rollup staker)
+    "Already staked."
+
 let test_withdraw_when_not_staked () =
   let* ctxt = new_context in
   let* (rollup, ctxt) = lift @@ new_sc_rollup ctxt in
@@ -656,6 +669,7 @@ let tests =
       "deposit to existing rollup"
       `Quick
       test_deposit_to_existing_rollup;
+    Tztest.tztest "can not deposit twice" `Quick test_can_not_stake_twice;
     Tztest.tztest "deposit, then withdraw" `Quick test_deposit_then_withdraw;
     Tztest.tztest
       "withdrawing when not staked fails"
