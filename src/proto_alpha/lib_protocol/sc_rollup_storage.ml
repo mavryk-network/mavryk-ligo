@@ -220,19 +220,15 @@ let add_messages ctxt rollup messages =
   Storage.Sc_rollup.Inbox.update ctxt rollup inbox >>=? fun (ctxt, size) ->
   return (inbox, Z.of_int size, ctxt)
 
-(** Try to consume n messages.
-
-    Returns [Some new_inbox] if successful.
-    Returns [None] if there are strictly less than [n] messages available
-    in the inbox. *)
+(** Try to consume n messages. *)
 let consume_n_messages ctxt rollup n =
   let open Lwt_result_syntax in
   let* (ctxt, inbox) = Storage.Sc_rollup.Inbox.get ctxt rollup in
   match Sc_rollup_inbox.consume_n_messages n inbox with
-  | None -> return (inbox, ctxt)
+  | None -> return ctxt
   | Some inbox ->
       let* (ctxt, _size) = Storage.Sc_rollup.Inbox.update ctxt rollup inbox in
-      return (inbox, ctxt)
+      return ctxt
 
 let inbox ctxt rollup =
   let open Lwt_result_syntax in
@@ -435,7 +431,7 @@ let finalize_commitment ctxt rollup level new_lfc =
            can safely deallocate the old LFC.
         *)
         let* ctxt = deallocate ctxt rollup old_lfc in
-        let* (_inbox_res, ctxt) =
+        let* ctxt =
           consume_n_messages
             ctxt
             rollup
