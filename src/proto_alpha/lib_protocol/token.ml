@@ -23,13 +23,15 @@
 (*                                                                           *)
 (*****************************************************************************)
 
+type carb_container = [`Frozen_bonds of Contract_repr.t * Bond_id_repr.t]
+
 type container =
   [ `Contract of Contract_repr.t
   | `Collected_commitments of Blinded_public_key_hash.t
   | `Delegate_balance of Signature.Public_key_hash.t
   | `Frozen_deposits of Signature.Public_key_hash.t
   | `Block_fees
-  | `Frozen_bonds of Contract_repr.t * Bond_id_repr.t ]
+  | carb_container ]
 
 type source =
   [ `Invoice
@@ -51,6 +53,11 @@ type sink =
   | `Burned
   | container ]
 
+let carb_allocated ctxt stored =
+  match stored with
+  | `Frozen_bonds (contract, bond_id) ->
+      Frozen_bonds_storage.allocated ctxt contract bond_id
+
 let allocated ctxt stored =
   match stored with
   | `Contract contract -> Contract_storage.allocated ctxt contract
@@ -62,8 +69,13 @@ let allocated ctxt stored =
       let contract = Contract_repr.implicit_contract delegate in
       Frozen_deposits_storage.allocated ctxt contract >|= ok
   | `Block_fees -> return_true
+  | `Frozen_bonds _ as account -> carb_allocated ctxt account >|=? snd
+
+let carb_balance ctxt stored =
+  match stored with
   | `Frozen_bonds (contract, bond_id) ->
-      Frozen_bonds_storage.allocated ctxt contract bond_id
+      Frozen_bonds_storage.find ctxt contract bond_id >|=? fun (ctxt, value) ->
+      (ctxt, Option.value ~default:Tez_repr.zero value)
 
 let balance ctxt stored =
   match stored with
@@ -79,9 +91,7 @@ let balance ctxt stored =
       | None -> Tez_repr.zero
       | Some frozen_deposits -> frozen_deposits.current_amount)
   | `Block_fees -> return (Raw_context.get_collected_fees ctxt)
-  | `Frozen_bonds (contract, bond_id) ->
-      Frozen_bonds_storage.find ctxt contract bond_id
-      >|=? Option.value ~default:Tez_repr.zero
+  | `Frozen_bonds _ as stored -> carb_balance ctxt stored >|=? snd
 
 let credit ctxt dest amount origin =
   let open Receipt_repr in
@@ -177,8 +187,8 @@ let deallocate_stakeless_implicit_contracts ctxt contract =
   match Contract_repr.is_implicit contract with
   | None -> return ctxt (* Never delete originated contracts *)
   | Some _ -> (
-      Contract_storage.stake ctxt contract >>=? fun stake ->
-      if Tez_repr.(stake <> zero) then return ctxt
+      Contract_storage.has_stake ctxt contract >>=? fun has_stake ->
+      if has_stake then return ctxt
       else
         Contract_delegate_storage.find ctxt contract >>=? function
         | Some _ ->

@@ -181,7 +181,7 @@ module Contract : sig
        and type t := Raw_context.t
 
   module Frozen_bonds :
-    Indexed_data_storage
+    Non_iterable_indexed_carbonated_data_storage
       with type key = Bond_id_repr.t
        and type value = Tez_repr.t
        and type t := Raw_context.t * Contract_repr.t

@@ -344,8 +344,7 @@ let test_transferring_from_bounded_source ctxt src amount expected_bupds =
   (match src with
   | `Frozen_bonds _ -> (
       wrap (Token.transfer ctxt src `Burned amount) >>= function
-      | Ok _ ->
-          failwith "Partial withdrawals are forbidden for frozen bonds."
+      | Ok _ -> failwith "Partial withdrawals are forbidden for frozen bonds."
       | Error _ -> return_unit)
   | _ ->
       wrap (Token.transfer ctxt src `Burned amount) >>=? fun (ctxt', bupds) ->
