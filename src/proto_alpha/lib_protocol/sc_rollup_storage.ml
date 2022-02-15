@@ -257,7 +257,9 @@ let find_staker ctxt rollup staker =
 let modify_staker_size ctxt rollup f =
   let* (ctxt, maybe_count) = Store.Stakers_size.find ctxt rollup in
   let count = Option.value ~default:0l maybe_count in
-  let* (ctxt, _, _) = Store.Stakers_size.add ctxt rollup (f count) in
+  let* (ctxt, _size_diff, _was_bound) =
+    Store.Stakers_size.add ctxt rollup (f count)
+  in
   return ctxt
 
 let get_commitment_stake_count ctxt rollup node =
@@ -269,7 +271,7 @@ let get_commitment_stake_count ctxt rollup node =
 let modify_stake_count ctxt rollup node f =
   let* (count, ctxt) = get_commitment_stake_count ctxt rollup node in
   let new_count = f count in
-  let* (ctxt, _, _) =
+  let* (ctxt, _size_diff, _was_bound) =
     Store.Commitment_stake_count.add (ctxt, rollup) node new_count
   in
   return (new_count, ctxt)
@@ -283,7 +285,7 @@ let set_commitment_added ctxt rollup node new_value =
   let new_value =
     match res with None -> new_value | Some old_value -> old_value
   in
-  let* (ctxt, _, _) =
+  let* (ctxt, _size_diff, _was_bound) =
     Store.Commitment_added.add (ctxt, rollup) node new_value
   in
   return ctxt
@@ -292,17 +294,19 @@ let deallocate (ctxt : Raw_context.t) (rollup : Sc_rollup_repr.t)
     (node : Commitment_hash.t) : Raw_context.t tzresult Lwt.t =
   if Commitment_hash.(node = zero) then return ctxt
   else
-    let* (ctxt, _) = Store.Commitments.remove_existing (ctxt, rollup) node in
-    let* (ctxt, _) =
+    let* (ctxt, _size_freed) =
+      Store.Commitments.remove_existing (ctxt, rollup) node
+    in
+    let* (ctxt, _size_freed) =
       Store.Commitment_added.remove_existing (ctxt, rollup) node
     in
-    let* (ctxt, _) =
+    let* (ctxt, _size_freed) =
       Store.Commitment_stake_count.remove_existing (ctxt, rollup) node
     in
     return ctxt
 
 let increase_stake_count ctxt rollup node =
-  let* (_, ctxt) = modify_stake_count ctxt rollup node Int32.succ in
+  let* (_new_count, ctxt) = modify_stake_count ctxt rollup node Int32.succ in
   return ctxt
 
 let decrease_stake_count ctxt rollup node =
@@ -318,7 +322,7 @@ let deposit_stake ctxt rollup staker =
       (* TODO: https://gitlab.com/tezos/tezos/-/issues/2449
          We should lock stake here, and fail if there aren't enough funds.
       *)
-      let* (ctxt, _) = Store.Stakers.init (ctxt, rollup) staker lfc in
+      let* (ctxt, _size) = Store.Stakers.init (ctxt, rollup) staker lfc in
       let* ctxt = modify_staker_size ctxt rollup Int32.succ in
       return ctxt
   | Some _ -> fail Sc_rollup_already_staked
@@ -333,7 +337,9 @@ let withdraw_stake ctxt rollup staker =
         (* TODO: https://gitlab.com/tezos/tezos/-/issues/2449
            We should refund stake here.
         *)
-        let* (ctxt, _) = Store.Stakers.remove_existing (ctxt, rollup) staker in
+        let* (ctxt, _size_freed) =
+          Store.Stakers.remove_existing (ctxt, rollup) staker
+        in
         let* ctxt = modify_staker_size ctxt rollup Int32.pred in
         return ctxt
       else fail Sc_rollup_not_staked_on_final
@@ -350,11 +356,13 @@ let refine_stake ctxt rollup level staker commitment =
       if Commitment_hash.(node = staked_on) then
         (* Previously staked commit found:
            Insert new commitment if not existing *)
-        let* (ctxt, _, _) =
+        let* (ctxt, _size_diff, _was_bound) =
           Store.Commitments.add (ctxt, rollup) new_hash commitment
         in
         let* ctxt = set_commitment_added ctxt rollup new_hash level in
-        let* (ctxt, _) = Store.Stakers.update (ctxt, rollup) staker new_hash in
+        let* (ctxt, _size_diff) =
+          Store.Stakers.update (ctxt, rollup) staker new_hash
+        in
         let* ctxt = increase_stake_count ctxt rollup new_hash in
         return (new_hash, ctxt) (* See WARNING above. *)
       else if Commitment_hash.(node = lfc) then
@@ -397,7 +405,7 @@ let finalize_commitment ctxt rollup level new_lfc =
       then fail Sc_rollup_too_recent
       else
         (* update LFC *)
-        let* (ctxt, _) =
+        let* (ctxt, _size_diff) =
           Store.Last_final_commitment.update ctxt rollup new_lfc
         in
         (* At this point we know all stakers are implicitly staked
