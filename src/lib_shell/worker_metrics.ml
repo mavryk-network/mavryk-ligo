@@ -78,7 +78,7 @@ let update metrics Worker_types.{pushed; treated; completed} =
     (Ptime.to_float_s pushed) ;
   Prometheus.Gauge.set
     metrics.last_finished_request_treatment_seconds
-    (Ptime.Span.to_float_s treated) ;
+    (Ptime.to_float_s treated) ;
   Prometheus.Gauge.set
     metrics.last_finished_request_completion_seconds
-    (Ptime.Span.to_float_s completed)
+    (Ptime.to_float_s completed)
