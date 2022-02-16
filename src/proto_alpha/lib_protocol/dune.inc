@@ -164,6 +164,8 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    sc_rollup_PVM_sem.ml
    sc_rollup_arith.mli sc_rollup_arith.ml
    sc_rollups.mli sc_rollups.ml
+   game_repr.mli game_repr.ml
+   game_repr.mli game_repr.ml
    baking.mli baking.ml
    amendment.mli amendment.ml
    apply_results.mli apply_results.ml
@@ -321,6 +323,8 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    sc_rollup_PVM_sem.ml
    sc_rollup_arith.mli sc_rollup_arith.ml
    sc_rollups.mli sc_rollups.ml
+   game_repr.mli game_repr.ml
+   game_repr.mli game_repr.ml
    baking.mli baking.ml
    amendment.mli amendment.ml
    apply_results.mli apply_results.ml
@@ -478,6 +482,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    sc_rollup_PVM_sem.ml
    sc_rollup_arith.mli sc_rollup_arith.ml
    sc_rollups.mli sc_rollups.ml
+   game_repr.mli game_repr.ml
    baking.mli baking.ml
    amendment.mli amendment.ml
    apply_results.mli apply_results.ml
@@ -657,6 +662,7 @@ include Tezos_raw_protocol_alpha.Main
    Sc_rollup_PVM_sem
    Sc_rollup_arith
    Sc_rollups
+   Game_repr
    Baking
    Amendment
    Apply_results
@@ -855,6 +861,7 @@ include Tezos_raw_protocol_alpha.Main
    sc_rollup_PVM_sem.ml
    sc_rollup_arith.mli sc_rollup_arith.ml
    sc_rollups.mli sc_rollups.ml
+   game_repr.mli game_repr.ml
    baking.mli baking.ml
    amendment.mli amendment.ml
    apply_results.mli apply_results.ml

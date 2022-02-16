@@ -147,6 +147,7 @@
         "Sc_rollup_PVM_sem",
         "Sc_rollup_arith",
         "Sc_rollups",
+        "Game_repr",
 
         "Baking",
         "Amendment",

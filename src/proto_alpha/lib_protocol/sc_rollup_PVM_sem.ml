@@ -67,6 +67,8 @@ module type S = sig
   (** [compress state] turns a PVM state into a compressed state. *)
   val compress : state -> state
 
+  val pp : Format.formatter -> state -> unit
+
   (**
 
        A state must finally be *serializable* as it must be

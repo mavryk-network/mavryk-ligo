@@ -34,6 +34,8 @@ let pp_boot_sector _fmt _ = ()
 
 type state = unit
 
+let pp _ _ = ()
+
 let eval : state -> state option = fun _ -> assert false
 
 let equal_states _ _ = assert false
