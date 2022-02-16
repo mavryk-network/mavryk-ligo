@@ -5110,7 +5110,9 @@ and[@coq_axiom_with_reason "complex mutually recursive definition"] parse_contra
         match arg with
         | Pair_t (Ticket_t (_, _), Tx_rollup_l2_address_t, _) ->
             return (ctxt, {arg_ty = arg; address = {destination; entrypoint}})
-        | _ -> fail Tx_rollup_bad_deposit_parameter
+        | _ ->
+            fail
+            @@ Tx_rollup_bad_deposit_parameter (loc, serialize_ty_for_error arg)
       else fail (No_such_entrypoint entrypoint)
 
 and parse_view_name ctxt : Script.node -> (Script_string.t * context) tzresult =

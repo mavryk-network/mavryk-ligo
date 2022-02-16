@@ -257,11 +257,16 @@ let report_errors ~details ~show_source ?parsed ppf errs =
         Format.fprintf ppf "Entrypoint at path %s is not reachable" path ;
         if rest <> [] then Format.fprintf ppf "@," ;
         print_trace locations rest
-    | Environment.Ecoproto_error Tx_rollup_bad_deposit_parameter :: rest ->
+    | Environment.Ecoproto_error (Tx_rollup_bad_deposit_parameter (loc, expr))
+      :: rest ->
         Format.fprintf
           ppf
-          "Trying to call the deposit entrypoint of a transaction rollup with \
-           the wrong parameter." ;
+          "@[<v 2>%aTrying to call the deposit entrypoint of a transaction \
+           rollup with an ill-formed parameter:@ %a@]"
+          print_loc
+          loc
+          print_expr
+          expr ;
         if rest <> [] then Format.fprintf ppf "@," ;
         print_trace locations rest
     | Environment.Ecoproto_error (Tx_rollup_invalid_ticket_amount amount)

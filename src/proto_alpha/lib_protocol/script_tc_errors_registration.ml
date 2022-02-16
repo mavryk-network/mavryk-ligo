@@ -229,6 +229,20 @@ let () =
     (obj1 (req "path" (list prim_encoding)))
     (function Unreachable_entrypoint path -> Some path | _ -> None)
     (fun path -> Unreachable_entrypoint path) ;
+  (* Tx rollup bad deposit parameter *)
+  register_error_kind
+    `Permanent
+    ~id:"michelson_v1.tx_rollup_bad_deposit_parameter"
+    ~title:"Bad deposit parameter"
+    ~description:
+      "The parameter to the deposit entrypoint of a transaction rollup should \
+       be a pair of a ticket and the address of a recipient transaction \
+       rollup."
+    (located (obj1 (req "parameter" Script.expr_encoding)))
+    (function
+      | Tx_rollup_bad_deposit_parameter (loc, expr) -> Some (loc, expr)
+      | _ -> None)
+    (fun (loc, expr) -> Tx_rollup_bad_deposit_parameter (loc, expr)) ;
   (* Tx rollup invalid ticket amount *)
   register_error_kind
     `Permanent

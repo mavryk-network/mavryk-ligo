@@ -70,7 +70,7 @@ type error += Unreachable_entrypoint of prim list
 
 (* Transaction rollup errors *)
 
-type error += Tx_rollup_bad_deposit_parameter
+type error += Tx_rollup_bad_deposit_parameter of Script.location * Script.expr
 
 type error += Tx_rollup_invalid_ticket_amount of Z.t
 
