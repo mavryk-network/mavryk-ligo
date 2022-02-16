@@ -28,7 +28,6 @@
         "Fitness_repr",
         "Cycle_repr",
         "Level_repr",
-        "Sc_rollup_inbox",
         "Sc_rollup_repr",
         "Seed_repr",
         "Sampler",
@@ -63,6 +62,9 @@
 
         "Raw_context_intf",
         "Raw_context",
+
+        "Sc_rollup_inbox",
+
         "Storage_costs",
         "Storage_sigs",
         "Storage_functors",

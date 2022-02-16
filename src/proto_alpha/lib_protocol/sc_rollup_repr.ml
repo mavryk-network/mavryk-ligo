@@ -297,3 +297,5 @@ module Kind = struct
 
   let encoding = Data_encoding.union ~tag_size:`Uint16 [example_arith_case]
 end
+
+type 'a maybe = Answer of 'a | DontKnow

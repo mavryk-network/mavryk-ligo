@@ -69,5 +69,6 @@ let () =
       Unit_test.spec "saturation arithmetic" Test_saturation.tests;
       Unit_test.spec "gas monad" Test_gas_monad.tests;
       Unit_test.spec "tx rollup l2" Test_tx_rollup_l2.tests;
+      Unit_test.spec "sc rollup inbox" Test_sc_rollup_inbox.tests;
     ]
   |> Lwt_main.run

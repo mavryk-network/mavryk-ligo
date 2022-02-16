@@ -1793,15 +1793,28 @@ module Sc_rollup : sig
   module Inbox : sig
     type t
 
-    val encoding : t Data_encoding.encoding
+    type inbox_context
 
     val pp : Format.formatter -> t -> unit
+
+    val encoding : t Data_encoding.t
+
+    val empty : Address.t -> Level.t -> t
+
+    val number_of_available_messages : t -> Z.t
+
+    val consume_n_messages : int -> t -> t option tzresult
+
+    val get_message : inbox_context -> t -> Level.t -> Z.t -> tree option Lwt.t
   end
 
   val rpc_arg : t RPC_arg.t
 
   val add_messages :
-    context -> t -> string list -> (Inbox.t * Z.t * context) tzresult Lwt.t
+    context ->
+    t ->
+    Inbox.message list ->
+    (Inbox.t * Z.t * context) tzresult Lwt.t
 
   val inbox : context -> t -> (Inbox.t * context) tzresult Lwt.t
 end

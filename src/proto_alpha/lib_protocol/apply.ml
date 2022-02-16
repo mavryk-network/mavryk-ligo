@@ -1300,6 +1300,13 @@ let apply_manager_operation_content :
       in
       return (ctxt, result, [])
   | Sc_rollup_add_messages {rollup; messages} ->
+      List.fold_left_map_s
+        (fun ctxt m ->
+          Sc_rollup.Inbox.make_full_message ctxt m >>= fun (x, ctxt) ->
+          Lwt.return (ctxt, x))
+        ctxt
+        messages
+      >>= fun (ctxt, messages) ->
       Sc_rollup.add_messages ctxt rollup messages
       >>=? fun (inbox_after, _size, ctxt) ->
       let consumed_gas = Gas.consumed ~since:before_operation ~until:ctxt in

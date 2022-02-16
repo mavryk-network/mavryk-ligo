@@ -139,3 +139,11 @@ module Kind : sig
 
   val encoding : t Data_encoding.t
 end
+
+(** The smart contract rollup logic is based on Merkle proofs. *)
+
+(** A Merkle proof for values of type ['a] may be informative, which
+    means that we can get a precise [Answer] in the form of a value
+    of type ['a], or may be non informative, which means that we
+    [DontKnow] the value of type ['a] it denotes. *)
+type 'a maybe = Answer of 'a | DontKnow
