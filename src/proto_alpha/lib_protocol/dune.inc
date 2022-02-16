@@ -139,6 +139,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    script_ir_annot.mli script_ir_annot.ml
    script_typed_ir.mli script_typed_ir.ml
    script_comparable.mli script_comparable.ml
+   gas_comparable_input_size.mli gas_comparable_input_size.ml
    script_set.mli script_set.ml
    script_map.mli script_map.ml
    gas_input_size.mli gas_input_size.ml
@@ -296,6 +297,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    script_ir_annot.mli script_ir_annot.ml
    script_typed_ir.mli script_typed_ir.ml
    script_comparable.mli script_comparable.ml
+   gas_comparable_input_size.mli gas_comparable_input_size.ml
    script_set.mli script_set.ml
    script_map.mli script_map.ml
    gas_input_size.mli gas_input_size.ml
@@ -453,6 +455,7 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    script_ir_annot.mli script_ir_annot.ml
    script_typed_ir.mli script_typed_ir.ml
    script_comparable.mli script_comparable.ml
+   gas_comparable_input_size.mli gas_comparable_input_size.ml
    script_set.mli script_set.ml
    script_map.mli script_map.ml
    gas_input_size.mli gas_input_size.ml
@@ -632,6 +635,7 @@ include Tezos_raw_protocol_alpha.Main
    Script_ir_annot
    Script_typed_ir
    Script_comparable
+   Gas_comparable_input_size
    Script_set
    Script_map
    Gas_input_size
@@ -830,6 +834,7 @@ include Tezos_raw_protocol_alpha.Main
    script_ir_annot.mli script_ir_annot.ml
    script_typed_ir.mli script_typed_ir.ml
    script_comparable.mli script_comparable.ml
+   gas_comparable_input_size.mli gas_comparable_input_size.ml
    script_set.mli script_set.ml
    script_map.mli script_map.ml
    gas_input_size.mli gas_input_size.ml
