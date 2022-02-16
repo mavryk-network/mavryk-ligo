@@ -228,7 +228,7 @@ let catch_up cctxt chain last_seen_head new_head =
   let (Head {hash; _}) = last_seen_head in
 
   (* [heads] is the list of intermediate heads between
-     between the predecessor of [ancestor] and the [new_head]. [level]
+     the predecessor of [ancestor] and the [new_head]. [level]
      is the level of [ancestor]. *)
   let rec aux heads (Head {hash = ancestor_hash; level} as ancestor) =
     if Option.equal Block_hash.equal (Some ancestor_hash) (Some hash) then
