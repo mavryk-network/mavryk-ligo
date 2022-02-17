@@ -376,7 +376,7 @@ let init1 ?rng_state ?commitments ?(initial_balances = []) ?consensus_threshold
     ?min_proposal_quorum ?level ?cost_per_byte ?liquidity_baking_subsidy
     ?endorsing_reward_per_slot ?baking_reward_bonus_per_slot
     ?baking_reward_fixed_portion ?origination_size ?blocks_per_cycle
-    ?blocks_per_voting_period () =
+    ?blocks_per_voting_period ?tx_rollup_enable ?sc_rollup_enable () =
   init
     ?rng_state
     ?commitments
@@ -392,6 +392,8 @@ let init1 ?rng_state ?commitments ?(initial_balances = []) ?consensus_threshold
     ?origination_size
     ?blocks_per_cycle
     ?blocks_per_voting_period
+    ?tx_rollup_enable
+    ?sc_rollup_enable
     1
   >|=? function
   | (_, []) -> assert false
@@ -401,7 +403,7 @@ let init2 ?rng_state ?commitments ?(initial_balances = []) ?consensus_threshold
     ?min_proposal_quorum ?level ?cost_per_byte ?liquidity_baking_subsidy
     ?endorsing_reward_per_slot ?baking_reward_bonus_per_slot
     ?baking_reward_fixed_portion ?origination_size ?blocks_per_cycle
-    ?blocks_per_voting_period () =
+    ?blocks_per_voting_period ?tx_rollup_enable ?sc_rollup_enable () =
   init
     ?rng_state
     ?commitments
@@ -417,6 +419,8 @@ let init2 ?rng_state ?commitments ?(initial_balances = []) ?consensus_threshold
     ?origination_size
     ?blocks_per_cycle
     ?blocks_per_voting_period
+    ?tx_rollup_enable
+    ?sc_rollup_enable
     2
   >|=? function
   | (_, []) | (_, [_]) -> assert false

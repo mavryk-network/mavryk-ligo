@@ -1,0 +1,7 @@
+parameter unit;
+storage unit;
+code {
+       DROP;
+       PUSH address "tru1HdK6HiR31Xo1bSAr4mwwCek8ExgwuUeHm"; DROP;
+       UNIT; NIL operation; PAIR;
+     }
