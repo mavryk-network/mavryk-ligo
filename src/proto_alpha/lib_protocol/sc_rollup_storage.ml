@@ -92,7 +92,6 @@ let () =
     Data_encoding.empty
     (function Sc_rollup_no_stakers -> Some () | _ -> None)
     (fun () -> Sc_rollup_no_stakers) ;
-  (* Sc_rollup_not_staked *)
   let description = "Unknown staker." in
   register_error_kind
     `Temporary
@@ -457,7 +456,6 @@ let get_conflict_point ctxt rollup staker1 staker2 =
   let* (staker2_branch, ctxt) = find_staker ctxt rollup staker2 in
   (* Build a map from commitments on the staker1 branch to their direct
      successor on this branch. *)
-  (* let rec staker1_commitments map commitment_hash *)
   let traverse_staker1 =
     let rec go (node : Commitment_hash.t) (prev_map : successor_map)
         (ctxt : Raw_context.t) =
@@ -470,24 +468,18 @@ let get_conflict_point ctxt rollup staker1 staker2 =
     go staker1_branch Successor_map.empty ctxt
   in
   let* (staker1_succ_map, ctxt) = traverse_staker1 in
-  (* Traverse from staker2.
-
-     Assuming invariants hold, we have 3 possible outcomes:
-       * _staker2_branch tup is member of staker1_successor_comp, so
-         staker1 is strictly ahead of staker2
-       * During traversal from staker2 we encounter _staker1_branch_tup, so
-         staker2 is strictly ahead of staker1.
-       * During traversal from staker2 we encounter the conflict point, which
-         may be the LFC.
-  *)
+  (* Traverse from staker2 towards LFC. *)
   if Successor_map.mem staker2_branch staker1_succ_map then
-    (* staker2 is a predecessor of staker1 *)
+    (* The staker1 branch contains the tip of the staker2 branch.
+       Commitments are perfect agreement, or in partial agreement with staker1
+       ahead. *)
     fail Sc_rollup_no_conflict
   else
     let traverse_staker2 =
       let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
         if Commitment_hash.(node = staker1_branch) then
-          (* staker1 is a predecessor of staker2 *)
+          (* The staker2 branch contains the tip of the staker1 branch.
+             The commitments are in partial agreement with staker2 ahead. *)
           fail Sc_rollup_no_conflict
         else
           let right = node in
