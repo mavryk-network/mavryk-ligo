@@ -81,22 +81,22 @@ module Make : functor (P : Sc_rollup_PVM_sem.S) -> sig
   val remember : history -> Tick_repr.t -> PVM.state -> history
 
   (** [execute_until tick stat prop] runs eval until the tick statisfies pred. 
- It returns the new tick and the modified state
- *)
+  It returns the new tick and the modified state
+  *)
   val execute_until :
     Tick_repr.t ->
     PVM.state ->
     (Tick_repr.t -> PVM.state -> bool) ->
     Tick_repr.t * PVM.state
 
-(** [state_at history tick initial_state] is a lookup in the history. 
-If no value at tick exists then it runs eval from the tick t0 to t starting from initial_state.
-Here   t0 is the last known tick smaller that t (or the intial tick if no such exits) *)    
+  (** [state_at history tick initial_state] is a lookup in the history. 
+  If no value at tick exists then it runs eval from the tick t0 to t starting from initial_state.
+  Here   t0 is the last known tick smaller that t (or the intial tick if no such exits) *)
   val state_at : history -> Tick_repr.t -> P.state -> P.state
 
-  (** This submodule introduces sections and dissections and the functions that build them
-*)
+  (** This submodule introduces sections and dissections and the functions that build them *)
   module Section_repr : sig
+
     (** a section has a start and end tick as well as a start and end state. 
     The game will compare such sections and dissagree on them.*)
     type section = {
@@ -114,8 +114,8 @@ Here   t0 is the last known tick smaller that t (or the intial tick if no such e
 
     val dissection_encoding : dissection option Data_encoding.t
 
-(** this finds whether the section appears in the dissection. Note that 
-it is only the start_at and stop_at positions of the section that are checked and not the states.*)
+    (** this finds whether the section appears in the dissection. Note that 
+    we check only the start_at and stop_at positions of the section and not the states.*)
     val find_section : section -> dissection -> section option
 
     val pp_of_section : Format.formatter -> section -> unit
