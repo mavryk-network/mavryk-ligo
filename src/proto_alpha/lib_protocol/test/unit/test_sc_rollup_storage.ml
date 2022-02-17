@@ -220,8 +220,9 @@ let test_deposit_then_refine () =
 
 let test_finalize () =
   let* ctxt = new_context in
+  let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_after = Raw_level_repr.add level_0 20_160 in
+  let level_after = Raw_level_repr.add level_0 challenge_window in
   lift
   @@ let* (rollup, ctxt) = new_sc_rollup ctxt in
      let staker =
@@ -249,8 +250,9 @@ let test_finalize () =
 
 let test_finalize_with_zero_stakers_fails () =
   let* ctxt = new_context in
+  let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_after = Raw_level_repr.add level_0 20_160 in
+  let level_after = Raw_level_repr.add level_0 challenge_window in
   let* (rollup, ctxt) = lift @@ new_sc_rollup ctxt in
   let staker =
     Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
@@ -277,8 +279,9 @@ let test_finalize_with_zero_stakers_fails () =
 
 let test_finalize_fail_too_recent () =
   let* ctxt = new_context in
+  let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
   let level = (Raw_context.current_level ctxt).level in
-  let level_1999 = Raw_level_repr.add level 20_159 in
+  let level_after = Raw_level_repr.add level (challenge_window - 1) in
   let* (rollup, ctxt) = lift @@ new_sc_rollup ctxt in
   let staker =
     Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
@@ -306,15 +309,16 @@ let test_finalize_fail_too_recent () =
   let* () =
     assert_fails_with
       ~loc:__LOC__
-      (Sc_rollup_storage.finalize_commitment ctxt rollup level_1999 c1)
+      (Sc_rollup_storage.finalize_commitment ctxt rollup level_after c1)
       "Attempted to finalize a commitment before its refutation deadline."
   in
   assert_true ctxt
 
 let test_finalize_deadline_uses_oldest_add_time () =
   let* ctxt = new_context in
+  let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_after = Raw_level_repr.add level_0 20_160 in
+  let level_after = Raw_level_repr.add level_0 challenge_window in
   let* (rollup, ctxt) = lift @@ new_sc_rollup ctxt in
   let staker1 =
     Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
@@ -408,8 +412,9 @@ let test_stake_on_existing_node () =
 
 let test_finalize_with_two_stakers () =
   let* ctxt = new_context in
+  let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_after = Raw_level_repr.add level_0 20_160 in
+  let level_after = Raw_level_repr.add level_0 challenge_window in
   lift
   @@ let* (rollup, ctxt) = new_sc_rollup ctxt in
      let staker1 =
@@ -455,8 +460,9 @@ let test_finalize_with_two_stakers () =
 
 let test_can_remove_staker () =
   let* ctxt = new_context in
+  let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_after = Raw_level_repr.add level_0 20_160 in
+  let level_after = Raw_level_repr.add level_0 challenge_window in
   lift
   @@ let* (rollup, ctxt) = new_sc_rollup ctxt in
      let staker1 =
@@ -503,8 +509,9 @@ let test_can_remove_staker () =
 
 let test_can_remove_staker2 () =
   let* ctxt = new_context in
+  let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
   let level_0 = (Raw_context.current_level ctxt).level in
-  let level_after = Raw_level_repr.add level_0 20_160 in
+  let level_after = Raw_level_repr.add level_0 challenge_window in
   lift
   @@ let* (rollup, ctxt) = new_sc_rollup ctxt in
      let staker1 =
