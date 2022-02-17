@@ -24,6 +24,54 @@
 (*                                                                           *)
 (*****************************************************************************)
 
+(** Defines storage for Smart Contract Optimistic Rollups.
+
+    {2 Commitments}
+
+    [Commitment]s are stored directly in the L1 context. Commitments are immutable
+    and content-addressed, and can be indexed by a [Commitment_hash]. We also
+    keep mutable state about each commitments, namely:
+
+    {ul
+      {li When it was first added.}
+      {li Its current number of stakers.}
+      }
+
+    Each commitment contains the hash of its {i predecessor}. During disputes
+    of a commitment [C], whose claims are preconditions for the claims made in
+    [C]. Commitments thus form a Merkle tree of claims. By definition, a
+    commitment happens {i after} its predecessor.
+
+    Commitments accepted as true by the protocol are referred to as Final.
+    Non-final commitments are also referred to as Disputable. Commitments
+    that have at least one sibling are referred to as Disputed.
+
+    The rollup protocol ensures that all disputes are resolved before finalizing
+    a commitment. Therefore, final commitments form a list rather than a tree.
+
+    Conceptually the root of this tree is the
+    [Commitment_hash.zero].  This commitment claims that the PVM
+    (Proof-generating Virtual Machine) is in a boot state, implied by Machine
+    type and Boot sector, and waiting to recieve its first message.
+
+    In the context we only store the Last Final Commitment (LFC), which is
+    by definition a descendant of [zero]. We also store all Disputable
+    commitments that have at least one Staker.
+
+    For example, assuming the full set of commitments for a rollup
+    looks like this:
+
+    {[
+                 LFC  staker1  staker2
+                  |      |        |
+                  |      V        |
+                  V   --c3        |
+      zero--c1 --c2--/            |
+                     \            V
+                      --c4------ c5
+    ]}
+    then commitments [c2..c5] will be stored in the context. *)
+
 type error +=
   | (* `Temporary *)
       Sc_rollup_does_not_exist of Sc_rollup_repr.t
