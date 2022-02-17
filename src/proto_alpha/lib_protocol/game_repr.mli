@@ -96,7 +96,6 @@ module Make : functor (P : Sc_rollup_PVM_sem.S) -> sig
 
   (** This submodule introduces sections and dissections and the functions that build them *)
   module Section_repr : sig
-
     (** a section has a start and end tick as well as a start and end state. 
     The game will compare such sections and dissagree on them.*)
     type section = {
