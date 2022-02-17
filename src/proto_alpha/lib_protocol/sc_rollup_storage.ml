@@ -300,8 +300,7 @@ let set_commitment_added ctxt rollup node new_value =
   in
   return ctxt
 
-let deallocate (ctxt : Raw_context.t) (rollup : Sc_rollup_repr.t)
-    (node : Commitment_hash.t) : Raw_context.t tzresult Lwt.t =
+let deallocate ctxt rollup node =
   let open Lwt_result_syntax in
   if Commitment_hash.(node = zero) then return ctxt
   else
