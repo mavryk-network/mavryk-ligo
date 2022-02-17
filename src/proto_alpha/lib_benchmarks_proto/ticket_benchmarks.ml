@@ -76,6 +76,11 @@ end
 
 let () = Registration_helpers.register (module Compare_ticket_hash_benchmark)
 
+(* A simple ticket type for use in the benchmarks. *)
+let ticket_ty =
+  let open Script_typed_ir in
+  match ticket_t (-1) int_key with Error _ -> assert false | Ok t -> t
+
 (* A dummy type generator, sampling linear terms of a given size.
    The generator always returns types of the shape:
 
@@ -88,9 +93,7 @@ let rec dummy_type_generator ~rng_state size =
   let open Script_ir_translator in
   let open Script_typed_ir in
   let ticket_or_int =
-    if Base_samplers.uniform_bool rng_state then
-      Ex_ty
-        (match ticket_t (-1) int_key with Error _ -> assert false | Ok t -> t)
+    if Base_samplers.uniform_bool rng_state then Ex_ty ticket_ty
     else Ex_ty int_t
   in
   if size <= 1 then ticket_or_int
@@ -156,3 +159,94 @@ module Has_tickets_type_benchmark : Benchmark.S = struct
 end
 
 let () = Registration_helpers.register (module Has_tickets_type_benchmark)
+
+let num_z_sampler rng_state =
+  let x = Random.State.int rng_state 10000 in
+  Script_int_repr.of_int x
+
+let ticket_sampler rng_state =
+  let contents = num_z_sampler rng_state in
+  let seed = Base_samplers.uniform_bytes ~nbytes:32 rng_state in
+  let (pkh, _, _) = Signature.generate_key ~algo:Signature.Ed25519 ~seed () in
+  let ticketer = Alpha_context.Contract.implicit_contract pkh in
+  let amount = Script_int_repr.abs (num_z_sampler rng_state) in
+  Script_typed_ir.{ticketer; contents; amount}
+
+(** A benchmark for {!Ticket_costs.Constants.cost_collect_tickets_step}. *)
+module Collect_tickets_benchmark : Benchmark.S = struct
+  include Translator_benchmarks.Parse_type_shared
+
+  let tags = ["tickets"]
+
+  let name = "COLLECT_TICKETS"
+
+  let info = "Benchmarking tickets_of_value"
+
+  let make_bench_helper rng_state config () =
+    let open Script_typed_ir in
+    let open Result_syntax in
+    let* (ctxt, _) = Lwt_main.run (Execution_context.make ~rng_state) in
+    let ctxt = Gas_helpers.set_limit ctxt in
+    let ty =
+      match list_t (-1) ticket_ty with Error _ -> assert false | Ok t -> t
+    in
+    let (length, ticket_list) =
+      Structure_samplers.list
+        ~range:{min = 0; max = config.max_size}
+        ~sampler:ticket_sampler
+        rng_state
+    in
+    let boxed_ticket_list = {elements = ticket_list; length} in
+    Environment.wrap_tzresult
+    @@ let* (has_tickets, _) = Ticket_scanner.type_has_tickets ctxt ty in
+       let* (_, ctxt') =
+         Lwt_main.run
+           (Ticket_scanner.tickets_of_value
+              ctxt
+              ~include_lazy:true
+              has_tickets
+              boxed_ticket_list)
+       in
+       let consumed =
+         Z.to_int
+           (Gas_helpers.fp_to_z
+              (Alpha_context.Gas.consumed ~since:ctxt ~until:ctxt'))
+       in
+       let workload = Type_workload {nodes = length; consumed} in
+       let closure () =
+         ignore
+           (Lwt_main.run
+              (Ticket_scanner.tickets_of_value
+                 ctxt
+                 ~include_lazy:true
+                 has_tickets
+                 boxed_ticket_list))
+       in
+       ok (Generator.Plain {workload; closure})
+
+  let make_bench rng_state config () =
+    match make_bench_helper rng_state config () with
+    | Ok closure -> closure
+    | Error err -> Translator_benchmarks.global_error name err
+
+  let size_model =
+    Model.make
+      ~conv:(function Type_workload {nodes; consumed = _} -> (nodes, ()))
+      ~model:
+        (Model.affine
+           ~intercept:
+             (Free_variable.of_string (Format.asprintf "%s_const" name))
+           ~coeff:(Free_variable.of_string (Format.asprintf "%s_coeff" name)))
+
+  let models = [("size_collect_tickets_model", size_model)]
+
+  let create_benchmarks ~rng_state ~bench_num config =
+    List.repeat bench_num (make_bench rng_state config)
+
+  let () =
+    Registration_helpers.register_for_codegen
+      name
+      (Model.For_codegen size_model)
+end
+
+let () = Registration_helpers.register (module Collect_tickets_benchmark)
