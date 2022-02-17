@@ -117,6 +117,10 @@ val deposit_stake :
       {li [Sc_rollup_not_staked_on_final] if [staker] is not staked on the last final commitment}
     }
 
+    Note that it is not possible to be staked on a Final commitment other
+    than the Last, because of Finalization Rule #4. See [finalize_commitment]
+    for details.
+
     By design, the operation wrapping this should {i not} be authenticated,
     as it may be necessary for nodes on the honest branch to refund stakers on
     the LFC. They must do so by using [withdraw_stake] as they are implicitly
