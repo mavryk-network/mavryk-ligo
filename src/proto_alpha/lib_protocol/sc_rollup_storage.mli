@@ -114,7 +114,8 @@ val deposit_stake :
     May fail with:
     {ul
       {li [Sc_rollup_does_not_exist] if [rollup] does not exist}
-      {li [Sc_rollup_not_staked_on_final] if [staker] is not staked on the last final commitment}
+      {li [Sc_rollup_not_staked_on_final] if [staker] is not staked on the last
+      final commitment}
     }
 
     Note that it is not possible to be staked on a Final commitment other
@@ -151,7 +152,7 @@ val withdraw_stake :
     May fail with:
     {ul
       {li [Sc_rollup_does_not_exist] if [rollup] does not exist}
-      {li [Sc_rollup_not_staked]}
+      {li [Sc_rollup_not_staked] if [staker] is not staked}
       {li [Sc_rollup_staker_backtracked] if [staker] is not staked on an ancestor of [commitment]}
       {li [Sc_rollup_unknown_commitment] if the parent of the given commitment does not exist}
     }
