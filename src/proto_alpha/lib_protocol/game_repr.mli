@@ -74,16 +74,24 @@ val repeat : int -> (int -> 'a) -> ('a list, 'b list) result
 module Make : functor (P : Sc_rollup_PVM_sem.S) -> sig
   module PVM : Sc_rollup_PVM_sem.S with type state = P.state
 
+  (** the history is a map of states, it is used to cache some computations*)
   type history = PVM.state Tick_repr.Map.t
 
+  (** This is a simple update of the history*)
   val remember : history -> Tick_repr.t -> PVM.state -> history
 
+  (** [execute_until tick stat prop] runs eval until the tick statisfies pred. 
+ It returns the new tick and the modified state
+ *)
   val execute_until :
     Tick_repr.t ->
     PVM.state ->
     (Tick_repr.t -> PVM.state -> bool) ->
     Tick_repr.t * PVM.state
 
+(** [state_at history tick initial_state] is a lookup in the history. 
+If no value at tick exists then it runs eval from the tick t0 to t starting from initial_state.
+Here   t0 is the last known tick smaller that t (or the intial tick if no such exits) *)    
   val state_at : history -> Tick_repr.t -> P.state -> P.state
 
   (** This submodule introduces sections and dissections and the functions that build them
@@ -106,6 +114,8 @@ module Make : functor (P : Sc_rollup_PVM_sem.S) -> sig
 
     val dissection_encoding : dissection option Data_encoding.t
 
+(** this finds whether the section appears in the dissection. Note that 
+it is only the start_at and stop_at positions of the section that are checked and not the states.*)
     val find_section : section -> dissection -> section option
 
     val pp_of_section : Format.formatter -> section -> unit
@@ -250,9 +260,7 @@ Note that there is some overlap of the info in a move.*)
       it is valid. Otherwise, this function returns [None]. *)
   val apply_dissection : game:t -> Section_repr.dissection -> t option
 
-  val verifiable_representation : P.state -> P.state -> unit option
-
-  (** [playe game move] returns the state of the [game] after that
+  (** [play game move] returns the state of the [game] after that
      [move] has been applied, if [move] is valid. Otherwise, this
      function returns an game over due to InvalidMove. *)
   val play : t -> move -> state
