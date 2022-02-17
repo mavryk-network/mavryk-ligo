@@ -363,36 +363,33 @@ let refine_stake ctxt rollup level staker commitment =
   let* (lfc, ctxt) = last_final_commitment ctxt rollup in
   let* (staked_on, ctxt) = find_staker ctxt rollup staker in
   let new_hash = Commitment.hash commitment in
-  let traverse =
-    let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
-      (* WARNING: Do NOT reorder this sequence of ifs.
-         we must check for staked_on before LFC, since refining
-         from the LFC to another commit is a valid operation. *)
-      if Commitment_hash.(node = staked_on) then
-        (* Previously staked commit found:
-           Insert new commitment if not existing *)
-        let* (ctxt, _size_diff, _was_bound) =
-          Store.Commitments.add (ctxt, rollup) new_hash commitment
-        in
-        let* ctxt = set_commitment_added ctxt rollup new_hash level in
-        let* (ctxt, _size_diff) =
-          Store.Stakers.update (ctxt, rollup) staker new_hash
-        in
-        let* ctxt = increase_stake_count ctxt rollup new_hash in
-        return (new_hash, ctxt) (* See WARNING above. *)
-      else if Commitment_hash.(node = lfc) then
-        (* We reached the LFC, but [staker] is not staked directly on it.
-           Thus, we backtracked. Note that everyone is staked in indirectly on
-           the LFC. *)
-        fail Sc_rollup_staker_backtracked
-      else
-        let* (pred, ctxt) = get_predecessor ctxt rollup node in
-        let* ctxt = increase_stake_count ctxt rollup node in
-        (go [@ocaml.tailcall]) pred ctxt
-    in
-    go Commitment.(commitment.predecessor) ctxt
+  let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
+    (* WARNING: Do NOT reorder this sequence of ifs.
+       we must check for staked_on before LFC, since refining
+       from the LFC to another commit is a valid operation. *)
+    if Commitment_hash.(node = staked_on) then
+      (* Previously staked commit found:
+         Insert new commitment if not existing *)
+      let* (ctxt, _size_diff, _was_bound) =
+        Store.Commitments.add (ctxt, rollup) new_hash commitment
+      in
+      let* ctxt = set_commitment_added ctxt rollup new_hash level in
+      let* (ctxt, _size_diff) =
+        Store.Stakers.update (ctxt, rollup) staker new_hash
+      in
+      let* ctxt = increase_stake_count ctxt rollup new_hash in
+      return (new_hash, ctxt) (* See WARNING above. *)
+    else if Commitment_hash.(node = lfc) then
+      (* We reached the LFC, but [staker] is not staked directly on it.
+         Thus, we backtracked. Note that everyone is staked indirectly on
+         the LFC. *)
+      fail Sc_rollup_staker_backtracked
+    else
+      let* (pred, ctxt) = get_predecessor ctxt rollup node in
+      let* ctxt = increase_stake_count ctxt rollup node in
+      (go [@ocaml.tailcall]) pred ctxt
   in
-  traverse
+  go Commitment.(commitment.predecessor) ctxt
 
 let finalize_commitment ctxt rollup level new_lfc =
   let open Lwt_result_syntax in
@@ -502,14 +499,11 @@ let remove_staker ctxt rollup staker =
       else
         let* (ctxt, _) = Store.Stakers.remove_existing (ctxt, rollup) staker in
         let* ctxt = modify_staker_size ctxt rollup Int32.pred in
-        let traverse =
-          let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
-            if Commitment_hash.(node = lfc) then return ctxt
-            else
-              let* (pred, ctxt) = get_predecessor ctxt rollup node in
-              let* ctxt = decrease_stake_count ctxt rollup node in
-              (go [@ocaml.tailcall]) pred ctxt
-          in
-          go staked_on ctxt
+        let rec go (node : Commitment_hash.t) (ctxt : Raw_context.t) =
+          if Commitment_hash.(node = lfc) then return ctxt
+          else
+            let* (pred, ctxt) = get_predecessor ctxt rollup node in
+            let* ctxt = decrease_stake_count ctxt rollup node in
+            (go [@ocaml.tailcall]) pred ctxt
         in
-        traverse
+        go staked_on ctxt
