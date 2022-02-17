@@ -165,7 +165,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    sc_rollup_arith.mli sc_rollup_arith.ml
    sc_rollups.mli sc_rollups.ml
    game_repr.mli game_repr.ml
-   game_repr.mli game_repr.ml
    baking.mli baking.ml
    amendment.mli amendment.ml
    apply_results.mli apply_results.ml
@@ -323,7 +322,6 @@ module CamlinternalFormatBasics = struct include CamlinternalFormatBasics end
    sc_rollup_PVM_sem.ml
    sc_rollup_arith.mli sc_rollup_arith.ml
    sc_rollups.mli sc_rollups.ml
-   game_repr.mli game_repr.ml
    game_repr.mli game_repr.ml
    baking.mli baking.ml
    amendment.mli amendment.ml
