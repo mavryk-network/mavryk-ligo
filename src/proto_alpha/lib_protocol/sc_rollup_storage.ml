@@ -426,7 +426,7 @@ let finalize_commitment ctxt rollup level new_lfc =
           Store.Last_final_commitment.update ctxt rollup new_lfc
         in
         (* At this point we know all stakers are implicitly staked
-           on the new LFC, and noone is directly staked on the old LFC. We
+           on the new LFC, and no one is directly staked on the old LFC. We
            can safely deallocate the old LFC.
         *)
         let* ctxt = deallocate ctxt rollup old_lfc in
