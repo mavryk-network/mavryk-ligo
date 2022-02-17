@@ -24,7 +24,13 @@
 (*****************************************************************************)
 
 (** This module encapsulates the following storage maps:
-    - [Storage.Contract.Frozen_bonds]. *)
+    - [Storage.Contract.Frozen_bonds]
+    - [Storage.Contract.Total_frozen_bonds]
+
+   This module enforces the following invariants:
+    - [ (Frozen_bonds.mem x) <-> (Total_frozen_bonds.mem x) ]
+    - [ Total_frozen_bonds.find x ] = sum of all bond values in
+      [ Frozen_bonds.bindings x ]. *)
 
 open Storage.Contract
 
@@ -55,6 +61,8 @@ let () =
       | Frozen_bonds_must_be_spent_at_once (c, b) -> Some (c, b) | _ -> None)
     (fun (c, b) -> Frozen_bonds_must_be_spent_at_once (c, b))
 
+let has_frozen_bonds ctxt contract = Total_frozen_bonds.mem ctxt contract >|= ok
+
 let allocated ctxt contract bond_id =
   Frozen_bonds.mem (ctxt, contract) bond_id >|= ok
 
@@ -68,14 +76,29 @@ let spend_only_call_from_token ctxt contract bond_id amount =
   error_when
     Tez_repr.(frozen_bonds <> amount)
     (Frozen_bonds_must_be_spent_at_once (contract, bond_id))
-  >>?= fun () -> Frozen_bonds.remove_existing (ctxt, contract) bond_id
+  >>?= fun () ->
+  Frozen_bonds.remove_existing (ctxt, contract) bond_id >>=? fun ctxt ->
+  Total_frozen_bonds.get ctxt contract >>=? fun total ->
+  Tez_repr.(total -? amount) >>?= fun new_total ->
+  if Tez_repr.(new_total = zero) then
+    Total_frozen_bonds.remove_existing ctxt contract
+  else Total_frozen_bonds.update ctxt contract new_total
 
 (** PRE : [amount > 0], fullfilled by unique caller [Token.transfer].*)
 let credit_only_call_from_token ctxt contract bond_id amount =
   Contract_delegate_storage.add_contract_stake ctxt contract amount
   >>=? fun ctxt ->
-  Frozen_bonds.find (ctxt, contract) bond_id >>=? function
-  | None -> Frozen_bonds.init (ctxt, contract) bond_id amount
-  | Some frozen_bonds ->
-      Tez_repr.(frozen_bonds +? amount) >>?= fun new_amount ->
-      Frozen_bonds.update (ctxt, contract) bond_id new_amount
+  (Frozen_bonds.find (ctxt, contract) bond_id >>=? function
+   | None -> Frozen_bonds.init (ctxt, contract) bond_id amount
+   | Some frozen_bonds ->
+       Tez_repr.(frozen_bonds +? amount) >>?= fun new_amount ->
+       Frozen_bonds.update (ctxt, contract) bond_id new_amount)
+  >>=? fun ctxt ->
+  Total_frozen_bonds.find ctxt contract >>=? function
+  | None -> Total_frozen_bonds.init ctxt contract amount
+  | Some total ->
+      Tez_repr.(total +? amount) >>?= fun new_total ->
+      Total_frozen_bonds.update ctxt contract new_total
+
+let total ctxt contract =
+  Total_frozen_bonds.find ctxt contract >|=? Option.value ~default:Tez_repr.zero

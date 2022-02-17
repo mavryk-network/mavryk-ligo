@@ -436,7 +436,11 @@ let create_implicit c manager ~balance =
     ?script:None
     ()
 
-let stake = Storage.Contract.Balance.get
+let stake ctxt contract =
+  let open Storage.Contract in
+  Balance.get ctxt contract >>=? fun balance ->
+  Frozen_bonds_storage.total ctxt contract >>=? fun total_bonds ->
+  Lwt.return Tez_repr.(balance +? total_bonds)
 
 let delete_only_call_from_token c contract =
   match Contract_repr.is_implicit contract with
