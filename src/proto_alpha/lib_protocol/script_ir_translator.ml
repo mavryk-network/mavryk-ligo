@@ -5812,7 +5812,7 @@ and[@coq_axiom_with_reason "gadt"] unparse_code ctxt ~stack_depth mode code =
 (* TODO: https://gitlab.com/tezos/tezos/-/issues/1688
    Refactor the sharing part of unparse_script and create_contract *)
 let unparse_script ctxt mode
-    {code; arg_type; storage; storage_type; entrypoints; views; _} =
+    (Ex_script {code; arg_type; storage; storage_type; entrypoints; views; _}) =
   let (Lam (_, original_code)) = code in
   unparse_code ctxt ~stack_depth:0 mode original_code >>=? fun (code, ctxt) ->
   unparse_data ctxt ~stack_depth:0 mode storage_type storage
