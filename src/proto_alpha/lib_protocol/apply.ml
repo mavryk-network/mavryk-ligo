@@ -114,7 +114,7 @@ type error +=
   | (* `Permanent *)
       Inconsistent_counters
   | (* `Permanent *)
-      Tx_rollup_commit_with_non_implicit_contract
+      Tx_rollup_operation_with_non_implicit_contract
 
 let () =
   register_error_kind
@@ -502,17 +502,18 @@ let () =
 
   register_error_kind
     `Permanent
-    ~id:"operation.commit_with_non_implicit_source"
-    ~title:"Submitted a commit with a non-implicit source"
-    ~description:"Submitting a commit must be with implicit contracts."
+    ~id:"operation.operation_with_non_implicit_source"
+    ~title:"Submitted a tx rollup operation with a non-implicit source"
+    ~description:
+      "Submitting a tx rollup operation must be with implicit contracts."
     ~pp:(fun ppf () ->
       Format.pp_print_string
         ppf
-        "Submitting a commit must be with implicit contracts.")
+        "Submitting a tx rollup operation must be with implicit contracts.")
     Data_encoding.empty
     (function
-      | Tx_rollup_commit_with_non_implicit_contract -> Some () | _ -> None)
-    (fun () -> Tx_rollup_commit_with_non_implicit_contract) ;
+      | Tx_rollup_operation_with_non_implicit_contract -> Some () | _ -> None)
+    (fun () -> Tx_rollup_operation_with_non_implicit_contract) ;
 
   register_error_kind
     `Permanent
@@ -1276,7 +1277,7 @@ let apply_manager_operation_content :
   | Tx_rollup_commit {tx_rollup; commitment} -> (
       match Contract.is_implicit source with
       | None ->
-          fail Tx_rollup_commit_with_non_implicit_contract
+          fail Tx_rollup_operation_with_non_implicit_contract
           (* This is only called with implicit contracts *)
       | Some key ->
           ( Tx_rollup_commitment.has_bond ctxt tx_rollup key
