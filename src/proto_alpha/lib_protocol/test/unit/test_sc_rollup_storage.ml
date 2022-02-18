@@ -248,6 +248,26 @@ let test_finalize () =
      in
      assert_true ctxt
 
+let test_finalize_unknown_commitment_fails () =
+  let* ctxt = new_context in
+  let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
+  let level_0 = (Raw_context.current_level ctxt).level in
+  let level_after = Raw_level_repr.add level_0 challenge_window in
+  let* (rollup, ctxt) = lift @@ new_sc_rollup ctxt in
+  let staker =
+    Sc_rollup_repr.Staker.of_b58check_exn "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG"
+  in
+  let* ctxt = lift @@ Sc_rollup_storage.deposit_stake ctxt rollup staker in
+  assert_fails_with
+    ~loc:__LOC__
+    (Sc_rollup_storage.finalize_commitment
+       ctxt
+       rollup
+       level_after
+       Sc_rollup_repr.Commitment_hash.zero)
+    "Commitment scc12XhSULdV8bAav21e99VYLTpqAjTd7NU8Mn4zFdKPSA8auMbggG does \
+     not exist"
+
 let test_finalize_with_zero_stakers_fails () =
   let* ctxt = new_context in
   let challenge_window = Constants_storage.sc_rollup_challenge_window ctxt in
@@ -726,6 +746,10 @@ let tests =
       `Quick
       test_initial_state_is_pre_boot;
     Tztest.tztest "finalize" `Quick test_finalize;
+    Tztest.tztest
+      "finalize unknown commitment fails"
+      `Quick
+      test_finalize_unknown_commitment_fails;
     Tztest.tztest
       "finalize fails when too recent"
       `Quick
