@@ -27,8 +27,6 @@
 open Compare.Int
 open Sc_rollup_PVM_sem
 
-let repeat n f = List.init ~when_negative_length:[] n f
-
 module Make (P : S) = struct
   module PVM = P
 
@@ -435,9 +433,7 @@ module Make (P : S) = struct
       chosen_stop_state =
     Option.bind
       (match game.current_dissection with
-      | Some dissection ->
-          Section_repr.find_section choice dissection
-          (* TODO faster binary search in the list if we have binary tree.*)
+      | Some dissection -> Section_repr.find_section choice dissection
       | None ->
           if PVM.equal_states choice.section_start_state game.start_state then
             Some choice

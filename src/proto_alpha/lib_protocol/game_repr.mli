@@ -1,8 +1,9 @@
 (*****************************************************************************)
 (*                                                                           *)
 (* Open Source License                                                       *)
-(* Copyright (c) 2021 Nomadic Labs <contact@nomadic-labs.com>  and           *)
-(*  Trili Tech, <contact@trili.tech>                                         *)
+(* Copyright (c) 2022 Nomadic Labs <contact@nomadic-labs.com>                *)
+(* Copyright (c) 2022 Trili Tech, <contact@trili.tech>                       *)
+(*                                                                           *)
 (* Permission is hereby granted, free of charge, to any person obtaining a   *)
 (* copy of this software and associated documentation files (the "Software"),*)
 (* to deal in the Software without restriction, including without limitation *)
@@ -68,8 +69,6 @@
   
 
 *)
-
-val repeat : int -> (int -> 'a) -> ('a list, 'b list) result
 
 module Make : functor (P : Sc_rollup_PVM_sem.S) -> sig
   module PVM : Sc_rollup_PVM_sem.S with type state = P.state
@@ -280,9 +279,9 @@ Note that there is some overlap of the info in a move.*)
   outputs the outcome of the refutation game.*)
 
   val run :
-    start_at:'a ->
+    start_at:Tick_repr.t->
     start_state:P.state ->
-    committer:('a * P.state, commit) client ->
+    committer:(Tick_repr.t * P.state, commit) client ->
     refuter:(P.state * commit, refutation) client ->
     outcome
 end
