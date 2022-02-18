@@ -279,7 +279,7 @@ Note that there is some overlap of the info in a move.*)
   outputs the outcome of the refutation game.*)
 
   val run :
-    start_at:Tick_repr.t->
+    start_at:Tick_repr.t ->
     start_state:P.state ->
     committer:(Tick_repr.t * P.state, commit) client ->
     refuter:(P.state * commit, refutation) client ->
