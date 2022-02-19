@@ -532,11 +532,12 @@ let perfect_failing (module P : TestPVM) max_failure =
 
 (** this assembles a test from a RandomPVM and a function that choses the type of strategies *)
 let testing_randomPVM (f : (module TestPVM) -> int option -> bool) name =
-  QCheck.Test.make
+  let open QCheck2 in
+  Test.make
     ~name
-    (QCheck.list_of_size QCheck.Gen.small_int (QCheck.int_range 0 100))
+    (Gen.list_size Gen.small_int (Gen.int_range 0 100))
     (fun initial_prog ->
-      QCheck.assume (initial_prog <> []) ;
+      assume (initial_prog <> []) ;
       f
         (module MakeRandomPVM (struct
           let initial_prog = initial_prog
@@ -545,19 +546,14 @@ let testing_randomPVM (f : (module TestPVM) -> int option -> bool) name =
 
 (** this assembles a test from a CountingPVM and a function that choses the type of strategies *)
 let testing_countPVM (f : (module TestPVM) -> int option -> bool) name =
-  QCheck.Test.make ~name QCheck.small_int (fun target ->
-      QCheck.assume (target > 0) ;
+  let open QCheck2 in
+  Test.make ~name Gen.small_int (fun target ->
+      assume (target > 0) ;
       f
         (module MakeCountingPVM (struct
           let target = target
         end))
         (Some target))
-
-(** this assembles a test from a MichelsonPVM and a function that choses the type of strategies *)
-
-(* let testing_mich (f : (module TestPVM) -> int option -> bool) name =
-  QCheck.Test.make ~name QCheck.small_int (fun _ ->
-      f (module MakeMPVM (Fact20)) (Some 20)) *)
 
 let test_random_dissection (module P : TestPVM) start_at length branching =
   let open P in
@@ -594,16 +590,17 @@ let test_random_dissection (module P : TestPVM) start_at length branching =
   S.Game.Section_repr.valid_dissection section dissection
 
 let testDissection =
+  let open QCheck2 in
   [
-    QCheck.Test.make
+    Test.make
       ~name:"randomVPN"
-      (QCheck.quad
-         (QCheck.list_of_size QCheck.Gen.small_int (QCheck.int_range 0 100))
-         QCheck.small_int
-         QCheck.small_int
-         QCheck.small_int)
+      (Gen.quad
+         (Gen.list_size Gen.small_int (Gen.int_range 0 100))
+         Gen.small_int
+         Gen.small_int
+         Gen.small_int)
       (fun (initial_prog, start_at, length, branching) ->
-        QCheck.assume
+        assume
           (start_at >= 0 && length > 1
           && List.length initial_prog > start_at + length
           && 1 < branching) ;
@@ -611,15 +608,11 @@ let testDissection =
           let initial_prog = initial_prog
         end) in
         test_random_dissection (module P) start_at length branching);
-    QCheck.Test.make
+    Test.make
       ~name:"count"
-      (QCheck.quad
-         QCheck.small_int
-         QCheck.small_int
-         QCheck.small_int
-         QCheck.small_int)
+      (Gen.quad Gen.small_int Gen.small_int Gen.small_int Gen.small_int)
       (fun (target, start_at, length, branching) ->
-        QCheck.assume (start_at >= 0 && length > 1 && 1 < branching) ;
+        assume (start_at >= 0 && length > 1 && 1 < branching) ;
         let module P = MakeCountingPVM (struct
           let target = target
         end) in
