@@ -116,7 +116,7 @@ end
 type mode =
   | Light_client of Light.sources
   | Proxy_client
-  | Proxy_server of int option
+  | Proxy_server of int option * string option
 
 let to_client_server_mode = function
   | Light_client _ | Proxy_client -> Proxy.Client
@@ -176,7 +176,7 @@ let schedule_clearing (printer : Tezos_client_base.Client_context.printer)
            Remember that contexts are kept in an LRU cache though, so clearing
            will eventually happen; but we don't schedule it. *)
       Lwt.return_unit
-  | (Proxy_server sym_block_caching_time_opt, _) ->
+  | (Proxy_server (sym_block_caching_time_opt, _), _) ->
       let (chain_string, block_string) =
         Tezos_shell_services.Block_services.
           (chain_to_string chain, to_string block)

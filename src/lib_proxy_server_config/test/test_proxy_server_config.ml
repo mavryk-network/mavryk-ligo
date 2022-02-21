@@ -78,7 +78,8 @@ let proxy_server_config_arb endpoint_gen rpc_addr_gen rpc_tls_gen
         ~endpoint
         ~rpc_addr
         ~rpc_tls
-        ~sym_block_caching_time)
+        ~sym_block_caching_time
+        ~data_dir:None)
   in
   let print config = Format.asprintf "%a" Proxy_server_config.pp config in
   QCheck.make ~print gen

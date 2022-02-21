@@ -38,9 +38,10 @@ exception Rpc_dir_creation_failure of tztrace
 type mode =
   | Light_client of Light.sources  (** [tezos-client --mode light] is running *)
   | Proxy_client  (** [tezos-client --mode proxy] is running *)
-  | Proxy_server of int option
-      (** [tezos-proxy-server] is running and the [int option] value
-          is the value of argument [--sym-block-caching-time] *)
+  | Proxy_server of int option * string option
+      (** [tezos-proxy-server] is running; the [int option] value
+          is the value of argument [--sym-block-caching-time],
+          and the [string option] value is the value of argument [--data-dir] *)
 
 (** [build_directory printer rpc_context env mode] returns the directory
     of RPCs that is served locally by the client's light and proxy modes and
