@@ -37,10 +37,9 @@
       {li Its current number of stakers.}
       }
 
-    Each commitment contains the hash of its {i predecessor}. During disputes
-    of a commitment [C], whose claims are preconditions for the claims made in
-    [C]. Commitments thus form a Merkle tree of claims. By definition, a
-    commitment happens {i after} its predecessor.
+    Each commitment contains the hash of its {i predecessor}. Multiple
+    commitments can have the same predecessor. Therefore, commitments form
+    a Merkle tree.
 
     Commitments accepted as true by the protocol are referred to as Final.
     Non-final commitments are also referred to as Disputable. Commitments
