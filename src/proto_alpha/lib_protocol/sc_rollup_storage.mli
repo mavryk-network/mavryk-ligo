@@ -284,7 +284,7 @@ val get_conflict_point :
 
     May fail with:
     {ul
-      {li [Sc_rollup_unknown_commitment] if [commitment] does not exist}
+      {li [Sc_rollup_unknown_commitment] if [rollup] or [commitment] does not exist}
     } *)
 val get_commitment :
   Raw_context.t ->
