@@ -141,7 +141,7 @@ module Message_result = struct
   }
 
   type transaction_result =
-    | Transaction_success of Indexable.unknown withdrawal list
+    | Transaction_success
     | Transaction_failure of {index : int; reason : error}
 
   type deposit_result = Deposit_success of indexes | Deposit_failure of error
@@ -157,7 +157,11 @@ module Message_result = struct
         }
   end
 
-  type t = Deposit_result of deposit_result | Batch_V1_result of Batch_V1.t
+  type message_result =
+    | Deposit_result of deposit_result
+    | Batch_V1_result of Batch_V1.t
+
+  type t = message_result * Indexable.unknown withdrawal list
 end
 
 module Make (Context : CONTEXT) = struct
@@ -523,13 +527,17 @@ module Make (Context : CONTEXT) = struct
         ctxt ->
         indexes ->
         (Indexable.index_only, Indexable.unknown) transaction ->
-        (ctxt * indexes * transaction_result) m =
+        (ctxt
+        * indexes
+        * transaction_result
+        * Indexable.unknown withdrawal list)
+        m =
      fun initial_ctxt initial_indexes transaction ->
       let rec fold (ctxt, prev_indexes, withdrawals) index ops =
         match ops with
-        | [] -> return (ctxt, prev_indexes, Transaction_success withdrawals)
+        | [] -> return (ctxt, prev_indexes, Transaction_success, withdrawals)
         | op :: rst ->
-            let* (ctxt, indexes, status) =
+            let* (ctxt, indexes, status, withdrawals) =
               catch
                 (apply_operation ctxt prev_indexes op)
                 (fun (ctxt, indexes, op_withdrawals) ->
@@ -541,9 +549,10 @@ module Make (Context : CONTEXT) = struct
                   return
                     ( initial_ctxt,
                       initial_indexes,
-                      Transaction_failure {index; reason} ))
+                      Transaction_failure {index; reason},
+                      withdrawals ))
             in
-            return (ctxt, indexes, status)
+            return (ctxt, indexes, status, withdrawals)
       in
       fold (initial_ctxt, initial_indexes, []) 0 transaction
 
@@ -555,7 +564,7 @@ module Make (Context : CONTEXT) = struct
     let update_counters ctxt status transaction =
       match status with
       | Transaction_failure {reason = Counter_mismatch _; _} -> return ctxt
-      | Transaction_failure _ | Transaction_success _ ->
+      | Transaction_failure _ | Transaction_success ->
           list_fold_left_m
             (fun ctxt (op : (Indexable.index_only, _) operation) ->
               Address_metadata.incr_counter ctxt
@@ -566,23 +575,31 @@ module Make (Context : CONTEXT) = struct
     let apply_batch :
         ctxt ->
         (Indexable.unknown, Indexable.unknown) t ->
-        (ctxt * Message_result.Batch_V1.t) m =
+        (ctxt * Message_result.Batch_V1.t * Indexable.unknown withdrawal list) m
+        =
      fun ctxt batch ->
       let* (ctxt, indexes, batch) = check_signature ctxt batch in
       let {contents; _} = batch in
-      let* (ctxt, indexes, rev_results) =
+      let* (ctxt, indexes, rev_results, withdrawals) =
         list_fold_left_m
-          (fun (prev_ctxt, prev_indexes, results) transaction ->
-            let* (new_ctxt, new_indexes, status) =
+          (fun (prev_ctxt, prev_indexes, results, withdrawals) transaction ->
+            let* (new_ctxt, new_indexes, status, transactions_withdrawals) =
               apply_transaction prev_ctxt prev_indexes transaction
             in
             let* new_ctxt = update_counters new_ctxt status transaction in
-            return (new_ctxt, new_indexes, (transaction, status) :: results))
-          (ctxt, indexes, [])
+            return
+              ( new_ctxt,
+                new_indexes,
+                (transaction, status) :: results,
+                withdrawals @ transactions_withdrawals ))
+          (ctxt, indexes, [], [])
           contents
       in
       let results = List.rev rev_results in
-      return (ctxt, Message_result.Batch_V1.Batch_result {results; indexes})
+      return
+        ( ctxt,
+          Message_result.Batch_V1.Batch_result {results; indexes},
+          withdrawals )
   end
 
   let apply_deposit :
@@ -613,14 +630,16 @@ module Make (Context : CONTEXT) = struct
     match msg with
     | Deposit deposit ->
         let* (ctxt, result) = apply_deposit ctxt deposit in
-        return (ctxt, Deposit_result result)
+        return (ctxt, (Deposit_result result, []))
     | Batch str -> (
         let batch =
           Data_encoding.Binary.of_string_opt Tx_rollup_l2_batch.encoding str
         in
         match batch with
         | Some (V1 batch) ->
-            let* (ctxt, result) = Batch_V1.apply_batch ctxt batch in
-            return (ctxt, Batch_V1_result result)
+            let* (ctxt, result, withdrawals) =
+              Batch_V1.apply_batch ctxt batch
+            in
+            return (ctxt, (Batch_V1_result result, withdrawals))
         | None -> fail Invalid_batch_encoding)
 end

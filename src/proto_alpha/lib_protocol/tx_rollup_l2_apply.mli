@@ -93,7 +93,7 @@ module Message_result : sig
       In the case of a failure, we store the operation's index which failed
       with the reason it failed. *)
   type transaction_result =
-    | Transaction_success of Indexable.unknown withdrawal list
+    | Transaction_success
     | Transaction_failure of {index : int; reason : error}
 
   (** A deposit can either be a success or a failure. The created indexes
@@ -115,7 +115,11 @@ module Message_result : sig
         }
   end
 
-  type t = Deposit_result of deposit_result | Batch_V1_result of Batch_V1.t
+  type message_result =
+    | Deposit_result of deposit_result
+    | Batch_V1_result of Batch_V1.t
+
+  type t = message_result * Indexable.unknown withdrawal list
 end
 
 module Make (Context : CONTEXT) : sig
@@ -145,7 +149,10 @@ module Make (Context : CONTEXT) : sig
     val apply_batch :
       ctxt ->
       (Indexable.unknown, Indexable.unknown) t ->
-      (ctxt * Message_result.Batch_V1.t) m
+      (ctxt
+      * Message_result.Batch_V1.t
+      * Indexable.unknown Message_result.withdrawal list)
+      m
 
     (** [check_signature ctxt batch] asserts that [batch] is correctly signed.
 
