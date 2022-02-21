@@ -747,6 +747,7 @@ module Sc_rollup : sig
       - a merkelized inbox, of which only the root hash is stored
       - a tree of commitments, rooted at the last finalized commitment
       - a map from stakers to commitments
+      - a map from commitments to the time (level) of its first insertion
 
       For performance reasons we also store (per rollup):
 
