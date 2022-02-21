@@ -79,11 +79,21 @@ type indexes = {
 }
 
 module Message_result : sig
+  type 'status withdrawal = {
+    destination : Signature.Public_key_hash.t;
+    ticket_hash : 'status Ticket_indexable.t;
+    amount : Tx_rollup_l2_qty.t;
+  }
+
   (** A transaction inside a batch can either be a success or a failure.
+
+      In case of success, we store the list of withdrawals that result
+      from layer2-to-layer1 transfers.
+
       In the case of a failure, we store the operation's index which failed
       with the reason it failed. *)
   type transaction_result =
-    | Transaction_success
+    | Transaction_success of Indexable.unknown withdrawal list
     | Transaction_failure of {index : int; reason : error}
 
   (** A deposit can either be a success or a failure. The created indexes

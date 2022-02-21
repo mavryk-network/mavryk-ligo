@@ -134,8 +134,14 @@ type indexes = {
 }
 
 module Message_result = struct
+  type 'status withdrawal = {
+    destination : Signature.Public_key_hash.t;
+    ticket_hash : 'status Ticket_indexable.t;
+    amount : Tx_rollup_l2_qty.t;
+  }
+
   type transaction_result =
-    | Transaction_success
+    | Transaction_success of Indexable.unknown withdrawal list
     | Transaction_failure of {index : int; reason : error}
 
   type deposit_result = Deposit_success of indexes | Deposit_failure of error
@@ -419,23 +425,46 @@ module Make (Context : CONTEXT) = struct
         on the [ctxt]. The validity of the transfer is checked in
         the context itself, e.g. for an invalid balance.
 
-        It also returns the potential created indexes:
+        It returns the potential created indexes:
 
         {ul {li The destination address index.}
             {li The ticket exchanged index.}}
+
+        If the transfer is layer2-to-layer1, then it also returns
+        the resulting withdrawal.
     *)
     let apply_operation_content :
         ctxt ->
         indexes ->
         Signer_indexable.index ->
-        'content operation_content ->
-        (ctxt * indexes) m =
+        'status operation_content ->
+        (ctxt * indexes * 'status withdrawal option) m =
      fun ctxt indexes source_idx {destination; ticket_hash; qty} ->
       match destination with
-      | Layer1 _ ->
-          (* FIXME/TORU: https://gitlab.com/tezos/tezos/-/issues/2259
-             Implement the withdraw. *)
-          fail Invalid_operation_destination
+      | Layer1 l1_dest ->
+          (* AJ:
+
+              - to withdraw, the ticket must already exist and be
+             indexed. the ticket must have already been assigned an
+             index in the content: otherwise the ticket has not been
+             seen before and we can't withdraw from it.
+             Therefore, we do not add the [_created_ticket] to the index.
+          *)
+          let* (ctxt, _created_ticket, tidx) = ticket_index ctxt ticket_hash in
+
+          (* TODO: by the same reasoning as above, should we assert
+             that [_created_ticket] is [None]? *)
+          let source_idx = address_of_signer_index source_idx in
+
+          (* spend the ticket -- this is responsible for checking that
+             the source has the required balance *)
+          let* ctxt = Ticket_ledger.spend ctxt tidx source_idx qty in
+
+          let (wd : 'status withdrawal) =
+            {destination = l1_dest; ticket_hash; amount = qty}
+          in
+
+          return (ctxt, indexes, Some wd)
       | Layer2 l2_dest ->
           let* (ctxt, created_addr, dest_idx) = address_index ctxt l2_dest in
           let* (ctxt, created_ticket, tidx) = ticket_index ctxt ticket_hash in
@@ -444,7 +473,7 @@ module Make (Context : CONTEXT) = struct
           let indexes =
             add_indexes indexes (created_addr, dest_idx) (created_ticket, tidx)
           in
-          return (ctxt, indexes)
+          return (ctxt, indexes, None)
 
     (** [check_counter ctxt signer counter] asserts that the provided [counter] is equal
         to the expected one associated to the [signer] in the [ctxt]. *)
@@ -467,15 +496,22 @@ module Make (Context : CONTEXT) = struct
         ctxt ->
         indexes ->
         (Indexable.index_only, Indexable.unknown) operation ->
-        (ctxt * indexes) m =
+        (ctxt * indexes * Indexable.unknown withdrawal list) m =
      fun ctxt indexes {signer; counter; contents} ->
       (* Before applying any operation, we check the counter *)
       let* () = check_counter ctxt signer counter in
-      list_fold_left_m
-        (fun (ctxt, indexes) content ->
-          apply_operation_content ctxt indexes signer content)
-        (ctxt, indexes)
-        contents
+      let* (ctxt, indexes, withdrawals) =
+        list_fold_left_m
+          (fun (ctxt, indexes, withdrawals) content ->
+            let* (ctxt, indexes, withdrawal_opt) =
+              apply_operation_content ctxt indexes signer content
+            in
+            (* TODO: do we care about the order in which return the withdrawals? *)
+            return (ctxt, indexes, Option.to_list withdrawal_opt @ withdrawals))
+          (ctxt, indexes, [])
+          contents
+      in
+      return (ctxt, indexes, withdrawals |> List.rev)
 
     (** [apply_transaction ctxt indexes transaction] applies each operation in
         the [transaction]. It returns a {!transaction_result}, i.e. either
@@ -489,14 +525,18 @@ module Make (Context : CONTEXT) = struct
         (Indexable.index_only, Indexable.unknown) transaction ->
         (ctxt * indexes * transaction_result) m =
      fun initial_ctxt initial_indexes transaction ->
-      let rec fold (ctxt, prev_indexes) index ops =
+      let rec fold (ctxt, prev_indexes, withdrawals) index ops =
         match ops with
-        | [] -> return (ctxt, prev_indexes, Transaction_success)
+        | [] -> return (ctxt, prev_indexes, Transaction_success withdrawals)
         | op :: rst ->
             let* (ctxt, indexes, status) =
               catch
                 (apply_operation ctxt prev_indexes op)
-                (fun (ctxt, indexes) -> fold (ctxt, indexes) (index + 1) rst)
+                (fun (ctxt, indexes, op_withdrawals) ->
+                  fold
+                    (ctxt, indexes, withdrawals @ op_withdrawals)
+                    (index + 1)
+                    rst)
                 (fun reason ->
                   return
                     ( initial_ctxt,
@@ -505,7 +545,7 @@ module Make (Context : CONTEXT) = struct
             in
             return (ctxt, indexes, status)
       in
-      fold (initial_ctxt, initial_indexes) 0 transaction
+      fold (initial_ctxt, initial_indexes, []) 0 transaction
 
     (** [update_counters ctxt status transaction] updates the counters for
         the signers of operations in [transaction]. If the [transaction]
@@ -515,7 +555,7 @@ module Make (Context : CONTEXT) = struct
     let update_counters ctxt status transaction =
       match status with
       | Transaction_failure {reason = Counter_mismatch _; _} -> return ctxt
-      | Transaction_failure _ | Transaction_success ->
+      | Transaction_failure _ | Transaction_success _ ->
           list_fold_left_m
             (fun ctxt (op : (Indexable.index_only, _) operation) ->
               Address_metadata.incr_counter ctxt
