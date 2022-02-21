@@ -118,6 +118,7 @@ end
 (** A smart contract rollup is identified by its address. *)
 type t = Address.t
 
+(** A [Staker] is an implicit account, identified by its public key hash. *)
 module Staker :
   S.SIGNATURE_PUBLIC_KEY_HASH with type t = Signature.Public_key_hash.t
 
