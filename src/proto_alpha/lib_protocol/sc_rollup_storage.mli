@@ -51,7 +51,7 @@
     Conceptually the root of this tree is the
     [Commitment_hash.zero].  This commitment claims that the PVM
     (Proof-generating Virtual Machine) is in a boot state, implied by Machine
-    type and Boot sector, and waiting to recieve its first message.
+    type and Boot sector, and waiting to receive its first message.
 
     In the context we only store the Last Final Commitment (LFC), which is
     by definition a descendant of [zero]. We also store all Disputable
