@@ -120,7 +120,7 @@ end
 
 type proxy_m = (module M)
 
-type rpc_context_starter = {
+type rpc_context_args = {
   printer : Tezos_client_base.Client_context.printer option;
   proxy_builder : Proxy_proto.proto_rpc -> proxy_m Lwt.t;
   rpc_context : RPC_context.generic;

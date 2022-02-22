@@ -302,7 +302,7 @@ let build_directory (printer : Tezos_client_base.Client_context.printer)
     in
     let key = (chain, block_key) in
     let compute_value (chain, block_key) =
-      let ctx : Proxy_getter.rpc_context_starter =
+      let ctx : Proxy_getter.rpc_context_args =
         {
           printer = Some printer;
           proxy_builder = make chain block_key;

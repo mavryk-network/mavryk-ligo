@@ -91,7 +91,7 @@ type proxy_m = (module M)
 
 (** Input data required by the proxy mode to build a
     {!Tezos_protocol_environment.rpc_context}. *)
-type rpc_context_starter = {
+type rpc_context_args = {
   printer : Tezos_client_base.Client_context.printer option;
       (** Optional printer to display information in some custom format. *)
   proxy_builder : Proxy_proto.proto_rpc -> proxy_m Lwt.t;
