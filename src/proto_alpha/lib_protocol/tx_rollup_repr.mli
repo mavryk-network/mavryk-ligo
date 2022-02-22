@@ -68,6 +68,10 @@ module Index : Storage_description.INDEX with type t = t
     into a transaction rollup. *)
 val deposit_entrypoint : Entrypoint_repr.t
 
+(** The entrypoint a layer-1 contract can use to withdraw Michelson tickets that
+    were removed from the layer2 into a kt1 contract. *)
+val withdraw_entrypoint : Entrypoint_repr.t
+
 (* TODO: https://gitlab.com/tezos/tezos/-/issues/2035
    Refactor this away when proper internal operations are introduced.
    Currently, this type is needed because when emitting an internal
@@ -92,4 +96,22 @@ type deposit_parameters = {
   ticketer : Script_repr.node;
   amount : Tx_rollup_l2_qty.t;
   destination : Tx_rollup_l2_address.Indexable.value;
+}
+
+(** The parameters expected to be supplied to the withdraw entrypoint.
+
+    These arguments will not be supplied as-is, but encoded using
+    Micheline.
+
+    The function {!Script_ir_translator.parse_tx_rollup_withdraw_parameters}
+    should be used to extract a [withdraw_parameters] from a Micheline value. *)
+type withdraw_parameters = {
+  contents : Script_repr.node;
+  ty : Script_repr.node;
+  ticketer : Script_repr.node;
+  amount : Tx_rollup_l2_qty.t;
+  level : Raw_level_repr.t;
+  predecessor_hash : string;
+  destination : Contract_repr.t;
+  entrypoint : Entrypoint_repr.t;
 }

@@ -154,10 +154,23 @@ end
 
 let deposit_entrypoint = Entrypoint_repr.of_string_strict_exn "deposit"
 
+let withdraw_entrypoint = Entrypoint_repr.of_string_strict_exn "withdraw"
+
 type deposit_parameters = {
   contents : Script_repr.node;
   ty : Script_repr.node;
   ticketer : Script_repr.node;
   amount : Tx_rollup_l2_qty.t;
   destination : Tx_rollup_l2_address.Indexable.value;
+}
+
+type withdraw_parameters = {
+  contents : Script_repr.node;
+  ty : Script_repr.node;
+  ticketer : Script_repr.node;
+  amount : Tx_rollup_l2_qty.t;
+  level : Raw_level_repr.t;
+  predecessor_hash : string;
+  destination : Contract_repr.t;
+  entrypoint : Entrypoint_repr.t;
 }

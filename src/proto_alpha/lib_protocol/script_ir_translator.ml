@@ -2252,6 +2252,87 @@ let parse_tx_rollup_deposit_parameters :
       (Tx_rollup.{ticketer; contents; ty; amount; destination}, ctxt)
   | expr -> error @@ Invalid_kind (location expr, [Seq_kind], kind expr)
 
+(* TODO: https://gitlab.com/tezos/tezos/-/issues/2035
+   Investigate if separating internal operations from manager
+   operations could make this shenanigan useless. *)
+let parse_tx_rollup_withdraw_parameters :
+    context -> Script.expr -> (Tx_rollup.withdraw_parameters * context) tzresult
+    =
+ fun ctxt parameters ->
+  (* /!\ This pattern matching needs to remain in sync with the
+     [Tx_rollup] case of [parse_contract] and [parse_contract_for_script]. *)
+  match root parameters with
+  | Seq
+      ( _,
+        [
+          Prim
+            ( _,
+              D_Pair,
+              [
+                Prim
+                  ( _,
+                    D_Pair,
+                    [
+                      Prim
+                        ( _,
+                          D_Pair,
+                          [
+                            Prim
+                              ( _,
+                                D_Pair,
+                                [
+                                  Prim
+                                    ( _,
+                                      D_Pair,
+                                      [
+                                        Int (_, level);
+                                        String (_, predecessor_hash);
+                                      ],
+                                      _ );
+                                  contents;
+                                ],
+                                _ );
+                            Int (_, amount);
+                          ],
+                          _ );
+                      ticketer;
+                    ],
+                    _ );
+                address;
+              ],
+              _ );
+          ty;
+        ] ) ->
+      parse_address ctxt address >>? fun ({destination; entrypoint}, ctxt) ->
+      (match destination with
+      | Contract contract -> ok @@ contract
+      | Tx_rollup _ ->
+          error @@ invalid_arg "tx_rollup cannot be the destination")
+      >>? fun destination ->
+      error_unless
+        Compare.Z.(Z.zero < amount && amount <= Z.of_int64 Int64.max_int)
+        (Tx_rollup_invalid_ticket_amount amount)
+      >>? fun () ->
+      let amount = Tx_rollup_l2_qty.of_int64_exn (Z.to_int64 amount) in
+      error_unless
+        Compare.Z.(level <= Z.of_int32 Int32.max_int)
+        (invalid_arg "wrong level")
+      >>? fun () ->
+      Raw_level.of_int32 (Z.to_int32 level) >|? fun level ->
+      ( Tx_rollup.
+          {
+            ticketer;
+            contents;
+            ty;
+            amount;
+            level;
+            predecessor_hash;
+            destination;
+            entrypoint;
+          },
+        ctxt )
+  | expr -> error @@ Invalid_kind (location expr, [Seq_kind], kind expr)
+
 let parse_never expr : (never * context) tzresult =
   error @@ Invalid_never_expr (location expr)
 

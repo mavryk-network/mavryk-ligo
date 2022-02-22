@@ -1048,6 +1048,8 @@ let apply_manager_operation_content :
               in
               (ctxt, result, operations) ))
   | Transaction {amount; parameters; destination = Tx_rollup dst; entrypoint} ->
+      (* FIXME/TORU: #2488 The ticket accounting for the recipient of rollup
+         transactions is not done anywhere *)
       assert_tx_rollup_feature_enabled ctxt >>=? fun () ->
       fail_unless Tez.(amount = zero) Tx_rollup_invalid_transaction_amount
       >>=? fun () ->
@@ -1084,6 +1086,51 @@ let apply_manager_operation_content :
                  balance_updates;
                  consumed_gas = Gas.consumed ~since:before_operation ~until:ctxt;
                  ticket_hash;
+               })
+        in
+        return (ctxt, result, [])
+      else if Entrypoint.(entrypoint = Tx_rollup.withdraw_entrypoint) then
+        Script.force_decode_in_context
+          ~consume_deserialization_gas
+          ctxt
+          parameters
+        >>?= fun (param, ctxt) ->
+        Script_ir_translator.parse_tx_rollup_withdraw_parameters ctxt param
+        >>?= fun ( Tx_rollup.
+                     {
+                       ticketer;
+                       contents;
+                       ty;
+                       amount = _;
+                       level = _;
+                       predecessor_hash = _;
+                       destination;
+                       entrypoint;
+                     },
+                   ctxt ) ->
+        Tx_rollup.hash_ticket ctxt dst ~contents ~ticketer ~ty
+        >>?= fun (ticket_hash, ctxt) ->
+        error_when
+          (Option.is_none (Contract.is_originated destination))
+          (invalid_arg "should be kt1 contract")
+        >>?= fun () ->
+        let result =
+          Transaction_result
+            (Transaction_to_tx_rollup_result
+               {
+                 balance_updates = [];
+                 consumed_gas = Gas.consumed ~since:before_operation ~until:ctxt;
+                 ticket_hash;
+               })
+        in
+        let _op =
+          Manager
+            (Transaction
+               {
+                 amount;
+                 parameters;
+                 destination = Contract destination;
+                 entrypoint;
                })
         in
         return (ctxt, result, [])
@@ -1276,9 +1323,8 @@ let apply_manager_operation_content :
   | Tx_rollup_commit {tx_rollup; commitment} -> (
       (* TODO: bonds https://gitlab.com/tezos/tezos/-/issues/2459 *)
       match Contract.is_implicit source with
-      | None ->
-          fail Tx_rollup_commit_with_non_implicit_contract
-          (* This is only called with implicit contracts *)
+      | None -> fail Tx_rollup_commit_with_non_implicit_contract
+      (* This is only called with implicit contracts *)
       | Some key ->
           Tx_rollup_commitments.add_commitment ctxt tx_rollup key commitment
           >>=? fun ctxt ->

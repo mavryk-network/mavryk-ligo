@@ -1961,12 +1961,25 @@ module Tx_rollup : sig
 
   val deposit_entrypoint : Entrypoint.t
 
+  val withdraw_entrypoint : Entrypoint.t
+
   type deposit_parameters = {
     contents : Script.node;
     ty : Script.node;
     ticketer : Script.node;
     amount : Tx_rollup_l2_qty.t;
     destination : Tx_rollup_l2_address.Indexable.value;
+  }
+
+  type withdraw_parameters = {
+    contents : Script.node;
+    ty : Script.node;
+    ticketer : Script.node;
+    amount : Tx_rollup_l2_qty.t;
+    level : Raw_level.t;
+    predecessor_hash : string;
+    destination : Contract.t;
+    entrypoint : Entrypoint.t;
   }
 
   (** [hash_ticket ctxt tx_rollup ~contents ~ticketer ~ty] computes the
