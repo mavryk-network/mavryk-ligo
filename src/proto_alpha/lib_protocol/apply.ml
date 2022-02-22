@@ -1062,8 +1062,26 @@ let apply_manager_operation_content :
           ->
         Tx_rollup.hash_ticket ctxt dst ~contents ~ticketer ~ty
         >>?= fun (ticket_hash, ctxt) ->
+        (* TODO: we need a sender that can receive the deposit in
+           the form of a withdrawal if the deposit fails due to a
+           Balance_overflow in the recipient. This sender must be
+           an implicit account: only such contracts can retrieve
+           withdrawals.
+
+           But who should this sender be? Here I take the payer,
+           but is there any guarantees that the payer is a tz1?
+        *)
+        let payer_is_implicit =
+          match Contract.is_implicit payer with
+          | Some i -> i
+          | None -> assert false
+        in
         let (deposit, message_size) =
-          Tx_rollup_message.make_deposit destination ticket_hash amount
+          Tx_rollup_message.make_deposit
+            payer_is_implicit
+            destination
+            ticket_hash
+            amount
         in
         Tx_rollup_state.get ctxt dst >>=? fun (ctxt, state) ->
         Tx_rollup_state.burn ~limit:None state message_size >>?= fun cost ->

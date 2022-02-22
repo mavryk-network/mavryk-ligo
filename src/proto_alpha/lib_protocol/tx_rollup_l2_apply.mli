@@ -197,7 +197,10 @@ module Make (Context : CONTEXT) : sig
   val apply_deposit :
     ctxt ->
     Tx_rollup_message.deposit ->
-    (ctxt * Message_result.deposit_result) m
+    (ctxt
+    * Message_result.deposit_result
+    * Indexable.unknown Message_result.withdrawal option)
+    m
 
   (** [apply_message ctxt message] interpets the [message] in the [ctxt].
 

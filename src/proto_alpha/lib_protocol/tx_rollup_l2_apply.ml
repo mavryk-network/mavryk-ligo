@@ -603,8 +603,10 @@ module Make (Context : CONTEXT) = struct
   end
 
   let apply_deposit :
-      ctxt -> Tx_rollup_message.deposit -> (ctxt * deposit_result) m =
-   fun initial_ctxt Tx_rollup_message.{destination; ticket_hash; amount} ->
+      ctxt ->
+      Tx_rollup_message.deposit ->
+      (ctxt * deposit_result * Indexable.unknown withdrawal option) m =
+   fun initial_ctxt Tx_rollup_message.{sender; destination; ticket_hash; amount} ->
     let apply_deposit () =
       let* (ctxt, created_addr, aidx) =
         address_index initial_ctxt destination
@@ -620,8 +622,19 @@ module Make (Context : CONTEXT) = struct
     in
     catch
       (apply_deposit ())
-      (fun (ctxt, indexes) -> return (ctxt, Deposit_success indexes))
-      (fun reason -> return (initial_ctxt, Deposit_failure reason))
+      (fun (ctxt, indexes) -> return (ctxt, Deposit_success indexes, None))
+      (function
+        | Balance_overflow ->
+            (* Should there be no space in [destination] for [amount],
+               return the full [amount] to [sender] in the form of a
+               withdrawal. *)
+            let ticket_hash = Indexable.from_value ticket_hash in
+            let withdrawal_opt =
+              Some {destination = sender; ticket_hash; amount}
+            in
+            return
+              (initial_ctxt, Deposit_failure Balance_overflow, withdrawal_opt)
+        | reason -> return (initial_ctxt, Deposit_failure reason, None))
 
   let apply_message : ctxt -> Tx_rollup_message.t -> (ctxt * Message_result.t) m
       =
@@ -629,8 +642,8 @@ module Make (Context : CONTEXT) = struct
     let open Tx_rollup_message in
     match msg with
     | Deposit deposit ->
-        let* (ctxt, result) = apply_deposit ctxt deposit in
-        return (ctxt, (Deposit_result result, []))
+        let* (ctxt, result, withdrawl_opt) = apply_deposit ctxt deposit in
+        return (ctxt, (Deposit_result result, Option.to_list withdrawl_opt))
     | Batch str -> (
         let batch =
           Data_encoding.Binary.of_string_opt Tx_rollup_l2_batch.encoding str
