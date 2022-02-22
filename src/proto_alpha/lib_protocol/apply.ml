@@ -1123,17 +1123,22 @@ let apply_manager_operation_content :
                  ticket_hash;
                })
         in
-        let _op =
-          Manager
-            (Transaction
-               {
-                 amount;
-                 parameters;
-                 destination = Contract destination;
-                 entrypoint;
-               })
+        let op =
+          Internal_operation
+            {
+              source;
+              nonce = 0;
+              operation =
+                Transaction
+                  {
+                    amount;
+                    parameters;
+                    destination = Contract destination;
+                    entrypoint;
+                  };
+            }
         in
-        return (ctxt, result, [])
+        return (ctxt, result, [op])
       else fail (Script_tc_errors.No_such_entrypoint entrypoint)
   | Origination {delegate; script; preorigination; credit} ->
       Script.force_decode_in_context
@@ -1753,7 +1758,7 @@ let rec mark_skipped :
     batch. Fail with a {b permanent} error otherwise.
     TODO: https://gitlab.com/tezos/tezos/-/issues/2301
     Remove when format of operation is changed to save space.
- *)
+*)
 let check_counters_consistency contents_list =
   let check_counter ~previous_counter counter =
     match previous_counter with
