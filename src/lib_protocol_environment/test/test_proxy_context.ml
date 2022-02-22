@@ -25,7 +25,7 @@
 
 (** Testing
     -------
-    Component:    Protocol Environment
+    Component:    Proxy context (without delegation for now)
     Invocation:   dune build @src/lib_protocol_environment/runtest
     Dependencies: src/lib_protocol_environment/test/assert.ml
     Subject:      Low-level operations on proxy contexts.
