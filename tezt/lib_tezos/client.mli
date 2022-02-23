@@ -1011,6 +1011,10 @@ val init_with_protocol :
   unit ->
   (Node.t * t) Lwt.t
 
+val bootstrap_name : int -> string
+
+val bootstrap : int -> t -> Account.key Lwt.t
+
 (** Create a client with mode [Mockup] and run [create mockup].
 
     Contrary to [init], this does not import any secret key, because

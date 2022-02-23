@@ -1378,6 +1378,12 @@ let init_light ?path ?admin_path ?name ?color ?base_dir ?(min_agreement = 0.66)
   in
   return (client, node1, node2)
 
+let bootstrap_name i = sf "bootstrap%d" i
+
+let bootstrap i client =
+  let alias = bootstrap_name i in
+  show_address ~alias client
+
 let get_parameter_file ?additional_bootstrap_account_count
     ?default_accounts_balance ?parameter_file ~protocol client =
   match additional_bootstrap_account_count with
@@ -1386,7 +1392,7 @@ let get_parameter_file ?additional_bootstrap_account_count
       let* additional_bootstrap_accounts =
         Lwt_list.map_s
           (fun i ->
-            let alias = sf "bootstrap%d" i in
+            let alias = bootstrap_name i in
             let* key = gen_and_show_keys ~alias client in
             return (key, default_accounts_balance))
           (range 6 (5 + n))
