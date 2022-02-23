@@ -121,7 +121,7 @@ let append_message :
     Constants_storage.tx_rollup_hard_size_limit_per_inbox ctxt
   in
   fail_unless
-    Compare.Int.(new_size < inbox_limit)
+    Compare.Int.(new_size <= inbox_limit)
     (Tx_rollup_inbox_size_would_exceed_limit rollup)
   >>=? fun () ->
   (* FIXME/TORU: https://gitlab.com/tezos/tezos/-/issues/2408
