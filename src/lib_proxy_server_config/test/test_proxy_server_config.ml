@@ -158,6 +158,7 @@ module UnionRightBias = struct
       Field t.rpc_addr;
       Field t.rpc_tls;
       Field t.sym_block_caching_time;
+      Field t.data_dir;
     ]
 
   let common_some t1 t2 =
