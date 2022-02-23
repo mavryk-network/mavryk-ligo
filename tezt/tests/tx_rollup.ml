@@ -63,7 +63,7 @@ module Regressions = struct
     let* _ = Node.wait_for_level node 2 in
     return {node; client; rollup}
 
-  let submit_batch ~batch {rollup; client; node} =
+  let submit_batch_and_bake ~batch {rollup; client; node} =
     let*! () =
       Client.Tx_rollup.submit_batch
         ~hooks
@@ -119,7 +119,7 @@ module Regressions = struct
       in
       (* The content of the batch does not matter for the regression test. *)
       let batch = "blob" in
-      let* () = submit_batch ~batch state in
+      let* () = submit_batch_and_bake ~batch state in
       let*! _inbox = Rollup.get_inbox ~hooks ~rollup client in
       unit
 
@@ -134,7 +134,7 @@ module Regressions = struct
       let* ({rollup; client; node} as state) = init_with_tx_rollup ~protocol in
       (* The content of the batch does not matter for the regression test. *)
       let batch = "blob" in
-      let* () = submit_batch ~batch state in
+      let* () = submit_batch_and_bake ~batch state in
       let batch_level = Node.get_level node in
       (* FIXME https://gitlab.com/tezos/tezos/-/issues/2503
 
@@ -173,7 +173,7 @@ module Regressions = struct
       @@ fun protocol ->
       let* state = init_with_tx_rollup ~protocol in
       let batch = "" in
-      let* () = submit_batch ~batch state in
+      let* () = submit_batch_and_bake ~batch state in
       unit
 
     let submit_maximum_size_batch ~protocols =
@@ -188,7 +188,7 @@ module Regressions = struct
       (* The constant comes from the default parameters of the protocol. *)
       let limit = 5000 in
       let batch = String.make limit 'b' in
-      let* () = submit_batch ~batch state in
+      let* () = submit_batch_and_bake ~batch state in
       unit
   end
 
