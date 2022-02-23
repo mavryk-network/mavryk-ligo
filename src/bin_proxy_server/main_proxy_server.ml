@@ -63,8 +63,9 @@ let rpc_tls : string option Term.t =
 
 let data_dir : string option Term.t =
   let doc =
-    "Path to the `context` subdirectory of a running tezos-node, to be used \
-     instead of using a ../raw/bytes RPC call."
+    "Path to the data-dir of a running tezos-node, for reading the `context` \
+     subdirectory to obtain data instead of using the ../raw/bytes RPC (hereby \
+     reducing the node's IO)."
   in
   let docv = "DATA_DIR" in
   Arg.(value & opt (some string) None & info ["data-dir"] ~docv ~doc)

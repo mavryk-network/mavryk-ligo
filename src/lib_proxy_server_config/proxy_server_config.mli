@@ -50,8 +50,9 @@ type t = private {
           is too high, pass a bigger value than [time_between_blocks] (if
           your clients are fine seeing slightly deprecated values) *)
   data_dir : string option;
-      (** Path to the `context` subdirectory of a running tezos-node, to be used
-          instead of using a ../raw/bytes RPC call. *)
+      (** Path to the data-dir of a running tezos-node. If specified, we use
+          the [context] subdirectory to obtain data instead of using the
+          [../raw/bytes] RPC call (hereby reducing the node's IO). *)
 }
 
 (** Pretty printer for [t] *)
@@ -69,8 +70,9 @@ type runtime = private {
   sym_block_caching_time : int option;
       (** The duration during which data of symbolic blocks is kept *)
   data_dir : string option;
-      (** Path to the `context` subdirectory of a running tezos-node, to be used
-          instead of using a ../raw/bytes RPC call. *)
+      (** Path to the data-dir of a running tezos-node. If specified, we use
+          the [context] subdirectory to obtain data instead of using the
+          [../raw/bytes] RPC call (hereby reducing the node's IO). *)
 }
 
 (** [make endpoint rpc_addr rpc_tls sym_block_caching_time]
