@@ -1435,7 +1435,7 @@ let precheck_manager_contents (type kind) ctxt (op : kind Kind.manager contents)
       in
       let (_, message_size) = Tx_rollup_message.make_batch content in
       fail_unless
-        Compare.Int.(message_size < size_limit)
+        Compare.Int.(message_size <= size_limit)
         Tx_rollup_inbox.Tx_rollup_message_size_exceeds_limit
       >|=? fun () -> ctxt
   | Tx_rollup_commit {commitment; _} ->
