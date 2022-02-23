@@ -191,10 +191,9 @@ let originate ctxt ~kind ~boot_sector =
   Storage.Sc_rollup.Boot_sector.add ctxt address boot_sector >>= fun ctxt ->
   Storage.Sc_rollup.Inbox.init ctxt address Sc_rollup_inbox.empty
   >>=? fun (ctxt, size_diff) ->
-  let* (ctxt, _size) =
-    Store.Last_final_commitment.init ctxt address Commitment_hash.zero
-  in
-  let* (ctxt, _size) = Store.Stakers_size.init ctxt address 0l in
+  Store.Last_final_commitment.init ctxt address Commitment_hash.zero
+  >>=? fun (ctxt, lfc_size_diff) ->
+  Store.Stakers_size.init ctxt address 0l >>=? fun (ctxt, stakers_size_diff) ->
   let addresses_size = 2 * Sc_rollup_repr.Address.size in
   let stored_kind_size = 2 (* because tag_size of kind encoding is 16bits. *) in
   let boot_sector_size =
@@ -206,7 +205,7 @@ let originate ctxt ~kind ~boot_sector =
   let size =
     Z.of_int
       (origination_size + stored_kind_size + boot_sector_size + addresses_size
-     + size_diff)
+     + size_diff + lfc_size_diff + stakers_size_diff)
   in
   return (address, size, ctxt)
 
