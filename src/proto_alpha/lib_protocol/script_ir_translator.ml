@@ -1833,9 +1833,9 @@ let rec make_dug_proof_argument :
     (a, s) stack_ty ->
     (a, s, x) dug_proof_argument option =
  fun loc n x stk ->
-  match (Compare.Int.(n = 0), stk) with
-  | (true, rest) -> Some (Dug_proof_argument (KRest, Item_t (x, rest)))
-  | (false, Item_t (v, rest)) ->
+  match (n, stk) with
+  | (0, rest) -> Some (Dug_proof_argument (KRest, Item_t (x, rest)))
+  | (n, Item_t (v, rest)) ->
       make_dug_proof_argument loc (n - 1) x rest
       |> Option.map @@ fun (Dug_proof_argument (n', aft')) ->
          let kinfo = {iloc = loc; kstack_ty = aft'} in
