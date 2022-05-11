@@ -388,8 +388,6 @@ def main() -> int:
         return _main_test_itself()
     adjective = "staged" if staged else "modified"
 
-    return_code = _main_py_files(staged, adjective, not lint_only)
-
     ml_extensions = ["ml", "mli"]
     relevant_ocaml_files = _git_diff_many(staged, ml_extensions)
     if relevant_ocaml_files:

@@ -163,17 +163,6 @@ test-unit: test-nonproto-unit test-proto-unit
 test-unit-alpha:
 	@dune build --profile=$(PROFILE) @src/proto_alpha/lib_protocol/runtest
 
-.PHONY: test-python
-test-python: all
-	@$(MAKE) -C tests_python all
-
-.PHONY: test-python-alpha
-test-python-alpha: all
-	@$(MAKE) -C tests_python alpha
-
-.PHONY: test-python-tenderbake
-test-python-tenderbake: all
-	@$(MAKE) -C tests_python tenderbake
 
 .PHONY: test-flextesa
 test-flextesa:
@@ -276,9 +265,7 @@ check-linting:
 	@src/tooling/lint.sh --check-ocamlformat
 	@dune build --profile=$(PROFILE) @fmt
 
-check-python-linting:
-	@$(MAKE) -C tests_python lint
-	@$(MAKE) -C docs lint
+
 
 check-ocaml-linting:
 	@./scripts/semgrep/lint-all-ocaml-sources.sh
@@ -289,8 +276,6 @@ fmt: fmt-ocaml fmt-python
 fmt-ocaml:
 	@dune build --profile=$(PROFILE) @fmt --auto-promote
 
-fmt-python:
-	@$(MAKE) -C tests_python fmt
 
 .PHONY: build-deps
 build-deps:
@@ -379,10 +364,3 @@ uninstall:
 coverage-clean:
 	@-rm -Rf ${COVERAGE_OUTPUT}/*.coverage ${COVERAGE_REPORT}
 
-.PHONY: clean
-clean: coverage-clean
-	@-dune clean
-	@-rm -f ${TEZOS_BIN} ${UNRELEASED_TEZOS_BIN} tezos-sandbox
-	@-${MAKE} -C docs clean
-	@-${MAKE} -C tests_python clean
-	@-rm -f docs/api/tezos-{baker,endorser,accuser}-alpha.html docs/api/tezos-{admin-,}client.html docs/api/tezos-signer.html
