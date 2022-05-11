@@ -14,7 +14,7 @@
   (:standard
    -open Tezos_base.TzPervasives
    -open Tezos_protocol_013_PtJakart))
- (modules (:standard \ gen)))
+ (modules (:standard \ gen config)))
 
 (executable
  (name gen)
@@ -27,8 +27,18 @@
   (:standard
    -open Tezos_base.TzPervasives
    -open Tezos_protocol_013_PtJakart_parameters
-   -open Tezos_protocol_013_PtJakart))
+   -open Tezos_protocol_013_PtJakart
+   (:include win32-flags.sexp)))
  (modules gen))
+
+(executable
+ (name config)
+ (modules config)
+ (libraries dune-configurator))
+
+(rule
+ (targets win32-flags.sexp)
+ (action (run ./config.exe)))
 
 (rule
  (targets sandbox-parameters.json)
