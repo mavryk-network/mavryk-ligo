@@ -11,7 +11,7 @@
             tezos-shell-services
             tezos-protocol-environment
             tezos-protocol-013-PtJakart
-            tezos-protocol-013-PtJakart-parameters
+            PtJakart-parameters
             tezos-client-013-PtJakart
             tezos-protocol-plugin-013-PtJakart)
  (flags (:standard -open Tezos_base__TzPervasives

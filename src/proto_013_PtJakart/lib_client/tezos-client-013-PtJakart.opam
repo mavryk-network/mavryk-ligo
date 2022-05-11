@@ -18,7 +18,7 @@ depends: [
   "tezos-proxy"
   "tezos-signer-backends"
   "tezos-protocol-plugin-013-PtJakart"
-  "tezos-protocol-013-PtJakart-parameters"
+  "PtJakart-parameters"
   "tezos-rpc"
   "tezos-micheline" {with-test}
   "tezos-base-test-helpers" {with-test}

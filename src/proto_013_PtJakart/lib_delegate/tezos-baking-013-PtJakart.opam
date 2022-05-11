@@ -30,7 +30,7 @@ depends: [
   "tezos-tooling"
   "data-encoding" { >= "0.5.3" & < "0.6" }
   "tezos-client-base-unix"
-  "tezos-protocol-013-PtJakart-parameters"
+  "PtJakart-parameters"
   "tezos-mockup"
   "tezos-mockup-proxy"
   "tezos-mockup-commands"

@@ -12,7 +12,7 @@ depends: [
   "tezos-shell-services"
   "tezos-protocol-environment"
   "tezos-protocol-013-PtJakart"
-  "tezos-protocol-013-PtJakart-parameters"
+  "PtJakart-parameters"
   "tezos-client-013-PtJakart"
   "tezos-test-helpers"
   "alcotest-lwt"

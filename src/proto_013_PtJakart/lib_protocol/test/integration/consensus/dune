@@ -6,7 +6,7 @@
             tezos-protocol-013-PtJakart
             tezos-base-test-helpers
             tezos-013-PtJakart-test-helpers
-            tezos-protocol-013-PtJakart-parameters
+            PtJakart-parameters
             tezos-protocol-plugin-013-PtJakart)
  (flags (:standard -open Tezos_base__TzPervasives
                    -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals

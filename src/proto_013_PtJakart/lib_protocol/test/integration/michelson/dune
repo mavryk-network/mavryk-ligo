@@ -6,7 +6,7 @@
  (libraries alcotest-lwt
             tezos-base
             tezos-protocol-013-PtJakart
-            tezos-protocol-013-PtJakart-parameters
+            PtJakart-parameters
             tezos-base-test-helpers
             tezos-013-PtJakart-test-helpers
 

@@ -16,7 +16,7 @@ depends: [
   "tezos-stdlib-unix" { with-test }
   "tezos-protocol-environment" { with-test }
   "tezos-client-base" { with-test }
-  "tezos-protocol-013-PtJakart-parameters" { with-test }
+  "PtJakart-parameters" { with-test }
   "tezos-shell-services" { with-test }
   "tezos-base-test-helpers" { with-test }
   "tezos-benchmark" { with-test }
