@@ -415,6 +415,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     ?baking_reward_bonus_per_slot ?baking_reward_fixed_portion ?origination_size
     ?blocks_per_cycle ?cycles_per_voting_period ?tx_rollup_enable
     ?tx_rollup_sunset_level ?tx_rollup_origination_size ?sc_rollup_enable
+    ?(initial_timestamp = Time.Protocol.epoch)
     initial_accounts =
   let open Tezos_protocol_013_PtJakart_parameters in
   let constants = Default_parameters.constants_test in
@@ -523,7 +524,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     Forge.make_shell
       ~level
       ~predecessor:hash
-      ~timestamp:Time.Protocol.epoch
+      ~timestamp:initial_timestamp
       ~fitness
       ~operations_hash:Operation_list_list_hash.zero
   in
@@ -538,7 +539,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?endorsing_reward_per_slot ?baking_reward_bonus_per_slot
     ?baking_reward_fixed_portion ?origination_size ?blocks_per_cycle
     ?cycles_per_voting_period ?tx_rollup_enable ?tx_rollup_sunset_level
-    ?tx_rollup_origination_size ?sc_rollup_enable
+    ?tx_rollup_origination_size ?sc_rollup_enable ?initial_timestamp
     (initial_accounts : (Account.t * Tez.t) list) =
   prepare_initial_context_params
     ?consensus_threshold
@@ -556,6 +557,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?tx_rollup_sunset_level
     ?tx_rollup_origination_size
     ?sc_rollup_enable
+    ?initial_timestamp
     initial_accounts
   >>=? fun (constants, shell, hash) ->
   initial_context
