@@ -123,6 +123,42 @@ val apply_operation :
   'a operation ->
   (context * 'a operation_metadata, error trace) result Lwt.t
 
+(* for test *)
+val apply_origination : ctxt:t ->
+  storage_type:('a, 'b) Script_typed_ir.ty ->
+  storage:'a ->
+  unparsed_code:Michelson_v1_primitives.prim Micheline.canonical ->
+  contract:Contract.t ->
+  delegate:public_key_hash option ->
+  source:Contract.t ->
+  credit:Tez.t ->
+  before_operation:t ->
+  (t * Kind.origination successful_manager_operation_result * 'c list,
+   error trace)
+  result Lwt.t
+
+type execution_arg =
+  | Typed_arg :
+      Script.location * ('a, _) Script_typed_ir.ty * 'a
+      -> execution_arg
+  | Untyped_arg : Script.expr -> execution_arg
+
+val apply_transaction :
+  ctxt:t ->
+  parameter:execution_arg ->
+  source:Contract.t ->
+  contract:Contract.t ->
+  amount:Tez.t ->
+  entrypoint:Entrypoint_repr.t ->
+  before_operation:t ->
+  payer:public_key_hash ->
+  chain_id:Chain_id.t ->
+  mode:Script_ir_translator.unparsing_mode ->
+  internal:bool ->
+  (t * Kind.transaction successful_manager_operation_result *
+  Script_typed_ir.packed_internal_operation list, error trace)
+  result Lwt.t
+
 type finalize_application_mode =
   | Finalize_full_construction of {
       level : Raw_level.t;
