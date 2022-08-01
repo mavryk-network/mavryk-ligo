@@ -64,7 +64,7 @@ depopts: [
   "tezos-protocol-plugin-alpha-registerer"
 ]
 build: [
-  ["rm" "-r" "vendors"]
+  ["rm" "-rf" "vendors"]
   ["dune" "build" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
