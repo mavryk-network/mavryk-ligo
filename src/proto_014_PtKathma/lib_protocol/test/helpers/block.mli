@@ -128,6 +128,7 @@ val genesis :
   ?dal_enable:bool ->
   ?hard_gas_limit_per_block:Gas.Arith.integral ->
   ?nonce_revelation_threshold:int32 ->
+  ?initial_timestamp:Timestamp.time ->
   (Account.t * Tez.tez * Signature.Public_key_hash.t option) list ->
   block tzresult Lwt.t
 
@@ -272,6 +273,7 @@ val prepare_initial_context_params :
   ?dal_enable:bool ->
   ?hard_gas_limit_per_block:Gas.Arith.integral ->
   ?nonce_revelation_threshold:int32 ->
+  ?initial_timestamp:Timestamp.time ->
   (Account.t * Tez.t * Signature.Public_key_hash.t option) list ->
   ( Constants.Parametric.t * Block_header.shell_header * Block_hash.t,
     tztrace )
