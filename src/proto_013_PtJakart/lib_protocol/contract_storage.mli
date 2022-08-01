@@ -27,6 +27,12 @@
     contracts. *)
 
 type error +=
+
+  (* ADDED IN TEZOS-LIGO *)
+  | (* `Temporary *)
+  Balance_too_low of Contract_repr.contract * Tez_repr.t * Tez_repr.t
+  (* ADDED IN TEZOS-LIGO *)
+
   | (* `Branch *)
       Counter_in_the_future of Contract_repr.contract * Z.t * Z.t
   | (* `Temporary *)
