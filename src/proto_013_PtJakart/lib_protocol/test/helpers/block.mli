@@ -125,6 +125,7 @@ val genesis :
   ?tx_rollup_sunset_level:int32 ->
   ?tx_rollup_origination_size:int ->
   ?sc_rollup_enable:bool ->
+  ?initial_timestamp:Timestamp.time ->
   (Account.t * Tez.tez) list ->
   block tzresult Lwt.t
 
@@ -262,6 +263,7 @@ val prepare_initial_context_params :
   ?tx_rollup_sunset_level:int32 ->
   ?tx_rollup_origination_size:int ->
   ?sc_rollup_enable:bool ->
+  ?initial_timestamp:Timestamp.time ->
   (Account.t * Tez.t) list ->
   ( Constants.parametric * Block_header.shell_header * Block_hash.t,
     tztrace )
