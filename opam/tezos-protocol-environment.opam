@@ -34,7 +34,7 @@ depends: [
   "lwt" { with-test & >= "5.6.0" }
 ]
 build: [
-  ["rm" "-r" "vendors"]
+  ["rm" "-rf" "vendors"]
   ["dune" "build" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
