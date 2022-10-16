@@ -23,7 +23,7 @@ depends: [
   "tezos-webassembly-interpreter-extra" {with-test}
 ]
 build: [
-  ["rm" "-r" "vendors"]
+  ["rm" "-rf" "vendors"]
   ["dune" "build" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
