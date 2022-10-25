@@ -478,6 +478,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     ?tx_rollup_sunset_level ?tx_rollup_origination_size ?sc_rollup_enable
     ?sc_rollup_max_number_of_messages_per_commitment_period ?dal_enable
     ?zk_rollup_enable ?hard_gas_limit_per_block ?nonce_revelation_threshold
+    ?(initial_timestamp = Time.Protocol.epoch)
     initial_accounts =
   let open Tezos_protocol_015_PtLimaPt_parameters in
   let constants = Default_parameters.constants_test in
@@ -623,7 +624,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     Forge.make_shell
       ~level
       ~predecessor:hash
-      ~timestamp:Time.Protocol.epoch
+      ~timestamp:initial_timestamp
       ~fitness
       ~operations_hash:Operation_list_list_hash.zero
   in
@@ -641,6 +642,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?tx_rollup_origination_size ?sc_rollup_enable
     ?sc_rollup_max_number_of_messages_per_commitment_period ?dal_enable
     ?zk_rollup_enable ?hard_gas_limit_per_block ?nonce_revelation_threshold
+    ?initial_timestamp
     (initial_accounts :
       (Account.t * Tez.t * Signature.Public_key_hash.t option) list) =
   prepare_initial_context_params
@@ -664,6 +666,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?zk_rollup_enable
     ?hard_gas_limit_per_block
     ?nonce_revelation_threshold
+    ?initial_timestamp
     initial_accounts
   >>=? fun (constants, shell, hash) ->
   initial_context
