@@ -27,7 +27,7 @@
   -open Tezos_benchmark
   -open Tezos_benchmark_type_inference_014_PtKathma
   -open Tezos_benchmark_014_PtKathma
-  -open Tezos_014_PtKathma_test_helpers))
+  -open P014_test_helpers))
 
 (rule
  (alias runtest_micheline_rewriting_data)

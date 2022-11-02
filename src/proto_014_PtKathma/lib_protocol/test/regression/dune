@@ -21,7 +21,7 @@
   -open Tezos_protocol_014_PtKathma
   -open Tezos_client_014_PtKathma
   -open Tezos_protocol_plugin_014_PtKathma
-  -open Tezos_014_PtKathma_test_helpers
+  -open P014_test_helpers
   -open Tezos_micheline)
  (modules test_logging))
 
