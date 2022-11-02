@@ -1,7 +1,7 @@
 (* This file was automatically generated, do not edit.*)
 (* Edit file v4.in.ml instead. *)
 # 1 "v4.in.ml"
-open Tezos_protocol_environment_sigs_stdlib_compat.V_all
+open Tpe_sigs_stdlib_compat.V_all
 
 module type T = sig
   module Pervasives : sig
@@ -4185,7 +4185,7 @@ end
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_protocol_environment_sigs_stdlib_compat.V4
+open Tpe_sigs_stdlib_compat.V4
 
 (* From Lwtreslib *)
 

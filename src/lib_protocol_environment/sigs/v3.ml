@@ -1,7 +1,7 @@
 (* This file was automatically generated, do not edit.*)
 (* Edit file v3.in.ml instead. *)
 # 1 "v3.in.ml"
-open Tezos_protocol_environment_sigs_stdlib_compat.V_all
+open Tpe_sigs_stdlib_compat.V_all
 
 module type T = sig
   module Pervasives : sig
@@ -4156,7 +4156,7 @@ end
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_protocol_environment_sigs_stdlib_compat.V3
+open Tpe_sigs_stdlib_compat.V3
 
 (* From Lwtreslib *)
 
@@ -4341,7 +4341,7 @@ end
     variants may return [Ok _] even though the arguments have different lengths.
 *)
 
-open Tezos_protocol_environment_sigs_stdlib_compat.V3
+open Tpe_sigs_stdlib_compat.V3
 
 (** {3 Trivial values} *)
 
@@ -5163,7 +5163,7 @@ end
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_protocol_environment_sigs_stdlib_compat.V3
+open Tpe_sigs_stdlib_compat.V3
 
 (* From Lwtreslib *)
 
@@ -5452,7 +5452,7 @@ end
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_protocol_environment_sigs_stdlib_compat.V3
+open Tpe_sigs_stdlib_compat.V3
 
 (** Signature from Lwtreslib's option module *)
 
@@ -5602,7 +5602,7 @@ end
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_protocol_environment_sigs_stdlib_compat.V3
+open Tpe_sigs_stdlib_compat.V3
 
 type ('a, 'e) t = ('a, 'e) result = Ok of 'a | Error of 'e (***)
 

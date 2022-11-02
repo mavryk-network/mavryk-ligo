@@ -93,16 +93,16 @@ let tezos_protocol_env =
   let open Embedded_cmis in
   [
     ("CamlinternalFormatBasics", camlinternalFormatBasics_cmi);
-    ( "Tezos_protocol_environment_sigs_stdlib_compat",
-      tezos_protocol_environment_sigs_stdlib_compat_cmi );
-    ( "Tezos_protocol_environment_sigs_stdlib_compat__V_all",
-      tezos_protocol_environment_sigs_stdlib_compat__V_all_cmi );
-    ( "Tezos_protocol_environment_sigs_stdlib_compat__V2",
-      tezos_protocol_environment_sigs_stdlib_compat__V2_cmi );
-    ( "Tezos_protocol_environment_sigs_stdlib_compat__V3",
-      tezos_protocol_environment_sigs_stdlib_compat__V3_cmi );
-    ( "Tezos_protocol_environment_sigs_stdlib_compat__V4",
-      tezos_protocol_environment_sigs_stdlib_compat__V4_cmi );
+    ( "Tpe_sigs_stdlib_compat",
+      tpe_sigs_stdlib_compat_cmi );
+    ( "Tpe_sigs_stdlib_compat__V_all",
+      tpe_sigs_stdlib_compat__V_all_cmi );
+    ( "Tpe_sigs_stdlib_compat__V2",
+      tpe_sigs_stdlib_compat__V2_cmi );
+    ( "Tpe_sigs_stdlib_compat__V3",
+      tpe_sigs_stdlib_compat__V3_cmi );
+    ( "Tpe_sigs_stdlib_compat__V4",
+      tpe_sigs_stdlib_compat__V4_cmi );
     ("Tezos_protocol_environment_sigs", tezos_protocol_environment_sigs_cmi);
     ( "Tezos_protocol_environment_sigs__V0",
       tezos_protocol_environment_sigs__V0_cmi );

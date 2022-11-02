@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_protocol_environment_sigs_stdlib_compat.V3
+open Tpe_sigs_stdlib_compat.V3
 
 (* From Lwtreslib *)
 

@@ -1,4 +1,4 @@
-open Tezos_protocol_environment_sigs_stdlib_compat.V_all
+open Tpe_sigs_stdlib_compat.V_all
 
 module type T = sig
   module Pervasives : [%sig "v6/pervasives.mli"]

@@ -1711,7 +1711,7 @@ let _octez_sapling_ctypes_gen =
       ["rustzcash_ctypes_gen"; "rustzcash_ctypes_bindings"; "gen_runtime_js"]
     ~opam_with_test:Never
 
-let tezos_protocol_environment_sigs_stdlib_compat =
+let tpe_sigs_stdlib_compat =
   public_lib
     "tezos-protocol-environment.sigs.stdlib-compat"
     ~path:"src/lib_protocol_environment/sigs/stdlib_compat"
@@ -1722,7 +1722,7 @@ let tezos_protocol_environment_sigs =
     "tezos-protocol-environment.sigs"
     ~path:"src/lib_protocol_environment/sigs"
     ~ocaml:V.(at_least "4.12")
-    ~deps:[tezos_protocol_environment_sigs_stdlib_compat]
+    ~deps:[tpe_sigs_stdlib_compat]
     ~flags:(Flags.standard ~nopervasives:true ~nostdlib:true ())
     ~dune:
       (let gen n =
@@ -1887,15 +1887,15 @@ let octez_protocol_compiler_registerer =
                 S
                   "%{dep:.tezos_protocol_registerer.objs/byte/tezos_protocol_registerer__Registerer.cmi}";
                 S
-                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tezos_protocol_environment_sigs_stdlib_compat.cmi}";
+                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tpe_sigs_stdlib_compat.cmi}";
                 S
-                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tezos_protocol_environment_sigs_stdlib_compat__V_all.cmi}";
+                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tpe_sigs_stdlib_compat__V_all.cmi}";
                 S
-                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tezos_protocol_environment_sigs_stdlib_compat__V2.cmi}";
+                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tpe_sigs_stdlib_compat__V2.cmi}";
                 S
-                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tezos_protocol_environment_sigs_stdlib_compat__V3.cmi}";
+                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tpe_sigs_stdlib_compat__V3.cmi}";
                 S
-                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tezos_protocol_environment_sigs_stdlib_compat__V4.cmi}";
+                  "%{lib:tezos-protocol-environment.sigs.stdlib-compat:tpe_sigs_stdlib_compat__V4.cmi}";
                 S
                   "%{lib:tezos-protocol-environment.sigs:tezos_protocol_environment_sigs.cmi}";
                 S
