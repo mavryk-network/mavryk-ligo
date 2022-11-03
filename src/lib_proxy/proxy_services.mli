@@ -43,7 +43,7 @@ type mode =
       sym_block_caching_time : Ptime.span option;
       on_disk_proxy_builder :
         (Context_hash.t ->
-        Tezos_protocol_environment.Proxy_delegate.t tzresult Lwt.t)
+        Tp_environment.Proxy_delegate.t tzresult Lwt.t)
         option;
     }
       (** [tezos-proxy-server] is running. The [sleep] field is implemented

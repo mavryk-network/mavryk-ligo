@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-module Context = Tezos_protocol_environment.Context
+module Context = Tp_environment.Context
 
 type t = {
   total : int;

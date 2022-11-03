@@ -34,7 +34,7 @@ open Environment_protocol_T
 
 module type T = sig
   include
-    Tezos_protocol_environment_sigs.V6.T
+    Tp_environment_sigs.V6.T
       with type Format.formatter = Format.formatter
        and type 'a Seq.node = 'a Seq.node
        and type 'a Seq.t = unit -> 'a Seq.node
@@ -95,10 +95,10 @@ module type T = sig
        and type ('a, 'b) Either.t = ('a, 'b) Stdlib.Either.t
        and type Bls12_381.Fr.t = Bls12_381.Fr.t
        and type Plonk.transcript =
-        Tezos_protocol_environment_structs.V6.Plonk.transcript
-       and type Plonk.proof = Tezos_protocol_environment_structs.V6.Plonk.proof
+        Tp_environment_structs.V6.Plonk.transcript
+       and type Plonk.proof = Tp_environment_structs.V6.Plonk.proof
        and type Plonk.verifier_public_parameters =
-        Tezos_protocol_environment_structs.V6.Plonk.verifier_public_parameters
+        Tp_environment_structs.V6.Plonk.verifier_public_parameters
 
   type error += Ecoproto_error of Error_monad.error
 
@@ -247,7 +247,7 @@ struct
   module Lwt = Lwt
 
   module Data_encoding = struct
-    include Tezos_protocol_environment_structs.V6.Data_encoding
+    include Tp_environment_structs.V6.Data_encoding
 
     type tag_size = [`Uint8 | `Uint16]
 
@@ -617,7 +617,7 @@ struct
         (Tezos_error_monad.TzLwtreslib.Monad)
 
     (* Backwards compatibility additions (dont_wait, trace helpers) *)
-    include Tezos_protocol_environment_structs.V6.Error_monad_infix_globals
+    include Tp_environment_structs.V6.Error_monad_infix_globals
 
     let fail e = Lwt.return_error (TzTrace.make e)
 
@@ -697,7 +697,7 @@ struct
   module Fitness = Fitness
   module Operation = Operation
   module Block_header = Block_header
-  module Bounded = Tezos_protocol_environment_structs.V6.Bounded
+  module Bounded = Tp_environment_structs.V6.Bounded
   module Protocol = Protocol
   module RPC_arg = RPC_arg
   module RPC_path = RPC_path
@@ -734,7 +734,7 @@ struct
   end
 
   module RPC_directory = struct
-    include Tezos_protocol_environment_structs.V6.RPC_directory
+    include Tp_environment_structs.V6.RPC_directory
 
     let gen_register dir service handler =
       let open Lwt_syntax in
@@ -1076,7 +1076,7 @@ struct
       let set_input_step {inbox_level; message_counter} payload
           (tree : Tree.tree) =
         let inbox_level =
-          Tezos_protocol_environment_structs.V6.Bounded.Int32
+          Tp_environment_structs.V6.Bounded.Int32
           .non_negative_of_legacy_non_negative
             inbox_level
         in
@@ -1085,7 +1085,7 @@ struct
       let get_output {outbox_level; message_index} (tree : Tree.tree) =
         let open Lwt_syntax in
         let outbox_level =
-          Tezos_protocol_environment_structs.V6.Bounded.Int32
+          Tp_environment_structs.V6.Bounded.Int32
           .non_negative_of_legacy_non_negative
             outbox_level
         in
@@ -1096,7 +1096,7 @@ struct
         function
         | {inbox_level; message_counter} ->
             let inbox_level =
-              Tezos_protocol_environment_structs.V6.Bounded.Int32
+              Tp_environment_structs.V6.Bounded.Int32
               .legacy_non_negative_of_non_negative
                 inbox_level
             in
@@ -1499,5 +1499,5 @@ struct
     end
 
   module Equality_witness = Environment_context.Equality_witness
-  module Plonk = Tezos_protocol_environment_structs.V6.Plonk
+  module Plonk = Tp_environment_structs.V6.Plonk
 end

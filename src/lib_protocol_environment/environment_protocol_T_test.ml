@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-(** An implementation of {!Tezos_protocol_environment.PROTOCOL} used
+(** An implementation of {!Tp_environment.PROTOCOL} used
     in tests. It sets all types to [unit] and implement all functions
     as [assert false]. Users of this module should [include] it
     and override the functions they need. *)

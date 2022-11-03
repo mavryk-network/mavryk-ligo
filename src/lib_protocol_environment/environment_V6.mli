@@ -29,7 +29,7 @@ open Environment_protocol_T
 
 module type T = sig
   include
-    Tezos_protocol_environment_sigs.V6.T
+    Tp_environment_sigs.V6.T
       with type Format.formatter = Format.formatter
        and type 'a Seq.node = 'a Seq.node
        and type 'a Seq.t = unit -> 'a Seq.node
@@ -96,10 +96,10 @@ module type T = sig
        and type ('a, 'b) Either.t = ('a, 'b) Stdlib.Either.t
        and type Bls12_381.Fr.t = Bls12_381.Fr.t
        and type Plonk.transcript =
-        Tezos_protocol_environment_structs.V6.Plonk.transcript
-       and type Plonk.proof = Tezos_protocol_environment_structs.V6.Plonk.proof
+        Tp_environment_structs.V6.Plonk.transcript
+       and type Plonk.proof = Tp_environment_structs.V6.Plonk.proof
        and type Plonk.verifier_public_parameters =
-        Tezos_protocol_environment_structs.V6.Plonk.verifier_public_parameters
+        Tp_environment_structs.V6.Plonk.verifier_public_parameters
 
   (** An [Ecoproto_error e] is a shell error that carry a protocol error.
 
