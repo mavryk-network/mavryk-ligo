@@ -25,6 +25,6 @@
   -open Tezos_stdlib_unix
   -open Tezos_client_base
   -open Tezos_client_014_PtKathma
-  -open Tezos_client_014_PtKathma_commands
+  -open PtKathma_commands
   -open Tezos_protocol_014_PtKathma
   -open Tezos_protocol_plugin_014_PtKathma))
