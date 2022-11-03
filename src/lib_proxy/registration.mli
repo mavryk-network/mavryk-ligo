@@ -32,7 +32,7 @@ module type Proxy_sig = sig
   val protocol_hash : Protocol_hash.t
 
   (** RPCs provided by the protocol *)
-  val directory : Tezos_protocol_environment.rpc_context RPC_directory.t
+  val directory : Tp_environment.rpc_context RPC_directory.t
 
   (** The protocol's /chains/<chain>/blocks/<block_id>/hash RPC *)
   val hash :
@@ -52,7 +52,7 @@ module type Proxy_sig = sig
     *)
   val init_env_rpc_context :
     Proxy_getter.rpc_context_args ->
-    Tezos_protocol_environment.rpc_context tzresult Lwt.t
+    Tp_environment.rpc_context tzresult Lwt.t
 
   (** The [time_between_blocks] constant for the given block, if any. *)
   val time_between_blocks :

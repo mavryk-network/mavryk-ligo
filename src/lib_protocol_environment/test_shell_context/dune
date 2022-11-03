@@ -13,7 +13,7 @@
   (:standard)
   -open Lib_test
   -open Tezos_base.TzPervasives
-  -open Tezos_protocol_environment))
+  -open Tp_environment))
 
 (rule
  (alias runtest)

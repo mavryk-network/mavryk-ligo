@@ -171,7 +171,7 @@ let make_rpc_context ~chain_id ctxt block =
     Tezos_protocol_alpha.Environment.wrap_tzresult value_of_key
   in
   let* ctxt =
-    Tezos_protocol_environment.Context.load_cache
+    Tp_environment.Context.load_cache
       (Store.Block.hash block)
       ctxt
       `Lazy
@@ -534,7 +534,7 @@ let apply ctxt chain_id ~policy ?(operations = empty_operations) pred =
       ~timestamp:shell.timestamp
   in
   let* predecessor_context =
-    Tezos_protocol_environment.Context.load_cache
+    Tp_environment.Context.load_cache
       (Store.Block.hash pred)
       predecessor_context
       `Lazy
@@ -655,7 +655,7 @@ let apply_and_store chain_store ?(synchronous_merge = true) ?policy
         {
           context_hash;
           timestamp = block_header.shell.timestamp;
-          message = validation.Tezos_protocol_environment.message;
+          message = validation.Tp_environment.message;
           max_operations_ttl = validation.max_operations_ttl;
           last_allowed_fork_level = validation.last_allowed_fork_level;
         };

@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_protocol_environment
+open Tp_environment
 open Context
 
 module C = struct

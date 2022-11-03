@@ -53,7 +53,7 @@ let () =
 
 type incremental = {
   predecessor : Baking_state.block_info;
-  context : Tezos_protocol_environment.Context.t;
+  context : Tp_environment.Context.t;
   state : Protocol.validation_state * Protocol.application_state;
   rev_operations : Operation.packed list;
   header : Tezos_base.Block_header.shell_header;

@@ -70,9 +70,9 @@ module ProtoRpc : Tezos_proxy.Proxy_proto.PROTO_RPC = struct
     | _ -> None
 
   let split_key (mode : Tezos_proxy.Proxy.mode)
-      (key : Tezos_protocol_environment.Proxy_context.M.key) :
-      (Tezos_protocol_environment.Proxy_context.M.key
-      * Tezos_protocol_environment.Proxy_context.M.key)
+      (key : Tp_environment.Proxy_context.M.key) :
+      (Tp_environment.Proxy_context.M.key
+      * Tp_environment.Proxy_context.M.key)
       option =
     match split_always key with
     | Some _ as res ->
@@ -91,7 +91,7 @@ module ProtoRpc : Tezos_proxy.Proxy_proto.PROTO_RPC = struct
     | _ -> false
 
   let do_rpc (pgi : Tezos_proxy.Proxy.proxy_getter_input)
-      (key : Tezos_protocol_environment.Proxy_context.M.key) =
+      (key : Tp_environment.Proxy_context.M.key) =
     let chain = pgi.chain in
     let block = pgi.block in
     L.emit
@@ -114,7 +114,7 @@ end
 
 let initial_context (ctx : Tezos_proxy.Proxy_getter.rpc_context_args)
     (hash : Context_hash.t) :
-    Tezos_protocol_environment.Context.t tzresult Lwt.t =
+    Tp_environment.Context.t tzresult Lwt.t =
   let open Lwt_result_syntax in
   let*! () =
     L.emit
@@ -127,12 +127,12 @@ let initial_context (ctx : Tezos_proxy.Proxy_getter.rpc_context_args)
     Tezos_proxy.Proxy_getter.make_delegate ctx p_rpc hash
   in
   let empty =
-    Tezos_protocol_environment.Proxy_context.empty
+    Tp_environment.Proxy_context.empty
     @@ Some (module ProxyDelegation)
   in
   let version_value = "alpha_current" in
   let*! ctxt =
-    Tezos_protocol_environment.Context.add
+    Tp_environment.Context.add
       empty
       ["version"]
       (Bytes.of_string version_value)
@@ -160,7 +160,7 @@ let initial_context (ctx : Tezos_proxy.Proxy_getter.rpc_context_args)
       ]
   in
   Lwt_result.ok
-    (Tezos_protocol_environment.Context.Cache.set_cache_layout
+    (Tp_environment.Context.Cache.set_cache_layout
        ctxt
        cache_layout)
 
@@ -175,14 +175,14 @@ let round_durations (rpc_context : RPC_context.generic)
     (Alpha_context.Period.to_seconds constants.parametric.minimal_block_delay)
 
 let init_env_rpc_context (ctxt : Tezos_proxy.Proxy_getter.rpc_context_args) :
-    Tezos_protocol_environment.rpc_context tzresult Lwt.t =
+    Tp_environment.rpc_context tzresult Lwt.t =
   let open Lwt_result_syntax in
   let* header = proxy_block_header ctxt.rpc_context ctxt.chain ctxt.block in
   let block_hash = header.hash in
   let* context = initial_context ctxt header.shell.context in
   return
     {
-      Tezos_protocol_environment.block_hash;
+      Tp_environment.block_hash;
       block_header = header.shell;
       context;
     }

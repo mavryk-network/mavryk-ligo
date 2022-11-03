@@ -25,11 +25,11 @@
 
 (* Backend-agnostic operations on the context *)
 
-module Environment_context = Tezos_protocol_environment.Context
-module Memory_context = Tezos_protocol_environment.Memory_context
+module Environment_context = Tp_environment.Context
+module Memory_context = Tp_environment.Memory_context
 
 let err_implementation_mismatch =
-  Tezos_protocol_environment.err_implementation_mismatch
+  Tp_environment.err_implementation_mismatch
 
 (** Values of type [index] are used to [checkout] contexts specified by their hash. *)
 type index =
