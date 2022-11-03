@@ -26,7 +26,7 @@
   -open Tezos_protocol_014_PtKathma
   -open Tezos_protocol_014_PtKathma.Protocol
   -open Tezos_protocol_014_PtKathma_parameters
-  -open Tezos_014_PtKathma_test_helpers))
+  -open P014_test_helpers))
 
 (rule
  (alias runtest)

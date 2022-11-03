@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_014_PtKathma_test_helpers)
+ (name p014_test_helpers)
  (public_name tezos-014-PtKathma-test-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries
