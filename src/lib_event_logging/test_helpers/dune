@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_event_logging_test_helpers)
+ (name tel_test_helpers)
  (public_name tezos-event-logging-test-helpers)
  (libraries
   tezos-stdlib

@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tezos_event_logging_test_helpers
+open Tel_test_helpers
 
 (** [tztest] contains the definition of [tztest]: a wrapper for tests
    cases running in the error monad. It also adds helpers for working
