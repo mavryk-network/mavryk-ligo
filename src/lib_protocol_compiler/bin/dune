@@ -5,7 +5,7 @@
  (name cmis_of_cma)
  (instrumentation (backend bisect_ppx))
  (libraries
-  compiler-libs.common)
+  compiler-libs.common str)
  (modules cmis_of_cma))
 
 (executable

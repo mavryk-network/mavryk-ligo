@@ -28,7 +28,7 @@ let parse_cma file =
   let find_unit name =
     List.find_map
       (fun fname ->
-        let fname = Filename.concat path fname in
+        let fname = Filename.concat path fname |> Str.global_replace (Str.regexp "\\") "/" in
         if Sys.file_exists fname then Some fname else None)
       [
         String.capitalize_ascii name ^ ".cmi";
