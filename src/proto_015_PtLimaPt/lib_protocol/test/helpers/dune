@@ -2,8 +2,8 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_015_PtLimaPt_test_helpers)
- (public_name tezos-015-PtLimaPt-test-helpers)
+ (name tz015_test_helpers)
+ (public_name tz015-test-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries
   alcotest-lwt

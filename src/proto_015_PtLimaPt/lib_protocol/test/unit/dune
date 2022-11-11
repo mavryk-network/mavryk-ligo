@@ -13,7 +13,7 @@
   tezos-protocol-environment
   tezos-stdlib-unix
   tezos-protocol-015-PtLimaPt
-  tezos-015-PtLimaPt-test-helpers
+  tz015-test-helpers
   alcotest-lwt
   tezos-stdlib)
  (flags
@@ -24,7 +24,7 @@
   -open Tezos_micheline
   -open Tezos_client_015_PtLimaPt
   -open Tezos_protocol_015_PtLimaPt
-  -open Tezos_015_PtLimaPt_test_helpers
+  -open Tz015_test_helpers
   -open Tezos_stdlib))
 
 (rule

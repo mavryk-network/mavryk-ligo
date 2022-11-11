@@ -405,12 +405,12 @@ opam:tezos-014-PtKathma-test-helpers:
   variables:
     package: tezos-014-PtKathma-test-helpers
 
-opam:tezos-015-PtLimaPt-test-helpers:
+opam:tz015-test-helpers:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-015-PtLimaPt-test-helpers
+    package: tz015-test-helpers
 
 opam:tezos-alpha-test-helpers:
   extends:

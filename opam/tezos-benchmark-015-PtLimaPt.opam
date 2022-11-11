@@ -19,7 +19,7 @@ depends: [
   "tezos-protocol-015-PtLimaPt"
   "tezos-crypto"
   "hashcons"
-  "tezos-015-PtLimaPt-test-helpers"
+  "tz015-test-helpers"
   "prbnmcn-stats" { = "0.0.4" }
   "alcotest-lwt" { with-test & >= "1.5.0" }
 ]

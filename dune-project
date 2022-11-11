@@ -27,7 +27,7 @@
 (package (name octez-tx-rollup-node-alpha))
 (package (name octez-validator))
 (package (name tezos-014-PtKathma-test-helpers))
-(package (name tezos-015-PtLimaPt-test-helpers))
+(package (name tz015-test-helpers))
 (package (name tezos-alpha-test-helpers))
 (package (name tezos-baking-014-PtKathma))
 (package (name tezos-baking-014-PtKathma-commands))

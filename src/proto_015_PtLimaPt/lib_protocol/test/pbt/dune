@@ -23,7 +23,7 @@
   tezos-protocol-015-PtLimaPt
   tezos-context.merkle_proof_encoding
   tezos-test-helpers
-  tezos-015-PtLimaPt-test-helpers
+  tz015-test-helpers
   alcotest
   qcheck-alcotest
   tezos-benchmark
@@ -35,7 +35,7 @@
   -open Tezos_micheline
   -open Tezos_client_015_PtLimaPt
   -open Tezos_protocol_015_PtLimaPt
-  -open Tezos_015_PtLimaPt_test_helpers
+  -open Tz015_test_helpers
   -open Tezos_benchmark_015_PtLimaPt
   -open Tezos_benchmark_type_inference_015_PtLimaPt))
 
