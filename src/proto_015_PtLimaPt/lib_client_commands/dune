@@ -29,7 +29,7 @@
   -open Tezos_base.TzPervasives
   -open Tezos_clic
   -open Tezos_protocol_015_PtLimaPt
-  -open Tezos_protocol_015_PtLimaPt_parameters
+  -open Tp015_parameters
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
   -open Tezos_client_base
@@ -64,7 +64,7 @@
   -open Tezos_base.TzPervasives
   -open Tezos_clic
   -open Tezos_protocol_015_PtLimaPt
-  -open Tezos_protocol_015_PtLimaPt_parameters
+  -open Tp015_parameters
   -open Tezos_shell_services
   -open Tezos_client_base
   -open Tezos_client_015_PtLimaPt

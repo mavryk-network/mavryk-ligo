@@ -28,5 +28,5 @@
   -open Tezos_baking_014_PtKathma
   -open Tezos_stdlib_unix
   -open Tezos_client_base_unix
-  -open Tezos_protocol_014_PtKathma_parameters
+  -open Tp014_parameters
   -open Tenderbrute_014_PtKathma))

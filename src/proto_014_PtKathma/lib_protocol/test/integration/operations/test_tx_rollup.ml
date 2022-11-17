@@ -1960,14 +1960,14 @@ let test_commitment_predecessor () =
 let test_full_inbox () =
   let constants =
     {
-      Tezos_protocol_014_PtKathma_parameters.Default_parameters.constants_test with
+      Tp014_parameters.Default_parameters.constants_test with
       consensus_threshold = 0;
       endorsing_reward_per_slot = Tez.zero;
       baking_reward_bonus_per_slot = Tez.zero;
       baking_reward_fixed_portion = Tez.zero;
       tx_rollup =
         {
-          Tezos_protocol_014_PtKathma_parameters.Default_parameters
+          Tp014_parameters.Default_parameters
           .constants_test
             .tx_rollup
           with

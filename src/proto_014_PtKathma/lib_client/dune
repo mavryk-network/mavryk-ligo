@@ -30,5 +30,5 @@
   -open Tezos_client_base
   -open Tezos_protocol_014_PtKathma
   -open Tezos_protocol_plugin_014_PtKathma
-  -open Tezos_protocol_014_PtKathma_parameters
+  -open Tp014_parameters
   -open Tezos_rpc))

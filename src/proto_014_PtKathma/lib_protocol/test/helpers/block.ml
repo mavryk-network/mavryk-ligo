@@ -286,7 +286,7 @@ let check_constants_consistency constants =
 
 let prepare_main_init_params ?bootstrap_contracts commitments constants
     initial_accounts =
-  let open Tezos_protocol_014_PtKathma_parameters in
+  let open Tp014_parameters in
   let bootstrap_accounts =
     List.map
       (fun (Account.{pk; pkh; _}, amount, delegate_to) ->
@@ -393,7 +393,7 @@ let genesis_with_parameters parameters =
       ~seed_nonce_hash:None
       ()
   in
-  let open Tezos_protocol_014_PtKathma_parameters in
+  let open Tp014_parameters in
   let json = Default_parameters.json_of_parameters parameters in
   let proto_params =
     Data_encoding.Binary.to_bytes_exn Data_encoding.json json
@@ -440,7 +440,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     ?dal_enable ?hard_gas_limit_per_block ?nonce_revelation_threshold
     ?(initial_timestamp = Time.Protocol.epoch)
     initial_accounts =
-  let open Tezos_protocol_014_PtKathma_parameters in
+  let open Tp014_parameters in
   let constants = Default_parameters.constants_test in
   let min_proposal_quorum =
     Option.value ~default:constants.min_proposal_quorum min_proposal_quorum

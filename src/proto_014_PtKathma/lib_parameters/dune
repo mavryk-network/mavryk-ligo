@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_014_PtKathma_parameters)
+ (name tp014_parameters)
  (public_name tezos-protocol-014-PtKathma.parameters)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -28,7 +28,7 @@
  (flags
   (:standard)
   -open Tezos_base.TzPervasives
-  -open Tezos_protocol_014_PtKathma_parameters
+  -open Tp014_parameters
   -open Tezos_protocol_014_PtKathma)
  (modules gen))
 

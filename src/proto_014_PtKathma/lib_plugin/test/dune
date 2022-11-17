@@ -25,7 +25,7 @@
   -open Tezos_protocol_plugin_014_PtKathma
   -open Tezos_protocol_014_PtKathma
   -open Tezos_protocol_014_PtKathma.Protocol
-  -open Tezos_protocol_014_PtKathma_parameters
+  -open Tp014_parameters
   -open P014_test_helpers))
 
 (rule

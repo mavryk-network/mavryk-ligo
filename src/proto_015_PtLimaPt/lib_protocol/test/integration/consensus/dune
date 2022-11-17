@@ -18,7 +18,7 @@
   -open Tezos_protocol_015_PtLimaPt
   -open Tz015_test_helpers
   -open Tezos_base_test_helpers
-  -open Tezos_protocol_015_PtLimaPt_parameters
+  -open Tp015_parameters
   -open Tezos_protocol_plugin_015_PtLimaPt))
 
 (rule

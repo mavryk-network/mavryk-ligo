@@ -191,7 +191,7 @@ let get_seed_computation ctxt =
 let get_constants ctxt = Alpha_services.Constants.all rpc_ctxt ctxt
 
 let default_test_constants =
-  Tezos_protocol_015_PtLimaPt_parameters.Default_parameters.constants_test
+  Tp015_parameters.Default_parameters.constants_test
 
 let get_baking_reward_fixed_portion ctxt =
   get_constants ctxt
@@ -520,7 +520,7 @@ let init_with_constants_gen tup constants =
       (fun (a, _, _) -> Alpha_context.Contract.Implicit Account.(a.pkh))
       accounts
   in
-  let open Tezos_protocol_015_PtLimaPt_parameters in
+  let open Tp015_parameters in
   let bootstrap_accounts =
     List.map
       (fun (acc, tez, delegate_to) ->
@@ -544,7 +544,7 @@ let default_raw_context () =
   let initial_accounts =
     Account.generate_accounts ~initial_balances:[100_000_000_000L] 1
   in
-  let open Tezos_protocol_015_PtLimaPt_parameters in
+  let open Tp015_parameters in
   let bootstrap_accounts =
     List.map
       (fun (Account.{pk; pkh; _}, amount, delegate_to) ->
