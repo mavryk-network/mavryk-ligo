@@ -113,14 +113,17 @@ module Commitments : COMMITMENTS = struct
   let assert_pos pos height =
     assert (Compare.Int64.(pos >= 0L && pos <= pow2 height))
 
-  let default_root () =
-    let default_root_ = ref None in
-    match ! default_root_ with
+  let lazify f =
+    let value = ref None in
+    fun () ->
+    match ! value with
     | None ->
-       let default_root = H.uncommitted ~height:max_height in
-       default_root_ := Some default_root ;
-       default_root
-    | Some default_root -> default_root
+       let value_ = f () in
+       value := Some value_ ;
+       value_
+    | Some value_ -> value_
+
+  let default_root = lazify (fun () -> H.uncommitted ~height:max_height)
 
   let init = Storage.Sapling.commitments_init
 
