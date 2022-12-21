@@ -89,10 +89,22 @@ type initialisation_parameters
    parameters. To ensure this property, an integrity check is run.
 
    This function can take several seconds to run. *)
-val initialisation_parameters_from_files :
-  g1_path:string ->
-  g2_path:string ->
+val initialisation_parameters_from_bigstring :
+  Bigstring.t ->
+  Bigstring.t ->
   initialisation_parameters Error_monad.tzresult Lwt.t
+
+(** [initialisation_parameters_from_files ~g1_path ~g2_path] allows to
+   load initialisation_parameters from files [g1_path] and
+   [g2_path]. It is important that every time those primitives are
+   used, they are used with the very same initialisation
+   parameters. To ensure this property, an integrity check is run.
+
+   This function can take several seconds to run. *)
+(* val initialisation_parameters_from_files : *)
+(*   g1_path:string -> *)
+(*   g2_path:string -> *)
+(*   initialisation_parameters Error_monad.tzresult Lwt.t *)
 
 val load_parameters : initialisation_parameters -> unit Error_monad.tzresult
 

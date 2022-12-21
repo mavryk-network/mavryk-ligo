@@ -64,29 +64,8 @@ let load_parameters parameters =
 
    An integrity check is run to ensure the validity of the files. *)
 
-let initialisation_parameters_from_files ~g1_path ~g2_path =
+let initialisation_parameters_from_bigstring srs_g1_bigstring srs_g2_bigstring =
   let open Lwt_result_syntax in
-  (* FIXME https://gitlab.com/tezos/tezos/-/issues/3409
-
-     The `21` constant is the logarithmic size of the file. Can this
-     constant be recomputed? Even though it should be determined by
-     the integrity check. *)
-  let logarithmic_size = 21 in
-  let to_bigstring path =
-    let open Lwt_syntax in
-    let* fd = Lwt_unix.openfile path [Unix.O_RDONLY] 0o440 in
-    Lwt.finalize
-      (fun () ->
-        return
-          (Lwt_bytes.map_file
-             ~fd:(Lwt_unix.unix_file_descr fd)
-             ~shared:false
-             ~size:(1 lsl logarithmic_size)
-             ()))
-      (fun () -> Lwt_unix.close fd)
-  in
-  let*! srs_g1_bigstring = to_bigstring g1_path in
-  let*! srs_g2_bigstring = to_bigstring g2_path in
   match
     let open Result_syntax in
     let* srs_g1 = Srs_g1.of_bigstring srs_g1_bigstring in
@@ -98,6 +77,41 @@ let initialisation_parameters_from_files ~g1_path ~g2_path =
       tzfail
         (Failed_to_load_trusted_setup (Printf.sprintf "Invalid point %i" p))
   | Ok (srs_g1, srs_g2) -> return {srs_g1; srs_g2}
+
+(* let initialisation_parameters_from_files ~g1_path ~g2_path = *)
+(*   let open Lwt_result_syntax in *)
+(*   (\* FIXME https://gitlab.com/tezos/tezos/-/issues/3409 *)
+
+(*      The `21` constant is the logarithmic size of the file. Can this *)
+(*      constant be recomputed? Even though it should be determined by *)
+(*      the integrity check. *\) *)
+(*   let logarithmic_size = 21 in *)
+(*   let to_bigstring path = *)
+(*     let open Lwt_syntax in *)
+(*     let* fd = Lwt_unix.openfile path [Unix.O_RDONLY] 0o440 in *)
+(*     Lwt.finalize *)
+(*       (fun () -> *)
+(*         return *)
+(*           (Lwt_bytes.map_file *)
+(*              ~fd:(Lwt_unix.unix_file_descr fd) *)
+(*              ~shared:false *)
+(*              ~size:(1 lsl logarithmic_size) *)
+(*              ())) *)
+(*       (fun () -> Lwt_unix.close fd) *)
+(*   in *)
+(*   let*! srs_g1_bigstring = to_bigstring g1_path in *)
+(*   let*! srs_g2_bigstring = to_bigstring g2_path in *)
+(*   match *)
+(*     let open Result_syntax in *)
+(*     let* srs_g1 = Srs_g1.of_bigstring srs_g1_bigstring in *)
+(*     let* srs_g2 = Srs_g2.of_bigstring srs_g2_bigstring in *)
+(*     return (srs_g1, srs_g2) *)
+(*   with *)
+(*   | Error (`End_of_file s) -> tzfail (Failed_to_load_trusted_setup s) *)
+(*   | Error (`Invalid_point p) -> *)
+(*       tzfail *)
+(*         (Failed_to_load_trusted_setup (Printf.sprintf "Invalid point %i" p)) *)
+(*   | Ok (srs_g1, srs_g2) -> return {srs_g1; srs_g2} *)
 
 (* The srs is made of the initialisation_parameters and two
    well-choosen points. Building the srs from the initialisation
