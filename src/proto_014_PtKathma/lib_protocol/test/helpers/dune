@@ -11,7 +11,6 @@
   tezos-test-helpers
   tezos-base
   tezos-micheline
-  tezos-stdlib-unix
   tezos-protocol-014-PtKathma
   tezos-client-014-PtKathma
   tezos-protocol-014-PtKathma.parameters
@@ -23,7 +22,6 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_micheline
-  -open Tezos_stdlib_unix
   -open Tezos_protocol_014_PtKathma
   -open Tezos_client_014_PtKathma
   -open Tezos_protocol_plugin_014_PtKathma

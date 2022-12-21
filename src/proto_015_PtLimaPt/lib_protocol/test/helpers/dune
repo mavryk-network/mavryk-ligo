@@ -11,7 +11,6 @@
   tezos-test-helpers
   tezos-base
   tezos-micheline
-  tezos-stdlib-unix
   tezos-protocol-015-PtLimaPt
   tezos-client-015-PtLimaPt
   tezos-protocol-015-PtLimaPt.parameters
@@ -24,7 +23,6 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_micheline
-  -open Tezos_stdlib_unix
   -open Tezos_protocol_015_PtLimaPt
   -open Tezos_client_015_PtLimaPt
   -open Tezos_protocol_plugin_015_PtLimaPt
