@@ -391,12 +391,12 @@ let cost_of_control : type a s r f. (a, s, r, f) continuation -> Gas.cost =
 *)
 
 let consume_instr local_gas_counter k accu stack =
-  let cost = cost_of_instr k accu stack in
+  let cost = Gas.free in (* cost_of_instr k accu stack in *)
   consume_opt local_gas_counter cost
   [@@ocaml.inline always]
 
 let consume_control local_gas_counter ks =
-  let cost = cost_of_control ks in
+  let cost = Gas.free in (* cost_of_control ks in *)
   consume_opt local_gas_counter cost
   [@@ocaml.inline always]
 
