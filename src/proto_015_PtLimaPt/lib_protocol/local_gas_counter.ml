@@ -83,7 +83,7 @@ let use_gas_counter_in_context ctxt gas_counter f =
   [@@ocaml.inline always]
 
 let consume_opt (Local_gas_counter gas_counter) (cost : Gas.cost) =
-  let gas_counter = gas_counter - (cost :> int) in
+  let gas_counter = gas_counter - (Saturation_repr.wont_saturate cost) in
   if Compare.Int.(gas_counter < 0) then None
   else Some (Local_gas_counter gas_counter)
   [@@ocaml.inline always]
