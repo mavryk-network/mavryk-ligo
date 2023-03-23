@@ -223,7 +223,8 @@ module Gas = struct
   let consume_from available_gas cost =
     match raw_consume available_gas cost with
     | Some remaining_gas -> ok remaining_gas
-    | None -> error Operation_quota_exceeded
+    | None ->
+       error Operation_quota_exceeded
 
   let remaining_operation_gas = Raw_context.remaining_operation_gas
 
