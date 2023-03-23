@@ -70,7 +70,7 @@ let update_context (Local_gas_counter gas_counter) (Outdated_context ctxt) =
   [@@ocaml.inline always]
 
 let local_gas_counter ctxt =
-  Local_gas_counter (Gas.remaining_operation_gas ctxt :> int)
+  Local_gas_counter (Gas.Arith.to_int (Gas.remaining_operation_gas ctxt))
   [@@ocaml.inline always]
 
 let local_gas_counter_and_outdated_context ctxt =

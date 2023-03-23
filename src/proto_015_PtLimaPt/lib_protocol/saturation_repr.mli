@@ -58,13 +58,14 @@
     multiplication.
 
 *)
-type 'a t = private int
+type 'a t = private Z.t
 
 type mul_safe
 
 type may_saturate
 
 val may_saturate : _ t -> may_saturate t
+val wont_saturate : may_saturate t -> int
 
 (** [to_int x] returns the underlying integer representing [x]. *)
 val to_int : 'a t -> int
@@ -77,6 +78,7 @@ val one : _ t
 
 (** 2^62 - 1 *)
 val saturated : may_saturate t
+val saturated_int : int
 
 (** We inherit the order over native integers. *)
 val ( >= ) : _ t -> _ t -> bool
