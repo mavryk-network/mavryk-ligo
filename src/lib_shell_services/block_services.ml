@@ -29,7 +29,7 @@ module Proof = Tezos_context_sigs.Context.Proof_types
 
 (* TODO: V2.Tree32 has been chosen arbitrarily ; maybe it's not the best option *)
 module Merkle_proof_encoding =
-  Tezos_context_merkle_proof_encoding.Merkle_proof_encoding.V2.Tree32
+  Tc_merkle_proof_enc.V2.Tree32
 
 type chain = [`Main | `Test | `Hash of Chain_id.t]
 

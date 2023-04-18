@@ -41,7 +41,7 @@ module Context = Tezos_context_memory.Context_binary
 open Wasm_utils
 
 module Proof_encoding =
-  Tezos_context_merkle_proof_encoding.Merkle_proof_encoding
+  tc_merkle_proof_enc
 
 module Wasm_context = struct
   module Tree = struct

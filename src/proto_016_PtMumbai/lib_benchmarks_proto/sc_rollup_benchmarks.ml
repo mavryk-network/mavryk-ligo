@@ -84,7 +84,7 @@ module Pvm_state_generator = struct
 
     let proof_encoding =
       let module Proof_encoding =
-        Tezos_context_merkle_proof_encoding.Merkle_proof_encoding
+        tc_merkle_proof_enc
       in
       Proof_encoding.V2.Tree2.tree_proof_encoding
   end

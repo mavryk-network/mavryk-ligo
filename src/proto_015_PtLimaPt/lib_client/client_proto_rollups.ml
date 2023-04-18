@@ -124,7 +124,7 @@ module ScRollup = struct
     let proof_after proof = kinded_hash_to_state_hash proof.Context.Proof.after
 
     let proof_encoding =
-      Tezos_context_merkle_proof_encoding.Merkle_proof_encoding.V2.Tree32
+      Tc_merkle_proof_enc.V2.Tree32
       .tree_proof_encoding
   end
 
