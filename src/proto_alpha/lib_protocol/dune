@@ -18,7 +18,7 @@
    "module Name = struct let name = \"alpha\" end\ninclude Tp_environment.V9.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_alpha)
+ (name trp_alpha)
  (public_name tezos-protocol-alpha.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -301,7 +301,7 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK\"\nlet name = Tp_environment_alpha.Name.name\ninclude Tezos_raw_protocol_alpha\ninclude Tezos_raw_protocol_alpha.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK\"\nlet name = Tp_environment_alpha.Name.name\ninclude Trp_alpha\ninclude Trp_alpha.Main\n")))
 
 (rule
  (targets tezos_protocol_alpha.ml)

@@ -18,7 +18,7 @@
    "module Name = struct let name = \"011-PtHangz2\" end\ninclude Tp_environment.V3.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_011_PtHangz2)
+ (name trp_011_PtHangz2)
  (public_name tezos-protocol-011-PtHangz2.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -155,7 +155,7 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtHangz2aRngywmSRGGvrcTyMbbdpWdpFKuS4uMWxg2RaH9i1qx\"\nlet name = Tp_environment_011_PtHangz2.Name.name\ninclude Tezos_raw_protocol_011_PtHangz2\ninclude Tezos_raw_protocol_011_PtHangz2.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtHangz2aRngywmSRGGvrcTyMbbdpWdpFKuS4uMWxg2RaH9i1qx\"\nlet name = Tp_environment_011_PtHangz2.Name.name\ninclude Trp_011_PtHangz2\ninclude Trp_011_PtHangz2.Main\n")))
 
 (rule
  (targets tezos_protocol_011_PtHangz2.ml)

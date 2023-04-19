@@ -18,7 +18,7 @@
    "module Name = struct let name = \"002-PsYLVpVv\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_002_PsYLVpVv)
+ (name trp_002_PsYLVpVv)
  (public_name tezos-protocol-002-PsYLVpVv.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -125,7 +125,7 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsYLVpVvgbLhAhoqAkMFUo6gudkJ9weNXhUYCiLDzcUpFpkk8Wt\"\nlet name = Tp_environment_002_PsYLVpVv.Name.name\ninclude Tezos_raw_protocol_002_PsYLVpVv\ninclude Tezos_raw_protocol_002_PsYLVpVv.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsYLVpVvgbLhAhoqAkMFUo6gudkJ9weNXhUYCiLDzcUpFpkk8Wt\"\nlet name = Tp_environment_002_PsYLVpVv.Name.name\ninclude Trp_002_PsYLVpVv\ninclude Trp_002_PsYLVpVv.Main\n")))
 
 (rule
  (targets tezos_protocol_002_PsYLVpVv.ml)

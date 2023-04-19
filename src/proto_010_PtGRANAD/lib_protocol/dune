@@ -18,7 +18,7 @@
    "module Name = struct let name = \"010-PtGRANAD\" end\ninclude Tp_environment.V2.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_010_PtGRANAD)
+ (name trp_010_PtGRANAD)
  (public_name tezos-protocol-010-PtGRANAD.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -142,7 +142,7 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtGRANADsDU8R9daYKAgWnQYAJ64omN1o3KMGVCykShA97vQbvV\"\nlet name = Tp_environment_010_PtGRANAD.Name.name\ninclude Tezos_raw_protocol_010_PtGRANAD\ninclude Tezos_raw_protocol_010_PtGRANAD.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtGRANADsDU8R9daYKAgWnQYAJ64omN1o3KMGVCykShA97vQbvV\"\nlet name = Tp_environment_010_PtGRANAD.Name.name\ninclude Trp_010_PtGRANAD\ninclude Trp_010_PtGRANAD.Main\n")))
 
 (rule
  (targets tezos_protocol_010_PtGRANAD.ml)

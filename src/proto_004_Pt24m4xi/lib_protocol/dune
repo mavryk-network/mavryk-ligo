@@ -18,7 +18,7 @@
    "module Name = struct let name = \"004-Pt24m4xi\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_004_Pt24m4xi)
+ (name trp_004_Pt24m4xi)
  (public_name tezos-protocol-004-Pt24m4xi.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -126,7 +126,7 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd\"\nlet name = Tp_environment_004_Pt24m4xi.Name.name\ninclude Tezos_raw_protocol_004_Pt24m4xi\ninclude Tezos_raw_protocol_004_Pt24m4xi.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd\"\nlet name = Tp_environment_004_Pt24m4xi.Name.name\ninclude Trp_004_Pt24m4xi\ninclude Trp_004_Pt24m4xi.Main\n")))
 
 (rule
  (targets tezos_protocol_004_Pt24m4xi.ml)
