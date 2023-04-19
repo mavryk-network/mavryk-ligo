@@ -82,7 +82,7 @@ module type PROTOCOL = sig
   val hash : Protocol_hash.t
 
   val prepare_context :
-    Tezos_protocol_environment.Context.t ->
+    Tp_environment.Context.t ->
     level:int32 ->
     predecessor_timestamp:Time.Protocol.t ->
     timestamp:Time.Protocol.t ->

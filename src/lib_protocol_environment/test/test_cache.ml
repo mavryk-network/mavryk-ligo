@@ -32,7 +32,7 @@
     Subject:      Low-level operations on protocol cache
 *)
 
-open Tezos_protocol_environment.Internal_for_tests.Environment_cache
+open Tp_environment.Internal_for_tests.Environment_cache
 
 open Qcheck2_helpers
 open QCheck2

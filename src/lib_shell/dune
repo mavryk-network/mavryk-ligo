@@ -38,7 +38,7 @@
   -open Tezos_context
   -open Tezos_store
   -open Tezos_store_shared
-  -open Tezos_protocol_environment
+  -open Tp_environment
   -open Tezos_context_ops
   -open Tezos_shell_context
   -open Tezos_p2p

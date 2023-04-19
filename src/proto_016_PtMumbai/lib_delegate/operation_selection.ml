@@ -160,7 +160,7 @@ let prioritize_managers ~hard_gas_limit_per_block ~minimal_fees
 (** Simulation *)
 
 type simulation_result = {
-  validation_result : Tezos_protocol_environment.validation_result option;
+  validation_result : Tp_environment.validation_result option;
   block_header_metadata : block_header_metadata option;
   operations : packed_operation list list;
   operations_hash : Operation_list_list_hash.t;
@@ -190,7 +190,7 @@ let validate_operation inc op =
       | Some _b -> Lwt.return_some resulting_state)
 
 let filter_valid_operations_up_to_quota inc (ops, quota) =
-  let {Tezos_protocol_environment.max_size; max_op} = quota in
+  let {Tp_environment.max_size; max_op} = quota in
   let exception Full of (Baking_simulator.incremental * packed_operation list)
   in
   try
@@ -277,7 +277,7 @@ let filter_operations_with_simulation initial_inc fees_config
         }
 
 let filter_valid_operations_up_to_quota_without_simulation (ops, quota) =
-  let {Tezos_protocol_environment.max_size; max_op} = quota in
+  let {Tp_environment.max_size; max_op} = quota in
   let exception Full of packed_operation list in
   try
     List.fold_left

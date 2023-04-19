@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_015_PtLimaPt)
+ (name tp_environment_015_PtLimaPt)
  (public_name tezos-protocol-015-PtLimaPt.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-protocol-environment)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_015_PtLimaPt))
+ (modules Tp_environment_015_PtLimaPt))
 
 (rule
- (targets tezos_protocol_environment_015_PtLimaPt.ml)
+ (targets tp_environment_015_PtLimaPt.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"015-PtLimaPt\" end\ninclude Tezos_protocol_environment.V7.Make(Name)()\n")))
+   "module Name = struct let name = \"015-PtLimaPt\" end\ninclude Tp_environment.V7.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_015_PtLimaPt)
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_015_PtLimaPt
-  -open Tezos_protocol_environment_015_PtLimaPt.Pervasives
-  -open Tezos_protocol_environment_015_PtLimaPt.Error_monad)
+  -open Tp_environment_015_PtLimaPt
+  -open Tp_environment_015_PtLimaPt.Pervasives
+  -open Tp_environment_015_PtLimaPt.Error_monad)
  (modules
   Misc
   Non_empty_string
@@ -283,14 +283,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtLimaPtLMwfNinJi9rCfDPWea8dFgTZ1MeJ9f1m2SRic6ayiwW\"\nlet name = Tezos_protocol_environment_015_PtLimaPt.Name.name\ninclude Tezos_raw_protocol_015_PtLimaPt\ninclude Tezos_raw_protocol_015_PtLimaPt.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtLimaPtLMwfNinJi9rCfDPWea8dFgTZ1MeJ9f1m2SRic6ayiwW\"\nlet name = Tp_environment_015_PtLimaPt.Name.name\ninclude Tezos_raw_protocol_015_PtLimaPt\ninclude Tezos_raw_protocol_015_PtLimaPt.Main\n")))
 
 (rule
  (targets tezos_protocol_015_PtLimaPt.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_015_PtLimaPt\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tp_environment_015_PtLimaPt\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

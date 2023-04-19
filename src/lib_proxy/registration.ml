@@ -29,13 +29,13 @@ module type Proxy_sig = sig
   val protocol_hash : Protocol_hash.t
 
   (** RPCs provided by the protocol *)
-  val directory : Tezos_protocol_environment.rpc_context Tezos_rpc.Directory.t
+  val directory : Tp_environment.rpc_context Tezos_rpc.Directory.t
 
   (** How to build the context to execute RPCs on *)
   val initial_context :
     Proxy_getter.rpc_context_args ->
     Context_hash.t ->
-    Tezos_protocol_environment.Context.t tzresult Lwt.t
+    Tp_environment.Context.t tzresult Lwt.t
 
   val time_between_blocks :
     Tezos_rpc.Context.generic ->

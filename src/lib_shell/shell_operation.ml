@@ -57,7 +57,7 @@ module type PARSER = sig
     Operation_hash.t -> Operation.t -> protocol_operation operation tzresult
 end
 
-module MakeParser (Proto : Tezos_protocol_environment.PROTOCOL) :
+module MakeParser (Proto : Tp_environment.PROTOCOL) :
   PARSER with type protocol_operation = Proto.operation = struct
   type protocol_operation = Proto.operation
 

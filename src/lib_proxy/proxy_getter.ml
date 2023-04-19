@@ -126,7 +126,7 @@ type proxy_builder =
   | Of_rpc of (Proxy_proto.proto_rpc -> proxy_m Lwt.t)
   | Of_data_dir of
       (Context_hash.t ->
-      Tezos_protocol_environment.Proxy_delegate.t tzresult Lwt.t)
+      Tp_environment.Proxy_delegate.t tzresult Lwt.t)
 
 type rpc_context_args = {
   printer : Tezos_client_base.Client_context.printer option;
@@ -141,7 +141,7 @@ module StringMap = String.Map
 
 let make_delegate (ctx : rpc_context_args)
     (proto_rpc : (module Proxy_proto.PROTO_RPC)) (hash : Context_hash.t) :
-    Tezos_protocol_environment.Proxy_delegate.t tzresult Lwt.t =
+    Tp_environment.Proxy_delegate.t tzresult Lwt.t =
   match ctx.proxy_builder with
   | Of_rpc f ->
       let open Lwt_result_syntax in
@@ -161,7 +161,7 @@ let make_delegate (ctx : rpc_context_args)
           let proxy_get = Initial_context.proxy_get pgi
 
           let proxy_mem = Initial_context.proxy_mem pgi
-        end : Tezos_protocol_environment.Proxy_delegate.T)
+        end : Tp_environment.Proxy_delegate.T)
   | Of_data_dir f -> f hash
 
 module Tree : Proxy.TREE with type t = Local.tree with type key = Local.key =

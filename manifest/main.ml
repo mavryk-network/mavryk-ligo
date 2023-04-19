@@ -1908,16 +1908,16 @@ let _octez_sapling_ctypes_gen =
       ["rustzcash_ctypes_gen"; "rustzcash_ctypes_bindings"; "gen_runtime_js"]
     ~opam_with_test:Never
 
-let tezos_protocol_environment_sigs_internals =
+let tp_environment_sigs_internals =
   public_lib
     "tezos-protocol-environment.sigs-internals"
     ~path:"src/lib_protocol_environment/sigs-internals"
 
-let tezos_protocol_environment_sigs =
+let tp_environment_sigs =
   public_lib
     "tezos-protocol-environment.sigs"
     ~path:"src/lib_protocol_environment/sigs"
-    ~deps:[tezos_protocol_environment_sigs_internals]
+    ~deps:[tp_environment_sigs_internals]
     ~flags:(Flags.standard ~nopervasives:true ~nostdlib:true ())
     ~dune:
       (let gen n =
@@ -1992,7 +1992,7 @@ protocols.|}
         aches_lwt;
         octez_base |> open_ ~m:"TzPervasives";
         octez_sapling;
-        tezos_protocol_environment_sigs;
+        tp_environment_sigs;
         octez_protocol_environment_structs;
         octez_micheline |> open_;
         octez_context_memory;
@@ -2069,7 +2069,7 @@ let octez_protocol_compiler_registerer =
     ~path:"src/lib_protocol_compiler/registerer"
     ~internal_name:"tezos_protocol_registerer"
     ~deps:
-      [octez_base |> open_ ~m:"TzPervasives"; tezos_protocol_environment_sigs]
+      [octez_base |> open_ ~m:"TzPervasives"; tp_environment_sigs]
     ~flags:(Flags.standard ~opaque:true ())
 
 let _octez_protocol_compiler_cmis_of_cma =
@@ -2090,7 +2090,7 @@ let octez_protocol_compiler_lib =
         octez_base |> open_ ~m:"TzPervasives";
         octez_base_unix |> open_;
         octez_version;
-        tezos_protocol_environment_sigs;
+        tp_environment_sigs;
         octez_stdlib_unix |> open_;
         compiler_libs_common;
         lwt_unix;
@@ -2122,7 +2122,7 @@ let octez_protocol_compiler_lib =
                   V
                     [
                       S
-                        "%{lib:tezos-protocol-environment.sigs:tezos_protocol_environment_sigs.cmxa}";
+                        "%{lib:tezos-protocol-environment.sigs:tp_environment_sigs.cmxa}";
                     ];
                 ];
               ];
@@ -4010,17 +4010,17 @@ end = struct
       let environment =
         public_lib
           (sf "tezos-protocol-%s.environment" name_dash)
-          ~internal_name:(sf "tezos_protocol_environment_%s" name_underscore)
+          ~internal_name:(sf "tp_environment_%s" name_underscore)
           ~path:(path // "lib_protocol")
           ~opam:(sf "tezos-protocol-%s" name_dash)
-          ~modules:[sf "Tezos_protocol_environment_%s" name_underscore]
+          ~modules:[sf "Tp_environment_%s" name_underscore]
           ~linkall:true
           ~deps:[octez_protocol_environment]
           ~dune:
             Dune.
               [
                 targets_rule
-                  [sf "tezos_protocol_environment_%s.ml" name_underscore]
+                  [sf "tp_environment_%s.ml" name_underscore]
                   ~action:
                     [
                       S "write-file";
@@ -4028,7 +4028,7 @@ end = struct
                       S
                         (sf
                            {|module Name = struct let name = "%s" end
-include Tezos_protocol_environment.V%d.Make(Name)()
+include Tp_environment.V%d.Make(Name)()
 |}
                            name_dash
                            tezos_protocol.expected_env_version);
@@ -4076,7 +4076,7 @@ include Tezos_protocol_environment.V%d.Make(Name)()
           ~deps:
             [
               octez_protocol_environment;
-              tezos_protocol_environment_sigs;
+              tp_environment_sigs;
               raw_protocol;
             ]
           ~dune:
@@ -4096,7 +4096,7 @@ include Tezos_protocol_environment.V%d.Make(Name)()
                         (sf
                            {|
 let hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn "%s"
-let name = Tezos_protocol_environment_%s.Name.name
+let name = Tp_environment_%s.Name.name
 include Tezos_raw_protocol_%s
 include Tezos_raw_protocol_%s.Main
 |}
@@ -4114,7 +4114,7 @@ include Tezos_raw_protocol_%s.Main
                       S
                         (sf
                            {|
-module Environment = Tezos_protocol_environment_%s
+module Environment = Tp_environment_%s
 module Protocol = Protocol
 |}
                            name_underscore);
@@ -4172,7 +4172,7 @@ module Protocol = Protocol
           ~bisect_ppx:false
           ~flags:(Flags.standard ~nopervasives:true ~disable_warnings ())
           ~opam_only_deps:[octez_protocol_compiler_tezos_protocol_packer]
-          ~deps:[octez_protocol_environment; tezos_protocol_environment_sigs]
+          ~deps:[octez_protocol_environment; tp_environment_sigs]
           ~dune:
             Dune.
               [

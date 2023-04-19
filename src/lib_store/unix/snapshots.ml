@@ -3827,8 +3827,8 @@ module type Snapshot_importer = sig
   val import :
     snapshot_path:string ->
     ?patch_context:
-      (Tezos_protocol_environment.Context.t ->
-      Tezos_protocol_environment.Context.t tzresult Lwt.t) ->
+      (Tp_environment.Context.t ->
+      Tp_environment.Context.t tzresult Lwt.t) ->
     ?block:Block_hash.t ->
     ?check_consistency:bool ->
     dst_store_dir:[`Store_dir] Naming.directory ->

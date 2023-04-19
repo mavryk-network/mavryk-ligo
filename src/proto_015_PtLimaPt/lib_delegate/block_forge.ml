@@ -68,7 +68,7 @@ let convert_operation (op : packed_operation) : Tezos_base.Operation.t =
 let finalize_block_header shell_header timestamp validation_result
     operations_hash predecessor_block_metadata_hash
     predecessor_ops_metadata_hash =
-  let {Tezos_protocol_environment.context; fitness; message; _} =
+  let {Tp_environment.context; fitness; message; _} =
     validation_result
   in
   let validation_passes = List.length Main.validation_passes in
@@ -125,7 +125,7 @@ let forge (cctxt : #Protocol_client_context.full) ~chain_id ~pred_info
   in
   let chain = `Hash chain_id in
   let check_protocol_changed
-      ~(validation_result : Tezos_protocol_environment.validation_result) =
+      ~(validation_result : Tp_environment.validation_result) =
     Context_ops.get_protocol validation_result.context >>= fun next_protocol ->
     let next_protocol =
       match

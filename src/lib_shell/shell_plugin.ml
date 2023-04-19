@@ -37,7 +37,7 @@ module type FILTER = sig
     type state
 
     val init :
-      Tezos_protocol_environment.Context.t ->
+      Tp_environment.Context.t ->
       head:Tezos_base.Block_header.shell_header ->
       state tzresult Lwt.t
 
@@ -76,7 +76,7 @@ module type RPC = sig
   module Proto : Registered_protocol.T
 
   val rpc_services :
-    Tezos_protocol_environment.rpc_context Tezos_rpc.Directory.directory
+    Tp_environment.rpc_context Tezos_rpc.Directory.directory
 end
 
 module No_filter (Proto : Registered_protocol.T) :

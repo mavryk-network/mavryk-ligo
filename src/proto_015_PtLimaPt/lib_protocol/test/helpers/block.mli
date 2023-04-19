@@ -32,7 +32,7 @@ type t = {
   hash : Block_hash.t;
   header : Block_header.t;
   operations : Operation.packed list;
-  context : Tezos_protocol_environment.Context.t;  (** Resulting context *)
+  context : Tp_environment.Context.t;  (** Resulting context *)
 }
 
 type block = t

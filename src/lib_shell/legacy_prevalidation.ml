@@ -65,7 +65,7 @@ module type CHAIN_STORE = sig
   val context :
     chain_store ->
     Store.Block.t ->
-    Tezos_protocol_environment.Context.t tzresult Lwt.t
+    Tp_environment.Context.t tzresult Lwt.t
 
   val chain_id : chain_store -> Chain_id.t
 end
@@ -126,7 +126,7 @@ let safe_binary_of_bytes (encoding : 'a Data_encoding.t) (bytes : bytes) :
 
 module MakeAbstract
     (Chain_store : CHAIN_STORE)
-    (Proto : Tezos_protocol_environment.PROTOCOL) :
+    (Proto : Tp_environment.PROTOCOL) :
   T
     with type protocol_operation = Proto.operation
      and type operation_receipt = Proto.operation_receipt
@@ -291,7 +291,7 @@ module Production_chain_store :
   let chain_id = Store.Chain.chain_id
 end
 
-module Make (Proto : Tezos_protocol_environment.PROTOCOL) :
+module Make (Proto : Tp_environment.PROTOCOL) :
   T
     with type protocol_operation = Proto.operation
      and type operation_receipt = Proto.operation_receipt
