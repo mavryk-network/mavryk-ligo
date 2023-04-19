@@ -4038,7 +4038,7 @@ include Tp_environment.V%d.Make(Name)()
       let raw_protocol =
         public_lib
           (sf "tezos-protocol-%s.raw" name_dash)
-          ~internal_name:(sf "tezos_raw_protocol_%s" name_underscore)
+          ~internal_name:(sf "trp_%s" name_underscore)
           ~path:(path // "lib_protocol")
           ~opam:(sf "tezos-protocol-%s" name_dash)
           ~linkall:true
@@ -4097,8 +4097,8 @@ include Tp_environment.V%d.Make(Name)()
                            {|
 let hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn "%s"
 let name = Tp_environment_%s.Name.name
-include Tezos_raw_protocol_%s
-include Tezos_raw_protocol_%s.Main
+include Trp_%s
+include Trp_%s.Main
 |}
                            tezos_protocol.hash
                            name_underscore

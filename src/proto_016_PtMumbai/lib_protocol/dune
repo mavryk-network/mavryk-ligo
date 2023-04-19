@@ -18,7 +18,7 @@
    "module Name = struct let name = \"016-PtMumbai\" end\ninclude Tp_environment.V8.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_016_PtMumbai)
+ (name trp_016_PtMumbai)
  (public_name tezos-protocol-016-PtMumbai.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -299,7 +299,7 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtMumbai2TmsJHNGRkD8v8YDbtao7BLUC3wjASn1inAKLFCjaH1\"\nlet name = Tp_environment_016_PtMumbai.Name.name\ninclude Tezos_raw_protocol_016_PtMumbai\ninclude Tezos_raw_protocol_016_PtMumbai.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtMumbai2TmsJHNGRkD8v8YDbtao7BLUC3wjASn1inAKLFCjaH1\"\nlet name = Tp_environment_016_PtMumbai.Name.name\ninclude Trp_016_PtMumbai\ninclude Trp_016_PtMumbai.Main\n")))
 
 (rule
  (targets tezos_protocol_016_PtMumbai.ml)

@@ -18,7 +18,7 @@
    "module Name = struct let name = \"006-PsCARTHA\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_006_PsCARTHA)
+ (name trp_006_PsCARTHA)
  (public_name tezos-protocol-006-PsCARTHA.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -127,7 +127,7 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsCARTHAGazKbHtnKfLzQg3kms52kSRpgnDY982a9oYsSXRLQEb\"\nlet name = Tp_environment_006_PsCARTHA.Name.name\ninclude Tezos_raw_protocol_006_PsCARTHA\ninclude Tezos_raw_protocol_006_PsCARTHA.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsCARTHAGazKbHtnKfLzQg3kms52kSRpgnDY982a9oYsSXRLQEb\"\nlet name = Tp_environment_006_PsCARTHA.Name.name\ninclude Trp_006_PsCARTHA\ninclude Trp_006_PsCARTHA.Main\n")))
 
 (rule
  (targets tezos_protocol_006_PsCARTHA.ml)

@@ -18,7 +18,7 @@
    "module Name = struct let name = \"008-PtEdo2Zk\" end\ninclude Tp_environment.V1.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_008_PtEdo2Zk)
+ (name trp_008_PtEdo2Zk)
  (public_name tezos-protocol-008-PtEdo2Zk.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -134,7 +134,7 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtEdo2ZkT9oKpimTah6x2embF25oss54njMuPzkJTEi5RqfdZFA\"\nlet name = Tp_environment_008_PtEdo2Zk.Name.name\ninclude Tezos_raw_protocol_008_PtEdo2Zk\ninclude Tezos_raw_protocol_008_PtEdo2Zk.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtEdo2ZkT9oKpimTah6x2embF25oss54njMuPzkJTEi5RqfdZFA\"\nlet name = Tp_environment_008_PtEdo2Zk.Name.name\ninclude Trp_008_PtEdo2Zk\ninclude Trp_008_PtEdo2Zk.Main\n")))
 
 (rule
  (targets tezos_protocol_008_PtEdo2Zk.ml)
