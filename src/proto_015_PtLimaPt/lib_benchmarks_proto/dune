@@ -32,7 +32,7 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_error_monad
-  -open Tezos_protocol_015_PtLimaPt_parameters
+  -open Tp_015_params
   -open Tezos_lazy_containers
   -open Tezos_benchmark
   -open Tezos_benchmark_015_PtLimaPt

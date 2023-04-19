@@ -28,5 +28,5 @@
   -open Tezos_baking_015_PtLimaPt
   -open Tezos_stdlib_unix
   -open Tezos_client_base_unix
-  -open Tezos_protocol_015_PtLimaPt_parameters
+  -open Tp_015_params
   -open Tenderbrute_015_PtLimaPt))

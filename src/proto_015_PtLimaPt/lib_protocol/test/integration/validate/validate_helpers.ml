@@ -372,7 +372,7 @@ let pick_addr_endorser ctxt =
   | _ -> assert false
 
 let init_params =
-  Tezos_protocol_015_PtLimaPt_parameters.Default_parameters
+  Tp_015_params.Default_parameters
   .parameters_of_constants
     {Context.default_test_constants with consensus_threshold = 0}
 
