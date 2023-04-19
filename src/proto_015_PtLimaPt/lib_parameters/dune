@@ -30,7 +30,8 @@
   (:standard)
   -open Tezos_base.TzPervasives
   -open Tezos_protocol_015_PtLimaPt_parameters
-  -open Tezos_protocol_015_PtLimaPt)
+  -open Tezos_protocol_015_PtLimaPt
+  (:include ../../configurator/win32-flags.sexp))
  (modules gen))
 
 (rule
