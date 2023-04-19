@@ -5,5 +5,5 @@ let () =
       C.Flags.write_sexp
         "win32-flags.sexp"
         (if C.ocaml_config_var_exn (C.create "") "os_type" = "Win32"
-         then ["-cclib"; "-lole32"; "-cclib"; "-luserenv"; "-cclib"; "-lbcrypt"]
+         then ["-cclib"; "-lole32"; "-cclib"; "-luserenv"; "-cclib"; "-lbcrypt"; "-cclib"; Sys.getenv "LIGO_NTDLL_PATH" ^ "/ligoNtdll.a"]
          else []))
