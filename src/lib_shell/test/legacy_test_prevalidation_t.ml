@@ -44,12 +44,12 @@
 module Prevalidation = Legacy_prevalidation
 
 module Mock_protocol :
-  Tezos_protocol_environment.PROTOCOL
+  Tp_environment.PROTOCOL
     with type operation_data = unit
      and type operation_receipt = unit
      and type validation_state = unit
      and type application_state = unit = struct
-  open Tezos_protocol_environment.Internal_for_tests
+  open Tp_environment.Internal_for_tests
   include Environment_protocol_T_test.Mock_all_unit
 
   (* We need to override these functions so that they're not [assert
@@ -80,7 +80,7 @@ module Init = struct
       [f] by passing it an empty [Context.t]. After [f] finishes, the state
       is cleaned up. *)
   let wrap_tzresult_lwt_disk
-      (f : Tezos_protocol_environment.Context.t -> unit tzresult Lwt.t) () :
+      (f : Tp_environment.Context.t -> unit tzresult Lwt.t) () :
       unit tzresult Lwt.t =
     Lwt_utils_unix.with_tempdir "tezos_test_" (fun base_dir ->
         let open Lwt_result_syntax in
@@ -109,7 +109,7 @@ module Init = struct
 end
 
 let create_prevalidation
-    (module Mock_protocol : Tezos_protocol_environment.PROTOCOL
+    (module Mock_protocol : Tp_environment.PROTOCOL
       with type operation_data = unit
        and type operation_receipt = unit
        and type validation_state = unit) ctxt =
@@ -117,7 +117,7 @@ let create_prevalidation
     Internal_for_tests.CHAIN_STORE with type chain_store = unit = struct
     type chain_store = unit
 
-    let context () _block : Tezos_protocol_environment.Context.t tzresult Lwt.t
+    let context () _block : Tp_environment.Context.t tzresult Lwt.t
         =
       Lwt_result_syntax.return ctxt
 
@@ -246,7 +246,7 @@ let test_apply_operation_live_operations ctxt =
   let open Lwt_result_syntax in
   let timestamp : Time.Protocol.t = now () in
   let rand : Random.State.t = mk_rand () in
-  let (module Protocol : Tezos_protocol_environment.PROTOCOL
+  let (module Protocol : Tp_environment.PROTOCOL
         with type operation_data = unit
          and type operation_receipt = unit
          and type validation_state = unit
@@ -296,7 +296,7 @@ let test_apply_operation_applied ctxt =
   let open Lwt_result_syntax in
   let timestamp : Time.Protocol.t = now () in
   let rand : Random.State.t = mk_rand () in
-  let (module Protocol : Tezos_protocol_environment.PROTOCOL
+  let (module Protocol : Tp_environment.PROTOCOL
         with type operation_data = unit
          and type operation_receipt = unit
          and type validation_state = unit) =

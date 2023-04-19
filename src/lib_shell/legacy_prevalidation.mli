@@ -60,15 +60,15 @@ type 'protocol_operation operation = private {
 
 module type T = sig
   (** Similar to the same type in the protocol,
-      see {!Tezos_protocol_environment.PROTOCOL.operation} *)
+      see {!Tp_environment.PROTOCOL.operation} *)
   type protocol_operation
 
   (** Similar to the same type in the protocol,
-      see {!Tezos_protocol_environment.PROTOCOL} *)
+      see {!Tp_environment.PROTOCOL} *)
   type operation_receipt
 
   (** Similar to the same type in the protocol,
-      see {!Tezos_protocol_environment.PROTOCOL} *)
+      see {!Tp_environment.PROTOCOL} *)
   type validation_state
 
   (** The type implemented by {!Tezos_store.Store.chain_store} in
@@ -140,7 +140,7 @@ module type T = sig
 end
 
 (** How-to obtain an instance of this module's main module type: {!T} *)
-module Make : functor (Proto : Tezos_protocol_environment.PROTOCOL) ->
+module Make : functor (Proto : Tp_environment.PROTOCOL) ->
   T
     with type protocol_operation = Proto.operation
      and type operation_receipt = Proto.operation_receipt
@@ -178,7 +178,7 @@ module Internal_for_tests : sig
     val context :
       chain_store ->
       Store.Block.t ->
-      Tezos_protocol_environment.Context.t tzresult Lwt.t
+      Tp_environment.Context.t tzresult Lwt.t
 
     (** [chain_id store] returns the {!Chain_id.t} to which [store]
         corresponds *)
@@ -189,7 +189,7 @@ module Internal_for_tests : sig
       for mocking purposes. *)
   module Make : functor
     (Chain_store : CHAIN_STORE)
-    (Proto : Tezos_protocol_environment.PROTOCOL)
+    (Proto : Tp_environment.PROTOCOL)
     ->
     T
       with type protocol_operation = Proto.operation

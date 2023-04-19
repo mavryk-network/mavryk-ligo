@@ -49,7 +49,7 @@ module Init = struct
       [f] by passing it an empty [Context.t]. After [f] finishes, the state
       is cleaned up. *)
   let wrap_tzresult_lwt_disk
-      (f : Tezos_protocol_environment.Context.t -> unit tzresult Lwt.t) () :
+      (f : Tp_environment.Context.t -> unit tzresult Lwt.t) () :
       unit tzresult Lwt.t =
     Lwt_utils_unix.with_tempdir "tezos_test_" (fun base_dir ->
         let open Lwt_result_syntax in
@@ -80,7 +80,7 @@ let make_chain_store ctxt =
   let module Chain_store = struct
     type chain_store = unit
 
-    let context () _block : Tezos_protocol_environment.Context.t tzresult Lwt.t
+    let context () _block : Tp_environment.Context.t tzresult Lwt.t
         =
       Lwt_result_syntax.return ctxt
 
@@ -93,12 +93,12 @@ let make_chain_store ctxt =
     functions are [assert false]), with just enough functions actually
     implemented so that [Prevalidation.create] can be run successfully. *)
 module Mock_protocol :
-  Tezos_protocol_environment.PROTOCOL
+  Tp_environment.PROTOCOL
     with type operation_data = unit
      and type operation_receipt = unit
      and type validation_state = unit
      and type application_state = unit = struct
-  open Tezos_protocol_environment.Internal_for_tests
+  open Tp_environment.Internal_for_tests
   include Environment_protocol_T_test.Mock_all_unit
 
   let begin_validation _ctxt _chain_id _mode ~predecessor:_ ~cache:_ =
@@ -111,7 +111,7 @@ module Mock_protocol :
   end
 end
 
-module MakeFilter (Proto : Tezos_protocol_environment.PROTOCOL) :
+module MakeFilter (Proto : Tp_environment.PROTOCOL) :
   Shell_plugin.FILTER
     with type Proto.operation_data = Proto.operation_data
      and type Proto.operation = Proto.operation
@@ -281,7 +281,7 @@ let proto_add_outcome_gen =
     [Mempool.operations]. This allows the test below to check that
     operations were correctly added or removed. *)
 module Toy_proto :
-  Tezos_protocol_environment.PROTOCOL
+  Tp_environment.PROTOCOL
     with type operation_data = unit
      and type operation = Mock_protocol.operation
      and type Mempool.validation_info = proto_add_outcome = struct

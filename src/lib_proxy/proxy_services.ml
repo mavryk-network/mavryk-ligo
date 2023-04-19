@@ -60,7 +60,7 @@ type mode =
       sym_block_caching_time : Ptime.span option;
       on_disk_proxy_builder :
         (Context_hash.t ->
-        Tezos_protocol_environment.Proxy_delegate.t tzresult Lwt.t)
+        Tp_environment.Proxy_delegate.t tzresult Lwt.t)
         option;
     }
 
@@ -208,7 +208,7 @@ let build_directory (printer : Tezos_client_base.Client_context.printer)
         Tezos_rpc.Directory.map
           (fun (_chain, _block) ->
             Lwt.return
-              Tezos_protocol_environment.
+              Tp_environment.
                 {block_hash; block_header; context = initial_context})
           Proxy_environment.directory
       in
@@ -264,7 +264,7 @@ let build_directory (printer : Tezos_client_base.Client_context.printer)
          Tezos_shell_services.Chain_services.path
          Tezos_shell_services.Block_services.path)
       (fun ((_, chain), block) ->
-        (* The Tezos_protocol_environment.rpc_context values returned
+        (* The Tp_environment.rpc_context values returned
            by init_env_rpc_context contain proxy_getter's RPC
            cache. We wanna keep it in between RPC calls, hence
            the use of get_env_rpc_context' to cache init_env_rpc_context

@@ -184,7 +184,7 @@ module type S = sig
   type filter_config
 
   (** Similar to the type [operation] from the protocol,
-      see {!Tezos_protocol_environment.PROTOCOL} *)
+      see {!Tp_environment.PROTOCOL} *)
   type protocol_operation
 
   (** Type instantiated by {!Prevalidation.t} *)

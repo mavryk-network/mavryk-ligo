@@ -231,7 +231,7 @@ let run ~readonly input output =
          operation_metadata_size_limit ) =
     init ~readonly input
   in
-  let rec loop (cache : Tezos_protocol_environment.Context.block_cache option)
+  let rec loop (cache : Tp_environment.Context.block_cache option)
       cached_result =
     let*! recved =
       External_validation.recv input External_validation.request_encoding

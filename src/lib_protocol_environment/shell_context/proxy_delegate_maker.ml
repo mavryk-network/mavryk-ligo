@@ -24,7 +24,7 @@
 (*****************************************************************************)
 
 let of_memory_tree (t : Tezos_context_memory.Context.tree) :
-    Tezos_protocol_environment.Proxy_delegate.t =
+    Tp_environment.Proxy_delegate.t =
   (module struct
     let proxy_dir_mem key =
       let open Lwt_syntax in
@@ -40,10 +40,10 @@ let of_memory_tree (t : Tezos_context_memory.Context.tree) :
       let open Lwt_syntax in
       let* v = Tezos_context_memory.Context.Tree.mem t key in
       return_ok v
-  end : Tezos_protocol_environment.Proxy_delegate.T)
+  end : Tp_environment.Proxy_delegate.T)
 
 let of_memory_context (m : Tezos_context_memory.Context.t) :
-    Tezos_protocol_environment.Proxy_delegate.t =
+    Tp_environment.Proxy_delegate.t =
   (module struct
     let proxy_dir_mem key =
       let open Lwt_syntax in
@@ -59,14 +59,14 @@ let of_memory_context (m : Tezos_context_memory.Context.t) :
       let open Lwt_syntax in
       let* v = Tezos_context_memory.Context.mem m key in
       return_ok v
-  end : Tezos_protocol_environment.Proxy_delegate.T)
+  end : Tp_environment.Proxy_delegate.T)
 
 let make_index ~(context_path : string) : Tezos_context.Context.index Lwt.t =
   Tezos_context.Context.init ~readonly:true context_path
 
 let of_index ~(index : Tezos_context.Context.index)
     (hash : Tezos_crypto.Hashed.Context_hash.t) :
-    Tezos_protocol_environment.Proxy_delegate.t tzresult Lwt.t =
+    Tp_environment.Proxy_delegate.t tzresult Lwt.t =
   let open Lwt_syntax in
   let* ctxt = Tezos_context.Context.checkout index hash in
   match ctxt with
@@ -75,7 +75,7 @@ let of_index ~(index : Tezos_context.Context.index)
         "Couldn't check out the hash %s"
         (Tezos_crypto.Hashed.Context_hash.to_string hash)
   | Some ctxt ->
-      let proxy_data_dir : Tezos_protocol_environment.Proxy_delegate.t =
+      let proxy_data_dir : Tp_environment.Proxy_delegate.t =
         (module struct
           let proxy_dir_mem (key : Tezos_context.Context.key) :
               bool tzresult Lwt.t =

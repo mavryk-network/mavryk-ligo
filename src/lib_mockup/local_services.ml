@@ -33,7 +33,7 @@ type error += Cannot_parse_op
 type error += Cannot_parse_proto_data
 
 type callback_writer =
-  Tezos_protocol_environment.rpc_context -> bytes -> unit tzresult Lwt.t
+  Tp_environment.rpc_context -> bytes -> unit tzresult Lwt.t
 
 let () =
   register_error_kind
@@ -81,7 +81,7 @@ module type MENV = sig
 
   val chain_id : Chain_id.t
 
-  val rpc_context : Tezos_protocol_environment.rpc_context
+  val rpc_context : Tp_environment.rpc_context
 
   val base_dir : string
 
@@ -146,7 +146,7 @@ module Make (E : MENV) = struct
           (`Ok {Block_services.current_protocol; next_protocol = protocol_hash}))
 
   let monitor () =
-    let open Tezos_protocol_environment in
+    let open Tp_environment in
     let {block_hash; block_header; _} = E.rpc_context in
     Tezos_rpc.Directory.gen_register
       Directory.empty
@@ -772,7 +772,7 @@ module Make (E : MENV) = struct
             let*! r =
               let* {context; _}, _ = reconstruct operations block_header in
               let rpc_context =
-                Tezos_protocol_environment.
+                Tp_environment.
                   {
                     context;
                     block_hash;
@@ -1012,7 +1012,7 @@ end
 
 let build_shell_directory (base_dir : string)
     (mockup_env : Registration.mockup_environment) chain_id
-    (rpc_context : Tezos_protocol_environment.rpc_context)
+    (rpc_context : Tp_environment.rpc_context)
     (protocol_data : bytes) (mem_only : bool)
     (write_context_callback : callback_writer) =
   let (module Mockup_environment) = mockup_env in
@@ -1038,7 +1038,7 @@ let build_shell_directory (base_dir : string)
  *)
 let build_directory (base_dir : string) (mem_only : bool)
     (mockup_env : Registration.mockup_environment) (chain_id : Chain_id.t)
-    (rpc_context : Tezos_protocol_environment.rpc_context) protocol_data :
+    (rpc_context : Tp_environment.rpc_context) protocol_data :
     unit Tezos_rpc.Directory.t =
   let write_context rpc_context protocol_data =
     let (module Mockup_environment) = mockup_env in

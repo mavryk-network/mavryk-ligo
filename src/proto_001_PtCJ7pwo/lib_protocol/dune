@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_001_PtCJ7pwo)
+ (name tp_environment_001_PtCJ7pwo)
  (public_name tezos-protocol-001-PtCJ7pwo.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-protocol-environment)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_001_PtCJ7pwo))
+ (modules Tp_environment_001_PtCJ7pwo))
 
 (rule
- (targets tezos_protocol_environment_001_PtCJ7pwo.ml)
+ (targets tp_environment_001_PtCJ7pwo.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"001-PtCJ7pwo\" end\ninclude Tezos_protocol_environment.V0.Make(Name)()\n")))
+   "module Name = struct let name = \"001-PtCJ7pwo\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_001_PtCJ7pwo)
@@ -29,9 +29,9 @@
   -w -6-7-9-16-29-32-51-68
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_001_PtCJ7pwo
-  -open Tezos_protocol_environment_001_PtCJ7pwo.Pervasives
-  -open Tezos_protocol_environment_001_PtCJ7pwo.Error_monad)
+  -open Tp_environment_001_PtCJ7pwo
+  -open Tp_environment_001_PtCJ7pwo.Pervasives
+  -open Tp_environment_001_PtCJ7pwo.Error_monad)
  (modules
   Misc
   Storage_description
@@ -125,14 +125,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtCJ7pwoxe8JasnHY8YonnLYjcVHmhiARPJvqcC6VfHT5s8k8sY\"\nlet name = Tezos_protocol_environment_001_PtCJ7pwo.Name.name\ninclude Tezos_raw_protocol_001_PtCJ7pwo\ninclude Tezos_raw_protocol_001_PtCJ7pwo.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtCJ7pwoxe8JasnHY8YonnLYjcVHmhiARPJvqcC6VfHT5s8k8sY\"\nlet name = Tp_environment_001_PtCJ7pwo.Name.name\ninclude Tezos_raw_protocol_001_PtCJ7pwo\ninclude Tezos_raw_protocol_001_PtCJ7pwo.Main\n")))
 
 (rule
  (targets tezos_protocol_001_PtCJ7pwo.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_001_PtCJ7pwo\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tp_environment_001_PtCJ7pwo\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)
