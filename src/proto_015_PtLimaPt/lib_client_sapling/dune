@@ -24,6 +24,6 @@
   -open Tezos_stdlib_unix
   -open Tezos_client_base
   -open Tezos_client_015_PtLimaPt
-  -open Tezos_client_015_PtLimaPt_commands
+  -open Tc_015_commands
   -open Tezos_protocol_015_PtLimaPt
   -open Tp_plugin_015))

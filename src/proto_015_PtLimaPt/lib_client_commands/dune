@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_client_015_PtLimaPt_commands)
+ (name tc_015_commands)
  (public_name tezos-client-015-PtLimaPt.commands)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -39,7 +39,7 @@
  (modules (:standard \ alpha_commands_registration)))
 
 (library
- (name tezos_client_015_PtLimaPt_commands_registration)
+ (name tc_015_commands_registration)
  (public_name tezos-client-015-PtLimaPt.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -66,7 +66,7 @@
   -open Tezos_client_base
   -open Tezos_client_015_PtLimaPt
   -open Tezos_client_commands
-  -open Tezos_client_015_PtLimaPt_commands
+  -open Tc_015_commands
   -open Tezos_client_sapling_015_PtLimaPt
   -open Tp_plugin_015)
  (modules alpha_commands_registration))
