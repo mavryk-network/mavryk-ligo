@@ -1,8 +1,4 @@
 (executable
- (name config)
- (modules config)
+ (name discover)
+ (modules discover)
  (libraries dune-configurator))
-
-(rule
- (targets win32-flags.sexp)
- (action (run ./config.exe)))
