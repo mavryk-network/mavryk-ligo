@@ -47,5 +47,5 @@
   -open Tezos_client_base
   -open Tezos_client_base_unix
   -open Tezos_workers
-  -open Tezos_protocol_plugin_015_PtLimaPt
+  -open Tp_plugin_015
   -open Tezos_injector_015_PtLimaPt))

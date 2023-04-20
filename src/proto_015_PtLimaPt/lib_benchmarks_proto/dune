@@ -42,4 +42,4 @@
   -open Tezos_micheline
   -open Tezos_015_PtLimaPt_test_helpers
   -open Tezos_client_015_PtLimaPt
-  -open Tezos_protocol_plugin_015_PtLimaPt))
+  -open Tp_plugin_015))

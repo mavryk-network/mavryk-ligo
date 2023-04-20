@@ -30,7 +30,7 @@
   -open Tezos_micheline
   -open Tezos_benchmark_015_PtLimaPt
   -open Tezos_benchmark_type_inference_015_PtLimaPt
-  -open Tezos_protocol_plugin_015_PtLimaPt))
+  -open Tp_plugin_015))
 
 (rule
  (alias runtest)
