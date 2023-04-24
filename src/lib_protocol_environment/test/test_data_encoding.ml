@@ -31,7 +31,7 @@
                   e.g. in src/lib_protocol_environment/structs/v5_data_encoding.ml
 *)
 
-open Tp_environment_structs.V8
+open Tpenv_structs.V8
 
 type t = {x : int; y : string Data_encoding.lazy_t}
 

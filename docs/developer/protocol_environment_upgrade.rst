@@ -32,7 +32,7 @@ The following steps are roughly the steps taken in the `V6 bootstrap MR <https:/
 
 3. Copy the existing compatibility layer if any (see details in `Struct compatibility layer <#struct-compatibility-layer>`__).
 
-   * Update  ``src/lib_protocol_environment/structs/tp_environment_structs.ml`` to add a new submodule ``V<N>`` by copying the submodule ``V<N-1>``.
+   * Update  ``src/lib_protocol_environment/structs/tpenv_structs.ml`` to add a new submodule ``V<N>`` by copying the submodule ``V<N-1>``.
 
 4. Copy and adapt the environment functor:
 

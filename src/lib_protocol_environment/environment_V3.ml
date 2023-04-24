@@ -142,7 +142,7 @@ struct
      shadow modules from [Stdlib]/[Base]/etc. with backwards compatible
      versions. Thus we open the module, hiding the incompatible, newer modules.
   *)
-  open Tp_environment_structs.V3
+  open Tpenv_structs.V3
   module Pervasives = Stdlib
 
   module Logging = struct
@@ -177,7 +177,7 @@ struct
   module List = struct
     include Tezos_error_monad.TzLwtreslib.List
 
-    include Tp_environment_structs.V3.Lwtreslib_list_combine
+    include Tpenv_structs.V3.Lwtreslib_list_combine
   end
 
   module Char = Char
@@ -189,7 +189,7 @@ struct
 
   module Set = struct
     module type S =
-      Tp_environment_structs.V3.Replicated_signatures.Set.S
+      Tpenv_structs.V3.Replicated_signatures.Set.S
         with type 'a error_monad_trace := 'a Error_monad.trace
 
     module Make (Ord : Compare.COMPARABLE) : S with type elt = Ord.t =
@@ -198,7 +198,7 @@ struct
 
   module Map = struct
     module type S =
-      Tp_environment_structs.V3.Replicated_signatures.Map.S
+      Tpenv_structs.V3.Replicated_signatures.Map.S
         with type 'a error_monad_trace := 'a Error_monad.trace
 
     module Make (Ord : Compare.COMPARABLE) : S with type key = Ord.t =
@@ -565,7 +565,7 @@ struct
         (struct
           let id = Format.asprintf "proto.%s." Param.name
         end)
-        (Tp_environment_structs.V3.Error_monad_trace_eval)
+        (Tpenv_structs.V3.Error_monad_trace_eval)
 
     let error_encoding = Data_encoding.dynamic_size error_encoding
   end
@@ -603,12 +603,12 @@ struct
         (Tezos_error_monad.TzLwtreslib.Monad)
 
     (* Backwards compatibility additions (dont_wait, trace helpers) *)
-    include Tp_environment_structs.V3.Error_monad_infix_globals
+    include Tpenv_structs.V3.Error_monad_infix_globals
 
     include
-      Tp_environment_structs.V3.Error_monad_preallocated_values
+      Tpenv_structs.V3.Error_monad_preallocated_values
 
-    include Tp_environment_structs.V3.Error_monad_trace_eval
+    include Tpenv_structs.V3.Error_monad_trace_eval
 
     let fail e = Lwt.return_error (TzTrace.make e)
 
@@ -727,7 +727,7 @@ struct
   end
 
   module RPC_directory = struct
-    include Tp_environment_structs.V3.RPC_directory
+    include Tpenv_structs.V3.RPC_directory
 
     let gen_register dir service handler =
       let open Lwt_syntax in

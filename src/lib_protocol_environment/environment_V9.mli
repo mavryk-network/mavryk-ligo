@@ -104,9 +104,9 @@ module type T = sig
        and module Sapling = Tezos_sapling.Core.Validator
        and type ('a, 'b) Either.t = ('a, 'b) Stdlib.Either.t
        and type Bls.Primitive.Fr.t = Bls12_381.Fr.t
-       and type Plonk.proof = Tp_environment_structs.V9.Plonk.proof
+       and type Plonk.proof = Tpenv_structs.V9.Plonk.proof
        and type Plonk.public_parameters =
-        Tp_environment_structs.V9.Plonk.verifier_public_parameters
+        Tpenv_structs.V9.Plonk.verifier_public_parameters
        and type Dal.parameters = Tezos_crypto_dal.Cryptobox.Verifier.parameters
        and type Dal.commitment = Tezos_crypto_dal.Cryptobox.Verifier.commitment
        and type Dal.commitment_proof =

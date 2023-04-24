@@ -101,9 +101,9 @@ module type T = sig
        and module Sapling = Tezos_sapling.Core.Validator
        and type ('a, 'b) Either.t = ('a, 'b) Stdlib.Either.t
        and type Bls.Primitive.Fr.t = Bls12_381.Fr.t
-       and type Plonk.proof = Tp_environment_structs.V8.Plonk.proof
+       and type Plonk.proof = Tpenv_structs.V8.Plonk.proof
        and type Plonk.public_parameters =
-        Tp_environment_structs.V8.Plonk.verifier_public_parameters
+        Tpenv_structs.V8.Plonk.verifier_public_parameters
        and type Dal.parameters = Tezos_crypto_dal.Cryptobox.Verifier.parameters
        and type Dal.commitment = Tezos_crypto_dal.Cryptobox.Verifier.commitment
        and type Dal.commitment_proof =
@@ -210,7 +210,7 @@ struct
     let fold_right_es f l x = fold_left_es (fun acc x -> f x acc) x (rev l)
   end
 
-  module Array = Tp_environment_structs.V8.Array
+  module Array = Tpenv_structs.V8.Array
   module Char = Char
   module Bytes = Tezos_base.TzPervasives.Bytes
   module Hex = Tezos_stdlib.Hex
@@ -276,7 +276,7 @@ struct
   module Lwt = Lwt
 
   module Data_encoding = struct
-    include Tp_environment_structs.V8.Data_encoding
+    include Tpenv_structs.V8.Data_encoding
 
     type tag_size = [`Uint8 | `Uint16]
 
@@ -673,7 +673,7 @@ struct
         (Tezos_error_monad.TzLwtreslib.Monad)
 
     (* Backwards compatibility additions (dont_wait, trace helpers) *)
-    include Tp_environment_structs.V8.Error_monad_infix_globals
+    include Tpenv_structs.V8.Error_monad_infix_globals
 
     let tzfail e = Lwt.return_error (TzTrace.make e)
 
@@ -1448,6 +1448,6 @@ struct
     end
 
   module Equality_witness = Environment_context.Equality_witness
-  module Plonk = Tp_environment_structs.V8.Plonk
+  module Plonk = Tpenv_structs.V8.Plonk
   module Dal = Tezos_crypto_dal.Cryptobox.Verifier
 end

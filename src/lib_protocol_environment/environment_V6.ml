@@ -247,7 +247,7 @@ struct
   module Lwt = Lwt
 
   module Data_encoding = struct
-    include Tp_environment_structs.V6.Data_encoding
+    include Tpenv_structs.V6.Data_encoding
 
     type tag_size = [`Uint8 | `Uint16]
 
@@ -617,7 +617,7 @@ struct
         (Tezos_error_monad.TzLwtreslib.Monad)
 
     (* Backwards compatibility additions (dont_wait, trace helpers) *)
-    include Tp_environment_structs.V6.Error_monad_infix_globals
+    include Tpenv_structs.V6.Error_monad_infix_globals
 
     let fail e = Lwt.return_error (TzTrace.make e)
 
@@ -697,7 +697,7 @@ struct
   module Fitness = Fitness
   module Operation = Operation
   module Block_header = Block_header
-  module Bounded = Tp_environment_structs.V6.Bounded
+  module Bounded = Tpenv_structs.V6.Bounded
   module Protocol = Protocol
   module RPC_arg = Tezos_rpc.Arg
   module RPC_path = Tezos_rpc.Path
@@ -734,7 +734,7 @@ struct
   end
 
   module RPC_directory = struct
-    include Tp_environment_structs.V6.RPC_directory
+    include Tpenv_structs.V6.RPC_directory
 
     let gen_register dir service handler =
       let open Lwt_syntax in
@@ -1076,7 +1076,7 @@ struct
       let set_input_step {inbox_level; message_counter} payload
           (tree : Tree.tree) =
         let inbox_level =
-          Tp_environment_structs.V6.Bounded.Int32
+          Tpenv_structs.V6.Bounded.Int32
           .non_negative_of_legacy_non_negative
             inbox_level
         in
@@ -1085,7 +1085,7 @@ struct
       let get_output {outbox_level; message_index} (tree : Tree.tree) =
         let open Lwt_syntax in
         let outbox_level =
-          Tp_environment_structs.V6.Bounded.Int32
+          Tpenv_structs.V6.Bounded.Int32
           .non_negative_of_legacy_non_negative
             outbox_level
         in
@@ -1096,7 +1096,7 @@ struct
         function
         | {inbox_level; message_counter} ->
             let inbox_level =
-              Tp_environment_structs.V6.Bounded.Int32
+              Tpenv_structs.V6.Bounded.Int32
               .legacy_non_negative_of_non_negative
                 inbox_level
             in
