@@ -24,6 +24,6 @@
   -open Tezos_stdlib_unix
   -open Tezos_client_base
   -open Tezos_client_016_PtMumbai
-  -open Tezos_client_016_PtMumbai_commands
+  -open Tc_016_commands
   -open Tezos_protocol_016_PtMumbai
-  -open Tezos_protocol_plugin_016_PtMumbai))
+  -open Tp_plugin_016__Params))

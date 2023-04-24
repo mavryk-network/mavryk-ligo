@@ -29,7 +29,7 @@
  (flags
   (:standard)
   -open Tezos_base.TzPervasives
-  -open Tezos_protocol_016_PtMumbai_parameters
+  -open Tp_016__params
   -open Tezos_protocol_016_PtMumbai
   (:include ../../../win32-flags.sexp))
  (modules gen))

@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_client_016_PtMumbai_commands)
+ (name tc_016_commands)
  (public_name tezos-client-016-PtMumbai.commands)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -35,11 +35,11 @@
   -open Tezos_client_016_PtMumbai
   -open Tezos_client_commands
   -open Tezos_client_base_unix
-  -open Tezos_protocol_plugin_016_PtMumbai)
+  -open Tp_plugin_016__Params)
  (modules (:standard \ alpha_commands_registration)))
 
 (library
- (name tezos_client_016_PtMumbai_commands_registration)
+ (name tc_016_commands_registration)
  (public_name tezos-client-016-PtMumbai.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -66,7 +66,7 @@
   -open Tezos_client_base
   -open Tezos_client_016_PtMumbai
   -open Tezos_client_commands
-  -open Tezos_client_016_PtMumbai_commands
+  -open Tc_016_commands
   -open Tc_sapling_016
-  -open Tezos_protocol_plugin_016_PtMumbai)
+  -open Tp_plugin_016__Params)
  (modules alpha_commands_registration))
