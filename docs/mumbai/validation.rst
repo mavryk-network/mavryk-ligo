@@ -66,7 +66,7 @@ specified by the :package-api:`Protocol
 module in the :doc:`protocol
 environment<../shell/protocol_environment>` ``V8``, and it is
 implemented by this protocol in the
-:package-api:`Main<tezos-protocol-016-PtMumbai/Trp_016_PtMumbai/Main/index.html>`
+:package-api:`Main<tezos-protocol-016-PtMumbai/Trp_016/Main/index.html>`
 module.
 
 The rest of this document is organized as follows: we first describe
