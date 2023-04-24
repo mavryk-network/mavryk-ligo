@@ -32,7 +32,7 @@
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_016_PtMumbai
+  -open Tc_016
   -open Tezos_client_commands
   -open Tezos_client_base_unix
   -open Tp_plugin_016__Params)
@@ -64,7 +64,7 @@
   -open Tp_016__params
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_016_PtMumbai
+  -open Tc_016
   -open Tezos_client_commands
   -open Tc_016_commands
   -open Tc_sapling_016
