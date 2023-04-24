@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_015_PtLimaPt_test_helpers)
+ (name tz15_testhelpers)
  (public_name tezos-015-PtLimaPt-test-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries

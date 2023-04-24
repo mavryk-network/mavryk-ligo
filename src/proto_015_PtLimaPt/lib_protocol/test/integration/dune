@@ -23,7 +23,7 @@
   -open Tezos_client_015_PtLimaPt
   -open Tezos_protocol_015_PtLimaPt
   -open Tp_015_params
-  -open Tezos_015_PtLimaPt_test_helpers
+  -open Tz15_testhelpers
   -open Tezos_base_test_helpers))
 
 (rule

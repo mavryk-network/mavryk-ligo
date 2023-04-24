@@ -30,7 +30,7 @@
   -open Tezos_benchmark
   -open Tezos_benchmark_type_inference_015_PtLimaPt
   -open Tezos_benchmark_015_PtLimaPt
-  -open Tezos_015_PtLimaPt_test_helpers))
+  -open Tz15_testhelpers))
 
 (rule
  (alias runtest_micheline_rewriting_data)

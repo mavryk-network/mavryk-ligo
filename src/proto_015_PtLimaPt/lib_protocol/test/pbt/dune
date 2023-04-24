@@ -40,7 +40,7 @@
   -open Tezos_client_015_PtLimaPt
   -open Tezos_protocol_015_PtLimaPt
   -open Tezos_test_helpers
-  -open Tezos_015_PtLimaPt_test_helpers
+  -open Tz15_testhelpers
   -open Tezos_benchmark_015_PtLimaPt
   -open Tezos_benchmark_type_inference_015_PtLimaPt))
 

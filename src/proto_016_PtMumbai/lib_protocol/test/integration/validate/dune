@@ -23,7 +23,7 @@
   -open Tezos_protocol_016_PtMumbai
   -open Tc_016
   -open Tezos_test_helpers
-  -open Tezos_016_PtMumbai_test_helpers
+  -open Tz16_testhelpers
   -open Tezos_base_test_helpers
   -open Tp_plugin_016__Params))
 

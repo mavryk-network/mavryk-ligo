@@ -23,7 +23,7 @@
   -open Tezos_protocol_015_PtLimaPt
   -open Tezos_client_015_PtLimaPt
   -open Tp_plugin_015
-  -open Tezos_015_PtLimaPt_test_helpers
+  -open Tz15_testhelpers
   -open Tezos_micheline)
  (modules test_logging))
 

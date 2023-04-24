@@ -17,7 +17,7 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_protocol_015_PtLimaPt
-  -open Tezos_015_PtLimaPt_test_helpers
+  -open Tz15_testhelpers
   -open Tezos_base_test_helpers))
 
 (rule
