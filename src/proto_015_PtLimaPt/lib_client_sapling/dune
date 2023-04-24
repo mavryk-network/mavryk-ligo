@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_client_sapling_015_PtLimaPt)
+ (name tc_sapling_015)
  (public_name tezos-client-015-PtLimaPt.sapling)
  (instrumentation (backend bisect_ppx))
  (libraries
