@@ -39,7 +39,7 @@
  (modules (:standard \ alpha_commands_registration)))
 
 (library
- (name tc_015_commands_registration)
+ (name tc_015_com_reg)
  (public_name tezos-client-015-PtLimaPt.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
