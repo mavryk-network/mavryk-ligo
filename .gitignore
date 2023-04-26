@@ -32,7 +32,7 @@ __pycache__
 /octez-endorser-*
 /tezos-accuser-*
 /octez-accuser-*
-/tezos-proxy-server
+/tz-prx-server
 /octez-proxy-server
 /tezos-signer
 /octez-signer

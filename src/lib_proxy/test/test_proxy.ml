@@ -232,7 +232,7 @@ let test_split_key_triggers () =
 
 let () =
   Alcotest_lwt.run
-    "tezos-proxy"
+    "tz-prx"
     [
       ( "all",
         [

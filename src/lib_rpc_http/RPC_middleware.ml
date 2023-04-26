@@ -41,7 +41,7 @@ let make_transform_callback forwarding_endpoint callback conn req body =
         ( response,
           Cohttp_lwt.Body.of_string
             (Format.asprintf
-               "tezos-proxy-server: request unsupported for proxy server, \
+               "tz-prx-server: request unsupported for proxy server, \
                 redirecting to node endpoint at %s"
                overriding) ))
   else Lwt.return answer

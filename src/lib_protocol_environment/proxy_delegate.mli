@@ -25,7 +25,7 @@
 
 (** The module that needs to be implemented for providing the delegation
     feature to {!Proxy_context}. Implementors willing to add a new backend
-    to the client's [--mode proxy] and [tezos-proxy-server] should likely
+    to the client's [--mode proxy] and [tz-prx-server] should likely
     add a new implementation of this module type. *)
 module type T = sig
   (** [proxy_dir_mem key] returns whether {!proxy_get} would return a non-leaf tree. *)

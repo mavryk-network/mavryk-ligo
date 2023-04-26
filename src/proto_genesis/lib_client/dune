@@ -12,7 +12,7 @@
   tezos-protocol-environment
   tezos-protocol-genesis
   tc-com
-  tezos-proxy
+  tz-prx
   tezos-stdlib-unix)
  (library_flags (:standard -linkall))
  (flags

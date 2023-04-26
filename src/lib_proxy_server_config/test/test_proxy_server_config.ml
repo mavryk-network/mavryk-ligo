@@ -29,7 +29,7 @@
     Component:    Client
     Invocation:   dune build @src/lib_proxy_server_config/runtest
     Description:  Test various functions and types regarding the configuration
-                  of [tezos-proxy-server]
+                  of [tz-prx-server]
 *)
 
 open Tezos_proxy_server_config

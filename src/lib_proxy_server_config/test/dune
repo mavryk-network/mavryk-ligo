@@ -6,7 +6,7 @@
  (libraries
   tezos-base
   tezos-base.unix
-  tezos-proxy-server-config
+  tz-prx-server-config
   tezos-test-helpers
   qcheck-alcotest
   alcotest-lwt
@@ -18,5 +18,5 @@
 
 (rule
  (alias runtest)
- (package tezos-proxy-server-config)
+ (package tz-prx-server-config)
  (action (run %{dep:./test_proxy_server_config.exe})))

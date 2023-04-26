@@ -129,7 +129,7 @@ clean-old-names:
 	@rm -f tezos-signer
 	@rm -f tezos-codec
 	@rm -f tezos-protocol-compiler
-	@rm -f tezos-proxy-server
+	@rm -f tz-prx-server
 	@rm -f tezos-baker-012-Psithaca
 	@rm -f tezos-accuser-012-Psithaca
 	@rm -f tezos-baker-013-PtJakart

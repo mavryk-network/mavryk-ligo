@@ -16,7 +16,7 @@ depends: [
   "tezos-protocol-environment"
   "tezos-protocol-genesis"
   "tc-com"
-  "tezos-proxy"
+  "tz-prx"
   "tezos-stdlib-unix"
 ]
 build: [

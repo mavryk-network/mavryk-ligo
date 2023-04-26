@@ -17,7 +17,7 @@ depends: [
   "tz-cli-b"
   "tezos-protocol-alpha"
   "tezos-mockup-registration"
-  "tezos-proxy"
+  "tz-prx"
   "tz-sig-b"
   "tezos-protocol-plugin-alpha"
   "tezos-rpc"

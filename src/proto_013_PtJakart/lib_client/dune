@@ -12,7 +12,7 @@
   tz-cli-b
   tezos-protocol-013-PtJakart
   tezos-mockup-registration
-  tezos-proxy
+  tz-prx
   tz-sig-b
   tezos-protocol-plugin-013-PtJakart
   tezos-protocol-013-PtJakart.parameters

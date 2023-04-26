@@ -2798,7 +2798,7 @@ let _octez_mockup_tests =
 
 let octez_proxy =
   public_lib
-    "tezos-proxy"
+    "tz-prx"
     ~path:"src/lib_proxy"
     ~synopsis:"Tezos: proxy"
     ~deps:
@@ -2817,7 +2817,7 @@ let octez_proxy =
 
 let octez_proxy_rpc =
   public_lib
-    "tezos-proxy.rpc"
+    "tz-prx.rpc"
     ~path:"src/lib_proxy/rpc"
     ~deps:
       [
@@ -2872,7 +2872,7 @@ let _octez_proxy_tests =
     ]
     ~path:"src/lib_proxy/test"
     ~with_macos_security_framework:true
-    ~opam:"tezos-proxy"
+    ~opam:"tz-prx"
     ~deps:
       [
         octez_base |> open_ ~m:"TzPervasives";
@@ -2889,7 +2889,7 @@ let _octez_proxy_tests =
 
 let octez_proxy_server_config =
   public_lib
-    "tezos-proxy-server-config"
+    "tz-prx-server-config"
     ~path:"src/lib_proxy_server_config"
     ~synopsis:"Tezos: proxy server configuration"
     ~deps:[octez_base |> open_ ~m:"TzPervasives"; octez_stdlib_unix; uri]
@@ -2898,7 +2898,7 @@ let _octez_proxy_server_config_tests =
   test
     "test_proxy_server_config"
     ~path:"src/lib_proxy_server_config/test"
-    ~opam:"tezos-proxy-server-config"
+    ~opam:"tz-prx-server-config"
     ~deps:
       [
         octez_base |> open_ ~m:"TzPervasives";

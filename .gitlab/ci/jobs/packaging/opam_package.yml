@@ -1262,19 +1262,19 @@ opam:tezos-protocol-updater:
   variables:
     package: tezos-protocol-updater
 
-opam:tezos-proxy:
+opam:tz-prx:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_5
   variables:
-    package: tezos-proxy
+    package: tz-prx
 
-opam:tezos-proxy-server-config:
+opam:tz-prx-server-config:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_7
   variables:
-    package: tezos-proxy-server-config
+    package: tz-prx-server-config
 
 opam:tezos-requester:
   extends:

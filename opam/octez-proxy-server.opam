@@ -16,8 +16,8 @@ depends: [
   "cmdliner" { >= "1.1.0" }
   "lwt-exit"
   "lwt" { >= "5.6.0" }
-  "tezos-proxy"
-  "tezos-proxy-server-config"
+  "tz-prx"
+  "tz-prx-server-config"
   "tz-rpc-cli-unix"
   "tezos-rpc-http-server"
   "tzsh-s"

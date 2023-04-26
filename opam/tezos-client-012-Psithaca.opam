@@ -17,7 +17,7 @@ depends: [
   "tz-cli-b"
   "tezos-protocol-012-Psithaca"
   "tezos-mockup-registration"
-  "tezos-proxy"
+  "tz-prx"
   "tz-sig-b"
   "tezos-protocol-plugin-012-Psithaca"
   "tezos-rpc"

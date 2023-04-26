@@ -22,7 +22,7 @@ depends: [
   "tezos-mockup"
   "tezos-mockup-registration"
   "tz-mok-com"
-  "tezos-proxy"
+  "tz-prx"
   "tz-sig-b"
   "lwt-exit"
   "uri" { >= "3.1.0" }

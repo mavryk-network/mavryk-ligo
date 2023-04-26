@@ -27,7 +27,7 @@
     -------
     Component:    Client
     Invocation:   dune build @src/proto_alpha/lib_client/runtest
-    Subject:      Test of --mode proxy and tezos-proxy-server heuristic
+    Subject:      Test of --mode proxy and tz-prx-server heuristic
 *)
 
 let proxy_mode_gen = QCheck2.Gen.oneofl Tezos_proxy.Proxy.[Client; Server]

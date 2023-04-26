@@ -14,8 +14,8 @@
   cmdliner
   lwt-exit
   lwt.unix
-  tezos-proxy
-  tezos-proxy-server-config
+  tz-prx
+  tz-prx-server-config
   tz-rpc-cli-unix
   tezos-rpc-http-server
   tzsh-s
