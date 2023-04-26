@@ -205,7 +205,7 @@
 (package (name tzsh-s))
 (package (name tzsh-s-test-helpers))
 (package (name tezos-signer-backends))
-(package (name tezos-signer-services))
+(package (name tz-sig-s))
 (package (name tezos-smart-rollup-016-PtMumbai))
 (package (name tezos-smart-rollup-alpha))
 (package (name tezos-smart-rollup-layer2-016-PtMumbai))

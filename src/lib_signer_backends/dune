@@ -11,7 +11,7 @@
   tz-cli-b
   tezos-rpc-http
   tz-rpc-cli
-  tezos-signer-services
+  tz-sig-s
   tzsh-s
   uri)
  (flags

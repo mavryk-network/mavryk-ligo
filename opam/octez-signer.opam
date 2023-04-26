@@ -15,7 +15,7 @@ depends: [
   "tz-cli-b"
   "tz-cli-b-unix"
   "tezos-client-commands"
-  "tezos-signer-services"
+  "tz-sig-s"
   "tezos-rpc-http"
   "tezos-rpc-http-server"
   "tz-rpc-cli-unix"
