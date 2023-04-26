@@ -7,7 +7,7 @@
  (libraries
   tezos-base
   tezt
-  tezos-webassembly-interpreter
+  tz-wasm-int
   tezos-context.memory
   tz-sc-wasm
   tz-sc-wasm-helpers

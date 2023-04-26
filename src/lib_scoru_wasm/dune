@@ -9,7 +9,7 @@
   tezos-base
   tezos-tree-encoding
   tezos-lazy-containers
-  tezos-webassembly-interpreter
+  tz-wasm-int
   tezos-context.sigs
   tezos-lwt-result-stdlib
   data-encoding)

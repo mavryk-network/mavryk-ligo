@@ -1499,19 +1499,19 @@ opam:tezos-wasmer:
   variables:
     package: tezos-wasmer
 
-opam:tezos-webassembly-interpreter:
+opam:tz-wasm-int:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_7
   variables:
-    package: tezos-webassembly-interpreter
+    package: tz-wasm-int
 
-opam:tezos-webassembly-interpreter-extra:
+opam:tz-wasm-int-extra:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_7
   variables:
-    package: tezos-webassembly-interpreter-extra
+    package: tz-wasm-int-extra
 
 opam:tezos-workers:
   extends:

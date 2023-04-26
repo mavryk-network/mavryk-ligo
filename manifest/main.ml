@@ -1191,7 +1191,7 @@ let tree_encoding =
 
 let octez_webassembly_interpreter =
   public_lib
-    "tezos-webassembly-interpreter"
+    "tz-wasm-int"
     ~path:"src/lib_webassembly"
     ~license:"Apache-2.0"
     ~extra_authors:["WebAssembly Authors"]
@@ -1202,7 +1202,7 @@ let octez_webassembly_interpreter =
 
 let octez_webassembly_interpreter_extra =
   public_lib
-    "tezos-webassembly-interpreter-extra"
+    "tz-wasm-int-extra"
     ~path:"src/lib_webassembly/extra"
     ~license:"Apache-2.0"
     ~extra_authors:["WebAssembly Authors"]
@@ -1235,7 +1235,7 @@ let _octez_webassembly_test =
   test
     "main"
     ~path:"src/lib_webassembly/tests"
-    ~opam:"tezos-webassembly-interpreter"
+    ~opam:"tz-wasm-int"
     ~dune:Dune.[[S "include_subdirs"; S "no"]]
     ~deps:[octez_webassembly_interpreter |> open_; alcotest]
 

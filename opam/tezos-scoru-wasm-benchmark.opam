@@ -13,7 +13,7 @@ depends: [
   "ppx_deriving"
   "tezos-base"
   "tezt" { >= "3.0.0" }
-  "tezos-webassembly-interpreter"
+  "tz-wasm-int"
   "tezos-context"
   "tz-sc-wasm"
   "tz-sc-wasm-helpers"

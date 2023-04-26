@@ -22,7 +22,7 @@ depends: [
   "alcotest-lwt" { with-test & >= "1.5.0" }
   "tz-sc-wasm-helpers" {with-test}
   "tz-sc-wasm-test-helpers" {with-test}
-  "tezos-webassembly-interpreter-extra" {with-test}
+  "tz-wasm-int-extra" {with-test}
 ]
 build: [
   ["rm" "-rf" "vendors"]

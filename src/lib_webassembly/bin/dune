@@ -5,8 +5,8 @@
  (name main)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-webassembly-interpreter
-  tezos-webassembly-interpreter-extra
+  tz-wasm-int
+  tz-wasm-int-extra
   lwt.unix
   tezos-tree-encoding
   tezos-lazy-containers)

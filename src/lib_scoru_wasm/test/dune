@@ -15,7 +15,7 @@
   alcotest-lwt
   tz-sc-wasm-helpers
   tezos_scoru_wasm_test_helpers
-  tezos-webassembly-interpreter-extra)
+  tz-wasm-int-extra)
  (preprocess (staged_pps ppx_import ppx_deriving.show))
  (flags
   (:standard)

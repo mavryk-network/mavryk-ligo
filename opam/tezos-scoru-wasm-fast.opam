@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-tree-encoding"
-  "tezos-webassembly-interpreter"
+  "tz-wasm-int"
   "tezos-lazy-containers"
   "tz-sc-wasm"
   "tezos-wasmer"
