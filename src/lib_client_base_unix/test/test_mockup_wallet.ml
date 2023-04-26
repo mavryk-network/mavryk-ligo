@@ -110,7 +110,7 @@ let test_no_bootstrap_accounts_file_populates_defaults =
           in
           let () =
             Client_keys.register_signer
-              (module Tezos_signer_backends.Unencrypted)
+              (module Tz-sig-b.Unencrypted)
           in
           let* () = populate io_wallet None in
           let* key_list = Client_keys.list_keys io_wallet in
@@ -162,7 +162,7 @@ let test_with_valid_bootstrap_accounts_file_populates =
           in
           let () =
             Client_keys.register_signer
-              (module Tezos_signer_backends.Unencrypted)
+              (module Tz-sig-b.Unencrypted)
           in
           let* () =
             Lwt_utils_unix.Json.write_file

@@ -156,16 +156,16 @@ let gen_keys_containing ?(encrypted = false) ?(prefix = false)
               in
               if matches hash then
                 let*? pk_uri =
-                  Tezos_signer_backends.Unencrypted.make_pk public_key
+                  Tz-sig-b.Unencrypted.make_pk public_key
                 in
                 let* sk_uri =
                   if encrypted then
-                    Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt
+                    Tz-sig-b.Encrypted.prompt_twice_and_encrypt
                       cctxt
                       secret_key
                   else
                     Lwt.return
-                      (Tezos_signer_backends.Unencrypted.make_sk secret_key)
+                      (Tz-sig-b.Unencrypted.make_sk secret_key)
                 in
                 let* () =
                   register_key
@@ -346,8 +346,8 @@ let generate_test_keys =
             let pkh, pk, sk =
               Signature.generate_key ~algo:Signature.Ed25519 ()
             in
-            let*? pk_uri = Tezos_signer_backends.Unencrypted.make_pk pk in
-            let*? sk_uri = Tezos_signer_backends.Unencrypted.make_sk sk in
+            let*? pk_uri = Tz-sig-b.Unencrypted.make_pk pk in
+            let*? sk_uri = Tz-sig-b.Unencrypted.make_sk sk in
             return ({pkh; pk; sk}, pk_uri, sk_uri, alias))
       in
       (* All keys are registered into a single wallet. *)
@@ -407,13 +407,13 @@ module Bls_commands = struct
     in
     let seed = Mnemonic.to_32_bytes mnemonic in
     let pkh, pk, sk = Tezos_crypto.Aggregate_signature.generate_key ~seed () in
-    let*? pk_uri = Tezos_signer_backends.Unencrypted.Aggregate.make_pk pk in
+    let*? pk_uri = Tz-sig-b.Unencrypted.Aggregate.make_pk pk in
     let* sk_uri =
       if encrypted then
-        Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt_aggregate
+        Tz-sig-b.Encrypted.prompt_twice_and_encrypt_aggregate
           cctxt
           sk
-      else Tezos_signer_backends.Unencrypted.Aggregate.make_sk sk |> Lwt.return
+      else Tz-sig-b.Unencrypted.Aggregate.make_sk sk |> Lwt.return
     in
     register_aggregate_key
       cctxt
@@ -494,7 +494,7 @@ let commands network : Client_context.full Tezos_clic.command list =
   let encrypted_switch () =
     if
       List.exists
-        (fun (scheme, _) -> scheme = Tezos_signer_backends.Unencrypted.scheme)
+        (fun (scheme, _) -> scheme = Tz-sig-b.Unencrypted.scheme)
         (Client_keys.registered_signers ())
     then Tezos_clic.switch ~long:"encrypted" ~doc:"Encrypt the key on-disk" ()
     else Tezos_clic.constant true
@@ -554,9 +554,9 @@ let commands network : Client_context.full Tezos_clic.command list =
           (fun (force, algo) name (cctxt : Client_context.full) ->
             let* name = Secret_key.of_fresh cctxt force name in
             let pkh, pk, sk = Signature.generate_key ~algo () in
-            let*? pk_uri = Tezos_signer_backends.Unencrypted.make_pk pk in
+            let*? pk_uri = Tz-sig-b.Unencrypted.make_pk pk in
             let* sk_uri =
-              Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt cctxt sk
+              Tz-sig-b.Encrypted.prompt_twice_and_encrypt cctxt sk
             in
             register_key cctxt ~force (pkh, pk_uri, sk_uri) name)
     | Some `Testnet | None ->
@@ -571,13 +571,13 @@ let commands network : Client_context.full Tezos_clic.command list =
           (fun (force, algo, encrypted) name (cctxt : Client_context.full) ->
             let* name = Secret_key.of_fresh cctxt force name in
             let pkh, pk, sk = Signature.generate_key ~algo () in
-            let*? pk_uri = Tezos_signer_backends.Unencrypted.make_pk pk in
+            let*? pk_uri = Tz-sig-b.Unencrypted.make_pk pk in
             let* sk_uri =
               if encrypted then
-                Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt
+                Tz-sig-b.Encrypted.prompt_twice_and_encrypt
                   cctxt
                   sk
-              else Lwt.return (Tezos_signer_backends.Unencrypted.make_sk sk)
+              else Lwt.return (Tz-sig-b.Unencrypted.make_sk sk)
             in
             register_key cctxt ~force (pkh, pk_uri, sk_uri) name));
     (match network with
@@ -671,7 +671,7 @@ let commands network : Client_context.full Tezos_clic.command list =
           Lwt.return (Signature.Secret_key.of_b58check (Uri.path sk_uri))
         in
         let* sk_uri =
-          Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt cctxt sk
+          Tz-sig-b.Encrypted.prompt_twice_and_encrypt cctxt sk
         in
         let*! () =
           cctxt#message "Encrypted secret key %a" Uri.pp_hum (sk_uri :> Uri.t)
@@ -715,7 +715,7 @@ let commands network : Client_context.full Tezos_clic.command list =
             let* name = Secret_key.of_fresh cctxt force name in
             let* sk = input_fundraiser_params cctxt in
             let* sk_uri =
-              Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt cctxt sk
+              Tz-sig-b.Encrypted.prompt_twice_and_encrypt cctxt sk
             in
             let* pk_uri = Client_keys.neuterize sk_uri in
             let* () = fail_if_already_registered cctxt force pk_uri name in
@@ -932,12 +932,12 @@ let commands network : Client_context.full Tezos_clic.command list =
                      sk)
               in
               let*? unencrypted_sk_uri =
-                Tezos_signer_backends.Unencrypted.make_sk sk
+                Tz-sig-b.Unencrypted.make_sk sk
               in
               let* sk_uri =
                 match encrypt with
                 | true ->
-                    Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt
+                    Tz-sig-b.Encrypted.prompt_twice_and_encrypt
                       cctxt
                       sk
                 | false -> return unencrypted_sk_uri
