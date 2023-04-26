@@ -2763,7 +2763,7 @@ let octez_mockup =
 
 let octez_mockup_commands =
   public_lib
-    "tz-mok-com"
+    "tezos-mockup-commands"
     ~path:"src/lib_mockup"
     ~synopsis:"Tezos: library of auto-documented RPCs (commands)"
     ~deps:

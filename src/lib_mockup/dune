@@ -48,7 +48,7 @@
 
 (library
  (name tezos_mockup_commands)
- (public_name tz-mok-com)
+ (public_name tezos-mockup-commands)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base

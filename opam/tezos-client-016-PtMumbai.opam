@@ -31,7 +31,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-protocol-environment"
   "tezos-mockup"
-  "tz-mok-com"
+  "tezos-mockup-commands"
   "tc-com"
   "tz-cli-b-unix"
   "tezos-crypto"

@@ -21,7 +21,7 @@ depends: [
   "tc-com"
   "tezos-mockup"
   "tezos-mockup-registration"
-  "tz-mok-com"
+  "tezos-mockup-commands"
   "tezos-proxy"
   "tz-sig-b"
   "lwt-exit"

@@ -15,7 +15,7 @@
   tezos-protocol-016-PtMumbai.parameters
   tezos-mockup
   tezos-mockup-proxy
-  tz-mok-com
+  tezos-mockup-commands
   tezos-baking-016-PtMumbai.tenderbrute)
  (flags
   (:standard)

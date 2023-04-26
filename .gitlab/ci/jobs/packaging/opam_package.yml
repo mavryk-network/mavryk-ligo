@@ -884,12 +884,12 @@ opam:tezos-mockup:
   variables:
     package: tezos-mockup
 
-opam:tz-mok-com:
+opam:tezos-mockup-commands:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_3
   variables:
-    package: tz-mok-com
+    package: tezos-mockup-commands
 
 opam:tezos-mockup-proxy:
   extends:

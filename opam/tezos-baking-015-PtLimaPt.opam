@@ -35,7 +35,7 @@ depends: [
   "tz-cli-b-unix"
   "tezos-mockup"
   "tezos-mockup-proxy"
-  "tz-mok-com"
+  "tezos-mockup-commands"
   "tezos-micheline" {with-test}
   "tezos-base-test-helpers" {with-test}
   "tezos-crypto" {with-test}

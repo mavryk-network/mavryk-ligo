@@ -15,7 +15,7 @@
   tezos-protocol-alpha.parameters
   tezos-mockup
   tezos-mockup-proxy
-  tz-mok-com
+  tezos-mockup-commands
   tezos-baking-alpha.tenderbrute)
  (flags
   (:standard)

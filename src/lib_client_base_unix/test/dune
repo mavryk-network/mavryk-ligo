@@ -5,7 +5,7 @@
  (name test_mockup_wallet)
  (libraries
   tezos-base
-  tz-mok-com
+  tezos-mockup-commands
   tz-cli-b-unix
   tezos-base-test-helpers
   alcotest

@@ -15,7 +15,7 @@
   tzsh-s
   tz-cli-b
   tc-com
-  tz-mok-com
+  tezos-mockup-commands
   tezos-proxy
   tz-cli-b-unix
   tz-sig-b.unix
