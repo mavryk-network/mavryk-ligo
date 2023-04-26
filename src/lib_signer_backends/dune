@@ -10,7 +10,7 @@
   tezos-stdlib
   tezos-client-base
   tezos-rpc-http
-  tezos-rpc-http-client
+  tz-rpc-cli
   tezos-signer-services
   tzsh-s
   uri)

@@ -15,7 +15,7 @@ depends: [
   "cohttp-lwt-unix" { >= "4.0.0" }
   "resto-cohttp-client" { >= "1.0" }
   "tezos-rpc"
-  "tezos-rpc-http-client"
+  "tz-rpc-cli"
 ]
 build: [
   ["rm" "-rf" "vendors"]

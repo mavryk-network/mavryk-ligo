@@ -32,7 +32,7 @@
   tezos-protocol-environment
   tezos-stdlib-unix
   tezos-rpc-http
-  tezos-rpc-http-client
+  tz-rpc-cli
   tezos-mockup-registration)
  (flags
   (:standard)

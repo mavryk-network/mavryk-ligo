@@ -20,7 +20,7 @@ depends: [
   "tezos-protocol-environment"
   "tezos-stdlib-unix"
   "tezos-rpc-http"
-  "tezos-rpc-http-client"
+  "tz-rpc-cli"
   "tezos-mockup-registration"
   "tezos-base-test-helpers" {with-test}
   "tezos-test-helpers" {with-test}

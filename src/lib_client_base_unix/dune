@@ -11,7 +11,7 @@
   tezos-clic
   tezos-rpc
   tezos-rpc-http
-  tezos-rpc-http-client-unix
+  tz-rpc-cli-unix
   tzsh-s
   tezos-stdlib-unix
   tezos-client-base

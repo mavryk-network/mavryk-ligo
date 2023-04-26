@@ -15,8 +15,8 @@
   tezos-stdlib
   tezos-client-base
   tezos-rpc-http
-  tezos-rpc-http-client
-  tezos-rpc-http-client-unix
+  tz-rpc-cli
+  tz-rpc-cli-unix
   tezos-signer-services
   tezos-signer-backends
   tzsh-s

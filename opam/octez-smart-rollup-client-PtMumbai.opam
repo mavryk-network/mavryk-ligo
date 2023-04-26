@@ -18,7 +18,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-client-base-unix"
   "tezos-rpc-http"
-  "tezos-rpc-http-client-unix"
+  "tz-rpc-cli-unix"
   "tezos-protocol-016-PtMumbai"
   "tezos-smart-rollup-016-PtMumbai"
   "tezos-smart-rollup-layer2-016-PtMumbai"

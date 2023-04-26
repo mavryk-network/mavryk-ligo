@@ -24,7 +24,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-shell-context"
   "tezos-context"
-  "tezos-rpc-http-client-unix"
+  "tz-rpc-cli-unix"
   "tezos-context-ops"
   "tezos-rpc"
   "tezos-rpc-http"

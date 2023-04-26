@@ -17,7 +17,7 @@
 
 (library
  (name tezos_rpc_http_client)
- (public_name tezos-rpc-http-client)
+ (public_name tz-rpc-cli)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -32,7 +32,7 @@
 
 (library
  (name tezos_rpc_http_client_unix)
- (public_name tezos-rpc-http-client-unix)
+ (public_name tz-rpc-cli-unix)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-stdlib-unix
@@ -40,7 +40,7 @@
   cohttp-lwt-unix
   resto-cohttp-client
   tezos-rpc
-  tezos-rpc-http-client)
+  tz-rpc-cli)
  (flags
   (:standard)
   -open Tezos_base.TzPervasives

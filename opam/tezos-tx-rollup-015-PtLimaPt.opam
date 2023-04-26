@@ -22,7 +22,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-rpc"
   "tezos-rpc-http"
-  "tezos-rpc-http-client-unix"
+  "tz-rpc-cli-unix"
   "tezos-rpc-http-server"
   "tezos-micheline"
   "tezos-client-base"
