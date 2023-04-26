@@ -18,7 +18,7 @@ depends: [
   "lwt" { >= "5.6.0" }
   "tezos-baking-alpha"
   "tezos-client-alpha"
-  "tz-cli-b-unix"
+  "tezos-client-base-unix"
   "tezos-protocol-alpha"
   "tezt" { >= "3.0.0" }
   "tezt-tezos"

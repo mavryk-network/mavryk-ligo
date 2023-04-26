@@ -12,11 +12,11 @@
   tezos-stdlib-unix
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-009-PsFLoren
   tezos-client-commands
   tezos-rpc
-  tz-cli-b-unix
+  tezos-client-base-unix
   tezos-protocol-plugin-009-PsFLoren)
  (library_flags (:standard -linkall))
  (flags
@@ -43,7 +43,7 @@
   tezos-protocol-009-PsFLoren
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-009-PsFLoren
   tezos-client-commands
   tezos-client-009-PsFLoren.commands

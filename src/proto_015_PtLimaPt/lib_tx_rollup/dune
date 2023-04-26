@@ -20,8 +20,8 @@
   tz-rpc-cli-unix
   tezos-rpc-http-server
   tezos-micheline
-  tz-cli-b
-  tz-cli-b-unix
+  tezos-client-base
+  tezos-client-base-unix
   tezos-shell
   tezos-store
   tezos-workers

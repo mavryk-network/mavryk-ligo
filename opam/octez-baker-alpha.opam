@@ -17,7 +17,7 @@ depends: [
   "tezos-client-commands"
   "tezos-baking-alpha-commands"
   "tezos-stdlib-unix"
-  "tz-cli-b-unix"
+  "tezos-client-base-unix"
 ]
 build: [
   ["rm" "-rf" "vendors"]

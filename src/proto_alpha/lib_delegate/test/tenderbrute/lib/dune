@@ -9,7 +9,7 @@
   tezos-base
   tezos-base.unix
   tezos-protocol-alpha
-  tz-cli-b
+  tezos-client-base
   tezos-client-alpha)
  (flags
   (:standard)

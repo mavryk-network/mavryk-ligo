@@ -3,7 +3,7 @@
 
 (library
  (name tezos_client_base_unix)
- (public_name tz-cli-b-unix)
+ (public_name tezos-client-base-unix)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -14,7 +14,7 @@
   tz-rpc-cli-unix
   tzsh-s
   tezos-stdlib-unix
-  tz-cli-b
+  tezos-client-base
   tezos-client-commands
   tezos-mockup
   tezos-mockup-registration

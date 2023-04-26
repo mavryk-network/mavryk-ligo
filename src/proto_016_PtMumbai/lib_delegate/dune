@@ -13,7 +13,7 @@
   tezos-protocol-plugin-016-PtMumbai
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-016-PtMumbai
   tezos-client-commands
   tezos-stdlib
@@ -57,7 +57,7 @@
   tezos-stdlib-unix
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-016-PtMumbai
   tezos-client-commands
   tezos-baking-016-PtMumbai
@@ -86,7 +86,7 @@
   tezos-protocol-016-PtMumbai
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-016-PtMumbai
   tezos-client-commands
   tezos-baking-016-PtMumbai

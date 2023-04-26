@@ -8,7 +8,7 @@
  (libraries
   tezos-base
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-protocol-environment
   tezos-protocol-genesis
   tezos-client-commands

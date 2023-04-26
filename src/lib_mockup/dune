@@ -7,7 +7,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tz-cli-b
+  tezos-client-base
   tzsh-s
   tezos-protocol-environment
   uri)
@@ -23,7 +23,7 @@
  (libraries
   tezos-base
   tezos-base.unix
-  tz-cli-b
+  tezos-client-base
   tezos-mockup-proxy
   resto-cohttp-self-serving-client
   tezos-rpc
@@ -54,7 +54,7 @@
   tezos-base
   tezos-clic
   tezos-client-commands
-  tz-cli-b
+  tezos-client-base
   tezos-mockup
   tezos-mockup-registration)
  (flags

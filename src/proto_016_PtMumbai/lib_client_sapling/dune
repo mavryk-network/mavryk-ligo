@@ -10,7 +10,7 @@
   tezos-clic
   tezos-crypto
   tezos-stdlib-unix
-  tz-cli-b
+  tezos-client-base
   tezos-signer-backends
   tezos-client-016-PtMumbai
   tezos-client-016-PtMumbai.commands

@@ -16,11 +16,11 @@
   tezos-mockup
   tezos-mockup-registration
   tezos-mockup-commands
-  tz-cli-b
+  tezos-client-base
   tezos-client-014-PtKathma
   tezos-client-commands
   tezos-rpc
-  tz-cli-b-unix
+  tezos-client-base-unix
   tezos-protocol-plugin-014-PtKathma
   uri)
  (library_flags (:standard -linkall))
@@ -50,7 +50,7 @@
   tezos-protocol-014-PtKathma.parameters
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-014-PtKathma
   tezos-client-commands
   tezos-client-014-PtKathma.commands

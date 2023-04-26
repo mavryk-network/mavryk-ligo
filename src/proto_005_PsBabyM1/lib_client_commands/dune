@@ -11,7 +11,7 @@
   tezos-stdlib-unix
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-005-PsBabyM1
   tezos-client-commands
   tezos-rpc)
@@ -37,7 +37,7 @@
   tezos-protocol-005-PsBabyM1
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-005-PsBabyM1
   tezos-client-commands
   tezos-client-005-PsBabyM1.commands

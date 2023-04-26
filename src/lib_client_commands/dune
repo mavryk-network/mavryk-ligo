@@ -10,7 +10,7 @@
   tezos-rpc
   tezos-clic
   tezos-clic.unix
-  tz-cli-b
+  tezos-client-base
   tzsh-s
   tzp2p-s
   tezos-stdlib-unix

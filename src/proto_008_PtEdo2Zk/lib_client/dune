@@ -9,7 +9,7 @@
   tezos-base
   tezos-clic
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-protocol-008-PtEdo2Zk
   tezos-signer-backends
   tezos-protocol-plugin-008-PtEdo2Zk

@@ -16,11 +16,11 @@
   tezos-mockup
   tezos-mockup-registration
   tezos-mockup-commands
-  tz-cli-b
+  tezos-client-base
   tezos-client-013-PtJakart
   tezos-client-commands
   tezos-rpc
-  tz-cli-b-unix
+  tezos-client-base-unix
   tezos-protocol-plugin-013-PtJakart
   uri)
  (library_flags (:standard -linkall))
@@ -50,7 +50,7 @@
   tezos-protocol-013-PtJakart.parameters
   tezos-protocol-environment
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-client-013-PtJakart
   tezos-client-commands
   tezos-client-013-PtJakart.commands

@@ -13,7 +13,7 @@
   tezos-protocol-013-PtJakart
   tezos-micheline
   tezos-client-013-PtJakart
-  tz-cli-b
+  tezos-client-base
   tezos-workers
   tezos-shell)
  (inline_tests (flags -verbose) (modes native))

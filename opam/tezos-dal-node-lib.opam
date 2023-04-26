@@ -12,9 +12,9 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-dal-node-services"
-  "tz-cli-b"
+  "tezos-client-base"
   "tezos-protocol-updater"
-  "tz-cli-b-unix"
+  "tezos-client-base-unix"
   "tezos-stdlib-unix"
   "tezos-crypto-dal"
   "tezos-stdlib" {with-test}

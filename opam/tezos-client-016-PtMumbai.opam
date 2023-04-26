@@ -14,7 +14,7 @@ depends: [
   "tezos-base"
   "tezos-clic"
   "tzsh-s"
-  "tz-cli-b"
+  "tezos-client-base"
   "tezos-protocol-016-PtMumbai"
   "tezos-mockup-registration"
   "tezos-proxy"
@@ -33,7 +33,7 @@ depends: [
   "tezos-mockup"
   "tezos-mockup-commands"
   "tezos-client-commands"
-  "tz-cli-b-unix"
+  "tezos-client-base-unix"
   "tezos-crypto"
 ]
 build: [

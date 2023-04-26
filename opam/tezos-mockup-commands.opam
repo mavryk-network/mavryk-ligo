@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tezos-clic"
   "tezos-client-commands"
-  "tz-cli-b"
+  "tezos-client-base"
   "tezos-mockup"
   "tezos-mockup-registration"
 ]

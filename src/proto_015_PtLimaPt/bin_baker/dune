@@ -14,7 +14,7 @@
   tezos-client-commands
   tezos-baking-015-PtLimaPt-commands
   tezos-stdlib-unix
-  tz-cli-b-unix)
+  tezos-client-base-unix)
  (link_flags
   (:standard)
   (:include %{workspace_root}/static-link-flags.sexp)

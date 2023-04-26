@@ -9,7 +9,7 @@
   tezos-base
   tezos-clic
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-protocol-009-PsFLoren
   tezos-signer-backends
   tezos-protocol-plugin-009-PsFLoren

@@ -8,7 +8,7 @@
   tezos-base-test-helpers
   tezos-micheline
   tezos-client-015-PtLimaPt
-  tz-cli-b
+  tezos-client-base
   tezos-protocol-015-PtLimaPt.parameters
   tezos-protocol-environment
   tezos-stdlib-unix

@@ -17,7 +17,7 @@ depends: [
   "tezos-protocol-016-PtMumbai"
   "tezos-micheline"
   "tezos-client-016-PtMumbai"
-  "tz-cli-b"
+  "tezos-client-base"
   "tezos-workers"
   "tezos-shell"
   "tezos-layer2-utils-016-PtMumbai"

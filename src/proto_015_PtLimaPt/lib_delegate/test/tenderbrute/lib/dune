@@ -9,7 +9,7 @@
   tezos-base
   tezos-base.unix
   tezos-protocol-015-PtLimaPt
-  tz-cli-b
+  tezos-client-base
   tezos-client-015-PtLimaPt)
  (flags
   (:standard)

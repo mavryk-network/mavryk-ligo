@@ -15,11 +15,11 @@ depends: [
   "tz-rpc-cli"
   "tezos-stdlib-unix"
   "tzsh-s"
-  "tz-cli-b"
+  "tezos-client-base"
   "tezos-client-commands"
   "tezos-mockup-commands"
   "tezos-proxy"
-  "tz-cli-b-unix"
+  "tezos-client-base-unix"
   "tezos-signer-backends"
   "uri" { >= "3.1.0" }
   "tezos-client-015-PtLimaPt"

@@ -2537,7 +2537,7 @@ let _octez_context_merkle_proof_tests =
 
 let octez_client_base =
   public_lib
-    "tz-cli-b"
+    "tezos-client-base"
     ~path:"src/lib_client_base"
     ~synopsis:"Tezos: common helpers for `tezos-client`"
     ~deps:
@@ -2569,7 +2569,7 @@ let _octez_client_base_tests =
   tests
     ["bip39_tests"; "pbkdf_tests"]
     ~path:"src/lib_client_base/test"
-    ~opam:"tz-cli-b"
+    ~opam:"tezos-client-base"
     ~with_macos_security_framework:true
     ~deps:[octez_base; octez_client_base |> open_; alcotest]
     ~js_compatible:true
@@ -2579,7 +2579,7 @@ let _bip39_generator =
   private_exe
     "bip39_generator"
     ~path:"src/lib_client_base/gen"
-    ~opam:"tz-cli-b"
+    ~opam:"tezos-client-base"
     ~bisect_ppx:false
 
 let octez_signer_services =
@@ -2912,7 +2912,7 @@ let _octez_proxy_server_config_tests =
 
 let octez_client_base_unix =
   public_lib
-    "tz-cli-b-unix"
+    "tezos-client-base-unix"
     ~path:"src/lib_client_base_unix"
     ~synopsis:
       "Tezos: common helpers for `tezos-client` (unix-specific fragment)"
@@ -2943,7 +2943,7 @@ let _octez_client_base_unix_tests =
   test
     "test_mockup_wallet"
     ~path:"src/lib_client_base_unix/test"
-    ~opam:"tz-cli-b-unix"
+    ~opam:"tezos-client-base-unix"
     ~with_macos_security_framework:true
     ~deps:
       [

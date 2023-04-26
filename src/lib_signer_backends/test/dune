@@ -9,7 +9,7 @@
   tezos-stdlib
   tezos-error-monad
   tezos-crypto
-  tz-cli-b
+  tezos-client-base
   tezos-signer-backends
   alcotest-lwt
   uri)

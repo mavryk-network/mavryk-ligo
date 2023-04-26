@@ -9,7 +9,7 @@
   tezos-base
   tezos-clic
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-protocol-010-PtGRANAD
   tezos-signer-backends
   tezos-protocol-plugin-010-PtGRANAD

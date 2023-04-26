@@ -14,7 +14,7 @@ depends: [
   "aches-lwt" { >= "1.0.0" }
   "tezos-base"
   "tezos-clic"
-  "tz-cli-b"
+  "tezos-client-base"
   "tezos-protocol-environment"
   "tezos-rpc"
   "tzsh-s"

@@ -8,7 +8,7 @@
   tezos-base-test-helpers
   tezos-micheline
   tezos-client-016-PtMumbai
-  tz-cli-b
+  tezos-client-base
   tezos-protocol-016-PtMumbai.parameters
   tezos-protocol-environment
   tezos-stdlib-unix

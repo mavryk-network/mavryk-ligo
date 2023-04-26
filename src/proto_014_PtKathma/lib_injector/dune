@@ -13,7 +13,7 @@
   tezos-protocol-014-PtKathma
   tezos-micheline
   tezos-client-014-PtKathma
-  tz-cli-b
+  tezos-client-base
   tezos-workers
   tezos-shell)
  (inline_tests (flags -verbose) (modes native))

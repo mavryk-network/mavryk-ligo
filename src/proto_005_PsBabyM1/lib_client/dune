@@ -8,7 +8,7 @@
   tezos-base
   tezos-clic
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-protocol-005-PsBabyM1
   tezos-signer-backends
   tezos-rpc

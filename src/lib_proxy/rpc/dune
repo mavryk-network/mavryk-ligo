@@ -7,7 +7,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tz-cli-b
+  tezos-client-base
   tezos-mockup-proxy
   tezos-rpc
   tezos-proxy

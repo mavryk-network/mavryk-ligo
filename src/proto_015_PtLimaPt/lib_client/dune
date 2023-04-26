@@ -9,7 +9,7 @@
   tezos-base
   tezos-clic
   tzsh-s
-  tz-cli-b
+  tezos-client-base
   tezos-protocol-015-PtLimaPt
   tezos-mockup-registration
   tezos-proxy

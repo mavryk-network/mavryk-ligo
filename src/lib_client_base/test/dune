@@ -8,7 +8,7 @@
  (modes native js)
  (libraries
   tezos-base
-  tz-cli-b
+  tezos-client-base
   alcotest)
  (js_of_ocaml)
  (link_flags
@@ -20,20 +20,20 @@
 
 (rule
  (alias runtest)
- (package tz-cli-b)
+ (package tezos-client-base)
  (action (run %{dep:./bip39_tests.exe})))
 
 (rule
  (alias runtest)
- (package tz-cli-b)
+ (package tezos-client-base)
  (action (run %{dep:./pbkdf_tests.exe})))
 
 (rule
  (alias runtest_js)
- (package tz-cli-b)
+ (package tezos-client-base)
  (action (run node %{dep:./bip39_tests.bc.js})))
 
 (rule
  (alias runtest_js)
- (package tz-cli-b)
+ (package tezos-client-base)
  (action (run node %{dep:./pbkdf_tests.bc.js})))
