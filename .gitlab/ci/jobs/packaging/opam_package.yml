@@ -914,12 +914,12 @@ opam:tezos-p2p:
   variables:
     package: tezos-p2p
 
-opam:tezos-p2p-services:
+opam:tzp2p-s:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_7
   variables:
-    package: tezos-p2p-services
+    package: tzp2p-s
 
 opam:tezos-protocol-000-Ps9mPmXa:
   extends:

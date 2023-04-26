@@ -26,7 +26,7 @@
   tezos-shell-context
   tezos-protocol-updater
   tezos-p2p
-  tezos-p2p-services
+  tzp2p-s
   tezos-requester
   tezos-shell
   tezos-shell-services

@@ -24,7 +24,7 @@ depends: [
   "tezos-p2p"
   "tezos-stdlib-unix"
   "tezos-shell-services"
-  "tezos-p2p-services"
+  "tzp2p-s"
   "tezos-protocol-updater"
   "tezos-requester"
   "tezos-workers"

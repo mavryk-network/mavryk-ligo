@@ -22,7 +22,7 @@
   tezos-test-helpers
   tezos-base-test-helpers
   tezos-event-logging-test-helpers
-  tezos-p2p-services
+  tzp2p-s
   alcotest-lwt
   astring)
  (link_flags

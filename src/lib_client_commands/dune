@@ -12,7 +12,7 @@
   tezos-clic.unix
   tezos-client-base
   tezos-shell-services
-  tezos-p2p-services
+  tzp2p-s
   tezos-stdlib-unix
   tezos-signer-backends
   data-encoding

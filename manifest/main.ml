@@ -1297,7 +1297,7 @@ let _octez_version_tests =
 
 let octez_p2p_services =
   public_lib
-    "tezos-p2p-services"
+    "tzp2p-s"
     ~path:"src/lib_p2p_services"
     ~synopsis:"Tezos: descriptions of RPCs exported by `tezos-p2p`"
     ~deps:[octez_base |> open_ ~m:"TzPervasives"; octez_rpc]

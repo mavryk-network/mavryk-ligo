@@ -27,7 +27,7 @@
   tezos-mockup-proxy
   resto-cohttp-self-serving-client
   tezos-rpc
-  tezos-p2p-services
+  tzp2p-s
   tezos-p2p
   tezos-protocol-environment
   tezos-stdlib-unix
