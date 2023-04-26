@@ -107,7 +107,7 @@ let receive conn =
     let* r = read conn (mk_buffer_safe buf) in
     match r with
     | Ok _ -> loop ()
-    | Error (Tezos_p2p_services.P2p_errors.Connection_closed :: _) ->
+    | Error (Tz_p2p_s.P2p_errors.Connection_closed :: _) ->
         return_unit
     | Error err -> Lwt.fail (Error err)
   in

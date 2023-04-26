@@ -23,4 +23,4 @@
   -open Tezos_base_unix
   -open Tezos_stdlib_unix
   -open Tezos_stdlib
-  -open Tezos_p2p_services))
+  -open Tz_p2p_s))

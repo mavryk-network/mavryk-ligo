@@ -95,8 +95,8 @@ module Make (E : MENV) = struct
     let open Tezos_p2p in
     let peer_meta_config =
       {
-        P2p_params.peer_meta_encoding = Tezos_p2p_services.Peer_metadata.encoding;
-        peer_meta_initial = Tezos_p2p_services.Peer_metadata.empty;
+        P2p_params.peer_meta_encoding = Tz_p2p_s.Peer_metadata.encoding;
+        peer_meta_initial = Tz_p2p_s.Peer_metadata.empty;
         score = (fun _ -> 0.0);
       }
     in
@@ -112,7 +112,7 @@ module Make (E : MENV) = struct
       P2p.faked_network
         message_config
         peer_meta_config
-        Tezos_p2p_services.Connection_metadata.
+        Tz_p2p_s.Connection_metadata.
           {disable_mempool = true; private_node = true}
 
   (* Create dummy RPC directory for the p2p *)

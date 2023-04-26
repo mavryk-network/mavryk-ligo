@@ -66,10 +66,10 @@ and p2p = {
   advertised_net_port : int option;
   discovery_addr : string option;
   private_mode : bool;
-  limits : Tezos_p2p_services.P2p_limits.t;
+  limits : Tz_p2p_s.P2p_limits.t;
   disable_mempool : bool;
   enable_testchain : bool;
-  reconnection_config : Tezos_p2p_services.Point_reconnection_config.t;
+  reconnection_config : Tz_p2p_s.Point_reconnection_config.t;
 }
 
 and rpc = {

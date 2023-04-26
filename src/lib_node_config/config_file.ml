@@ -396,10 +396,10 @@ and p2p = {
   advertised_net_port : int option;
   discovery_addr : string option;
   private_mode : bool;
-  limits : Tezos_p2p_services.P2p_limits.t;
+  limits : Tz_p2p_s.P2p_limits.t;
   disable_mempool : bool;
   enable_testchain : bool;
-  reconnection_config : Tezos_p2p_services.Point_reconnection_config.t;
+  reconnection_config : Tz_p2p_s.Point_reconnection_config.t;
 }
 
 and rpc = {
@@ -421,10 +421,10 @@ let default_p2p =
     advertised_net_port = None;
     discovery_addr = None;
     private_mode = false;
-    limits = Tezos_p2p_services.P2p_limits.default;
+    limits = Tz_p2p_s.P2p_limits.default;
     disable_mempool = false;
     enable_testchain = false;
-    reconnection_config = Tezos_p2p_services.Point_reconnection_config.default;
+    reconnection_config = Tz_p2p_s.Point_reconnection_config.default;
   }
 
 let default_rpc =
@@ -547,8 +547,8 @@ let p2p =
        (dft
           "limits"
           ~description:"Network limits"
-          Tezos_p2p_services.P2p_limits.encoding
-          Tezos_p2p_services.P2p_limits.default)
+          Tz_p2p_s.P2p_limits.encoding
+          Tz_p2p_s.P2p_limits.default)
        (dft
           "disable_mempool"
           ~description:
@@ -568,7 +568,7 @@ let p2p =
              blocks."
           bool
           false)
-       (let open Tezos_p2p_services.Point_reconnection_config in
+       (let open Tz_p2p_s.Point_reconnection_config in
        dft
          "greylisting_config"
          ~description:
@@ -877,7 +877,7 @@ let update ?(disable_config_validation = false) ?data_dir ?min_connections
   in
   let peer_table_size = Option.map (fun i -> (i, i / 4 * 3)) peer_table_size in
   let unopt_list ~default = function [] -> default | l -> l in
-  let limits : Tezos_p2p_services.P2p_limits.t =
+  let limits : Tz_p2p_s.P2p_limits.t =
     {
       cfg.p2p.limits with
       min_connections =

@@ -50,7 +50,7 @@
   -open Tezos_shell_context
   -open Tezos_protocol_updater
   -open Tezos_p2p
-  -open Tezos_p2p_services
+  -open Tz_p2p_s
   -open Tezos_shell
   -open Tezos_shell_services
   -open Tezos_stdlib_unix
