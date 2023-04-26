@@ -38,8 +38,8 @@
   aches
   aches-lwt
   tezos-injector-alpha
-  tezos-scoru-wasm
-  tezos-scoru-wasm-fast
+  tz-sc-wasm
+  tz-sc-wasm-fast
   tezos-crypto-dal
   prometheus-app
   octez-node-config)

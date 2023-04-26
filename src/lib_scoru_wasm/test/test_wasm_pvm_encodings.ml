@@ -29,7 +29,7 @@
     Component:    Tree_encoding_decoding
     Invocation:   dune exec  src/lib_scoru_wasm/test/test_scoru_wasm.exe \
                     -- test "^WASM PVM Encodings$"
-    Subject:      WASM PVM encoding tests for the tezos-scoru-wasm library
+    Subject:      WASM PVM encoding tests for the tz-sc-wasm library
 *)
 
 open Tztest

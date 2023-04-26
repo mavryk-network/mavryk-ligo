@@ -16,10 +16,10 @@
   tezos-test-helpers
   tezos-alpha-test-helpers
   alcotest-lwt
-  tezos-scoru-wasm-helpers
+  tz-sc-wasm-helpers
   tezos-stdlib
   tezos-crypto-dal
-  tezos-scoru-wasm
+  tz-sc-wasm
   tezos-webassembly-interpreter-extra)
  (link_flags
   (:standard)

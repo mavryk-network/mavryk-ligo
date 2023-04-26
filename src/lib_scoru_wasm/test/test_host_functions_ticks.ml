@@ -29,7 +29,7 @@
     Invocation:   dune exec  src/lib_scoru_wasm/test/test_scoru_wasm.exe \
                     -- test "^Host functions ticks$"
     Subject:      Tickification of host functions tests for the \
-                  tezos-scoru-wasm library
+                  tz-sc-wasm library
 *)
 
 open Tztest

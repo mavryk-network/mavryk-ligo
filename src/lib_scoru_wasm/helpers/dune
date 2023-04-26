@@ -3,7 +3,7 @@
 
 (library
  (name tezos_scoru_wasm_helpers)
- (public_name tezos-scoru-wasm-helpers)
+ (public_name tz-sc-wasm-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -12,8 +12,8 @@
   tezos-context.disk
   tezos-base-test-helpers
   tezos-test-helpers
-  tezos-scoru-wasm
-  tezos-scoru-wasm-fast
+  tz-sc-wasm
+  tz-sc-wasm-fast
   qcheck-alcotest
   alcotest-lwt
   tezt

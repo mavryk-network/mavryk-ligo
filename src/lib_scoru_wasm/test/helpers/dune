@@ -3,7 +3,7 @@
 
 (library
  (name tezos_scoru_wasm_test_helpers)
- (package tezos-scoru-wasm-test-helpers)
+ (package tz-sc-wasm-test-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -12,9 +12,9 @@
   tezos-context.disk
   tezos-base-test-helpers
   tezos-test-helpers
-  tezos-scoru-wasm
-  tezos-scoru-wasm-fast
-  tezos-scoru-wasm-helpers
+  tz-sc-wasm
+  tz-sc-wasm-fast
+  tz-sc-wasm-helpers
   qcheck-alcotest
   alcotest-lwt
   tezos-webassembly-interpreter-extra)

@@ -14,7 +14,7 @@ depends: [
   "tezos-tree-encoding"
   "tezos-webassembly-interpreter"
   "tezos-lazy-containers"
-  "tezos-scoru-wasm"
+  "tz-sc-wasm"
   "tezos-wasmer"
 ]
 build: [

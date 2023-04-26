@@ -20,7 +20,7 @@
   tezos-protocol-environment.structs
   tezos-micheline
   tezos-context.memory
-  tezos-scoru-wasm
+  tz-sc-wasm
   tezos-event-logging)
  (flags
   (:standard)

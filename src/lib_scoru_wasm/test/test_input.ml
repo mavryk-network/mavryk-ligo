@@ -28,7 +28,7 @@
     Component:    Lib_scoru_wasm input
     Invocation:   dune exec  src/lib_scoru_wasm/test/test_scoru_wasm.exe \
                     -- test "^Input$"
-    Subject:      Input tests for the tezos-scoru-wasm library
+    Subject:      Input tests for the tz-sc-wasm library
 *)
 
 open Tztest

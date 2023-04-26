@@ -1325,34 +1325,34 @@ opam:tezos-sapling:
   variables:
     package: tezos-sapling
 
-opam:tezos-scoru-wasm:
+opam:tz-sc-wasm:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-scoru-wasm
+    package: tz-sc-wasm
 
-# Ignoring unreleased package tezos-scoru-wasm-benchmark.
+# Ignoring unreleased package tz-sc-wasm-benchmark.
 
-opam:tezos-scoru-wasm-fast:
+opam:tz-sc-wasm-fast:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-scoru-wasm-fast
+    package: tz-sc-wasm-fast
 
-# Ignoring unreleased package tezos-scoru-wasm-fast-test.
+# Ignoring unreleased package tz-sc-wasm-fast-test.
 
-opam:tezos-scoru-wasm-helpers:
+opam:tz-sc-wasm-helpers:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-scoru-wasm-helpers
+    package: tz-sc-wasm-helpers
 
-# Ignoring unreleased package tezos-scoru-wasm-test.
+# Ignoring unreleased package tz-sc-wasm-test.
 
-# Ignoring unreleased package tezos-scoru-wasm-test-helpers.
+# Ignoring unreleased package tz-sc-wasm-test-helpers.
 
 opam:tezos-shell:
   extends:
