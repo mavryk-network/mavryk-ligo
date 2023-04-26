@@ -21,7 +21,7 @@
   tezos-shell-context
   tezos-context
   tezos-context.memory
-  tz-rpc-cli-unix
+  tezos-rpc-http-client-unix
   tezos-context-ops
   tezos-rpc
   tezos-rpc-http

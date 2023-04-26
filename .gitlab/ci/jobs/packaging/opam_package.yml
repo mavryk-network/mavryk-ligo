@@ -1297,19 +1297,19 @@ opam:tezos-rpc-http:
   variables:
     package: tezos-rpc-http
 
-opam:tz-rpc-cli:
+opam:tezos-rpc-http-client:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tz-rpc-cli
+    package: tezos-rpc-http-client
 
-opam:tz-rpc-cli-unix:
+opam:tezos-rpc-http-client-unix:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tz-rpc-cli-unix
+    package: tezos-rpc-http-client-unix
 
 opam:tezos-rpc-http-server:
   extends:

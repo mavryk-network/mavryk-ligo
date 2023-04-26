@@ -11,7 +11,7 @@
   tezos-protocol-environment
   tezos-rpc-http
   resto-cohttp-self-serving-client
-  tz-rpc-cli
+  tezos-rpc-http-client
   tzsh-s
   uri)
  (flags

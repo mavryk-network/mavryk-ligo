@@ -16,7 +16,7 @@
   lwt.unix
   tezos-proxy
   tezos-proxy-server-config
-  tz-rpc-cli-unix
+  tezos-rpc-http-client-unix
   tezos-rpc-http-server
   tzsh-s
   tezos-shell-context

@@ -2456,7 +2456,7 @@ let octez_rpc_http =
 
 let octez_rpc_http_client =
   public_lib
-    "tz-rpc-cli"
+    "tezos-rpc-http-client"
     ~path:"src/lib_rpc_http"
     ~synopsis:"Tezos: library of auto-documented RPCs (http client)"
     ~deps:
@@ -2470,7 +2470,7 @@ let octez_rpc_http_client =
 
 let octez_rpc_http_client_unix =
   public_lib
-    "tz-rpc-cli-unix"
+    "tezos-rpc-http-client-unix"
     ~path:"src/lib_rpc_http"
     ~synopsis:"Tezos: unix implementation of the RPC client"
     ~deps:
