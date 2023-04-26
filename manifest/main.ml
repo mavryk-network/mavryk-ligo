@@ -2678,7 +2678,7 @@ let _octez_signer_backends_unix_tests =
 
 let octez_client_commands =
   public_lib
-    "tezos-client-commands"
+    "tc-com"
     ~path:"src/lib_client_commands"
     ~synopsis:"Tezos: protocol agnostic commands for `tezos-client`"
     ~deps:

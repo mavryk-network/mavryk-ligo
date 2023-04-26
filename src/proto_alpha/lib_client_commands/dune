@@ -18,7 +18,7 @@
   tezos-mockup-commands
   tz-cli-b
   tezos-client-alpha
-  tezos-client-commands
+  tc-com
   tezos-rpc
   tz-cli-b-unix
   tezos-protocol-plugin-alpha
@@ -51,7 +51,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-alpha
-  tezos-client-commands
+  tc-com
   tezos-client-alpha.commands
   tezos-client-alpha.sapling
   tezos-rpc

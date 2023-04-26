@@ -17,7 +17,7 @@
   tezos-mockup-commands
   tz-cli-b
   tezos-client-011-PtHangz2
-  tezos-client-commands
+  tc-com
   tezos-rpc
   tz-cli-b-unix
   tezos-protocol-plugin-011-PtHangz2
@@ -49,7 +49,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-011-PtHangz2
-  tezos-client-commands
+  tc-com
   tezos-client-011-PtHangz2.commands
   tezos-client-011-PtHangz2.sapling
   tezos-rpc

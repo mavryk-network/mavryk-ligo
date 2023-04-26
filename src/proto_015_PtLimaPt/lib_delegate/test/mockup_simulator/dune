@@ -8,7 +8,7 @@
   tezos-base
   tezos-protocol-015-PtLimaPt
   tezos-client-015-PtLimaPt
-  tezos-client-commands
+  tc-com
   tezos-baking-015-PtLimaPt
   tezos-stdlib-unix
   tz-cli-b-unix

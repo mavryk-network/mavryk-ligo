@@ -17,7 +17,7 @@
   tezos-mockup-commands
   tz-cli-b
   tezos-client-012-Psithaca
-  tezos-client-commands
+  tc-com
   tezos-rpc
   tz-cli-b-unix
   tezos-protocol-plugin-012-Psithaca
@@ -49,7 +49,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-012-Psithaca
-  tezos-client-commands
+  tc-com
   tezos-client-012-Psithaca.commands
   tezos-client-012-Psithaca.sapling
   tezos-rpc

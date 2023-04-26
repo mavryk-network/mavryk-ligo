@@ -16,7 +16,7 @@ depends: [
   "tezos-crypto"
   "tezos-protocol-015-PtLimaPt"
   "tezos-client-015-PtLimaPt"
-  "tezos-client-commands"
+  "tc-com"
   "tezos-context"
   "tezos-baking-015-PtLimaPt-commands"
   "tezos-stdlib-unix"

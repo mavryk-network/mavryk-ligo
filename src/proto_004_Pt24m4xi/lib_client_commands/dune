@@ -13,7 +13,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-004-Pt24m4xi
-  tezos-client-commands
+  tc-com
   tezos-rpc)
  (library_flags (:standard -linkall))
  (flags
@@ -39,7 +39,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-004-Pt24m4xi
-  tezos-client-commands
+  tc-com
   tezos-client-004-Pt24m4xi.commands
   tezos-rpc)
  (library_flags (:standard -linkall))

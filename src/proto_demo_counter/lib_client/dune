@@ -9,7 +9,7 @@
   tezos-base
   tzsh-s
   tz-cli-b
-  tezos-client-commands
+  tc-com
   tezos-protocol-demo-counter)
  (library_flags (:standard -linkall))
  (flags

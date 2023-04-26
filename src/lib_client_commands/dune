@@ -3,7 +3,7 @@
 
 (library
  (name tezos_client_commands)
- (public_name tezos-client-commands)
+ (public_name tc-com)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base

@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tzsh-s"
   "tz-cli-b"
-  "tezos-client-commands"
+  "tc-com"
   "tezos-protocol-demo-counter"
 ]
 build: [

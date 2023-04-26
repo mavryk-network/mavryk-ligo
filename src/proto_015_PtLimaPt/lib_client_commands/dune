@@ -18,7 +18,7 @@
   tezos-mockup-commands
   tz-cli-b
   tezos-client-015-PtLimaPt
-  tezos-client-commands
+  tc-com
   tezos-rpc
   tz-cli-b-unix
   tezos-protocol-plugin-015-PtLimaPt
@@ -51,7 +51,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-015-PtLimaPt
-  tezos-client-commands
+  tc-com
   tezos-client-015-PtLimaPt.commands
   tezos-client-015-PtLimaPt.sapling
   tezos-rpc

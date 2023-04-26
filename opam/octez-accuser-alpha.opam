@@ -14,7 +14,7 @@ depends: [
   "tezos-clic"
   "tezos-protocol-alpha"
   "tezos-client-alpha"
-  "tezos-client-commands"
+  "tc-com"
   "tezos-baking-alpha-commands"
   "tezos-stdlib-unix"
   "tz-cli-b-unix"

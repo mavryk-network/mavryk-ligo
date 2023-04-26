@@ -15,7 +15,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-alpha
-  tezos-client-commands
+  tc-com
   tezos-stdlib
   tezos-stdlib-unix
   tezos-shell-context
@@ -59,7 +59,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-alpha
-  tezos-client-commands
+  tc-com
   tezos-baking-alpha
   tezos-rpc
   uri)
@@ -88,7 +88,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-alpha
-  tezos-client-commands
+  tc-com
   tezos-baking-alpha
   tezos-baking-alpha-commands
   tezos-rpc)

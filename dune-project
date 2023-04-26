@@ -69,7 +69,7 @@
 (package (name tezos-client-alpha))
 (package (name tz-cli-b))
 (package (name tz-cli-b-unix))
-(package (name tezos-client-commands))
+(package (name tc-com))
 (package (name tezos-client-demo-counter))
 (package (name tezos-client-genesis))
 (package (name tezos-context))

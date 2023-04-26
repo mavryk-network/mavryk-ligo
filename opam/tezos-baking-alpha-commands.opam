@@ -17,7 +17,7 @@ depends: [
   "tzsh-s"
   "tz-cli-b"
   "tezos-client-alpha"
-  "tezos-client-commands"
+  "tc-com"
   "tezos-baking-alpha"
   "tezos-rpc"
   "uri" { >= "3.1.0" }

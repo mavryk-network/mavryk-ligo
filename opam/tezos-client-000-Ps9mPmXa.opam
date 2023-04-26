@@ -16,7 +16,7 @@ depends: [
   "tz-cli-b"
   "tezos-protocol-000-Ps9mPmXa"
   "tezos-rpc"
-  "tezos-client-commands"
+  "tc-com"
   "tezos-stdlib-unix"
 ]
 build: [

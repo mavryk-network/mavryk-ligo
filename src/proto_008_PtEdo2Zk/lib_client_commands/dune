@@ -14,7 +14,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-008-PtEdo2Zk
-  tezos-client-commands
+  tc-com
   tezos-rpc
   tezos-protocol-plugin-008-PtEdo2Zk)
  (library_flags (:standard -linkall))
@@ -43,7 +43,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-008-PtEdo2Zk
-  tezos-client-commands
+  tc-com
   tezos-client-008-PtEdo2Zk.commands
   tezos-rpc
   tezos-protocol-plugin-008-PtEdo2Zk)

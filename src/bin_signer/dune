@@ -12,7 +12,7 @@
   tezos-clic
   tz-cli-b
   tz-cli-b-unix
-  tezos-client-commands
+  tc-com
   tz-sig-s
   tezos-rpc-http
   tezos-rpc-http-server

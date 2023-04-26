@@ -14,7 +14,7 @@
   tezos-stdlib-unix
   tzsh-s
   tz-cli-b
-  tezos-client-commands
+  tc-com
   tezos-mockup-commands
   tezos-proxy
   tz-cli-b-unix

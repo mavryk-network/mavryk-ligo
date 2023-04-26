@@ -53,7 +53,7 @@
  (libraries
   tezos-base
   tezos-clic
-  tezos-client-commands
+  tc-com
   tz-cli-b
   tezos-mockup
   tezos-mockup-registration)

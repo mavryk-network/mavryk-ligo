@@ -11,7 +11,7 @@
   tezos-clic
   tz-cli-b
   tezos-client-016-PtMumbai
-  tezos-client-commands
+  tc-com
   tezos-stdlib-unix
   tz-cli-b-unix
   tezos-rpc-http
