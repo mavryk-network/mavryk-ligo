@@ -15,7 +15,7 @@
   tezos-client-015-PtLimaPt
   tezos-client-015-PtLimaPt.commands
   tezos-protocol-015-PtLimaPt
-  tp-plugin-015)
+  tezos-protocol-plugin-015-PtLimaPt)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

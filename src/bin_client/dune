@@ -97,7 +97,7 @@
    (-> void_for_linking-tezos-protocol-plugin-014-PtKathma.empty))
   tezos-client-015-PtLimaPt.commands-registration
   tezos-baking-015-PtLimaPt-commands.registration
-  tp-plugin-015
+  tezos-protocol-plugin-015-PtLimaPt
   tc-016.commands-registration
   tezos-baking-016-PtMumbai-commands.registration
   tp-plugin-016

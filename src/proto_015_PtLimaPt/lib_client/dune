@@ -14,7 +14,7 @@
   tezos-mockup-registration
   tz-prx
   tz-sig-b
-  tp-plugin-015
+  tezos-protocol-plugin-015-PtLimaPt
   tezos-protocol-015-PtLimaPt.parameters
   tezos-rpc
   uri)

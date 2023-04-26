@@ -22,7 +22,7 @@
   tezos-015-PtLimaPt-test-helpers
   tezos-sapling
   tezos-client-015-PtLimaPt
-  tp-plugin-015
+  tezos-protocol-plugin-015-PtLimaPt
   tpe)
  (library_flags (:standard -linkall))
  (flags

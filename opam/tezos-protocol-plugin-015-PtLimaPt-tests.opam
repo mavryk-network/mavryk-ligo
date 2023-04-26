@@ -17,7 +17,7 @@ depends: [
   "qcheck-alcotest" { with-test & >= "0.20" }
   "tezos-stdlib-unix" {with-test}
   "tezos-micheline" {with-test}
-  "tp-plugin-015" {with-test}
+  "tezos-protocol-plugin-015-PtLimaPt" {with-test}
   "tezos-protocol-015-PtLimaPt" {with-test}
   "tezos-015-PtLimaPt-test-helpers" {with-test}
 ]

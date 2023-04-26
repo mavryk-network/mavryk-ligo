@@ -25,7 +25,7 @@
   tezos-shell
   tezos-store
   tezos-workers
-  tp-plugin-015
+  tezos-protocol-plugin-015-PtLimaPt
   tezos-injector-015-PtLimaPt)
  (inline_tests (flags -verbose) (modes native))
  (preprocess (pps ppx_expect))

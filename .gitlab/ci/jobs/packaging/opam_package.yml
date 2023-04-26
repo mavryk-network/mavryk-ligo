@@ -1207,21 +1207,21 @@ opam:tezos-protocol-plugin-014-PtKathma-registerer:
   variables:
     package: tezos-protocol-plugin-014-PtKathma-registerer
 
-opam:tp-plugin-015:
+opam:tezos-protocol-plugin-015-PtLimaPt:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_4
   variables:
-    package: tp-plugin-015
+    package: tezos-protocol-plugin-015-PtLimaPt
 
-opam:tp-plugin-015-registerer:
+opam:tezos-protocol-plugin-015-PtLimaPt-registerer:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tp-plugin-015-registerer
+    package: tezos-protocol-plugin-015-PtLimaPt-registerer
 
-# Ignoring unreleased package tp-plugin-015-tests.
+# Ignoring unreleased package tezos-protocol-plugin-015-PtLimaPt-tests.
 
 opam:tp-plugin-016:
   extends:

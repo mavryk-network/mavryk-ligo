@@ -10,7 +10,7 @@
   tezos-clic
   tezos-version
   tezos-protocol-015-PtLimaPt
-  tp-plugin-015
+  tezos-protocol-plugin-015-PtLimaPt
   tpe
   tzsh-s
   tz-cli-b

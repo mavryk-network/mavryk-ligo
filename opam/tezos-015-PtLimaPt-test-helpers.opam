@@ -19,7 +19,7 @@ depends: [
   "tezos-protocol-015-PtLimaPt"
   "tezos-client-015-PtLimaPt"
   "tpe"
-  "tp-plugin-015"
+  "tezos-protocol-plugin-015-PtLimaPt"
   "tzsh-s"
   "tezos-plompiler" { >= "1.0.1" & < "2.0.0" }
 ]

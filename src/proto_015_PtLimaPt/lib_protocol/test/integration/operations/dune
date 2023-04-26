@@ -10,7 +10,7 @@
   tezos-client-015-PtLimaPt
   tezos-015-PtLimaPt-test-helpers
   tezos-base-test-helpers
-  tp-plugin-015)
+  tezos-protocol-plugin-015-PtLimaPt)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp))

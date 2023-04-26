@@ -21,7 +21,7 @@
   tc-com
   tezos-rpc
   tz-cli-b-unix
-  tp-plugin-015
+  tezos-protocol-plugin-015-PtLimaPt
   uri)
  (library_flags (:standard -linkall))
  (flags
@@ -55,7 +55,7 @@
   tezos-client-015-PtLimaPt.commands
   tezos-client-015-PtLimaPt.sapling
   tezos-rpc
-  tp-plugin-015)
+  tezos-protocol-plugin-015-PtLimaPt)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

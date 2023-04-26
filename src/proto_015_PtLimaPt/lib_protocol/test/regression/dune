@@ -10,7 +10,7 @@
   tezt-tezos
   tezos-protocol-015-PtLimaPt
   tezos-client-015-PtLimaPt
-  tp-plugin-015
+  tezos-protocol-plugin-015-PtLimaPt
   tezos-015-PtLimaPt-test-helpers
   tezos-micheline)
  (library_flags (:standard -linkall))
