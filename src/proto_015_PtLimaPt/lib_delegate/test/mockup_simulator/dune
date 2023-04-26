@@ -15,7 +15,7 @@
   tezos-protocol-015-PtLimaPt.parameters
   tezos-mockup
   tezos-mockup-proxy
-  tezos-mockup-commands
+  tz-mok-com
   tezos-baking-015-PtLimaPt.tenderbrute)
  (flags
   (:standard)

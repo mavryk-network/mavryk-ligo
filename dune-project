@@ -123,7 +123,7 @@
 (package (name tezos-micheline))
 (package (name tezos-micheline-rewriting))
 (package (name tezos-mockup))
-(package (name tezos-mockup-commands))
+(package (name tz-mok-com))
 (package (name tezos-mockup-proxy))
 (package (name tezos-mockup-registration))
 (package (name tezos-openapi))

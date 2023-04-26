@@ -18,7 +18,7 @@
   tc-com
   tezos-mockup
   tezos-mockup-registration
-  tezos-mockup-commands
+  tz-mok-com
   tezos-proxy
   tezos-proxy.rpc
   tz-sig-b.unix

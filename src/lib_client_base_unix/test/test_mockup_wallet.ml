@@ -176,7 +176,7 @@ let test_with_valid_bootstrap_accounts_file_populates =
 
 let () =
   Alcotest_lwt.run
-    "tezos-mockup-commands"
+    "tz-mok-com"
     [
       ( "mockup_wallet",
         [
