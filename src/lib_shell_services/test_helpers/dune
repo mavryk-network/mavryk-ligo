@@ -3,10 +3,10 @@
 
 (library
  (name tezos_shell_services_test_helpers)
- (public_name tezos-shell-services-test-helpers)
+ (public_name tzsh-s-test-helpers)
  (libraries
   tezos-base
-  tezos-shell-services
+  tzsh-s
   tezos-test-helpers
   qcheck-core
   tezos-context.memory

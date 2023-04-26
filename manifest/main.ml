@@ -1355,7 +1355,7 @@ let octez_merkle_proof_encoding =
 
 let octez_shell_services =
   public_lib
-    "tezos-shell-services"
+    "tzsh-s"
     ~path:"src/lib_shell_services"
     ~synopsis:"Tezos: descriptions of RPCs exported by `tezos-shell`"
     ~deps:
@@ -1390,7 +1390,7 @@ let _octez_shell_services_tests =
   test
     "test_block_services"
     ~path:"src/lib_shell_services/test"
-    ~opam:"tezos-shell-services"
+    ~opam:"tzsh-s"
     ~deps:
       [
         octez_base |> open_ ~m:"TzPervasives";
@@ -2831,7 +2831,7 @@ let octez_proxy_rpc =
 
 let octez_shell_services_test_helpers =
   public_lib
-    "tezos-shell-services-test-helpers"
+    "tzsh-s-test-helpers"
     ~path:"src/lib_shell_services/test_helpers"
     ~synopsis:"Tezos: Tezos shell_services test helpers"
     ~deps:
@@ -2850,7 +2850,7 @@ let _octez_shell_service_test_helpers_tests =
   test
     "test_block_services"
     ~path:"src/lib_shell_services/test_helpers/test"
-    ~opam:"tezos-shell-services-test-helpers"
+    ~opam:"tzsh-s-test-helpers"
     ~deps:
       [
         octez_base |> open_ ~m:"TzPervasives";

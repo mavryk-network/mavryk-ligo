@@ -13,7 +13,7 @@ depends: [
   "ppx_expect"
   "tezos-base"
   "tezos-clic"
-  "tezos-shell-services"
+  "tzsh-s"
   "tezos-client-base"
   "tezos-protocol-016-PtMumbai"
   "tezos-mockup-registration"

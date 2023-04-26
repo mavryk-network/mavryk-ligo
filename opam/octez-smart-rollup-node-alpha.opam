@@ -26,7 +26,7 @@ depends: [
   "tezos-workers"
   "tezos-dal-node-services"
   "tezos-dal-node-lib"
-  "tezos-shell-services"
+  "tzsh-s"
   "tezos-smart-rollup-alpha"
   "tezos-smart-rollup-layer2-alpha"
   "tezos-layer2-utils-alpha"

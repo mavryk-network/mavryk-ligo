@@ -7,7 +7,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-shell-services
+  tzsh-s
   tezos-client-base
   tezos-client-commands
   tezos-protocol-demo-counter)

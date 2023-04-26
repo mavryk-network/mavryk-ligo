@@ -19,7 +19,7 @@
   tezos-store.unix
   tezos-store.unix-reconstruction
   tezos-store.unix-snapshots
-  tezos-shell-services
+  tzsh-s
   tezos-stdlib-unix
   tezos-validation
   tezos-protocol-updater

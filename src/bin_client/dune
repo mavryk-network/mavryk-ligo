@@ -12,7 +12,7 @@
   tezos-clic
   tezos-rpc-http-client
   tezos-stdlib-unix
-  tezos-shell-services
+  tzsh-s
   tezos-client-base
   tezos-client-commands
   tezos-mockup-commands

@@ -12,7 +12,7 @@
   tezos-rpc-http
   resto-cohttp-self-serving-client
   tezos-rpc-http-client
-  tezos-shell-services
+  tzsh-s
   uri)
  (flags
   (:standard)

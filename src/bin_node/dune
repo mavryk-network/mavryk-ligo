@@ -12,7 +12,7 @@
   tezos-version
   octez-node-config
   tezos-stdlib-unix
-  tezos-shell-services
+  tzsh-s
   tezos-rpc-http
   tezos-rpc-http-server
   tezos-p2p

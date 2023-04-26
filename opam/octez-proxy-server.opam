@@ -20,7 +20,7 @@ depends: [
   "tezos-proxy-server-config"
   "tezos-rpc-http-client-unix"
   "tezos-rpc-http-server"
-  "tezos-shell-services"
+  "tzsh-s"
   "tezos-shell-context"
   "tezos-version"
   "uri" { >= "3.1.0" }

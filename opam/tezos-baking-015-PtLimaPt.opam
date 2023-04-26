@@ -16,7 +16,7 @@ depends: [
   "tezos-protocol-015-PtLimaPt"
   "tezos-protocol-plugin-015-PtLimaPt"
   "tezos-protocol-environment"
-  "tezos-shell-services"
+  "tzsh-s"
   "tezos-client-base"
   "tezos-client-015-PtLimaPt"
   "tezos-client-commands"

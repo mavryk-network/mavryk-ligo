@@ -11,7 +11,7 @@
   tezos-protocol-008-PtEdo2Zk
   tezos-stdlib-unix
   tezos-protocol-environment
-  tezos-shell-services
+  tzsh-s
   tezos-client-base
   tezos-client-008-PtEdo2Zk
   tezos-client-commands
@@ -40,7 +40,7 @@
   tezos-clic
   tezos-protocol-008-PtEdo2Zk
   tezos-protocol-environment
-  tezos-shell-services
+  tzsh-s
   tezos-client-base
   tezos-client-008-PtEdo2Zk
   tezos-client-commands

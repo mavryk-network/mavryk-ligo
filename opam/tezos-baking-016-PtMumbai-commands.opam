@@ -14,7 +14,7 @@ depends: [
   "tezos-protocol-016-PtMumbai"
   "tezos-stdlib-unix"
   "tezos-protocol-environment"
-  "tezos-shell-services"
+  "tzsh-s"
   "tezos-client-base"
   "tezos-client-016-PtMumbai"
   "tezos-client-commands"

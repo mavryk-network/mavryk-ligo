@@ -9,7 +9,7 @@
   tezos-stdlib-unix
   tezos-base
   tezos-crypto
-  tezos-shell-services
+  tzsh-s
   aches
   aches-lwt
   tezos-validation)

@@ -23,7 +23,7 @@ depends: [
   "tezos-shell-context"
   "tezos-p2p"
   "tezos-stdlib-unix"
-  "tezos-shell-services"
+  "tzsh-s"
   "tzp2p-s"
   "tezos-protocol-updater"
   "tezos-requester"

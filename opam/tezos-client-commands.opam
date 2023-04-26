@@ -14,7 +14,7 @@ depends: [
   "tezos-rpc"
   "tezos-clic"
   "tezos-client-base"
-  "tezos-shell-services"
+  "tzsh-s"
   "tzp2p-s"
   "tezos-stdlib-unix"
   "tezos-signer-backends"

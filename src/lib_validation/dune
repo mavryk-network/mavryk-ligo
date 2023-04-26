@@ -13,7 +13,7 @@
   tezos-context
   tezos-context-ops
   tezos-shell-context
-  tezos-shell-services
+  tzsh-s
   tezos-protocol-updater
   tezos-stdlib-unix)
  (flags

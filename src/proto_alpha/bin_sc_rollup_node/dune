@@ -25,7 +25,7 @@
   tezos-workers
   tezos_dal_node_services
   tezos_dal_node_lib
-  tezos-shell-services
+  tzsh-s
   tezos-smart-rollup-alpha
   tezos-smart-rollup-layer2-alpha
   tezos-layer2-utils-alpha

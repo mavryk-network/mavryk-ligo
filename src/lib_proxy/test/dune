@@ -10,7 +10,7 @@
   tezos-proxy
   tezos-base-test-helpers
   tezos-test-helpers
-  tezos-shell-services-test-helpers
+  tzsh-s-test-helpers
   qcheck-alcotest
   alcotest-lwt
   uri)

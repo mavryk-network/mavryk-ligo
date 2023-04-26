@@ -11,7 +11,7 @@
   tezos-protocol-011-PtHangz2
   tezos-stdlib-unix
   tezos-protocol-environment
-  tezos-shell-services
+  tzsh-s
   tezos-mockup
   tezos-mockup-registration
   tezos-mockup-commands
@@ -46,7 +46,7 @@
   tezos-clic
   tezos-protocol-011-PtHangz2
   tezos-protocol-environment
-  tezos-shell-services
+  tzsh-s
   tezos-client-base
   tezos-client-011-PtHangz2
   tezos-client-commands
