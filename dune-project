@@ -65,7 +65,7 @@
 (package (name tezos-client-013-PtJakart))
 (package (name tezos-client-014-PtKathma))
 (package (name tezos-client-015-PtLimaPt))
-(package (name tc-016))
+(package (name tezos-client-016-PtMumbai))
 (package (name tezos-client-alpha))
 (package (name tz-cli-b))
 (package (name tz-cli-b-unix))

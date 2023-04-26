@@ -6,7 +6,7 @@
  (libraries
   tezos-base
   tezos-micheline
-  tc-016
+  tezos-client-016-PtMumbai
   tezos-protocol-016-PtMumbai
   tezos-base-test-helpers
   tezos-baking-016-PtMumbai.mockup-simulator

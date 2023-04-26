@@ -18,7 +18,7 @@ depends: [
   "tpe"
   "tzsh-s"
   "tz-cli-b"
-  "tc-016"
+  "tezos-client-016-PtMumbai"
   "tc-com"
   "tezos-stdlib"
   "tezos-stdlib-unix"

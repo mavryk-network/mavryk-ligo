@@ -8,7 +8,7 @@
   tezos-base
   tezos-protocol-016-PtMumbai
   qcheck-alcotest
-  tc-016
+  tezos-client-016-PtMumbai
   tezos-test-helpers
   tezos-016-PtMumbai-test-helpers
   tezos-base-test-helpers

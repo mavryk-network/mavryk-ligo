@@ -15,7 +15,7 @@ depends: [
   "octez-protocol-compiler"
   "tezos-stdlib-unix"
   "tezos-dal-node-lib"
-  "tc-016"
+  "tezos-client-016-PtMumbai"
   "tp-plugin-016"
   "tezos-embedded-protocol-016-PtMumbai"
   "tezos-layer2-utils-016-PtMumbai"

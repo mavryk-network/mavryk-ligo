@@ -6,7 +6,7 @@
  (libraries
   tezos-base
   tz-cli-b
-  tc-016
+  tezos-client-016-PtMumbai
   tezos-protocol-016-PtMumbai
   tezos-baking-016-PtMumbai.tenderbrute)
  (link_flags

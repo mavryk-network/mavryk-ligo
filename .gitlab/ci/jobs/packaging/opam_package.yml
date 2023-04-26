@@ -528,12 +528,12 @@ opam:tezos-client-015-PtLimaPt:
   variables:
     package: tezos-client-015-PtLimaPt
 
-opam:tc-016:
+opam:tezos-client-016-PtMumbai:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tc-016
+    package: tezos-client-016-PtMumbai
 
 opam:tezos-client-alpha:
   extends:

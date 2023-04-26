@@ -10,7 +10,7 @@
   octez-protocol-compiler.registerer
   tezos-stdlib-unix
   tezos_dal_node_lib
-  tc-016
+  tezos-client-016-PtMumbai
   tp-plugin-016
   tezos-embedded-protocol-016-PtMumbai
   tezos-layer2-utils-016-PtMumbai

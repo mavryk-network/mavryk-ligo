@@ -3,7 +3,7 @@
 
 (library
  (name tc_sapling_016)
- (public_name tc-016.sapling)
+ (public_name tezos-client-016-PtMumbai.sapling)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -12,8 +12,8 @@
   tezos-stdlib-unix
   tz-cli-b
   tz-sig-b
-  tc-016
-  tc-016.commands
+  tezos-client-016-PtMumbai
+  tezos-client-016-PtMumbai.commands
   tezos-protocol-016-PtMumbai
   tp-plugin-016)
  (library_flags (:standard -linkall))

@@ -7,7 +7,7 @@
   tezos-base
   tezos-base-test-helpers
   tezos-micheline
-  tc-016
+  tezos-client-016-PtMumbai
   tz-cli-b
   tezos-protocol-016-PtMumbai.parameters
   tpe

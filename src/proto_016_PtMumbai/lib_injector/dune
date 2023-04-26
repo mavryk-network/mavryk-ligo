@@ -12,7 +12,7 @@
   tezos-crypto
   tezos-protocol-016-PtMumbai
   tezos-micheline
-  tc-016
+  tezos-client-016-PtMumbai
   tz-cli-b
   tezos-workers
   tezos-shell

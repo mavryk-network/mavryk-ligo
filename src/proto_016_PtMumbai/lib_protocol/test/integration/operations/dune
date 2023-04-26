@@ -7,7 +7,7 @@
   alcotest-lwt
   tezos-base
   tezos-protocol-016-PtMumbai
-  tc-016
+  tezos-client-016-PtMumbai
   tezos-016-PtMumbai-test-helpers
   tezos-base-test-helpers
   tp-plugin-016)

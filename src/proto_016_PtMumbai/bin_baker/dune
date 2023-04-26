@@ -10,7 +10,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-016-PtMumbai
-  tc-016
+  tezos-client-016-PtMumbai
   tc-com
   tezos-baking-016-PtMumbai-commands
   tezos-stdlib-unix

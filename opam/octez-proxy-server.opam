@@ -53,7 +53,7 @@ depopts: [
   "tezos-protocol-plugin-014-PtKathma"
   "tezos-client-015-PtLimaPt"
   "tezos-protocol-plugin-015-PtLimaPt"
-  "tc-016"
+  "tezos-client-016-PtMumbai"
   "tp-plugin-016"
   "tezos-client-alpha"
   "tezos-protocol-plugin-alpha"

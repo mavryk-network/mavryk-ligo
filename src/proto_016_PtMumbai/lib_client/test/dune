@@ -10,7 +10,7 @@
  (libraries
   tezos-base
   tezos-micheline
-  tc-016
+  tezos-client-016-PtMumbai
   tezos-protocol-016-PtMumbai
   tezos-base-test-helpers
   tezos-test-helpers
@@ -31,20 +31,20 @@
 
 (rule
  (alias runtest)
- (package tc-016)
+ (package tezos-client-016-PtMumbai)
  (action (run %{dep:./test_michelson_v1_macros.exe})))
 
 (rule
  (alias runtest)
- (package tc-016)
+ (package tezos-client-016-PtMumbai)
  (action (run %{dep:./test_client_proto_contracts.exe})))
 
 (rule
  (alias runtest)
- (package tc-016)
+ (package tezos-client-016-PtMumbai)
  (action (run %{dep:./test_client_proto_context.exe})))
 
 (rule
  (alias runtest)
- (package tc-016)
+ (package tezos-client-016-PtMumbai)
  (action (run %{dep:./test_proxy.exe})))

@@ -10,7 +10,7 @@
   tezos-base.unix
   tezos-protocol-016-PtMumbai
   tz-cli-b
-  tc-016)
+  tezos-client-016-PtMumbai)
  (flags
   (:standard)
   -open Data_encoding
