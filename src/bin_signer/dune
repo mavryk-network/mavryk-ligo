@@ -19,7 +19,7 @@
   tz-rpc-cli-unix
   tezos-stdlib-unix
   tezos-stdlib
-  tezos-signer-backends.unix)
+  tz-sig-b.unix)
  (link_flags
   (:standard)
   (:include %{workspace_root}/static-link-flags.sexp)

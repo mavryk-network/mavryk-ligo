@@ -23,7 +23,7 @@ depends: [
   "tezos-mockup-registration"
   "tezos-mockup-commands"
   "tezos-proxy"
-  "tezos-signer-backends"
+  "tz-sig-b"
   "lwt-exit"
   "uri" { >= "3.1.0" }
   "tezos-base-test-helpers" {with-test}

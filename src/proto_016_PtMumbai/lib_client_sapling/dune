@@ -11,7 +11,7 @@
   tezos-crypto
   tezos-stdlib-unix
   tz-cli-b
-  tezos-signer-backends
+  tz-sig-b
   tezos-client-016-PtMumbai
   tezos-client-016-PtMumbai.commands
   tezos-protocol-016-PtMumbai

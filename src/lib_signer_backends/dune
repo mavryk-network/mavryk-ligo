@@ -3,7 +3,7 @@
 
 (library
  (name tezos_signer_backends)
- (public_name tezos-signer-backends)
+ (public_name tz-sig-b)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base

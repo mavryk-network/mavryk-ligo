@@ -21,7 +21,7 @@
   tezos-mockup-commands
   tezos-proxy
   tezos-proxy.rpc
-  tezos-signer-backends.unix
+  tz-sig-b.unix
   lwt-exit
   uri)
  (library_flags (:standard -linkall))

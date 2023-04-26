@@ -18,7 +18,7 @@ depends: [
   "tezos-protocol-013-PtJakart"
   "tezos-mockup-registration"
   "tezos-proxy"
-  "tezos-signer-backends"
+  "tz-sig-b"
   "tezos-protocol-plugin-013-PtJakart"
   "tezos-rpc"
   "uri" { >= "3.1.0" }

@@ -13,7 +13,7 @@
   tezos-protocol-014-PtKathma
   tezos-mockup-registration
   tezos-proxy
-  tezos-signer-backends
+  tz-sig-b
   tezos-protocol-plugin-014-PtKathma
   tezos-protocol-014-PtKathma.parameters
   tezos-rpc

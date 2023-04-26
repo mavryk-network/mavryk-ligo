@@ -20,7 +20,7 @@ depends: [
   "tezos-mockup-commands"
   "tezos-proxy"
   "tz-cli-b-unix"
-  "tezos-signer-backends"
+  "tz-sig-b"
   "uri" { >= "3.1.0" }
   "tezos-client-015-PtLimaPt"
   "tezos-baking-015-PtLimaPt-commands"

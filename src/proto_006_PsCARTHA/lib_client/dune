@@ -10,7 +10,7 @@
   tzsh-s
   tz-cli-b
   tezos-protocol-006-PsCARTHA
-  tezos-signer-backends
+  tz-sig-b
   tezos-rpc
   uri)
  (library_flags (:standard -linkall))

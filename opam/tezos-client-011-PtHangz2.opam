@@ -18,7 +18,7 @@ depends: [
   "tezos-protocol-011-PtHangz2"
   "tezos-mockup-registration"
   "tezos-proxy"
-  "tezos-signer-backends"
+  "tz-sig-b"
   "tezos-protocol-plugin-011-PtHangz2"
   "tezos-rpc"
   "uri" { >= "3.1.0" }

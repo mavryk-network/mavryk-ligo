@@ -21,7 +21,7 @@ depends: [
   "tz-rpc-cli-unix"
   "tezos-stdlib-unix"
   "tezos-stdlib"
-  "tezos-signer-backends"
+  "tz-sig-b"
 ]
 build: [
   ["rm" "-rf" "vendors"]

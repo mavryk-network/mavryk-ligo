@@ -15,7 +15,7 @@ depends: [
   "tzsh-s"
   "tz-cli-b"
   "tezos-protocol-002-PsYLVpVv"
-  "tezos-signer-backends"
+  "tz-sig-b"
   "tezos-rpc"
   "uri" { >= "3.1.0" }
   "tezos-stdlib-unix"
