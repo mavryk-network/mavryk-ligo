@@ -3,7 +3,7 @@
 
 (library
  (name tezos_mockup_proxy)
- (public_name tz-mck-prxy)
+ (public_name tezos-mockup-proxy)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base

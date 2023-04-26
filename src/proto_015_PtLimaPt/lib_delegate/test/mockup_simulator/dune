@@ -14,7 +14,7 @@
   tz-cli-b-unix
   tezos-protocol-015-PtLimaPt.parameters
   tezos-mockup
-  tz-mck-prxy
+  tezos-mockup-proxy
   tz-mok-com
   tezos-baking-015-PtLimaPt.tenderbrute)
  (flags

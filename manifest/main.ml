@@ -2714,7 +2714,7 @@ let octez_mockup_registration =
 
 let octez_mockup_proxy =
   public_lib
-    "tz-mck-prxy"
+    "tezos-mockup-proxy"
     ~path:"src/lib_mockup_proxy"
     ~synopsis:"Tezos: local RPCs"
     ~deps:

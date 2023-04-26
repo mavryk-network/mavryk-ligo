@@ -8,7 +8,7 @@
  (libraries
   tezos-base
   tz-cli-b
-  tz-mck-prxy
+  tezos-mockup-proxy
   tezos-rpc
   tz-prx
   uri)

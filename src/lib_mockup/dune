@@ -24,7 +24,7 @@
   tezos-base
   tezos-base.unix
   tz-cli-b
-  tz-mck-prxy
+  tezos-mockup-proxy
   resto-cohttp-self-serving-client
   tezos-rpc
   tzp2p-s

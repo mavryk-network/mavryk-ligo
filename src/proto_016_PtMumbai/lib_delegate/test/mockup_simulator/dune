@@ -14,7 +14,7 @@
   tz-cli-b-unix
   tezos-protocol-016-PtMumbai.parameters
   tezos-mockup
-  tz-mck-prxy
+  tezos-mockup-proxy
   tz-mok-com
   tezos-baking-016-PtMumbai.tenderbrute)
  (flags
