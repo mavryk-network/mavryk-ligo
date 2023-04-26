@@ -17,7 +17,7 @@ depends: [
   "tezos-clic"
   "tezos-stdlib-unix"
   "tezos-event-logging"
-  "tz-sig-s"
+  "tezos-signer-services"
 ]
 depopts: [
   "tezos-client-005-PsBabyM1"

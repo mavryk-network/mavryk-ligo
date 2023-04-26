@@ -1393,12 +1393,12 @@ opam:tezos-signer-backends:
   variables:
     package: tezos-signer-backends
 
-opam:tz-sig-s:
+opam:tezos-signer-services:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tz-sig-s
+    package: tezos-signer-services
 
 opam:tezos-smart-rollup-016-PtMumbai:
   extends:

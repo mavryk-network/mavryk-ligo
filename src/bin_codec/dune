@@ -15,7 +15,7 @@
   tezos-clic
   tezos-stdlib-unix
   tezos-event-logging
-  tz-sig-s
+  tezos-signer-services
   (select void_for_linking-tezos-client-005-PsBabyM1 from
    (tezos-client-005-PsBabyM1 -> void_for_linking-tezos-client-005-PsBabyM1.empty)
    (-> void_for_linking-tezos-client-005-PsBabyM1.empty))

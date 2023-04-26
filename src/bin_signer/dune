@@ -13,7 +13,7 @@
   tz-cli-b
   tz-cli-b-unix
   tezos-client-commands
-  tz-sig-s
+  tezos-signer-services
   tezos-rpc-http
   tezos-rpc-http-server
   tz-rpc-cli-unix

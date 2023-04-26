@@ -17,7 +17,7 @@
   tezos-rpc-http
   tz-rpc-cli
   tz-rpc-cli-unix
-  tz-sig-s
+  tezos-signer-services
   tezos-signer-backends
   tzsh-s
   uri

@@ -2584,7 +2584,7 @@ let _bip39_generator =
 
 let octez_signer_services =
   public_lib
-    "tz-sig-s"
+    "tezos-signer-services"
     ~path:"src/lib_signer_services"
     ~synopsis:"Tezos: descriptions of RPCs exported by `tezos-signer`"
     ~deps:
