@@ -13,7 +13,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-006-PsCARTHA
-  tc-com
+  tezos-client-commands
   tezos-rpc)
  (library_flags (:standard -linkall))
  (flags
@@ -39,7 +39,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-006-PsCARTHA
-  tc-com
+  tezos-client-commands
   tezos-client-006-PsCARTHA.commands
   tezos-rpc)
  (library_flags (:standard -linkall))

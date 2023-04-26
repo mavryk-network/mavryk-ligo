@@ -14,7 +14,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-009-PsFLoren
-  tc-com
+  tezos-client-commands
   tezos-rpc
   tz-cli-b-unix
   tezos-protocol-plugin-009-PsFLoren)
@@ -45,7 +45,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-009-PsFLoren
-  tc-com
+  tezos-client-commands
   tezos-client-009-PsFLoren.commands
   tezos-rpc
   tezos-protocol-plugin-009-PsFLoren)

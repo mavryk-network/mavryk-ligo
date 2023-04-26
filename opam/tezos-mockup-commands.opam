@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-clic"
-  "tc-com"
+  "tezos-client-commands"
   "tz-cli-b"
   "tezos-mockup"
   "tezos-mockup-registration"

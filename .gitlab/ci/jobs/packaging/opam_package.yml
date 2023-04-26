@@ -556,12 +556,12 @@ opam:tz-cli-b-unix:
   variables:
     package: tz-cli-b-unix
 
-opam:tc-com:
+opam:tezos-client-commands:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_3
   variables:
-    package: tc-com
+    package: tezos-client-commands
 
 opam:tezos-client-demo-counter:
   extends:

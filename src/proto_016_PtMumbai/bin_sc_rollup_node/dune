@@ -9,7 +9,7 @@
  (libraries
   tezos-base
   tezos-clic
-  tc-com
+  tezos-client-commands
   tezos-stdlib-unix
   tz-cli-b
   tz-cli-b-unix

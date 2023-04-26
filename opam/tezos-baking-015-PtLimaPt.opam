@@ -19,7 +19,7 @@ depends: [
   "tzsh-s"
   "tz-cli-b"
   "tezos-client-015-PtLimaPt"
-  "tc-com"
+  "tezos-client-commands"
   "tezos-stdlib"
   "tezos-stdlib-unix"
   "tezos-shell-context"

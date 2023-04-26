@@ -15,7 +15,7 @@ depends: [
   "tz-cli-b"
   "tezos-protocol-environment"
   "tezos-protocol-genesis"
-  "tc-com"
+  "tezos-client-commands"
   "tezos-proxy"
   "tezos-stdlib-unix"
 ]

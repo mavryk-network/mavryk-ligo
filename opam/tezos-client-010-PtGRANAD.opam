@@ -22,7 +22,7 @@ depends: [
   "uri" { >= "3.1.0" }
   "tezos-stdlib-unix"
   "tezos-protocol-environment"
-  "tc-com"
+  "tezos-client-commands"
   "tz-cli-b-unix"
 ]
 build: [

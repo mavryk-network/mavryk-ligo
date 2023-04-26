@@ -18,7 +18,7 @@
   tezos-mockup-commands
   tz-cli-b
   tezos-client-013-PtJakart
-  tc-com
+  tezos-client-commands
   tezos-rpc
   tz-cli-b-unix
   tezos-protocol-plugin-013-PtJakart
@@ -52,7 +52,7 @@
   tzsh-s
   tz-cli-b
   tezos-client-013-PtJakart
-  tc-com
+  tezos-client-commands
   tezos-client-013-PtJakart.commands
   tezos-client-013-PtJakart.sapling
   tezos-rpc

@@ -11,7 +11,7 @@
   tezos-clic
   tezos-protocol-alpha
   tezos-client-alpha
-  tc-com
+  tezos-client-commands
   tezos-baking-alpha-commands
   tezos-stdlib-unix
   tz-cli-b-unix)
