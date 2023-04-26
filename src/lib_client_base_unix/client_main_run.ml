@@ -113,25 +113,25 @@ let setup_remote_signer (module C : M) client_config
       match C.logger with Some logger -> logger | None -> rpc_config.logger
   end in
   let module Http =
-    Tezos_signer_backends.Http.Make (RPC_client_unix) (Remote_params)
+    Tz-sig-b.Http.Make (RPC_client_unix) (Remote_params)
   in
   let module Https =
-    Tezos_signer_backends.Https.Make (RPC_client_unix) (Remote_params)
+    Tz-sig-b.Https.Make (RPC_client_unix) (Remote_params)
   in
-  let module Socket = Tezos_signer_backends_unix.Socket.Make (Remote_params) in
+  let module Socket = Tz-sig-b_unix.Socket.Make (Remote_params) in
   Client_keys.register_signer
-    (module Tezos_signer_backends.Encrypted.Make (struct
+    (module Tz-sig-b.Encrypted.Make (struct
       let cctxt = (client_config :> Client_context.io_wallet)
     end)) ;
   Client_keys.register_aggregate_signer
-    (module Tezos_signer_backends.Encrypted.Make_aggregate (struct
+    (module Tz-sig-b.Encrypted.Make_aggregate (struct
       let cctxt = (client_config :> Client_context.io_wallet)
     end)) ;
-  Client_keys.register_signer (module Tezos_signer_backends.Unencrypted) ;
+  Client_keys.register_signer (module Tz-sig-b.Unencrypted) ;
   Client_keys.register_aggregate_signer
-    (module Tezos_signer_backends.Unencrypted.Aggregate) ;
+    (module Tz-sig-b.Unencrypted.Aggregate) ;
   Client_keys.register_signer
-    (module Tezos_signer_backends_unix.Ledger.Signer_implementation) ;
+    (module Tz-sig-b_unix.Ledger.Signer_implementation) ;
   Client_keys.register_signer (module Socket.Unix) ;
   Client_keys.register_signer (module Socket.Tcp) ;
   Client_keys.register_signer (module Http) ;

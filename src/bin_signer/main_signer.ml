@@ -111,7 +111,7 @@ let commands base_dir require_auth : Client_context.full Tezos_clic.command list
     =
   let open Tezos_clic in
   let open Lwt_result_syntax in
-  Tezos_signer_backends_unix.Ledger.commands ()
+  Tz-sig-b_unix.Ledger.commands ()
   @ Client_keys_commands.commands None
   @ [
       command
@@ -152,7 +152,7 @@ let commands base_dir require_auth : Client_context.full Tezos_clic.command list
         (fun (pidfile, magic_bytes, check_high_watermark, host, port, timeout)
              cctxt ->
           may_setup_pidfile pidfile @@ fun () ->
-          let* () = Tezos_signer_backends.Encrypted.decrypt_all cctxt in
+          let* () = Tz-sig-b.Encrypted.decrypt_all cctxt in
           let* _ =
             Socket_daemon.run
               cctxt
@@ -180,7 +180,7 @@ let commands base_dir require_auth : Client_context.full Tezos_clic.command list
         (prefixes ["launch"; "local"; "signer"] @@ stop)
         (fun (pidfile, magic_bytes, check_high_watermark, path) cctxt ->
           may_setup_pidfile pidfile @@ fun () ->
-          let* () = Tezos_signer_backends.Encrypted.decrypt_all cctxt in
+          let* () = Tz-sig-b.Encrypted.decrypt_all cctxt in
           let* _ =
             Socket_daemon.run
               cctxt
@@ -216,7 +216,7 @@ let commands base_dir require_auth : Client_context.full Tezos_clic.command list
         (prefixes ["launch"; "http"; "signer"] @@ stop)
         (fun (pidfile, magic_bytes, check_high_watermark, host, port) cctxt ->
           may_setup_pidfile pidfile @@ fun () ->
-          let* () = Tezos_signer_backends.Encrypted.decrypt_all cctxt in
+          let* () = Tz-sig-b.Encrypted.decrypt_all cctxt in
           Http_daemon.run_http
             cctxt
             ~host
@@ -268,7 +268,7 @@ let commands base_dir require_auth : Client_context.full Tezos_clic.command list
              key
              cctxt ->
           may_setup_pidfile pidfile @@ fun () ->
-          let* () = Tezos_signer_backends.Encrypted.decrypt_all cctxt in
+          let* () = Tz-sig-b.Encrypted.decrypt_all cctxt in
           Http_daemon.run_https
             cctxt
             ~host

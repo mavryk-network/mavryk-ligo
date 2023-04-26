@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_signer_backends)
+ (name tz-sig-b)
  (public_name tezos-signer-backends)
  (instrumentation (backend bisect_ppx))
  (libraries

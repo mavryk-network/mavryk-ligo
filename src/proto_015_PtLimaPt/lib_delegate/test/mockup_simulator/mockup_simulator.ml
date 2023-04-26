@@ -1102,7 +1102,7 @@ let make_baking_delegate
 
 let run ?(config = default_config) bakers_spec =
   Tezos_client_base.Client_keys_v0.register_signer
-    (module Tezos_signer_backends.Unencrypted) ;
+    (module Tz-sig-b.Unencrypted) ;
   let total_accounts =
     List.fold_left (fun acc (n, _) -> acc + n) 0 bakers_spec
   in
