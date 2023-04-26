@@ -232,7 +232,7 @@ let test_random algo =
     else
       let _, _, sk = Tezos_crypto.Signature.generate_key ~algo () in
       let* sk_uri =
-        Tz-sig-b.Encrypted.prompt_twice_and_encrypt ctx sk
+        Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt ctx sk
       in
       let* decrypted_sk = decrypt decrypt_ctx sk_uri in
       Alcotest.check sk_testable "test_encrypt: decrypt" sk decrypted_sk ;
@@ -250,7 +250,7 @@ let test_random_aggregate () =
     else
       let _, _, sk = Tezos_crypto.Aggregate_signature.generate_key () in
       let* sk_uri =
-        Tz-sig-b.Encrypted.prompt_twice_and_encrypt_aggregate
+        Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt_aggregate
           ctx
           sk
       in

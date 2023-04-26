@@ -773,10 +773,10 @@ let activate_account (cctxt : #full) ~chain ~block ?confirmations ?dry_run
   >>=? fun () ->
   let pk = Tezos_crypto.Signature.Of_V1.public_key pk in
   let sk = Tezos_crypto.Signature.Of_V1.secret_key sk in
-  Tz-sig-b.Unencrypted.make_pk pk >>?= fun pk_uri ->
+  Tezos_signer_backends.Unencrypted.make_pk pk >>?= fun pk_uri ->
   (if encrypted then
-   Tz-sig-b.Encrypted.prompt_twice_and_encrypt cctxt sk
-  else Tz-sig-b.Unencrypted.make_sk sk >>?= return)
+   Tezos_signer_backends.Encrypted.prompt_twice_and_encrypt cctxt sk
+  else Tezos_signer_backends.Unencrypted.make_sk sk >>?= return)
   >>=? fun sk_uri ->
   Client_keys.register_key cctxt ?force (pkh, pk_uri, sk_uri) name
   >>=? fun () ->

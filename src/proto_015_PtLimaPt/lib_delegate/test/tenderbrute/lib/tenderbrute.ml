@@ -40,7 +40,7 @@ module LevelRoundMap = Map.Make (struct
 end)
 
 let _ =
-  Client_keys_v0.register_signer (module Tz-sig-b.Unencrypted)
+  Client_keys_v0.register_signer (module Tezos_signer_backends.Unencrypted)
 
 (* Initialize a context in memory with the Mockup *)
 let init_context ?constants_overrides_json ?bootstrap_accounts_json parameters =

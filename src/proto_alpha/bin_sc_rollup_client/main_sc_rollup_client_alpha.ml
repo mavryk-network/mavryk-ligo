@@ -31,7 +31,7 @@ let main () =
   Configuration.parse (argv ()) >>=? fun (configuration, argv) ->
   let cctxt = Configuration.make_unix_client_context configuration in
   Tezos_client_base.Client_keys.register_aggregate_signer
-    (module Tz-sig-b.Unencrypted.Aggregate) ;
+    (module Tezos_signer_backends.Unencrypted.Aggregate) ;
   Tezos_clic.dispatch (Commands.all ()) cctxt argv
 
 let handle_error = function

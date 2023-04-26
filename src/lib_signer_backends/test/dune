@@ -22,7 +22,7 @@
   -open Tezos_error_monad
   -open Tezos_error_monad.TzLwtreslib
   -open Tezos_client_base
-  -open Tz-sig-b))
+  -open Tezos_signer_backends))
 
 (rule
  (alias runtest)
