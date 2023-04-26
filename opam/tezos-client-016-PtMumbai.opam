@@ -17,7 +17,7 @@ depends: [
   "tz-cli-b"
   "tezos-protocol-016-PtMumbai"
   "tezos-mockup-registration"
-  "tz-prx"
+  "tezos-proxy"
   "tz-sig-b"
   "tezos-protocol-plugin-016-PtMumbai"
   "tezos-rpc"

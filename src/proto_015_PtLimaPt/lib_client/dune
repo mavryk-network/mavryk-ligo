@@ -12,7 +12,7 @@
   tz-cli-b
   tezos-protocol-015-PtLimaPt
   tezos-mockup-registration
-  tz-prx
+  tezos-proxy
   tz-sig-b
   tezos-protocol-plugin-015-PtLimaPt
   tezos-protocol-015-PtLimaPt.parameters

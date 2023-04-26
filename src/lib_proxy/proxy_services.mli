@@ -34,7 +34,7 @@ exception Rpc_dir_creation_failure of tztrace
 (** Whether using the light mode or the proxy mode (remember that
     the light mode is a different instance of the proxy mode
     (see srcs/lib_proxy/README_LIGHT.md for documentation)
-    and whether [octez-client] or [tz-prx-server] is running. *)
+    and whether [octez-client] or [tezos-proxy-server] is running. *)
 type mode =
   | Light_client of Light.sources  (** [octez-client --mode light] is running *)
   | Proxy_client  (** [octez-client --mode proxy] is running *)
@@ -46,7 +46,7 @@ type mode =
         Tp_environment.Proxy_delegate.t tzresult Lwt.t)
         option;
     }
-      (** [tz-prx-server] is running. The [sleep] field is implemented
+      (** [tezos-proxy-server] is running. The [sleep] field is implemented
           by {!Lwt_unix.sleep}. We don't want to depend on it directly
           (for compiling to Javascript), hence this field. The [Ptime.span option] field
           is the value of argument [--sym-block-caching-time]. The
@@ -62,7 +62,7 @@ type mode =
     - [printer] is used for logging.
     - [rpc_context] is used to perform RPCs to distant endpoints.
     - [mode] specifies whether [octez-client] (light or proxy mode)
-      or [tz-prx-server] is running.
+      or [tezos-proxy-server] is running.
     - [env] is a protocol-specific module used to create the context passed when executing a RPC. *)
 val build_directory :
   Tezos_client_base.Client_context.printer ->

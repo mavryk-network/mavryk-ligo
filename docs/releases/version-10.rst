@@ -29,7 +29,7 @@ about ACLs.
 
 This version also notably introduces a new *light* mode for the
 client, and a new executable
-:doc:`tz-prx-server<../user/proxy-server>`.  See full
+:doc:`tezos-proxy-server<../user/proxy-server>`.  See full
 `Changelog`_ for more details.
 
 Version 10.1 restores the broadcasting of endorsements received before

@@ -3,7 +3,7 @@
 
 (library
  (name tezos_proxy)
- (public_name tz-prx)
+ (public_name tezos-proxy)
  (instrumentation (backend bisect_ppx))
  (libraries
   aches

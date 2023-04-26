@@ -16,7 +16,7 @@
   tz-cli-b
   tc-com
   tz-mok-com
-  tz-prx
+  tezos-proxy
   tz-cli-b-unix
   tz-sig-b.unix
   uri

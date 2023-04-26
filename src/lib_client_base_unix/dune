@@ -19,8 +19,8 @@
   tezos-mockup
   tezos-mockup-registration
   tz-mok-com
-  tz-prx
-  tz-prx.rpc
+  tezos-proxy
+  tezos-proxy.rpc
   tz-sig-b.unix
   lwt-exit
   uri)

@@ -21,7 +21,7 @@ tezos-admin-client
 tezos-baker-*
 tezos-endorser-*
 tezos-accuser-*
-tz-prx-server
+tezos-proxy-server
 tezos-signer
 tezos-smart-rollup-node-*
 tezos-smart-rollup-client-*

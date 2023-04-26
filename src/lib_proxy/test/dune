@@ -7,7 +7,7 @@
   tezos-base
   tezos-base.unix
   tezos-stdlib-unix
-  tz-prx
+  tezos-proxy
   tezos-base-test-helpers
   tezos-test-helpers
   tzsh-s-test-helpers
@@ -25,20 +25,20 @@
 
 (rule
  (alias runtest)
- (package tz-prx)
+ (package tezos-proxy)
  (action (run %{dep:./test_proxy.exe})))
 
 (rule
  (alias runtest)
- (package tz-prx)
+ (package tezos-proxy)
  (action (run %{dep:./test_fuzzing_proxy_getter.exe})))
 
 (rule
  (alias runtest)
- (package tz-prx)
+ (package tezos-proxy)
  (action (run %{dep:./test_light.exe})))
 
 (rule
  (alias runtest)
- (package tz-prx)
+ (package tezos-proxy)
  (action (run %{dep:./test_fuzzing_light.exe})))

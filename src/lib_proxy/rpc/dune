@@ -3,14 +3,14 @@
 
 (library
  (name tezos_proxy_rpc)
- (public_name tz-prx.rpc)
+ (public_name tezos-proxy.rpc)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tz-cli-b
   tezos-mockup-proxy
   tezos-rpc
-  tz-prx
+  tezos-proxy
   uri)
  (flags
   (:standard)

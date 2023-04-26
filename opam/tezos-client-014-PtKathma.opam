@@ -17,7 +17,7 @@ depends: [
   "tz-cli-b"
   "tezos-protocol-014-PtKathma"
   "tezos-mockup-registration"
-  "tz-prx"
+  "tezos-proxy"
   "tz-sig-b"
   "tezos-protocol-plugin-014-PtKathma"
   "tezos-rpc"
