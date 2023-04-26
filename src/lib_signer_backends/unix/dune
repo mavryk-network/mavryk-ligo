@@ -3,7 +3,7 @@
 
 (library
  (name tezos_signer_backends_unix)
- (public_name tz-sig-b.unix)
+ (public_name tezos-signer-backends.unix)
  (instrumentation (backend bisect_ppx))
  (libraries
   ocplib-endian.bigstring
@@ -18,7 +18,7 @@
   tz-rpc-cli
   tz-rpc-cli-unix
   tz-sig-s
-  tz-sig-b
+  tezos-signer-backends
   tzsh-s
   uri
   (select ledger.ml from

@@ -18,7 +18,7 @@ depends: [
   "tezos-protocol-014-PtKathma"
   "tezos-mockup-registration"
   "tezos-proxy"
-  "tz-sig-b"
+  "tezos-signer-backends"
   "tezos-protocol-plugin-014-PtKathma"
   "tezos-rpc"
   "uri" { >= "3.1.0" }

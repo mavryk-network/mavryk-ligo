@@ -8,7 +8,7 @@
   tezos-stdlib
   tezos-crypto
   tz-cli-b
-  tz-sig-b.unix
+  tezos-signer-backends.unix
   alcotest-lwt)
  (link_flags
   (:standard)
@@ -22,5 +22,5 @@
 
 (rule
  (alias runtest)
- (package tz-sig-b)
+ (package tezos-signer-backends)
  (action (run %{dep:./test_crouching.exe})))

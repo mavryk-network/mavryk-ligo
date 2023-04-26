@@ -18,7 +18,7 @@
   tezos-mockup-commands
   tezos-proxy
   tz-cli-b-unix
-  tz-sig-b.unix
+  tezos-signer-backends.unix
   uri
   (select void_for_linking-tezos-client-genesis from
    (tezos-client-genesis -> void_for_linking-tezos-client-genesis.empty)

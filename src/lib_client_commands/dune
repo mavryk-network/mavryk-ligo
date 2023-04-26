@@ -14,7 +14,7 @@
   tzsh-s
   tzp2p-s
   tezos-stdlib-unix
-  tz-sig-b
+  tezos-signer-backends
   data-encoding
   uri)
  (library_flags (:standard -linkall))

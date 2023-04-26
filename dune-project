@@ -204,7 +204,7 @@
 (package (name tezos-shell-context-test)(allow_empty))
 (package (name tzsh-s))
 (package (name tzsh-s-test-helpers))
-(package (name tz-sig-b))
+(package (name tezos-signer-backends))
 (package (name tz-sig-s))
 (package (name tezos-smart-rollup-016-PtMumbai))
 (package (name tezos-smart-rollup-alpha))

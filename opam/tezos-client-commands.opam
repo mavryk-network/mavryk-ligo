@@ -17,7 +17,7 @@ depends: [
   "tzsh-s"
   "tzp2p-s"
   "tezos-stdlib-unix"
-  "tz-sig-b"
+  "tezos-signer-backends"
   "data-encoding" { >= "0.7.1" & < "1.0.0" }
   "uri" { >= "3.1.0" }
 ]

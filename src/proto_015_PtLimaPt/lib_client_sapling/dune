@@ -11,7 +11,7 @@
   tezos-crypto
   tezos-stdlib-unix
   tz-cli-b
-  tz-sig-b
+  tezos-signer-backends
   tezos-client-015-PtLimaPt
   tezos-client-015-PtLimaPt.commands
   tezos-protocol-015-PtLimaPt

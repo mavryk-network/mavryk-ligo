@@ -10,7 +10,7 @@
   tezos-error-monad
   tezos-crypto
   tz-cli-b
-  tz-sig-b
+  tezos-signer-backends
   alcotest-lwt
   uri)
  (link_flags
@@ -26,5 +26,5 @@
 
 (rule
  (alias runtest)
- (package tz-sig-b)
+ (package tezos-signer-backends)
  (action (run %{dep:./test_encrypted.exe})))

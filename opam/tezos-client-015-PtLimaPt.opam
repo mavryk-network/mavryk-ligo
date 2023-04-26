@@ -18,7 +18,7 @@ depends: [
   "tezos-protocol-015-PtLimaPt"
   "tezos-mockup-registration"
   "tezos-proxy"
-  "tz-sig-b"
+  "tezos-signer-backends"
   "tezos-protocol-plugin-015-PtLimaPt"
   "tezos-rpc"
   "uri" { >= "3.1.0" }

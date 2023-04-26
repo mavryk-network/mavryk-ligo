@@ -15,7 +15,7 @@ depends: [
   "tzsh-s"
   "tz-cli-b"
   "tezos-protocol-007-PsDELPH1"
-  "tz-sig-b"
+  "tezos-signer-backends"
   "tezos-protocol-plugin-007-PsDELPH1"
   "tezos-rpc"
   "uri" { >= "3.1.0" }

@@ -2598,7 +2598,7 @@ let octez_signer_services =
 
 let octez_signer_backends =
   public_lib
-    "tz-sig-b"
+    "tezos-signer-backends"
     ~path:"src/lib_signer_backends"
     ~synopsis:"Tezos: remote-signature backends for `tezos-client`"
     ~deps:
@@ -2617,7 +2617,7 @@ let _octez_signer_backends_tests =
   test
     "test_encrypted"
     ~path:"src/lib_signer_backends/test"
-    ~opam:"tz-sig-b"
+    ~opam:"tezos-signer-backends"
     ~with_macos_security_framework:true
     ~deps:
       [
@@ -2634,7 +2634,7 @@ let _octez_signer_backends_tests =
 
 let octez_signer_backends_unix =
   public_lib
-    "tz-sig-b.unix"
+    "tezos-signer-backends.unix"
     ~path:"src/lib_signer_backends/unix"
     ~deps:
       [
@@ -2664,7 +2664,7 @@ let _octez_signer_backends_unix_tests =
   test
     "test_crouching"
     ~path:"src/lib_signer_backends/unix/test"
-    ~opam:"tz-sig-b"
+    ~opam:"tezos-signer-backends"
     ~with_macos_security_framework:true
     ~deps:
       [

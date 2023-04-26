@@ -1386,12 +1386,12 @@ opam:tzsh-s-test-helpers:
   variables:
     package: tzsh-s-test-helpers
 
-opam:tz-sig-b:
+opam:tezos-signer-backends:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_5
   variables:
-    package: tz-sig-b
+    package: tezos-signer-backends
 
 opam:tz-sig-s:
   extends:

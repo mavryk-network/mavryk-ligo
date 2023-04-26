@@ -11,7 +11,7 @@
   tezos-crypto
   tezos-stdlib-unix
   tz-cli-b
-  tz-sig-b
+  tezos-signer-backends
   tezos-client-013-PtJakart
   tezos-client-013-PtJakart.commands
   tezos-protocol-013-PtJakart

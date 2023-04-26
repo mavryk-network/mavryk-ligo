@@ -11,7 +11,7 @@
   tzsh-s
   tz-cli-b
   tezos-protocol-008-PtEdo2Zk
-  tz-sig-b
+  tezos-signer-backends
   tezos-protocol-plugin-008-PtEdo2Zk
   tezos-rpc
   uri)
