@@ -179,7 +179,7 @@ let select_commands ctxt {chain; block; protocol; _} =
   in
   Lwt.return_ok
     (Client_rpc_commands.commands
-    @ Tz-sig-b_unix.Ledger.commands ()
+    @ Tezos_signer_backends_unix.Ledger.commands ()
     @ Client_keys_commands.commands network
     @ Client_helpers_commands.commands ()
     @ Mockup_commands.commands ()

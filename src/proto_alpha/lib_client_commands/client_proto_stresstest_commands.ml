@@ -244,7 +244,7 @@ let normalize_source cctxt =
     with
     | Ok sk -> Lwt.return_some sk
     | Error _ ->
-        let+ r = Tz-sig-b.Encrypted.decrypt cctxt sk_uri in
+        let+ r = Tezos_signer_backends.Encrypted.decrypt cctxt sk_uri in
         let sk = Option.of_result r in
         Option.bind sk Signature.Of_V_latest.secret_key
   in
@@ -1469,7 +1469,7 @@ let load_wallet cctxt ~source_pkh =
     | (_, pkh, pk, sk_uri) :: tl ->
         let* pk_uri = Client_keys.neuterize sk_uri in
         let payload =
-          Uri.path (sk_uri : Tz-sig-b.Unencrypted.sk_uri :> Uri.t)
+          Uri.path (sk_uri : Tezos_signer_backends.Unencrypted.sk_uri :> Uri.t)
         in
         let sk = Signature.Secret_key.of_b58check_exn payload in
         aux ({pkh; pk; pk_uri; sk; sk_uri} :: acc) tl

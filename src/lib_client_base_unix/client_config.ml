@@ -588,7 +588,7 @@ let remote_signer_arg () =
     ~placeholder:"uri"
     ~doc:"URI of the remote signer"
     (Tezos_clic.parameter (fun _ x ->
-         Tz-sig-b_unix.Remote.parse_base_uri x))
+         Tezos_signer_backends_unix.Remote.parse_base_uri x))
 
 let password_filename_arg () =
   Tezos_clic.arg
@@ -1170,7 +1170,7 @@ let parse_config_args (ctx : #Client_context.full) argv =
        pp_print_flush err_formatter ()))) ;
   let* () = light_mode_checks client_mode endpoint sources in
   let* remote_signer_env =
-    Tz-sig-b_unix.Remote.read_base_uri_from_env ()
+    Tezos_signer_backends_unix.Remote.read_base_uri_from_env ()
   in
   let remote_signer =
     Option.either remote_signer
@@ -1267,7 +1267,7 @@ let other_registrations : (_ -> (module Remote_params) -> _) option =
       parsed_config_file.Cfg_file.remote_signer
       |> Option.iter (fun signer ->
              Client_keys.register_signer
-               (module Tz-sig-b_unix.Remote.Make
+               (module Tezos_signer_backends_unix.Remote.Make
                          (Tezos_rpc_http_client_unix.RPC_client_unix)
                          (struct
                            let default = signer

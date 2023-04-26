@@ -202,7 +202,7 @@ let normalize_source cctxt =
     with
     | Ok sk -> Lwt.return_some sk
     | Error _ -> (
-        Tz-sig-b.Encrypted.decrypt cctxt sk_uri >|= function
+        Tezos_signer_backends.Encrypted.decrypt cctxt sk_uri >|= function
         | Error _ -> None
         | Ok sk -> Tezos_crypto.Signature.V0.Of_V_latest.secret_key sk)
   in

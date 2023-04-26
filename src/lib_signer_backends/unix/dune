@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tz-sig-b_unix)
+ (name tezos_signer_backends_unix)
  (public_name tezos-signer-backends.unix)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -34,5 +34,5 @@
   -open Tezos_rpc_http_client
   -open Tezos_rpc_http_client_unix
   -open Tezos_signer_services
-  -open Tz-sig-b
+  -open Tezos_signer_backends
   -open Tezos_shell_services))
