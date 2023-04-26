@@ -14,7 +14,7 @@
   tz-cli-b-unix
   tezos-protocol-alpha.parameters
   tezos-mockup
-  tezos-mockup-proxy
+  tz-mck-prxy
   tz-mok-com
   tezos-baking-alpha.tenderbrute)
  (flags

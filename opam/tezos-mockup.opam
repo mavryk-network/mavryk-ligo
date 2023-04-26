@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tz-cli-b"
-  "tezos-mockup-proxy"
+  "tz-mck-prxy"
   "resto-cohttp-self-serving-client" { >= "1.0" }
   "tezos-rpc"
   "tzp2p-s"

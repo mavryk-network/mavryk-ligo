@@ -891,12 +891,12 @@ opam:tz-mok-com:
   variables:
     package: tz-mok-com
 
-opam:tezos-mockup-proxy:
+opam:tz-mck-prxy:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_5
   variables:
-    package: tezos-mockup-proxy
+    package: tz-mck-prxy
 
 opam:tezos-mockup-registration:
   extends:

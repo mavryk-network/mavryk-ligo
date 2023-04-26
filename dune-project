@@ -124,7 +124,7 @@
 (package (name tezos-micheline-rewriting))
 (package (name tezos-mockup))
 (package (name tz-mok-com))
-(package (name tezos-mockup-proxy))
+(package (name tz-mck-prxy))
 (package (name tezos-mockup-registration))
 (package (name tezos-openapi))
 (package (name tezos-p2p))

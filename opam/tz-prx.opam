@@ -20,7 +20,7 @@ depends: [
   "tzsh-s"
   "tezos-context"
   "uri" { >= "3.1.0" }
-  "tezos-mockup-proxy"
+  "tz-mck-prxy"
   "tezos-stdlib-unix" {with-test}
   "tezos-base-test-helpers" {with-test}
   "tezos-test-helpers" {with-test}
