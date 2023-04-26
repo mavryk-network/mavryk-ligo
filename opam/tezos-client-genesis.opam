@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tzsh-s"
   "tz-cli-b"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-protocol-genesis"
   "tc-com"
   "tz-prx"

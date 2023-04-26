@@ -9,7 +9,7 @@
   tezos-clic
   tezos-protocol-004-Pt24m4xi
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tzsh-s
   tz-cli-b
   tezos-client-004-Pt24m4xi
@@ -35,7 +35,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-004-Pt24m4xi
-  tezos-protocol-environment
+  tpe
   tzsh-s
   tz-cli-b
   tezos-client-004-Pt24m4xi

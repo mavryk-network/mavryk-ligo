@@ -27,7 +27,7 @@ depends: [
   "tezos-context" {with-test}
   "alcotest" { with-test & >= "1.5.0" }
   "tz-cli-b" {with-test}
-  "tezos-protocol-environment" {with-test}
+  "tpe" {with-test}
   "tezos-stdlib-unix" {with-test}
   "tezos-stdlib" {with-test}
   "tz-sc-wasm" {with-test}

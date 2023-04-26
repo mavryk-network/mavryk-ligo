@@ -29,7 +29,7 @@ depends: [
   "tezos-smart-rollup-016-PtMumbai" {with-test}
   "tezos-crypto-dal" {with-test}
   "tz-cli-b" {with-test}
-  "tezos-protocol-environment" {with-test}
+  "tpe" {with-test}
   "tezos-stdlib-unix" {with-test}
   "tz-sc-wasm-helpers" {with-test}
   "tezos-stdlib" {with-test}

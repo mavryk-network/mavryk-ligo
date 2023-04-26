@@ -23,7 +23,7 @@
   tezos-sapling
   tezos-client-016-PtMumbai
   tezos-protocol-plugin-016-PtMumbai
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

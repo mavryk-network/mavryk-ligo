@@ -3,7 +3,7 @@
 
 (library
  (name tpenv_structs)
- (public_name tezos-protocol-environment.structs)
+ (public_name tpe.structs)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-stdlib

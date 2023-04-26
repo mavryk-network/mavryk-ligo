@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tz-cli-b"
   "tzsh-s"
-  "tezos-protocol-environment"
+  "tpe"
   "uri" { >= "3.1.0" }
 ]
 build: [

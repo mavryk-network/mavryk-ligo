@@ -11,7 +11,7 @@
   tezos-protocol-015-PtLimaPt
   tezos-protocol-015-PtLimaPt.parameters
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tzsh-s
   tezos-mockup
   tezos-mockup-registration
@@ -47,7 +47,7 @@
   tezos-clic
   tezos-protocol-015-PtLimaPt
   tezos-protocol-015-PtLimaPt.parameters
-  tezos-protocol-environment
+  tpe
   tzsh-s
   tz-cli-b
   tezos-client-015-PtLimaPt

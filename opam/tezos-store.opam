@@ -20,7 +20,7 @@ depends: [
   "tezos-version"
   "index" { >= "1.6.0" & < "1.7.0" }
   "irmin-pack" { >= "3.5.2" & < "3.6.0" }
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-context"
   "tezos-context-ops"
   "tezos-shell-context"

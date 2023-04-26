@@ -1910,12 +1910,12 @@ let _octez_sapling_ctypes_gen =
 
 let tp_environment_sigs_internals =
   public_lib
-    "tezos-protocol-environment.sigs-internals"
+    "tpe.sigs-internals"
     ~path:"src/lib_protocol_environment/sigs-internals"
 
 let tp_environment_sigs =
   public_lib
-    "tezos-protocol-environment.sigs"
+    "tpe.sigs"
     ~path:"src/lib_protocol_environment/sigs"
     ~deps:[tp_environment_sigs_internals]
     ~flags:(Flags.standard ~nopervasives:true ~nostdlib:true ())
@@ -1946,7 +1946,7 @@ let tp_environment_sigs =
 
 let octez_protocol_environment_structs =
   public_lib
-    "tezos-protocol-environment.structs"
+    "tpe.structs"
     ~path:"src/lib_protocol_environment/structs"
     ~deps:
       [
@@ -1961,7 +1961,7 @@ let octez_protocol_environment_structs =
 
 let octez_protocol_environment =
   public_lib
-    "tezos-protocol-environment"
+    "tpe"
     ~path:"src/lib_protocol_environment"
     ~synopsis:"Interface layer between the protocols and the shell"
     ~description:
@@ -2022,7 +2022,7 @@ let _octez_protocol_environment_tests =
       "test_data_encoding";
     ]
     ~path:"src/lib_protocol_environment/test"
-    ~opam:"tezos-protocol-environment"
+    ~opam:"tpe"
     ~deps:
       [
         octez_base |> open_ ~m:"TzPervasives";
@@ -2111,7 +2111,7 @@ let octez_protocol_compiler_lib =
         [
           targets_rule
             ["embedded-interfaces-env"]
-            ~deps:[Dune.(H [[S "package"; S "tezos-protocol-environment"]])]
+            ~deps:[Dune.(H [[S "package"; S "tpe"]])]
             ~action:
               [
                 S "with-stdout-to";
@@ -2122,13 +2122,13 @@ let octez_protocol_compiler_lib =
                   V
                     [
                       S
-                        "%{lib:tezos-protocol-environment.sigs:tp_environment_sigs.cmxa}";
+                        "%{lib:tpe.sigs:tp_environment_sigs.cmxa}";
                     ];
                 ];
               ];
           targets_rule
             ["embedded_cmis_env.ml"]
-            ~deps:[Dune.(H [[S "package"; S "tezos-protocol-environment"]])]
+            ~deps:[Dune.(H [[S "package"; S "tpe"]])]
             ~action:
               [
                 S "run";
@@ -5729,7 +5729,7 @@ let _ppinclude =
   private_exe
     "ppinclude"
     ~path:"src/lib_protocol_environment/ppinclude"
-    ~opam:"tezos-protocol-environment"
+    ~opam:"tpe"
     ~bisect_ppx:false
     ~deps:[compiler_libs_common]
 
