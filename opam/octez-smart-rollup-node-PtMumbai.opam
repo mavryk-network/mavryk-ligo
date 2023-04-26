@@ -19,7 +19,7 @@ depends: [
   "tezos-client-016-PtMumbai"
   "tezos-context"
   "tezos-protocol-016-PtMumbai"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tp-plugin-016"
   "tezos-rpc"
   "tezos-rpc-http"
   "tezos-rpc-http-server"

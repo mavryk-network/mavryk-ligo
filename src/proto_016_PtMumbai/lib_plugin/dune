@@ -3,7 +3,7 @@
 
 (library
  (name tp_plugin_016__Params)
- (public_name tezos-protocol-plugin-016-PtMumbai)
+ (public_name tp-plugin-016)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -19,12 +19,12 @@
 
 (library
  (name tp_plugin_016__Params_registerer)
- (public_name tezos-protocol-plugin-016-PtMumbai-registerer)
+ (public_name tp-plugin-016-registerer)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tezos-embedded-protocol-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tezos-shell)
  (flags
   (:standard)

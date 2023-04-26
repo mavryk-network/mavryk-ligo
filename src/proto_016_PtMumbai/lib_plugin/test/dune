@@ -16,7 +16,7 @@
   qcheck-alcotest
   tezos-stdlib-unix
   tezos-micheline
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tezos-protocol-016-PtMumbai
   tezos-protocol-016-PtMumbai.parameters
   tezos-016-PtMumbai-test-helpers)
@@ -38,20 +38,20 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-plugin-016-PtMumbai-tests)
+ (package tp-plugin-016-tests)
  (action (run %{dep:./test_consensus_filter.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-plugin-016-PtMumbai-tests)
+ (package tp-plugin-016-tests)
  (action (run %{dep:./test_filter_state.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-plugin-016-PtMumbai-tests)
+ (package tp-plugin-016-tests)
  (action (run %{dep:./test_plugin.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-plugin-016-PtMumbai-tests)
+ (package tp-plugin-016-tests)
  (action (run %{dep:./test_conflict_handler.exe})))

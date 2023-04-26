@@ -10,7 +10,7 @@
   tezt-tezos
   tezos-protocol-016-PtMumbai
   tezos-client-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tezos-016-PtMumbai-test-helpers
   tezos-micheline)
  (library_flags (:standard -linkall))

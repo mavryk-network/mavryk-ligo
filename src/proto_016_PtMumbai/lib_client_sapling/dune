@@ -15,7 +15,7 @@
   tezos-client-016-PtMumbai
   tezos-client-016-PtMumbai.commands
   tezos-protocol-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai)
+  tp-plugin-016)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

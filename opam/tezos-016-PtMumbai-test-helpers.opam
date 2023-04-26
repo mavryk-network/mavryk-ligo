@@ -19,7 +19,7 @@ depends: [
   "tezos-protocol-016-PtMumbai"
   "tezos-client-016-PtMumbai"
   "tpe"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tp-plugin-016"
   "tzsh-s"
   "tezos-plompiler" { >= "1.0.1" & < "2.0.0" }
   "tezos-crypto-dal"
