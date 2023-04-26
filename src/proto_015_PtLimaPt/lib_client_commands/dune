@@ -16,11 +16,11 @@
   tezos-mockup
   tezos-mockup-registration
   tezos-mockup-commands
-  tezos-client-base
+  tz-cli-b
   tezos-client-015-PtLimaPt
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-protocol-plugin-015-PtLimaPt
   uri)
  (library_flags (:standard -linkall))
@@ -49,7 +49,7 @@
   tezos-protocol-015-PtLimaPt.parameters
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-015-PtLimaPt
   tezos-client-commands
   tezos-client-015-PtLimaPt.commands

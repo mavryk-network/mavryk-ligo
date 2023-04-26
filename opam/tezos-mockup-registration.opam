@@ -11,7 +11,7 @@ depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
   "tezos-base"
-  "tezos-client-base"
+  "tz-cli-b"
   "tzsh-s"
   "tezos-protocol-environment"
   "uri" { >= "3.1.0" }

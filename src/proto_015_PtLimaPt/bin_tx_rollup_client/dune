@@ -12,7 +12,7 @@
   tezos-protocol-015-PtLimaPt
   tezos-client-015-PtLimaPt
   tezos-client-015-PtLimaPt.commands
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-stdlib-unix
   tezos-tx-rollup-015-PtLimaPt
   uri)

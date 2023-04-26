@@ -10,7 +10,7 @@
   tezos-clic
   tezos-crypto
   tezos-stdlib-unix
-  tezos-client-base
+  tz-cli-b
   tezos-signer-backends
   tezos-client-alpha
   tezos-client-alpha.commands

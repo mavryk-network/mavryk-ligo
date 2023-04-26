@@ -13,7 +13,7 @@
   tezos-protocol-016-PtMumbai
   tezos-micheline
   tezos-client-016-PtMumbai
-  tezos-client-base
+  tz-cli-b
   tezos-workers
   tezos-shell
   tezos-layer2-utils-016-PtMumbai)

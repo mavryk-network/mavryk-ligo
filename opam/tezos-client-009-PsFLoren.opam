@@ -14,7 +14,7 @@ depends: [
   "tezos-base"
   "tezos-clic"
   "tzsh-s"
-  "tezos-client-base"
+  "tz-cli-b"
   "tezos-protocol-009-PsFLoren"
   "tezos-signer-backends"
   "tezos-protocol-plugin-009-PsFLoren"
@@ -23,7 +23,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-protocol-environment"
   "tezos-client-commands"
-  "tezos-client-base-unix"
+  "tz-cli-b-unix"
 ]
 build: [
   ["rm" "-rf" "vendors"]

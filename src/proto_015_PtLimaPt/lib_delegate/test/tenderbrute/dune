@@ -5,7 +5,7 @@
  (name tenderbrute_main)
  (libraries
   tezos-base
-  tezos-client-base
+  tz-cli-b
   tezos-client-015-PtLimaPt
   tezos-protocol-015-PtLimaPt
   tezos-baking-015-PtLimaPt.tenderbrute)

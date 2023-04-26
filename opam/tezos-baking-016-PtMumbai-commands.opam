@@ -15,7 +15,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-protocol-environment"
   "tzsh-s"
-  "tezos-client-base"
+  "tz-cli-b"
   "tezos-client-016-PtMumbai"
   "tezos-client-commands"
   "tezos-baking-016-PtMumbai"

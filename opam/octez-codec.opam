@@ -12,8 +12,8 @@ depends: [
   "ocaml" { >= "4.14" }
   "data-encoding" { >= "0.7.1" & < "1.0.0" }
   "tezos-base"
-  "tezos-client-base-unix"
-  "tezos-client-base"
+  "tz-cli-b-unix"
+  "tz-cli-b"
   "tezos-clic"
   "tezos-stdlib-unix"
   "tezos-event-logging"

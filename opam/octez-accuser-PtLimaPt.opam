@@ -17,7 +17,7 @@ depends: [
   "tezos-client-commands"
   "tezos-baking-015-PtLimaPt-commands"
   "tezos-stdlib-unix"
-  "tezos-client-base-unix"
+  "tz-cli-b-unix"
 ]
 build: [
   ["rm" "-rf" "vendors"]

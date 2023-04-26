@@ -10,7 +10,7 @@
   tezos-rpc
   tezos-mockup
   tezos-mockup-registration
-  tezos-client-base
+  tz-cli-b
   qcheck-alcotest
   alcotest-lwt)
  (link_flags

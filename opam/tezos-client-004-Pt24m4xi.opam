@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tezos-clic"
   "tzsh-s"
-  "tezos-client-base"
+  "tz-cli-b"
   "tezos-protocol-004-Pt24m4xi"
   "tezos-signer-backends"
   "tezos-rpc"

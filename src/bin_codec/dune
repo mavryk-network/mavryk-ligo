@@ -10,8 +10,8 @@
   data-encoding
   tezos-base
   tezos-base.unix
-  tezos-client-base-unix
-  tezos-client-base
+  tz-cli-b-unix
+  tz-cli-b
   tezos-clic
   tezos-stdlib-unix
   tezos-event-logging

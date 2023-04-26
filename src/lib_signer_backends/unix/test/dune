@@ -7,7 +7,7 @@
   tezos-error-monad
   tezos-stdlib
   tezos-crypto
-  tezos-client-base
+  tz-cli-b
   tezos-signer-backends.unix
   alcotest-lwt)
  (link_flags

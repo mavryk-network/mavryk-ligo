@@ -10,7 +10,7 @@
   tezos-clic
   tezos-crypto
   tezos-stdlib-unix
-  tezos-client-base
+  tz-cli-b
   tezos-signer-backends
   tezos-client-013-PtJakart
   tezos-client-013-PtJakart.commands

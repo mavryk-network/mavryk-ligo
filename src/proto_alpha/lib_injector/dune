@@ -13,7 +13,7 @@
   tezos-protocol-alpha
   tezos-micheline
   tezos-client-alpha
-  tezos-client-base
+  tz-cli-b
   tezos-workers
   tezos-shell
   tezos-layer2-utils-alpha)

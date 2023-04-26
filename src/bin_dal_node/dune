@@ -10,8 +10,8 @@
   tezos-base
   tezos-base.unix
   tezos-clic
-  tezos-client-base
-  tezos-client-base-unix
+  tz-cli-b
+  tz-cli-b-unix
   tezos-client-commands
   tezos-rpc-http
   tezos-rpc-http-server

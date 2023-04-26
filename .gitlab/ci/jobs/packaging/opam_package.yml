@@ -542,19 +542,19 @@ opam:tezos-client-alpha:
   variables:
     package: tezos-client-alpha
 
-opam:tezos-client-base:
+opam:tz-cli-b:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-client-base
+    package: tz-cli-b
 
-opam:tezos-client-base-unix:
+opam:tz-cli-b-unix:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-client-base-unix
+    package: tz-cli-b-unix
 
 opam:tezos-client-commands:
   extends:

@@ -15,11 +15,11 @@
   tezos-mockup
   tezos-mockup-registration
   tezos-mockup-commands
-  tezos-client-base
+  tz-cli-b
   tezos-client-011-PtHangz2
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-protocol-plugin-011-PtHangz2
   uri)
  (library_flags (:standard -linkall))
@@ -47,7 +47,7 @@
   tezos-protocol-011-PtHangz2
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-011-PtHangz2
   tezos-client-commands
   tezos-client-011-PtHangz2.commands

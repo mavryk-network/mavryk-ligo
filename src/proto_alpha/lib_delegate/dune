@@ -13,7 +13,7 @@
   tezos-protocol-plugin-alpha
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-alpha
   tezos-client-commands
   tezos-stdlib
@@ -57,7 +57,7 @@
   tezos-stdlib-unix
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-alpha
   tezos-client-commands
   tezos-baking-alpha
@@ -86,7 +86,7 @@
   tezos-protocol-alpha
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-alpha
   tezos-client-commands
   tezos-baking-alpha

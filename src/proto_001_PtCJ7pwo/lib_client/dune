@@ -8,7 +8,7 @@
   tezos-base
   tezos-clic
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-protocol-001-PtCJ7pwo
   tezos-signer-backends
   tezos-rpc

@@ -13,7 +13,7 @@
   tezos-clic
   tezos-stdlib-unix
   tezos-stdlib
-  tezos-client-base
+  tz-cli-b
   tezos-rpc-http
   tz-rpc-cli
   tz-rpc-cli-unix

@@ -10,7 +10,7 @@
   aches-lwt
   tezos-base
   tezos-clic
-  tezos-client-base
+  tz-cli-b
   tezos-protocol-environment
   tezos-rpc
   tzsh-s

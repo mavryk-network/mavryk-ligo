@@ -10,7 +10,7 @@
  (libraries
   tezos-base
   tezos-rpc
-  tezos-client-base)
+  tz-cli-b)
  (js_of_ocaml)
  (library_flags (:standard -linkall))
  (flags

@@ -12,11 +12,11 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-clic"
-  "tezos-client-base"
+  "tz-cli-b"
   "tezos-client-016-PtMumbai"
   "tezos-client-commands"
   "tezos-stdlib-unix"
-  "tezos-client-base-unix"
+  "tz-cli-b-unix"
   "tezos-rpc-http"
   "tz-rpc-cli-unix"
   "tezos-protocol-016-PtMumbai"

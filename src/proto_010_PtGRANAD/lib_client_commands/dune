@@ -12,11 +12,11 @@
   tezos-stdlib-unix
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-010-PtGRANAD
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-protocol-plugin-010-PtGRANAD)
  (library_flags (:standard -linkall))
  (flags
@@ -43,7 +43,7 @@
   tezos-protocol-010-PtGRANAD
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-010-PtGRANAD
   tezos-client-commands
   tezos-client-010-PtGRANAD.commands

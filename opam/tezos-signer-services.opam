@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-rpc"
-  "tezos-client-base"
+  "tz-cli-b"
 ]
 build: [
   ["rm" "-rf" "vendors"]

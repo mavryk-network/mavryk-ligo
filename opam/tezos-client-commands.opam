@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tezos-rpc"
   "tezos-clic"
-  "tezos-client-base"
+  "tz-cli-b"
   "tzsh-s"
   "tzp2p-s"
   "tezos-stdlib-unix"

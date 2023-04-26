@@ -9,7 +9,7 @@
   tezos-base
   tezos-base.unix
   tezos-protocol-016-PtMumbai
-  tezos-client-base
+  tz-cli-b
   tezos-client-016-PtMumbai)
  (flags
   (:standard)

@@ -15,7 +15,7 @@
   lwt
   tezos-baking-alpha
   tezos-client-alpha.commands
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-protocol-alpha
   tezt
   tezt-tezos

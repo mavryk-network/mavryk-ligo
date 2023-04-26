@@ -11,7 +11,7 @@
   tezos-stdlib-unix
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-001-PtCJ7pwo
   tezos-client-commands
   tezos-rpc)
@@ -37,7 +37,7 @@
   tezos-protocol-001-PtCJ7pwo
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-001-PtCJ7pwo
   tezos-client-commands
   tezos-client-001-PtCJ7pwo.commands

@@ -17,7 +17,7 @@ depends: [
   "tezos-protocol-015-PtLimaPt"
   "tezos-micheline"
   "tezos-client-015-PtLimaPt"
-  "tezos-client-base"
+  "tz-cli-b"
   "tezos-workers"
   "tezos-shell"
 ]

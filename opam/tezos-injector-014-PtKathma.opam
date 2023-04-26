@@ -17,7 +17,7 @@ depends: [
   "tezos-protocol-014-PtKathma"
   "tezos-micheline"
   "tezos-client-014-PtKathma"
-  "tezos-client-base"
+  "tz-cli-b"
   "tezos-workers"
   "tezos-shell"
 ]

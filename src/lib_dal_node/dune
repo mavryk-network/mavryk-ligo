@@ -9,9 +9,9 @@
   tezos-base
   tezos-base.unix
   tezos_dal_node_services
-  tezos-client-base
+  tz-cli-b
   tezos-protocol-updater
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-stdlib-unix
   tezos-crypto-dal)
  (flags

@@ -16,11 +16,11 @@
   tezos-mockup
   tezos-mockup-registration
   tezos-mockup-commands
-  tezos-client-base
+  tz-cli-b
   tezos-client-alpha
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-protocol-plugin-alpha
   uri)
  (library_flags (:standard -linkall))
@@ -49,7 +49,7 @@
   tezos-protocol-alpha.parameters
   tezos-protocol-environment
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-alpha
   tezos-client-commands
   tezos-client-alpha.commands

@@ -13,11 +13,11 @@
   tz-rpc-cli
   tezos-stdlib-unix
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-client-commands
   tezos-mockup-commands
   tezos-proxy
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-signer-backends.unix
   uri
   (select void_for_linking-tezos-client-genesis from

@@ -17,7 +17,7 @@ depends: [
   "tezos-protocol-013-PtJakart"
   "tezos-micheline"
   "tezos-client-013-PtJakart"
-  "tezos-client-base"
+  "tz-cli-b"
   "tezos-workers"
   "tezos-shell"
 ]

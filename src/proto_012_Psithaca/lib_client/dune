@@ -9,7 +9,7 @@
   tezos-base
   tezos-clic
   tzsh-s
-  tezos-client-base
+  tz-cli-b
   tezos-protocol-012-Psithaca
   tezos-mockup-registration
   tezos-proxy

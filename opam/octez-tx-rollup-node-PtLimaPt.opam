@@ -14,8 +14,8 @@ depends: [
   "tezos-clic"
   "tezos-protocol-015-PtLimaPt"
   "tezos-client-015-PtLimaPt"
-  "tezos-client-base"
-  "tezos-client-base-unix"
+  "tz-cli-b"
+  "tz-cli-b-unix"
   "tezos-tx-rollup-015-PtLimaPt"
 ]
 build: [

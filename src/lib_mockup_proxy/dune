@@ -7,7 +7,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-client-base
+  tz-cli-b
   tezos-protocol-environment
   tezos-rpc-http
   resto-cohttp-self-serving-client

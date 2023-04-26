@@ -11,7 +11,7 @@
   tezos-client-commands
   tezos-baking-alpha
   tezos-stdlib-unix
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-protocol-alpha.parameters
   tezos-mockup
   tezos-mockup-proxy

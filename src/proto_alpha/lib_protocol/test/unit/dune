@@ -8,7 +8,7 @@
   tezos-base-test-helpers
   tezos-micheline
   tezos-client-alpha
-  tezos-client-base
+  tz-cli-b
   tezos-protocol-alpha.parameters
   tezos-protocol-environment
   tezos-stdlib-unix

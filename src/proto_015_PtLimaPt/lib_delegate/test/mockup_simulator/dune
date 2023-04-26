@@ -11,7 +11,7 @@
   tezos-client-commands
   tezos-baking-015-PtLimaPt
   tezos-stdlib-unix
-  tezos-client-base-unix
+  tz-cli-b-unix
   tezos-protocol-015-PtLimaPt.parameters
   tezos-mockup
   tezos-mockup-proxy
