@@ -28,7 +28,7 @@
     Component:    Lib_scoru_wasm reveal
     Invocation:   dune exec  src/lib_scoru_wasm/test/test_scoru_wasm.exe \
                     -- test "Reveal"
-    Subject:      Reveal tests for the tz-sc-wasm library
+    Subject:      Reveal tests for the tezos-scoru-wasm library
 *)
 
 open Tztest

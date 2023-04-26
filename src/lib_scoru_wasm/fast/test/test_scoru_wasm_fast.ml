@@ -27,7 +27,7 @@
     -------
     Component:    Lib_scoru_wasm_fast
     Invocation:   dune runtest src/lib_scoru_wasm/fast
-    Subject:      Tests for the tz-sc-wasm library
+    Subject:      Tests for the tezos-scoru-wasm library
 *)
 
 let () =

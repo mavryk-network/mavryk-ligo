@@ -3,14 +3,14 @@
 
 (library
  (name tezos_scoru_wasm_fast)
- (public_name tz-sc-wasm-fast)
+ (public_name tezos-scoru-wasm-fast)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tezos-tree-encoding
   tezos-webassembly-interpreter
   tezos-lazy-containers
-  tz-sc-wasm
+  tezos-scoru-wasm
   tezos-wasmer)
  (flags
   (:standard)

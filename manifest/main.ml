@@ -1638,7 +1638,7 @@ let octez_wasmer =
 
 let octez_scoru_wasm =
   public_lib
-    "tz-sc-wasm"
+    "tezos-scoru-wasm"
     ~path:"src/lib_scoru_wasm"
     ~synopsis:
       "Protocol environment dependency providing WASM functionality for SCORU"
@@ -1655,7 +1655,7 @@ let octez_scoru_wasm =
 
 let octez_scoru_wasm_fast =
   public_lib
-    "tz-sc-wasm-fast"
+    "tezos-scoru-wasm-fast"
     ~path:"src/lib_scoru_wasm/fast"
     ~synopsis:"WASM functionality for SCORU Fast Execution"
     ~deps:
@@ -3284,9 +3284,9 @@ let octez_node_config =
 
 let octez_scoru_wasm_helpers =
   public_lib
-    "tz-sc-wasm-helpers"
+    "tezos-scoru-wasm-helpers"
     ~path:"src/lib_scoru_wasm/helpers"
-    ~opam:"tz-sc-wasm-helpers"
+    ~opam:"tezos-scoru-wasm-helpers"
     ~synopsis:"Helpers for the smart rollup wasm functionality and debugger"
     ~deps:
       [
@@ -3309,7 +3309,7 @@ let octez_scoru_wasm_tests_helpers =
   private_lib
     "tezos_scoru_wasm_test_helpers"
     ~path:"src/lib_scoru_wasm/test/helpers"
-    ~opam:"tz-sc-wasm-test-helpers"
+    ~opam:"tezos-scoru-wasm-test-helpers"
     ~synopsis:"Helpers for test of the smart rollup wasm functionality"
     ~deps:
       [
@@ -3333,7 +3333,7 @@ let _octez_scoru_wasm_benchmark =
     "benchmark_scoru_wasm"
     ~path:"src/lib_scoru_wasm/bench"
     ~synopsis:"SCORU WASM benchmark executable"
-    ~opam:"tz-sc-wasm-benchmark"
+    ~opam:"tezos-scoru-wasm-benchmark"
     ~deps:
       [
         octez_base |> open_ ~m:"TzPervasives";
@@ -3350,7 +3350,7 @@ let _octez_scoru_wasm_tests =
   test
     "test_scoru_wasm"
     ~path:"src/lib_scoru_wasm/test"
-    ~opam:"tz-sc-wasm-test"
+    ~opam:"tezos-scoru-wasm-test"
     ~synopsis:"Tests for the scoru-wasm functionality"
     ~deps:
       [
@@ -3373,7 +3373,7 @@ let _octez_scoru_wasm_fast_tests =
   test
     "test_scoru_wasm_fast"
     ~path:"src/lib_scoru_wasm/fast/test"
-    ~opam:"tz-sc-wasm-fast-test"
+    ~opam:"tezos-scoru-wasm-fast-test"
     ~synopsis:"Tests for the scoru-wasm-fast functionality"
     ~deps:
       [

@@ -28,7 +28,7 @@
     Component:    Lib_scoru_wasm durable
     Invocation:   dune exec src/lib_scoru_wasm/test/test_scoru_wasm.exe \
                     -- test "Durable storage"
-    Subject:      Durable storage tests for the tz-sc-wasm library
+    Subject:      Durable storage tests for the tezos-scoru-wasm library
 *)
 
 open Tztest

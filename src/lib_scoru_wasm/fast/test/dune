@@ -9,11 +9,11 @@
   tezos-base.unix
   tezos-context.disk
   tezos-base-test-helpers
-  tz-sc-wasm-helpers
+  tezos-scoru-wasm-helpers
   tezos_scoru_wasm_test_helpers
   tezos-test-helpers
-  tz-sc-wasm
-  tz-sc-wasm-fast
+  tezos-scoru-wasm
+  tezos-scoru-wasm-fast
   qcheck-alcotest
   alcotest-lwt)
  (preprocess (staged_pps ppx_import ppx_deriving.show))
@@ -27,5 +27,5 @@
 
 (rule
  (alias runtest)
- (package tz-sc-wasm-fast-test)
+ (package tezos-scoru-wasm-fast-test)
  (action (run %{dep:./test_scoru_wasm_fast.exe})))

@@ -15,8 +15,8 @@ depends: [
   "tezt" { >= "3.0.0" }
   "tezos-webassembly-interpreter"
   "tezos-context"
-  "tz-sc-wasm"
-  "tz-sc-wasm-helpers"
+  "tezos-scoru-wasm"
+  "tezos-scoru-wasm-helpers"
   "lwt" { >= "5.6.0" }
 ]
 build: [

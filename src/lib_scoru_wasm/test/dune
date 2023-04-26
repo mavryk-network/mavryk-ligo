@@ -10,10 +10,10 @@
   tezos-context.disk
   tezos-base-test-helpers
   tezos-test-helpers
-  tz-sc-wasm
+  tezos-scoru-wasm
   qcheck-alcotest
   alcotest-lwt
-  tz-sc-wasm-helpers
+  tezos-scoru-wasm-helpers
   tezos_scoru_wasm_test_helpers
   tezos-webassembly-interpreter-extra)
  (preprocess (staged_pps ppx_import ppx_deriving.show))
@@ -28,5 +28,5 @@
 
 (rule
  (alias runtest)
- (package tz-sc-wasm-test)
+ (package tezos-scoru-wasm-test)
  (action (run %{dep:./test_scoru_wasm.exe})))

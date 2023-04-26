@@ -3,7 +3,7 @@
 
 (library
  (name tezos_scoru_wasm)
- (public_name tz-sc-wasm)
+ (public_name tezos-scoru-wasm)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base

@@ -15,8 +15,8 @@ depends: [
   "tezos-tree-encoding"
   "tezos-base-test-helpers"
   "tezos-client-alpha"
-  "tz-sc-wasm"
-  "tz-sc-wasm-helpers"
+  "tezos-scoru-wasm"
+  "tezos-scoru-wasm-helpers"
   "tezos-webassembly-interpreter"
   "tezos-webassembly-interpreter-extra"
 ]

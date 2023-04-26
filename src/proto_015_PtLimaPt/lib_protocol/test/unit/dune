@@ -17,7 +17,7 @@
   tezos-015-PtLimaPt-test-helpers
   alcotest-lwt
   tezos-stdlib
-  tz-sc-wasm)
+  tezos-scoru-wasm)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp))

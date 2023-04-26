@@ -9,8 +9,8 @@
   tezt
   tezos-webassembly-interpreter
   tezos-context.memory
-  tz-sc-wasm
-  tz-sc-wasm-helpers
+  tezos-scoru-wasm
+  tezos-scoru-wasm-helpers
   lwt.unix)
  (preprocess (pps ppx_deriving.show))
  (flags

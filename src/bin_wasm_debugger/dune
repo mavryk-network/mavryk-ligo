@@ -13,8 +13,8 @@
   tezos-base.unix
   tezos-base-test-helpers
   tezos-client-alpha
-  tz-sc-wasm
-  tz-sc-wasm-helpers
+  tezos-scoru-wasm
+  tezos-scoru-wasm-helpers
   tezos-webassembly-interpreter
   tezos-webassembly-interpreter-extra)
  (link_flags

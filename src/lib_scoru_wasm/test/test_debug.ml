@@ -28,7 +28,7 @@
     Component:    Tree_encoding_decoding
     Invocation:   dune exec  src/lib_scoru_wasm/test/test_scoru_wasm.exe \
                     -- test "^Debug$"
-    Subject:      Debug facilities tests for the tz-sc-wasm library
+    Subject:      Debug facilities tests for the tezos-scoru-wasm library
 *)
 
 open Tztest
