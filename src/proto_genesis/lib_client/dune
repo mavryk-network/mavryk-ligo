@@ -9,7 +9,7 @@
   tezos-base
   tzsh-s
   tz-cli-b
-  tpe
+  tezos-protocol-environment
   tezos-protocol-genesis
   tc-com
   tz-prx

@@ -6,7 +6,7 @@
  (public_name tezos-protocol-000-Ps9mPmXa.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Tp_environment_000_Ps9mPmXa))
 
@@ -39,8 +39,8 @@
  (public_name tezos-protocol-000-Ps9mPmXa)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe
-  tpe.sigs
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs
   tezos-protocol-000-Ps9mPmXa.raw)
  (flags
   (:standard)
@@ -82,8 +82,8 @@
 (library
  (name tezos_protocol_000_Ps9mPmXa_functor)
  (libraries
-  tpe
-  tpe.sigs)
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs)
  (flags
   (:standard)
   -w -6-7-9-16-29-32-51-68
@@ -109,7 +109,7 @@
  (libraries
   tezos-protocol-000-Ps9mPmXa
   tezos-protocol-updater
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

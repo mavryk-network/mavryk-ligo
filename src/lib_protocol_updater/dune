@@ -10,7 +10,7 @@
   tezos-stdlib-unix
   tezos-micheline
   tzsh-s
-  tpe
+  tezos-protocol-environment
   tezos-shell-context
   octez-protocol-compiler.registerer
   octez-protocol-compiler.native

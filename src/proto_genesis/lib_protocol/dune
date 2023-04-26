@@ -6,7 +6,7 @@
  (public_name tezos-protocol-genesis.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Tp_environment_genesis))
 
@@ -38,8 +38,8 @@
  (public_name tezos-protocol-genesis)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe
-  tpe.sigs
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs
   tezos-protocol-genesis.raw)
  (flags
   (:standard)
@@ -75,8 +75,8 @@
 (library
  (name tezos_protocol_genesis_functor)
  (libraries
-  tpe
-  tpe.sigs)
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs)
  (flags
   (:standard)
   -nopervasives)
@@ -101,7 +101,7 @@
  (libraries
   tezos-protocol-genesis
   tezos-protocol-updater
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Registerer))
 

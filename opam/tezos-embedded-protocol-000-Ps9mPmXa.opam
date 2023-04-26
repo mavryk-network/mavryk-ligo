@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-protocol-000-Ps9mPmXa"
   "tezos-protocol-updater"
-  "tpe"
+  "tezos-protocol-environment"
 ]
 build: [
   ["rm" "-rf" "vendors"]

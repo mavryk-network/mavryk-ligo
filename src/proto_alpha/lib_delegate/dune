@@ -11,7 +11,7 @@
   tezos-version
   tezos-protocol-alpha
   tezos-protocol-plugin-alpha
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-alpha
@@ -55,7 +55,7 @@
   tezos-base
   tezos-protocol-alpha
   tezos-stdlib-unix
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-alpha
@@ -84,7 +84,7 @@
  (libraries
   tezos-base
   tezos-protocol-alpha
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-alpha

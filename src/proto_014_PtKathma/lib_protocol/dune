@@ -6,7 +6,7 @@
  (public_name tezos-protocol-014-PtKathma.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Tp_environment_014_PtKathma))
 
@@ -241,8 +241,8 @@
  (public_name tezos-protocol-014-PtKathma)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe
-  tpe.sigs
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs
   tezos-protocol-014-PtKathma.raw)
  (flags
   (:standard)
@@ -482,8 +482,8 @@
 (library
  (name tezos_protocol_014_PtKathma_functor)
  (libraries
-  tpe
-  tpe.sigs)
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs)
  (flags
   (:standard)
   -nopervasives)
@@ -711,7 +711,7 @@
  (libraries
   tezos-protocol-014-PtKathma
   tezos-protocol-updater
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Registerer))
 

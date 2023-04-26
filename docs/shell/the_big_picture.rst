@@ -178,7 +178,7 @@ economic protocol, as a form of static sandboxing. It also generates a
 functorized version of the protocol, to make the execution of the
 protocol in an alternative environment possible.
 
-  - :package:`tpe` contains the protocol
+  - :package:`tezos-protocol-environment` contains the protocol
     generic environment, that is the API of the modules that are available to
     the economic protocol and the exported protocol API. A review of this
     sandbox is available :doc:`here <../shell/protocol_environment>`.
@@ -281,7 +281,7 @@ run them.
    (in directory :src:`src/lib_p2p/test/`):
    tests of the peer-to-peer layer, independently of the Tezos gossip
    protocol (establishing connections, propagating peers, etc.)
- - :package-name:`tpe`
+ - :package-name:`tezos-protocol-environment`
    (in directory :src:`src/lib_protocol_environment/test/`):
    tests for the in-memory context implementation.
  - :package-name:`tezos-shell`

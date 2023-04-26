@@ -6,7 +6,7 @@
  (public_name tezos-protocol-016-PtMumbai.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Tp_environment_016_PtMumbai))
 
@@ -281,8 +281,8 @@
  (public_name tezos-protocol-016-PtMumbai)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe
-  tpe.sigs
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs
   tezos-protocol-016-PtMumbai.raw)
  (flags
   (:standard)
@@ -565,8 +565,8 @@
 (library
  (name tezos_protocol_016_PtMumbai_functor)
  (libraries
-  tpe
-  tpe.sigs)
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs)
  (flags
   (:standard)
   -nopervasives)
@@ -837,7 +837,7 @@
  (libraries
   tezos-protocol-016-PtMumbai
   tezos-protocol-updater
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Registerer))
 

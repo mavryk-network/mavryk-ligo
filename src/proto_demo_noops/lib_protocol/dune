@@ -6,7 +6,7 @@
  (public_name tezos-protocol-demo-noops.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Tp_environment_demo_noops))
 
@@ -38,8 +38,8 @@
  (public_name tezos-protocol-demo-noops)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe
-  tpe.sigs
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs
   tezos-protocol-demo-noops.raw)
  (flags
   (:standard)
@@ -73,8 +73,8 @@
 (library
  (name tezos_protocol_demo_noops_functor)
  (libraries
-  tpe
-  tpe.sigs)
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs)
  (flags
   (:standard)
   -nopervasives)
@@ -97,7 +97,7 @@
  (libraries
   tezos-protocol-demo-noops
   tezos-protocol-updater
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Registerer))
 

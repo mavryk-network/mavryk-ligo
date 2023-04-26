@@ -6,7 +6,7 @@
  (public_name tezos-protocol-013-PtJakart.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Tp_environment_013_PtJakart))
 
@@ -218,8 +218,8 @@
  (public_name tezos-protocol-013-PtJakart)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe
-  tpe.sigs
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs
   tezos-protocol-013-PtJakart.raw)
  (flags
   (:standard)
@@ -435,8 +435,8 @@
 (library
  (name tezos_protocol_013_PtJakart_functor)
  (libraries
-  tpe
-  tpe.sigs)
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs)
  (flags
   (:standard)
   -w -51
@@ -640,7 +640,7 @@
  (libraries
   tezos-protocol-013-PtJakart
   tezos-protocol-updater
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

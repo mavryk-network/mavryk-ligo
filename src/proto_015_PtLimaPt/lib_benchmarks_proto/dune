@@ -23,7 +23,7 @@
   tezos-sapling
   tezos-client-015-PtLimaPt
   tezos-protocol-plugin-015-PtLimaPt
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

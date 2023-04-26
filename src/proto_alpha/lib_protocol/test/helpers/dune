@@ -15,7 +15,7 @@
   tezos-protocol-alpha
   tezos-client-alpha
   tezos-protocol-alpha.parameters
-  tpe
+  tezos-protocol-environment
   tezos-protocol-plugin-alpha
   tzsh-s
   tezos-plompiler

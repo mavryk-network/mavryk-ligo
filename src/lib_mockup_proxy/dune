@@ -8,7 +8,7 @@
  (libraries
   tezos-base
   tz-cli-b
-  tpe
+  tezos-protocol-environment
   tezos-rpc-http
   resto-cohttp-self-serving-client
   tz-rpc-cli

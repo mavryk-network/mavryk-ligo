@@ -13,7 +13,7 @@
   tezos-context.memory
   tezos-context-ops
   tezos-validation
-  tpe
+  tezos-protocol-environment
   tezos-store.shared)
  (flags
   (:standard)

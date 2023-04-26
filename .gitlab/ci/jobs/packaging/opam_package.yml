@@ -1081,12 +1081,12 @@ opam:tezos-protocol-demo-noops:
   variables:
     package: tezos-protocol-demo-noops
 
-opam:tpe:
+opam:tezos-protocol-environment:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tpe
+    package: tezos-protocol-environment
 
 opam:tezos-protocol-genesis:
   extends:

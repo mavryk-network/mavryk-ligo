@@ -8,7 +8,7 @@
   alcotest-lwt
   tezos-test-helpers
   tezos-base
-  tpe)
+  tezos-protocol-environment)
  (flags
   (:standard)
   -open Tezos_test_helpers

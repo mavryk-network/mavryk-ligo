@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-error-monad"
-  "tpe"
+  "tezos-protocol-environment"
   "tezos-context"
   "tezos-shell-context"
 ]

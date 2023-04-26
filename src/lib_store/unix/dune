@@ -12,7 +12,7 @@
   index
   irmin-pack
   tezos-store.shared
-  tpe
+  tezos-protocol-environment
   tezos-context
   tezos-context-ops
   tezos-shell-context

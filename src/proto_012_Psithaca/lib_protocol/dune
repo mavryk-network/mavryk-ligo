@@ -6,7 +6,7 @@
  (public_name tezos-protocol-012-Psithaca.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (modules Tp_environment_012_Psithaca))
 
@@ -153,8 +153,8 @@
  (public_name tezos-protocol-012-Psithaca)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tpe
-  tpe.sigs
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs
   tezos-protocol-012-Psithaca.raw)
  (flags
   (:standard)
@@ -304,8 +304,8 @@
 (library
  (name tezos_protocol_012_Psithaca_functor)
  (libraries
-  tpe
-  tpe.sigs)
+  tezos-protocol-environment
+  tezos-protocol-environment.sigs)
  (flags
   (:standard)
   -w -51
@@ -443,7 +443,7 @@
  (libraries
   tezos-protocol-012-Psithaca
   tezos-protocol-updater
-  tpe)
+  tezos-protocol-environment)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

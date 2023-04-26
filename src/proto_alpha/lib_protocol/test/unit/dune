@@ -10,7 +10,7 @@
   tezos-client-alpha
   tz-cli-b
   tezos-protocol-alpha.parameters
-  tpe
+  tezos-protocol-environment
   tezos-stdlib-unix
   tezos-protocol-alpha
   tezos-test-helpers

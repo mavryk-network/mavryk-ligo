@@ -7,7 +7,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tpe
+  tezos-protocol-environment
   tezos-protocol-015-PtLimaPt)
  (library_flags (:standard -linkall))
  (flags

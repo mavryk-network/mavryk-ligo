@@ -11,7 +11,7 @@ depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
   "tezos-base"
-  "tpe"
+  "tezos-protocol-environment"
   "tezos-version"
   "tezos-stdlib-unix"
   "lwt" { >= "5.6.0" }

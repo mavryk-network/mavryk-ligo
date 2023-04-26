@@ -28,7 +28,7 @@ depends: [
   "alcotest-lwt" { with-test & >= "1.5.0" }
   "qcheck-alcotest" { with-test & >= "0.20" }
   "tezos-stdlib-unix"
-  "tpe"
+  "tezos-protocol-environment"
   "tezos-mockup"
   "tz-mok-com"
   "tc-com"

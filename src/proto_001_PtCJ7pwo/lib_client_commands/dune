@@ -9,7 +9,7 @@
   tezos-clic
   tezos-protocol-001-PtCJ7pwo
   tezos-stdlib-unix
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-001-PtCJ7pwo
@@ -35,7 +35,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-001-PtCJ7pwo
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-001-PtCJ7pwo

@@ -3,7 +3,7 @@
 
 (library
  (name tp_environment)
- (public_name tpe)
+ (public_name tezos-protocol-environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   zarith
@@ -16,8 +16,8 @@
   aches-lwt
   tezos-base
   tezos-sapling
-  tpe.sigs
-  tpe.structs
+  tezos-protocol-environment.sigs
+  tezos-protocol-environment.structs
   tezos-micheline
   tezos-context.memory
   tz-sc-wasm

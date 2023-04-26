@@ -21,7 +21,7 @@ depends: [
   "tezos-rpc"
   "uri" { >= "3.1.0" }
   "tezos-stdlib-unix"
-  "tpe"
+  "tezos-protocol-environment"
   "tc-com"
   "tz-cli-b-unix"
 ]

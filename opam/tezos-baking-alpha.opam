@@ -15,7 +15,7 @@ depends: [
   "tezos-version"
   "tezos-protocol-alpha"
   "tezos-protocol-plugin-alpha"
-  "tpe"
+  "tezos-protocol-environment"
   "tzsh-s"
   "tz-cli-b"
   "tezos-client-alpha"

@@ -3,5 +3,5 @@
 
 (library
  (name tp_environment_sigs_internals)
- (public_name tpe.sigs-internals)
+ (public_name tezos-protocol-environment.sigs-internals)
  (instrumentation (backend bisect_ppx)))

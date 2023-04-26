@@ -15,7 +15,7 @@ depends: [
   "tezos-base"
   "tezos-clic"
   "tz-cli-b"
-  "tpe"
+  "tezos-protocol-environment"
   "tezos-rpc"
   "tzsh-s"
   "tezos-context"

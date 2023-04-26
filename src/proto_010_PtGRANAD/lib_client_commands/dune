@@ -10,7 +10,7 @@
   tezos-clic
   tezos-protocol-010-PtGRANAD
   tezos-stdlib-unix
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-010-PtGRANAD
@@ -41,7 +41,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-010-PtGRANAD
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-010-PtGRANAD

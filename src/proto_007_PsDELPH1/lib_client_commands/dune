@@ -9,7 +9,7 @@
   tezos-clic
   tezos-protocol-007-PsDELPH1
   tezos-stdlib-unix
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-007-PsDELPH1
@@ -35,7 +35,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-007-PsDELPH1
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-007-PsDELPH1

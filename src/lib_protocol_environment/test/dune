@@ -10,7 +10,7 @@
  (libraries
   tezos-base
   tezos-base.unix
-  tpe
+  tezos-protocol-environment
   alcotest-lwt
   tezos-test-helpers
   qcheck-alcotest
@@ -23,20 +23,20 @@
 
 (rule
  (alias runtest)
- (package tpe)
+ (package tezos-protocol-environment)
  (action (run %{dep:./test_mem_context.exe})))
 
 (rule
  (alias runtest)
- (package tpe)
+ (package tezos-protocol-environment)
  (action (run %{dep:./test_mem_context_array_theory.exe})))
 
 (rule
  (alias runtest)
- (package tpe)
+ (package tezos-protocol-environment)
  (action (run %{dep:./test_cache.exe})))
 
 (rule
  (alias runtest)
- (package tpe)
+ (package tezos-protocol-environment)
  (action (run %{dep:./test_data_encoding.exe})))

@@ -15,7 +15,7 @@
   tezos-context
   tezos-store
   tezos-store.shared
-  tpe
+  tezos-protocol-environment
   tezos-context-ops
   tezos-shell-context
   tezos-p2p

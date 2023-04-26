@@ -10,7 +10,7 @@
   tezos-clic
   tezos-protocol-012-Psithaca
   tezos-stdlib-unix
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tezos-mockup
   tezos-mockup-registration
@@ -45,7 +45,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-012-Psithaca
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-012-Psithaca

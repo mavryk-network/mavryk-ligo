@@ -10,7 +10,7 @@
   tezos-clic
   tezos-protocol-009-PsFLoren
   tezos-stdlib-unix
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-009-PsFLoren
@@ -41,7 +41,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-009-PsFLoren
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-009-PsFLoren

@@ -9,7 +9,7 @@
   tezos-clic
   tezos-protocol-006-PsCARTHA
   tezos-stdlib-unix
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-006-PsCARTHA
@@ -35,7 +35,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-006-PsCARTHA
-  tpe
+  tezos-protocol-environment
   tzsh-s
   tz-cli-b
   tezos-client-006-PsCARTHA
