@@ -10,7 +10,7 @@
   tezos-context.disk
   tezos-base-test-helpers
   tezos-test-helpers
-  tz-wasm-int
+  tezos-webassembly-interpreter
   qcheck-alcotest
   alcotest-lwt)
  (flags

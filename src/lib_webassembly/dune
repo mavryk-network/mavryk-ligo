@@ -3,7 +3,7 @@
 
 (library
  (name tezos_webassembly_interpreter)
- (public_name tz-wasm-int)
+ (public_name tezos-webassembly-interpreter)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-lwt-result-stdlib

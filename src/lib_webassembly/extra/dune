@@ -3,10 +3,10 @@
 
 (library
  (name tezos_webassembly_interpreter_extra)
- (public_name tz-wasm-int-extra)
+ (public_name tezos-webassembly-interpreter-extra)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tz-wasm-int
+  tezos-webassembly-interpreter
   lwt.unix
   tezos-lazy-containers)
  (flags

@@ -17,7 +17,7 @@
   qcheck-alcotest
   alcotest-lwt
   tezt
-  tz-wasm-int-extra)
+  tezos-webassembly-interpreter-extra)
  (preprocess (staged_pps ppx_import ppx_deriving.show))
  (flags
   (:standard)

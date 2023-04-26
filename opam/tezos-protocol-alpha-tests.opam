@@ -34,7 +34,7 @@ depends: [
   "tz-sc-wasm-helpers" {with-test}
   "tezos-stdlib" {with-test}
   "tz-sc-wasm" {with-test}
-  "tz-wasm-int-extra" {with-test}
+  "tezos-webassembly-interpreter-extra" {with-test}
   "tezt-tezos" {with-test}
 ]
 build: [

@@ -20,7 +20,7 @@
   tezos-stdlib
   tezos-crypto-dal
   tz-sc-wasm
-  tz-wasm-int-extra)
+  tezos-webassembly-interpreter-extra)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp))

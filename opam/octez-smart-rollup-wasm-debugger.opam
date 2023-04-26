@@ -17,8 +17,8 @@ depends: [
   "tezos-client-alpha"
   "tz-sc-wasm"
   "tz-sc-wasm-helpers"
-  "tz-wasm-int"
-  "tz-wasm-int-extra"
+  "tezos-webassembly-interpreter"
+  "tezos-webassembly-interpreter-extra"
 ]
 build: [
   ["rm" "-rf" "vendors"]
