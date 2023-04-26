@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tezos-stdlib-unix"
   "tezos-micheline"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-protocol-environment"
   "tezos-shell-context"
   "octez-protocol-compiler"

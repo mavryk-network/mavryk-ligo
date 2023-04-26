@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tezos-clic"
   "tezos-rpc"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-sapling"
   "uri" { >= "3.1.0" }
   "alcotest" { with-test & >= "1.5.0" }

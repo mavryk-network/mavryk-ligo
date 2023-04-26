@@ -16,7 +16,7 @@ depends: [
   "tezos-protocol-016-PtMumbai"
   "tezos-protocol-plugin-016-PtMumbai"
   "tezos-protocol-environment"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-client-base"
   "tezos-client-016-PtMumbai"
   "tezos-client-commands"

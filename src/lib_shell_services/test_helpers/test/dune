@@ -7,8 +7,8 @@
   tezos-base
   tezos-base.unix
   tezos-test-helpers
-  tzsh-s
-  tzsh-s-test-helpers
+  tezos-shell-services
+  tezos-shell-services-test-helpers
   qcheck-alcotest
   alcotest-lwt)
  (flags
@@ -18,5 +18,5 @@
 
 (rule
  (alias runtest)
- (package tzsh-s-test-helpers)
+ (package tezos-shell-services-test-helpers)
  (action (run %{dep:./test_block_services.exe})))

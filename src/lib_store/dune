@@ -10,7 +10,7 @@
   tezos-crypto
   tezos-rpc
   lwt-watcher
-  tzsh-s
+  tezos-shell-services
   tezos-validation
   tezos-context-ops
   tezos-store.shared)

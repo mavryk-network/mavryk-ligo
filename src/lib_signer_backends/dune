@@ -12,7 +12,7 @@
   tezos-rpc-http
   tezos-rpc-http-client
   tezos-signer-services
-  tzsh-s
+  tezos-shell-services
   uri)
  (flags
   (:standard)

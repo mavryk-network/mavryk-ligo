@@ -10,7 +10,7 @@
   tezos-protocol-006-PsCARTHA
   tezos-stdlib-unix
   tezos-protocol-environment
-  tzsh-s
+  tezos-shell-services
   tezos-client-base
   tezos-client-006-PsCARTHA
   tezos-client-commands
@@ -36,7 +36,7 @@
   tezos-clic
   tezos-protocol-006-PsCARTHA
   tezos-protocol-environment
-  tzsh-s
+  tezos-shell-services
   tezos-client-base
   tezos-client-006-PsCARTHA
   tezos-client-commands

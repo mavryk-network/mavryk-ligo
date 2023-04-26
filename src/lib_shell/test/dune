@@ -29,7 +29,7 @@
   tzp2p-s
   tezos-requester
   tezos-shell
-  tzsh-s
+  tezos-shell-services
   tezos-embedded-protocol-demo-noops
   tezos-stdlib-unix
   tezos-validation

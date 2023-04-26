@@ -16,7 +16,7 @@ depends: [
   "tezos-context"
   "tezos-context-ops"
   "tezos-shell-context"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-protocol-updater"
   "tezos-stdlib-unix"
 ]

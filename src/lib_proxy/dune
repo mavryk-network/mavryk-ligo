@@ -13,7 +13,7 @@
   tezos-client-base
   tezos-protocol-environment
   tezos-rpc
-  tzsh-s
+  tezos-shell-services
   tezos-context.memory
   uri)
  (flags

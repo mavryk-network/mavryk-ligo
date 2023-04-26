@@ -1372,19 +1372,19 @@ opam:tezos-shell-context:
 
 # Ignoring unreleased package tezos-shell-context-test.
 
-opam:tzsh-s:
+opam:tezos-shell-services:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tzsh-s
+    package: tezos-shell-services
 
-opam:tzsh-s-test-helpers:
+opam:tezos-shell-services-test-helpers:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tzsh-s-test-helpers
+    package: tezos-shell-services-test-helpers
 
 opam:tezos-signer-backends:
   extends:

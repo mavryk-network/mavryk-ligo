@@ -146,7 +146,7 @@ The shell is the part of the node responsible for all communications,
 peer-to-peer and RPC, acting as a cocoon around the economic
 protocols.
 
-  - :package:`tzsh-s` contains the definition of the
+  - :package:`tezos-shell-services` contains the definition of the
     node's service hierarchy, and calling functions to use in the
     client (or any third party software). As this library is linked
     into the client to call the services in a type-safe way, only the
@@ -254,7 +254,7 @@ compatible, and library vs command-line interface.
     an object whose methods allow for: accessing a wallet of keys,
     interacting via the user, making RPC calls, and signing data using
     signer plug-ins. Most of them, including RPC calling functions from
-    :package:`tzsh-s` and
+    :package:`tezos-shell-services` and
     :package:`tezos-protocol-alpha`, are abstracted over this object
     type. That way, it is possible to use the same code for different
     platforms or toolkits.

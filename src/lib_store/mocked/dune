@@ -9,7 +9,7 @@
  (libraries
   tezos-base
   tezos-crypto
-  tzsh-s
+  tezos-shell-services
   tezos-context.memory
   tezos-context-ops
   tezos-validation

@@ -15,7 +15,7 @@ depends: [
   "tezos-rpc"
   "tezos-rpc-http"
   "tezos-rpc-http-client-unix"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-stdlib-unix"
   "tezos-client-base"
   "tezos-client-commands"

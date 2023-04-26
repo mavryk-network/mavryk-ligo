@@ -25,7 +25,7 @@
   tezos-workers
   tezos_dal_node_services
   tezos_dal_node_lib
-  tzsh-s
+  tezos-shell-services
   tezos-smart-rollup-016-PtMumbai
   tezos-smart-rollup-layer2-016-PtMumbai
   tezos-layer2-utils-016-PtMumbai

@@ -14,7 +14,7 @@ depends: [
   "tezos-version"
   "octez-node-config"
   "tezos-stdlib-unix"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-rpc-http"
   "tezos-rpc-http-server"
   "tezos-p2p"

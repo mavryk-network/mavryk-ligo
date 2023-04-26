@@ -11,7 +11,7 @@ depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
   "tezos-base"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-client-base"
   "tezos-protocol-environment"
   "tezos-protocol-genesis"

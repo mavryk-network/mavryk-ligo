@@ -17,7 +17,7 @@
   tezos-protocol-alpha.parameters
   tezos-protocol-environment
   tezos-protocol-plugin-alpha
-  tzsh-s
+  tezos-shell-services
   tezos-plompiler
   tezos-crypto-dal)
  (flags

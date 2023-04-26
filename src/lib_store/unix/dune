@@ -6,7 +6,7 @@
  (public_name tezos-store.unix)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tzsh-s
+  tezos-shell-services
   tezos-base
   tezos-version
   index
@@ -61,7 +61,7 @@
   tezos-base
   tezos-stdlib-unix
   tezos-crypto
-  tzsh-s
+  tezos-shell-services
   tezos-protocol-updater
   tezos-validation
   tezos-context-ops
@@ -89,7 +89,7 @@
   tezos-base
   tezos-stdlib-unix
   tezos-crypto
-  tzsh-s
+  tezos-shell-services
   tezos-context
   tezos-validation
   tezos-store.shared

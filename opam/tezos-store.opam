@@ -13,7 +13,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-base"
   "tezos-crypto"
-  "tzsh-s"
+  "tezos-shell-services"
   "aches" { >= "1.0.0" }
   "aches-lwt" { >= "1.0.0" }
   "tezos-validation"

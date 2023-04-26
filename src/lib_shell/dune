@@ -20,7 +20,7 @@
   tezos-shell-context
   tezos-p2p
   tezos-stdlib-unix
-  tzsh-s
+  tezos-shell-services
   tzp2p-s
   tezos-protocol-updater
   tezos-requester

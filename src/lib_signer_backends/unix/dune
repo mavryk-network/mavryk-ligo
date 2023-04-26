@@ -19,7 +19,7 @@
   tezos-rpc-http-client-unix
   tezos-signer-services
   tezos-signer-backends
-  tzsh-s
+  tezos-shell-services
   uri
   (select ledger.ml from
    (ledgerwallet-tezos -> ledger.available.ml)

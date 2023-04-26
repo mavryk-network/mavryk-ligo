@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-client-base"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-protocol-environment"
   "uri" { >= "3.1.0" }
 ]

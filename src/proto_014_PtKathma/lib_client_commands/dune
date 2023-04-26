@@ -12,7 +12,7 @@
   tezos-protocol-014-PtKathma.parameters
   tezos-stdlib-unix
   tezos-protocol-environment
-  tzsh-s
+  tezos-shell-services
   tezos-mockup
   tezos-mockup-registration
   tezos-mockup-commands
@@ -49,7 +49,7 @@
   tezos-protocol-014-PtKathma
   tezos-protocol-014-PtKathma.parameters
   tezos-protocol-environment
-  tzsh-s
+  tezos-shell-services
   tezos-client-base
   tezos-client-014-PtKathma
   tezos-client-commands

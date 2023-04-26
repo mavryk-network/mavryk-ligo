@@ -16,7 +16,7 @@ depends: [
   "tezos-protocol-alpha"
   "tezos-protocol-plugin-alpha"
   "tezos-protocol-environment"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-client-base"
   "tezos-client-alpha"
   "tezos-client-commands"

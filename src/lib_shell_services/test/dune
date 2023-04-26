@@ -8,7 +8,7 @@
  (modes native js)
  (libraries
   tezos-base
-  tzsh-s
+  tezos-shell-services
   alcotest)
  (js_of_ocaml)
  (flags
@@ -18,10 +18,10 @@
 
 (rule
  (alias runtest)
- (package tzsh-s)
+ (package tezos-shell-services)
  (action (run %{dep:./test_block_services.exe})))
 
 (rule
  (alias runtest_js)
- (package tzsh-s)
+ (package tezos-shell-services)
  (action (run node %{dep:./test_block_services.bc.js})))

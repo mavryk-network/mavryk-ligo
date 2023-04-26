@@ -11,7 +11,7 @@
   tezos-base
   tezos-clic
   tezos-rpc
-  tzsh-s
+  tezos-shell-services
   tezos-sapling
   uri)
  (js_of_ocaml)

@@ -14,7 +14,7 @@ depends: [
   "tezos-clic"
   "tezos-rpc-http-client"
   "tezos-stdlib-unix"
-  "tzsh-s"
+  "tezos-shell-services"
   "tezos-client-base"
   "tezos-client-commands"
   "tezos-mockup-commands"
