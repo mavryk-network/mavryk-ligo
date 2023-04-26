@@ -16,7 +16,7 @@ depends: [
   "tezos-crypto"
   "tezos-protocol-016-PtMumbai"
   "tezos-micheline"
-  "tezos-client-016-PtMumbai"
+  "tc-016"
   "tz-cli-b"
   "tezos-workers"
   "tezos-shell"

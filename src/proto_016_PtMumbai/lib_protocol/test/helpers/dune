@@ -13,7 +13,7 @@
   tezos-micheline
   tezos-stdlib-unix
   tezos-protocol-016-PtMumbai
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-protocol-016-PtMumbai.parameters
   tpe
   tp-plugin-016

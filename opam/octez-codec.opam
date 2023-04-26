@@ -31,7 +31,7 @@ depopts: [
   "tezos-client-013-PtJakart"
   "tezos-client-014-PtKathma"
   "tezos-client-015-PtLimaPt"
-  "tezos-client-016-PtMumbai"
+  "tc-016"
   "tezos-client-alpha"
 ]
 build: [

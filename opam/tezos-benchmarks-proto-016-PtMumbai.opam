@@ -23,7 +23,7 @@ depends: [
   "tezos-micheline"
   "tezos-016-PtMumbai-test-helpers"
   "tezos-sapling"
-  "tezos-client-016-PtMumbai"
+  "tc-016"
   "tp-plugin-016"
   "tpe"
 ]

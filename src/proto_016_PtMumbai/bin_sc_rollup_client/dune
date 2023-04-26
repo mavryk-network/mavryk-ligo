@@ -10,7 +10,7 @@
   tezos-base
   tezos-clic
   tz-cli-b
-  tezos-client-016-PtMumbai
+  tc-016
   tc-com
   tezos-stdlib-unix
   tz-cli-b-unix

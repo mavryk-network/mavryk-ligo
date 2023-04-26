@@ -16,7 +16,7 @@ depends: [
   "tezos-stdlib-unix"
   "tz-cli-b"
   "tz-cli-b-unix"
-  "tezos-client-016-PtMumbai"
+  "tc-016"
   "tezos-context"
   "tezos-protocol-016-PtMumbai"
   "tp-plugin-016"

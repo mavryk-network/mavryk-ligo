@@ -3,7 +3,7 @@
 
 (library
  (name tc_016_commands)
- (public_name tezos-client-016-PtMumbai.commands)
+ (public_name tc-016.commands)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -17,7 +17,7 @@
   tezos-mockup-registration
   tz-mok-com
   tz-cli-b
-  tezos-client-016-PtMumbai
+  tc-016
   tc-com
   tezos-rpc
   tz-cli-b-unix
@@ -40,7 +40,7 @@
 
 (library
  (name tc_016_com_reg)
- (public_name tezos-client-016-PtMumbai.commands-registration)
+ (public_name tc-016.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -50,10 +50,10 @@
   tpe
   tzsh-s
   tz-cli-b
-  tezos-client-016-PtMumbai
+  tc-016
   tc-com
-  tezos-client-016-PtMumbai.commands
-  tezos-client-016-PtMumbai.sapling
+  tc-016.commands
+  tc-016.sapling
   tezos-rpc
   tp-plugin-016)
  (library_flags (:standard -linkall))

@@ -25,7 +25,7 @@ depends: [
   "tezos-client-015-PtLimaPt"
   "tezos-baking-015-PtLimaPt-commands"
   "tezos-protocol-plugin-015-PtLimaPt"
-  "tezos-client-016-PtMumbai"
+  "tc-016"
   "tezos-baking-016-PtMumbai-commands"
   "tp-plugin-016"
 ]

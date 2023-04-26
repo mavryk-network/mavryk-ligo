@@ -14,7 +14,7 @@
   tpe
   tzsh-s
   tz-cli-b
-  tezos-client-016-PtMumbai
+  tc-016
   tc-com
   tezos-stdlib
   tezos-stdlib-unix
@@ -58,7 +58,7 @@
   tpe
   tzsh-s
   tz-cli-b
-  tezos-client-016-PtMumbai
+  tc-016
   tc-com
   tezos-baking-016-PtMumbai
   tezos-rpc
@@ -87,7 +87,7 @@
   tpe
   tzsh-s
   tz-cli-b
-  tezos-client-016-PtMumbai
+  tc-016
   tc-com
   tezos-baking-016-PtMumbai
   tezos-baking-016-PtMumbai-commands
