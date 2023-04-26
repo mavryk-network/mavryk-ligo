@@ -12,7 +12,7 @@
   tezos-test-helpers
   tezos-016-PtMumbai-test-helpers
   tezos-base-test-helpers
-  tp-plugin-016)
+  tezos-protocol-plugin-016-PtMumbai)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp))

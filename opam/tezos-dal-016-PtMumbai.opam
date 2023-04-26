@@ -16,7 +16,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-dal-node-lib"
   "tezos-client-016-PtMumbai"
-  "tp-plugin-016"
+  "tezos-protocol-plugin-016-PtMumbai"
   "tezos-embedded-protocol-016-PtMumbai"
   "tezos-layer2-utils-016-PtMumbai"
   "tezos-protocol-016-PtMumbai"

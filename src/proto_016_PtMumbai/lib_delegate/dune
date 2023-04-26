@@ -10,7 +10,7 @@
   tezos-clic
   tezos-version
   tezos-protocol-016-PtMumbai
-  tp-plugin-016
+  tezos-protocol-plugin-016-PtMumbai
   tpe
   tzsh-s
   tz-cli-b

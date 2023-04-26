@@ -21,7 +21,7 @@
   tc-com
   tezos-rpc
   tz-cli-b-unix
-  tp-plugin-016
+  tezos-protocol-plugin-016-PtMumbai
   uri)
  (library_flags (:standard -linkall))
  (flags
@@ -55,7 +55,7 @@
   tezos-client-016-PtMumbai.commands
   tezos-client-016-PtMumbai.sapling
   tezos-rpc
-  tp-plugin-016)
+  tezos-protocol-plugin-016-PtMumbai)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

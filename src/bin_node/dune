@@ -117,7 +117,7 @@
   tezos-embedded-protocol-015-PtLimaPt
   tezos-protocol-plugin-015-PtLimaPt-registerer
   tezos-embedded-protocol-016-PtMumbai
-  tp-plugin-016-registerer
+  tezos-protocol-plugin-016-PtMumbai-registerer
   (select void_for_linking-tezos-embedded-protocol-alpha from
    (tezos-embedded-protocol-alpha -> void_for_linking-tezos-embedded-protocol-alpha.empty)
    (-> void_for_linking-tezos-embedded-protocol-alpha.empty))

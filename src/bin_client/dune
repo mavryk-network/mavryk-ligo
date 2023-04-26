@@ -100,7 +100,7 @@
   tezos-protocol-plugin-015-PtLimaPt
   tezos-client-016-PtMumbai.commands-registration
   tezos-baking-016-PtMumbai-commands.registration
-  tp-plugin-016
+  tezos-protocol-plugin-016-PtMumbai
   (select void_for_linking-tezos-client-alpha-commands-registration from
    (tezos-client-alpha.commands-registration -> void_for_linking-tezos-client-alpha-commands-registration.empty)
    (-> void_for_linking-tezos-client-alpha-commands-registration.empty))

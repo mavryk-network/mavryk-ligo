@@ -16,7 +16,7 @@
   tezos-client-016-PtMumbai
   tezos-protocol-016-PtMumbai.parameters
   tpe
-  tp-plugin-016
+  tezos-protocol-plugin-016-PtMumbai
   tzsh-s
   tezos-plompiler
   tezos-crypto-dal)
