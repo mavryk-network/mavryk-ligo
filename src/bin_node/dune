@@ -115,7 +115,7 @@
    (tezos-protocol-plugin-014-PtKathma-registerer -> void_for_linking-tezos-protocol-plugin-014-PtKathma-registerer.empty)
    (-> void_for_linking-tezos-protocol-plugin-014-PtKathma-registerer.empty))
   tezos-embedded-protocol-015-PtLimaPt
-  tezos-protocol-plugin-015-PtLimaPt-registerer
+  tp-plugin-015-registerer
   tezos-embedded-protocol-016-PtMumbai
   tp-plugin-016-registerer
   (select void_for_linking-tezos-embedded-protocol-alpha from

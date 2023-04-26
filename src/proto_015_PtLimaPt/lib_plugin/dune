@@ -3,7 +3,7 @@
 
 (library
  (name tp_plugin_015)
- (public_name tezos-protocol-plugin-015-PtLimaPt)
+ (public_name tp-plugin-015)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -17,12 +17,12 @@
 
 (library
  (name tp_plugin_015_registerer)
- (public_name tezos-protocol-plugin-015-PtLimaPt-registerer)
+ (public_name tp-plugin-015-registerer)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tezos-embedded-protocol-015-PtLimaPt
-  tezos-protocol-plugin-015-PtLimaPt
+  tp-plugin-015
   tezos-shell)
  (flags
   (:standard)

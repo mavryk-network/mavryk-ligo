@@ -19,7 +19,7 @@ depends: [
   "tezos-mockup-registration"
   "tz-prx"
   "tz-sig-b"
-  "tezos-protocol-plugin-015-PtLimaPt"
+  "tp-plugin-015"
   "tezos-rpc"
   "uri" { >= "3.1.0" }
   "tezos-micheline" {with-test}

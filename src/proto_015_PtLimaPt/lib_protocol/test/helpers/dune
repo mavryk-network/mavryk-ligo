@@ -16,7 +16,7 @@
   tezos-client-015-PtLimaPt
   tezos-protocol-015-PtLimaPt.parameters
   tpe
-  tezos-protocol-plugin-015-PtLimaPt
+  tp-plugin-015
   tzsh-s
   tezos-plompiler)
  (flags
