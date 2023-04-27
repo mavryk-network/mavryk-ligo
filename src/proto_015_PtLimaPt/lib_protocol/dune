@@ -6,7 +6,7 @@
  (public_name tezos-protocol-015-PtLimaPt.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (modules Tp_environment_015_PtLimaPt))
 
@@ -265,8 +265,8 @@
  (public_name tezos-protocol-015-PtLimaPt)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-environment
-  tezos-protocol-environment.sigs
+  tpe
+  tpe.sigs
   tezos-protocol-015-PtLimaPt.raw)
  (flags
   (:standard)
@@ -531,8 +531,8 @@
 (library
  (name tezos_protocol_015_PtLimaPt_functor)
  (libraries
-  tezos-protocol-environment
-  tezos-protocol-environment.sigs)
+  tpe
+  tpe.sigs)
  (flags
   (:standard)
   -nopervasives)
@@ -785,7 +785,7 @@
  (libraries
   tezos-protocol-015-PtLimaPt
   tezos-protocol-updater
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (modules Registerer))
 

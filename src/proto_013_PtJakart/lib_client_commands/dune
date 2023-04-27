@@ -11,7 +11,7 @@
   tezos-protocol-013-PtJakart
   tezos-protocol-013-PtJakart.parameters
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-mockup
   tezos-mockup-registration
@@ -48,7 +48,7 @@
   tezos-clic
   tezos-protocol-013-PtJakart
   tezos-protocol-013-PtJakart.parameters
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tezos-client-013-PtJakart

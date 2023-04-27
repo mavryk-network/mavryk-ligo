@@ -6,7 +6,7 @@
  (public_name tezos-protocol-001-PtCJ7pwo.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (modules Tp_environment_001_PtCJ7pwo))
 
@@ -106,8 +106,8 @@
  (public_name tezos-protocol-001-PtCJ7pwo)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-environment
-  tezos-protocol-environment.sigs
+  tpe
+  tpe.sigs
   tezos-protocol-001-PtCJ7pwo.raw)
  (flags
   (:standard)
@@ -215,8 +215,8 @@
 (library
  (name tezos_protocol_001_PtCJ7pwo_functor)
  (libraries
-  tezos-protocol-environment
-  tezos-protocol-environment.sigs)
+  tpe
+  tpe.sigs)
  (flags
   (:standard)
   -w -6-7-9-16-29-32-51-68
@@ -307,7 +307,7 @@
  (libraries
   tezos-protocol-001-PtCJ7pwo
   tezos-protocol-updater
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

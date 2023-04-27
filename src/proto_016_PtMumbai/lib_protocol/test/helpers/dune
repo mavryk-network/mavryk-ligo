@@ -15,7 +15,7 @@
   tezos-protocol-016-PtMumbai
   tezos-client-016-PtMumbai
   tezos-protocol-016-PtMumbai.parameters
-  tezos-protocol-environment
+  tpe
   tezos-protocol-plugin-016-PtMumbai
   tezos-shell-services
   tezos-plompiler

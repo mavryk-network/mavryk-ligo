@@ -1,8 +1,0 @@
-(executable
- (name main)
- (libraries
-   tezt-tezos
-   yes_wallet_lib)
- (flags (:standard
-          (:include %{workspace_root}/macos-link-flags.sexp)
-          -open Tezt -open Tezt_tezos -open Tezt.Base)))

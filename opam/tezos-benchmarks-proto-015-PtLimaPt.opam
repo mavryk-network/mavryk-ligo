@@ -25,7 +25,7 @@ depends: [
   "tezos-sapling"
   "tezos-client-015-PtLimaPt"
   "tezos-protocol-plugin-015-PtLimaPt"
-  "tezos-protocol-environment"
+  "tpe"
 ]
 build: [
   ["rm" "-rf" "vendors"]

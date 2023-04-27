@@ -9,7 +9,7 @@
   tezos-base
   tezos-client-base
   tezos-shell-services
-  tezos-protocol-environment
+  tpe
   uri)
  (flags
   (:standard)
@@ -29,7 +29,7 @@
   tezos-rpc
   tezos-p2p-services
   tezos-p2p
-  tezos-protocol-environment
+  tpe
   tezos-stdlib-unix
   tezos-rpc-http
   tezos-rpc-http-client

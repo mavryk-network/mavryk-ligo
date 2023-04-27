@@ -15,7 +15,7 @@ depends: [
   "tezos-version"
   "tezos-protocol-016-PtMumbai"
   "tezos-protocol-plugin-016-PtMumbai"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-shell-services"
   "tezos-client-base"
   "tezos-client-016-PtMumbai"

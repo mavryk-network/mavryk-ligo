@@ -9,7 +9,7 @@
   tezos-clic
   tezos-protocol-002-PsYLVpVv
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tezos-client-002-PsYLVpVv
@@ -35,7 +35,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-002-PsYLVpVv
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tezos-client-002-PsYLVpVv
