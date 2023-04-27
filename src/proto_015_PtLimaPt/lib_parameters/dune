@@ -16,38 +16,38 @@
   -open Tezos_protocol_015_PtLimaPt)
  (modules (:standard \ gen)))
 
-(executable
- (name gen)
- (libraries
-  tezos-base
-  tp-015.parameters
-  tp-015)
- (link_flags
-  (:standard)
-  (:include %{workspace_root}/macos-link-flags.sexp)
-  (-linkall))
- (flags
-  (:standard)
-  -open Tezos_base.TzPervasives
-  -open Tp_015_params
-  -open Tezos_protocol_015_PtLimaPt
-  (:include ../../../win32-flags.sexp))
- (modules gen))
+; (executable
+;  (name gen)
+;  (libraries
+;   tezos-base
+;   tp-015.parameters
+;   tp-015)
+;  (link_flags
+;   (:standard)
+;   (:include %{workspace_root}/macos-link-flags.sexp)
+;   (-linkall))
+;  (flags
+;   (:standard)
+;   -open Tezos_base.TzPervasives
+;   -open Tp_015_params
+;   -open Tezos_protocol_015_PtLimaPt
+;   (:include ../../../win32-flags.sexp))
+;  (modules gen))
 
-(rule
- (targets sandbox-parameters.json)
- (deps gen.exe)
- (action (run %{deps} --sandbox)))
+; (rule
+;  (targets sandbox-parameters.json)
+;  (deps gen.exe)
+;  (action (run %{deps} --sandbox)))
 
-(rule
- (targets test-parameters.json)
- (deps gen.exe)
- (action (run %{deps} --test)))
+; (rule
+;  (targets test-parameters.json)
+;  (deps gen.exe)
+;  (action (run %{deps} --test)))
 
-(rule
- (targets mainnet-parameters.json)
- (deps gen.exe)
- (action (run %{deps} --mainnet)))
+; (rule
+;  (targets mainnet-parameters.json)
+;  (deps gen.exe)
+;  (action (run %{deps} --mainnet)))
 
 (install
  (package tp-015)
