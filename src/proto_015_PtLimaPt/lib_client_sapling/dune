@@ -3,7 +3,7 @@
 
 (library
  (name tc_sapling_015)
- (public_name tezos-client-015-PtLimaPt.sapling)
+ (public_name tc-015.sapling)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -12,10 +12,10 @@
   tezos-stdlib-unix
   tezos-client-base
   tezos-signer-backends
-  tezos-client-015-PtLimaPt
-  tezos-client-015-PtLimaPt.commands
-  tezos-protocol-015-PtLimaPt
-  tezos-protocol-plugin-015-PtLimaPt)
+  tc-015
+  tc-015.commands
+  tp-015
+  tp-plugin-015)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

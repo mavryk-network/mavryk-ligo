@@ -15,13 +15,13 @@ depends: [
   "octez-protocol-compiler"
   "tezos-stdlib-unix"
   "tezos-dal-node-lib"
-  "tezos-client-016-PtMumbai"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tc-016"
+  "tp-plugin-016"
   "tezos-embedded-protocol-016-PtMumbai"
   "tezos-layer2-utils-016-PtMumbai"
-  "tezos-protocol-016-PtMumbai"
+  "tp-016"
   "tezos-base-test-helpers" {with-test}
-  "tezos-016-PtMumbai-test-helpers" {with-test}
+  "tz-016-test-helpers" {with-test}
   "alcotest-lwt" { with-test & >= "1.5.0" }
 ]
 build: [

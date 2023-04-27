@@ -7,9 +7,9 @@
   tezos-micheline
   tezos-micheline-rewriting
   tezos-benchmark-type-inference-016-PtMumbai
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-error-monad
-  tezos-client-016-PtMumbai)
+  tc-016)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp))

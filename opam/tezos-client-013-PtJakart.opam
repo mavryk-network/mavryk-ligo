@@ -16,7 +16,7 @@ depends: [
   "tezos-shell-services"
   "tezos-client-base"
   "tezos-protocol-013-PtJakart"
-  "tezos-mockup-registration"
+  "tz-mock-reg"
   "tezos-proxy"
   "tezos-signer-backends"
   "tezos-protocol-plugin-013-PtJakart"
@@ -32,7 +32,7 @@ depends: [
   "tezos-mockup"
   "tezos-mockup-commands"
   "tezos-client-commands"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
   "tezos-crypto"
 ]
 build: [

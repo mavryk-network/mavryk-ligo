@@ -15,9 +15,9 @@ depends: [
   "tezos-crypto"
   "tezos-micheline"
   "tezos-micheline-rewriting"
-  "tezos-protocol-015-PtLimaPt"
+  "tp-015"
   "hashcons"
-  "tezos-client-015-PtLimaPt" {with-test}
+  "tc-015" {with-test}
 ]
 build: [
   ["rm" "-rf" "vendors"]

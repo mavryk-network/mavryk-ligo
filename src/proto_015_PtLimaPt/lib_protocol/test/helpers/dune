@@ -3,7 +3,7 @@
 
 (library
  (name tz15_testhelpers)
- (public_name tezos-015-PtLimaPt-test-helpers)
+ (public_name tz-015-test-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries
   alcotest-lwt
@@ -12,11 +12,11 @@
   tezos-base
   tezos-micheline
   tezos-stdlib-unix
-  tezos-protocol-015-PtLimaPt
-  tezos-client-015-PtLimaPt
-  tezos-protocol-015-PtLimaPt.parameters
+  tp-015
+  tc-015
+  tp-015.parameters
   tpe
-  tezos-protocol-plugin-015-PtLimaPt
+  tp-plugin-015
   tezos-shell-services
   tezos-plompiler)
  (flags

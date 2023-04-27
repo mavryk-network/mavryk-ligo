@@ -6,13 +6,13 @@
  (public_name tezos-baking-015-PtLimaPt.mockup-simulator)
  (libraries
   tezos-base
-  tezos-protocol-015-PtLimaPt
-  tezos-client-015-PtLimaPt
+  tp-015
+  tc-015
   tezos-client-commands
   tezos-baking-015-PtLimaPt
   tezos-stdlib-unix
-  tezos-client-base-unix
-  tezos-protocol-015-PtLimaPt.parameters
+  tz-b-c-ux
+  tp-015.parameters
   tezos-mockup
   tezos-mockup-proxy
   tezos-mockup-commands

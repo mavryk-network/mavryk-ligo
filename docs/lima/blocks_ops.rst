@@ -14,7 +14,7 @@ those available to end-users on Tezos Mainnet. The complete list of
 operations, including those corresponding to features in development
 or available only on test networks, is given in the
 :package-api:`OCaml Documentation
-<tezos-protocol-015-PtLimaPt/Trp_015_PtLimaPt/Operation_repr/index.html>`.
+<tp-016/Trp_015_PtLimaPt/Operation_repr/index.html>`.
 
 .. _validation_passes:
 .. _validation_passes_lima:

@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "data-encoding" { >= "0.7.1" & < "1.0.0" }
   "tezos-base"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
   "tezos-client-base"
   "tezos-clic"
   "tezos-stdlib-unix"
@@ -30,8 +30,8 @@ depopts: [
   "tezos-client-012-Psithaca"
   "tezos-client-013-PtJakart"
   "tezos-client-014-PtKathma"
-  "tezos-client-015-PtLimaPt"
-  "tezos-client-016-PtMumbai"
+  "tc-015"
+  "tc-016"
   "tezos-client-alpha"
 ]
 build: [

@@ -3,9 +3,9 @@
 
 (library
  (name bare_structs)
- (public_name tezos-lwt-result-stdlib.bare.structs)
+ (public_name tz-lwtres-std.bare.structs)
  (instrumentation (backend bisect_ppx))
  (libraries
   lwt
-  tezos-lwt-result-stdlib.bare.sigs)
+  tz-lwtres-std.bare.sigs)
  (js_of_ocaml))

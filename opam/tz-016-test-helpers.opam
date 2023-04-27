@@ -16,12 +16,13 @@ depends: [
   "tezos-base"
   "tezos-micheline"
   "tezos-stdlib-unix"
-  "tezos-protocol-015-PtLimaPt"
-  "tezos-client-015-PtLimaPt"
+  "tp-016"
+  "tc-016"
   "tpe"
-  "tezos-protocol-plugin-015-PtLimaPt"
+  "tp-plugin-016"
   "tezos-shell-services"
   "tezos-plompiler" { >= "1.0.1" & < "2.0.0" }
+  "tezos-crypto-dal"
 ]
 build: [
   ["rm" "-rf" "vendors"]

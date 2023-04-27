@@ -8,9 +8,9 @@
   data-encoding
   tezos-base
   tezos-base.unix
-  tezos-protocol-015-PtLimaPt
+  tp-015
   tezos-client-base
-  tezos-client-015-PtLimaPt)
+  tc-015)
  (flags
   (:standard)
   -open Data_encoding

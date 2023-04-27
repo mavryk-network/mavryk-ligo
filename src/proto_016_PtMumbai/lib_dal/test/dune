@@ -6,9 +6,9 @@
  (libraries
   tezos-base
   tezos-dal-016-PtMumbai
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-base-test-helpers
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   alcotest-lwt)
  (link_flags
   (:standard)

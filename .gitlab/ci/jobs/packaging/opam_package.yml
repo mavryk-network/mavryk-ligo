@@ -323,9 +323,9 @@ opam:octez-tx-rollup-node-PtLimaPt:
   variables:
     package: octez-tx-rollup-node-PtLimaPt
 
-# Ignoring unreleased package tezos-015-PtLimaPt-test-helpers.
+# Ignoring unreleased package tz-015-test-helpers.
 
-# Ignoring unreleased package tezos-016-PtMumbai-test-helpers.
+# Ignoring unreleased package tz-016-test-helpers.
 
 # Ignoring unreleased package tezos-alpha-test-helpers.
 
@@ -521,19 +521,19 @@ opam:tezos-client-014-PtKathma:
   variables:
     package: tezos-client-014-PtKathma
 
-opam:tezos-client-015-PtLimaPt:
+opam:tc-015:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-client-015-PtLimaPt
+    package: tc-015
 
-opam:tezos-client-016-PtMumbai:
+opam:tc-016:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-client-016-PtMumbai
+    package: tc-016
 
 opam:tezos-client-alpha:
   extends:
@@ -549,12 +549,12 @@ opam:tezos-client-base:
   variables:
     package: tezos-client-base
 
-opam:tezos-client-base-unix:
+opam:tz-b-c-ux:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-client-base-unix
+    package: tz-b-c-ux
 
 opam:tezos-client-commands:
   extends:
@@ -861,12 +861,12 @@ opam:tezos-lazy-containers:
 
 # Ignoring unreleased package tezos-lazy-containers-tests.
 
-opam:tezos-lwt-result-stdlib:
+opam:tz-lwtres-std:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_7
   variables:
-    package: tezos-lwt-result-stdlib
+    package: tz-lwtres-std
 
 opam:tezos-micheline:
   extends:
@@ -898,12 +898,12 @@ opam:tezos-mockup-proxy:
   variables:
     package: tezos-mockup-proxy
 
-opam:tezos-mockup-registration:
+opam:tz-mock-reg:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_5
   variables:
-    package: tezos-mockup-registration
+    package: tz-mock-reg
 
 # Ignoring unreleased package tezos-openapi.
 
@@ -1040,23 +1040,23 @@ opam:tezos-protocol-014-PtKathma:
   variables:
     package: tezos-protocol-014-PtKathma
 
-opam:tezos-protocol-015-PtLimaPt:
+opam:tp-016:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-protocol-015-PtLimaPt
+    package: tp-016
 
-# Ignoring unreleased package tezos-protocol-015-PtLimaPt-tests.
+# Ignoring unreleased package tp-016-tests.
 
-opam:tezos-protocol-016-PtMumbai:
+opam:tp-016:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-protocol-016-PtMumbai
+    package: tp-016
 
-# Ignoring unreleased package tezos-protocol-016-PtMumbai-tests.
+# Ignoring unreleased package tp-016-tests.
 
 opam:tezos-protocol-alpha:
   extends:
@@ -1207,37 +1207,37 @@ opam:tezos-protocol-plugin-014-PtKathma-registerer:
   variables:
     package: tezos-protocol-plugin-014-PtKathma-registerer
 
-opam:tezos-protocol-plugin-015-PtLimaPt:
+opam:tp-plugin-015:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_4
   variables:
-    package: tezos-protocol-plugin-015-PtLimaPt
+    package: tp-plugin-015
 
-opam:tezos-protocol-plugin-015-PtLimaPt-registerer:
+opam:tp-plugin-015-registerer:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-protocol-plugin-015-PtLimaPt-registerer
+    package: tp-plugin-015-registerer
 
-# Ignoring unreleased package tezos-protocol-plugin-015-PtLimaPt-tests.
+# Ignoring unreleased package tp-plugin-015-tests.
 
-opam:tezos-protocol-plugin-016-PtMumbai:
+opam:tp-plugin-016:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_4
   variables:
-    package: tezos-protocol-plugin-016-PtMumbai
+    package: tp-plugin-016
 
-opam:tezos-protocol-plugin-016-PtMumbai-registerer:
+opam:tp-plugin-016-registerer:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-protocol-plugin-016-PtMumbai-registerer
+    package: tp-plugin-016-registerer
 
-# Ignoring unreleased package tezos-protocol-plugin-016-PtMumbai-tests.
+# Ignoring unreleased package tp-plugin-016-tests.
 
 opam:tezos-protocol-plugin-alpha:
   extends:
@@ -1304,12 +1304,12 @@ opam:tezos-rpc-http-client:
   variables:
     package: tezos-rpc-http-client
 
-opam:tezos-rpc-http-client-unix:
+opam:tz-rpc-h-c-ux:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-rpc-http-client-unix
+    package: tz-rpc-h-c-ux
 
 opam:tezos-rpc-http-server:
   extends:
@@ -1400,12 +1400,12 @@ opam:tezos-signer-services:
   variables:
     package: tezos-signer-services
 
-opam:tezos-smart-rollup-016-PtMumbai:
+opam:tz-scr-016:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_5
   variables:
-    package: tezos-smart-rollup-016-PtMumbai
+    package: tz-scr-016
 
 opam:tezos-smart-rollup-alpha:
   extends:
@@ -1499,19 +1499,19 @@ opam:tezos-wasmer:
   variables:
     package: tezos-wasmer
 
-opam:tezos-webassembly-interpreter:
+opam:tz-wasm-in:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_7
   variables:
-    package: tezos-webassembly-interpreter
+    package: tz-wasm-in
 
-opam:tezos-webassembly-interpreter-extra:
+opam:tz-wasm-in-extra:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_7
   variables:
-    package: tezos-webassembly-interpreter-extra
+    package: tz-wasm-in-extra
 
 opam:tezos-workers:
   extends:

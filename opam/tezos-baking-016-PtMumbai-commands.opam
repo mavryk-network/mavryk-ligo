@@ -11,12 +11,12 @@ depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
   "tezos-base"
-  "tezos-protocol-016-PtMumbai"
+  "tp-016"
   "tezos-stdlib-unix"
   "tpe"
   "tezos-shell-services"
   "tezos-client-base"
-  "tezos-client-016-PtMumbai"
+  "tc-016"
   "tezos-client-commands"
   "tezos-baking-016-PtMumbai"
   "tezos-rpc"

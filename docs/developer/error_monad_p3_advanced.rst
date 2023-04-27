@@ -10,7 +10,7 @@ Handling values within the Lwt, ``result``, and Lwt-``result`` monads is
 so common in Octez that you also have access to an extension of the
 Stdlib dedicated to these monads: the ``Lwtreslib`` library.
 
-The ``tezos-lwt-result-stdlib`` package exports an ``Lwtreslib`` module
+The ``tz-lwtres-std`` package exports an ``Lwtreslib`` module
 which is made available, through ``tezos-error-monad`` and
 ``tezos-base``, to the whole of the codebase. Specifically, within the
 codebase of Octez the following modules of OCaml’s ``Stdlib`` are
@@ -63,7 +63,7 @@ for ``List.map``
        ('b list, 'trace list) result Lwt.t
 
 Check out `the online documentation of
-Lwtreslib <../api/odoc/_html/tezos-lwt-result-stdlib/Tezos_lwt_result_stdlib/Lwtreslib/index.html>`__
+Lwtreslib <../api/odoc/_html/tz-lwtres-std/Tezos_lwt_result_stdlib/Lwtreslib/index.html>`__
 for a description of the semantic and naming convention.
 
 In addition to shadowing existing modules, ``Lwtreslib`` also exports

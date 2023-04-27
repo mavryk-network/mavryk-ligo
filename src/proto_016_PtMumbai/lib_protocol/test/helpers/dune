@@ -3,7 +3,7 @@
 
 (library
  (name tz16_testhelpers)
- (public_name tezos-016-PtMumbai-test-helpers)
+ (public_name tz-016-test-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries
   alcotest-lwt
@@ -12,11 +12,11 @@
   tezos-base
   tezos-micheline
   tezos-stdlib-unix
-  tezos-protocol-016-PtMumbai
-  tezos-client-016-PtMumbai
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016
+  tc-016
+  tp-016.parameters
   tpe
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tezos-shell-services
   tezos-plompiler
   tezos-crypto-dal)

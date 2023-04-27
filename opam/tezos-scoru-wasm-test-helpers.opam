@@ -22,7 +22,7 @@ depends: [
   "tezos-scoru-wasm-helpers"
   "qcheck-alcotest" { >= "0.20" }
   "alcotest-lwt" { >= "1.5.0" }
-  "tezos-webassembly-interpreter-extra"
+  "tz-wasm-in-extra"
 ]
 build: [
   ["rm" "-rf" "vendors"]

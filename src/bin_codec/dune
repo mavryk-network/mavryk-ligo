@@ -10,7 +10,7 @@
   data-encoding
   tezos-base
   tezos-base.unix
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-client-base
   tezos-clic
   tezos-stdlib-unix
@@ -46,12 +46,12 @@
   (select void_for_linking-tezos-client-014-PtKathma from
    (tezos-client-014-PtKathma -> void_for_linking-tezos-client-014-PtKathma.empty)
    (-> void_for_linking-tezos-client-014-PtKathma.empty))
-  (select void_for_linking-tezos-client-015-PtLimaPt from
-   (tezos-client-015-PtLimaPt -> void_for_linking-tezos-client-015-PtLimaPt.empty)
-   (-> void_for_linking-tezos-client-015-PtLimaPt.empty))
-  (select void_for_linking-tezos-client-016-PtMumbai from
-   (tezos-client-016-PtMumbai -> void_for_linking-tezos-client-016-PtMumbai.empty)
-   (-> void_for_linking-tezos-client-016-PtMumbai.empty))
+  (select void_for_linking-tc-015 from
+   (tc-015 -> void_for_linking-tc-015.empty)
+   (-> void_for_linking-tc-015.empty))
+  (select void_for_linking-tc-016 from
+   (tc-016 -> void_for_linking-tc-016.empty)
+   (-> void_for_linking-tc-016.empty))
   (select void_for_linking-tezos-client-alpha from
    (tezos-client-alpha -> void_for_linking-tezos-client-alpha.empty)
    (-> void_for_linking-tezos-client-alpha.empty)))
@@ -82,6 +82,6 @@
    (write-file void_for_linking-tezos-client-012-Psithaca.empty "")
    (write-file void_for_linking-tezos-client-013-PtJakart.empty "")
    (write-file void_for_linking-tezos-client-014-PtKathma.empty "")
-   (write-file void_for_linking-tezos-client-015-PtLimaPt.empty "")
-   (write-file void_for_linking-tezos-client-016-PtMumbai.empty "")
+   (write-file void_for_linking-tc-015.empty "")
+   (write-file void_for_linking-tc-016.empty "")
    (write-file void_for_linking-tezos-client-alpha.empty ""))))

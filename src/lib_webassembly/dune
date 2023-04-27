@@ -3,10 +3,10 @@
 
 (library
  (name tezos_webassembly_interpreter)
- (public_name tezos-webassembly-interpreter)
+ (public_name tz-wasm-in)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-lwt-result-stdlib
+  tz-lwtres-std
   zarith
   tezos-lazy-containers)
  (preprocess (pps ppx_deriving.show))

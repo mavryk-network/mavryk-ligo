@@ -16,7 +16,7 @@
   tezos-stdlib
   tezos-crypto
   tezos-error-monad
-  tezos-lwt-result-stdlib)
+  tz-lwtres-std)
  (js_of_ocaml (javascript_files runtime.js))
  (flags
   (:standard)

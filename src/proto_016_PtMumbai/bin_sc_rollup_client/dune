@@ -10,14 +10,14 @@
   tezos-base
   tezos-clic
   tezos-client-base
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-commands
   tezos-stdlib-unix
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-rpc-http
-  tezos-rpc-http-client-unix
-  tezos-protocol-016-PtMumbai
-  tezos-smart-rollup-016-PtMumbai
+  tz-rpc-h-c-ux
+  tp-016
+  tz-scr-016
   tezos-smart-rollup-layer2-016-PtMumbai
   uri)
  (link_flags

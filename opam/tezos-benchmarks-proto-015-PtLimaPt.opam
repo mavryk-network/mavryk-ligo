@@ -13,7 +13,7 @@ depends: [
   "tezos-stdlib"
   "tezos-base"
   "tezos-error-monad"
-  "tezos-protocol-015-PtLimaPt"
+  "tp-015"
   "tezos-lazy-containers"
   "tezos-benchmark"
   "tezos-benchmark-015-PtLimaPt"
@@ -21,10 +21,10 @@ depends: [
   "tezos-crypto"
   "tezos-shell-benchmarks"
   "tezos-micheline"
-  "tezos-015-PtLimaPt-test-helpers"
+  "tz-015-test-helpers"
   "tezos-sapling"
-  "tezos-client-015-PtLimaPt"
-  "tezos-protocol-plugin-015-PtLimaPt"
+  "tc-015"
+  "tp-plugin-015"
   "tpe"
 ]
 build: [

@@ -32,7 +32,7 @@
 
 (library
  (name tezos_rpc_http_client_unix)
- (public_name tezos-rpc-http-client-unix)
+ (public_name tz-rpc-h-c-ux)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-stdlib-unix

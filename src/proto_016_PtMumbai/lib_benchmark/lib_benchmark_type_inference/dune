@@ -11,7 +11,7 @@
   tezos-crypto
   tezos-micheline
   tezos-micheline-rewriting
-  tezos-protocol-016-PtMumbai
+  tp-016
   hashcons)
  (flags
   (:standard)

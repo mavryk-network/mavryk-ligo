@@ -4,7 +4,7 @@
 (executable
  (name main)
  (libraries
-  tezos-webassembly-interpreter
+  tz-wasm-in
   alcotest)
  (flags
   (:standard)
@@ -12,7 +12,7 @@
 
 (rule
  (alias runtest)
- (package tezos-webassembly-interpreter)
+ (package tz-wasm-in)
  (action (run %{dep:./main.exe})))
 
 (include_subdirs no)

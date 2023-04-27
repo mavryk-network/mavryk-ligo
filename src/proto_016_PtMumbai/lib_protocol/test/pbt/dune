@@ -24,20 +24,20 @@
  (libraries
   tezos-base
   tezos-micheline
-  tezos-client-016-PtMumbai
-  tezos-protocol-016-PtMumbai
+  tc-016
+  tp-016
   tezos-context.merkle_proof_encoding
   tezos-test-helpers
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   alcotest
   qcheck-alcotest
   tezos-benchmark
   tezos-benchmark-016-PtMumbai
   tezos-benchmark-type-inference-016-PtMumbai
-  tezos-smart-rollup-016-PtMumbai
+  tz-scr-016
   tezos-crypto-dal
   tezos-base-test-helpers
-  tezos-protocol-016-PtMumbai.parameters)
+  tp-016.parameters)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp))
@@ -58,92 +58,92 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./liquidity_baking_pbt.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./saturation_fuzzing.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_merkle_list.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_gas_properties.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_sampler.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_script_comparison.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_tez_repr.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_tx_rollup_l2_encoding.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_bitset.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_sc_rollup_tick_repr.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_sc_rollup_encoding.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_refutation_game.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_carbonated_map.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_zk_rollup_encoding.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_dal_slot_proof.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_compare_operations.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_operation_encoding.exe})))
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (action (run %{dep:./test_bytes_conversion.exe})))
 
 (rule (alias runtest1) (action (run %{exe:liquidity_baking_pbt.exe})))

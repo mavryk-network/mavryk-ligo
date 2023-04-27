@@ -14,8 +14,8 @@
   test_fuzzing_seq_tiered
   test_fuzzing_option)
  (libraries
-  tezos-lwt-result-stdlib
-  tezos-lwt-result-stdlib.examples.traces
+  tz-lwtres-std
+  tz-lwtres-std.examples.traces
   lwt.unix
   alcotest-lwt
   qcheck-alcotest
@@ -27,50 +27,50 @@
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_hashtbl.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_list_basic.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_list_basic_lwt.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_seq_basic.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_generic.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_fuzzing_seq.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_fuzzing_list.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_fuzzing_set.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_fuzzing_seq_tiered.exe})))
 
 (rule
  (alias runtest)
- (package tezos-lwt-result-stdlib)
+ (package tz-lwtres-std)
  (action (run %{dep:./test_fuzzing_option.exe})))

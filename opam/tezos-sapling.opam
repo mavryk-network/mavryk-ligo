@@ -20,7 +20,7 @@ depends: [
   "tezos-crypto"
   "tezos-error-monad"
   "tezos-rust-libs" { = "1.5" }
-  "tezos-lwt-result-stdlib"
+  "tz-lwtres-std"
   "tezos-base" {with-test}
   "tezos-stdlib-unix" {with-test}
   "tezos-base-test-helpers" {with-test}

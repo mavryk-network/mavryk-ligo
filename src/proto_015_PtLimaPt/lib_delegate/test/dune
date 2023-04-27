@@ -6,12 +6,12 @@
  (libraries
   tezos-base
   tezos-micheline
-  tezos-client-015-PtLimaPt
-  tezos-protocol-015-PtLimaPt
+  tc-015
+  tp-015
   tezos-base-test-helpers
   tezos-baking-015-PtLimaPt.mockup-simulator
   tezos-baking-015-PtLimaPt
-  tezos-protocol-015-PtLimaPt.parameters
+  tp-015.parameters
   tezos-crypto
   alcotest-lwt
   uri)

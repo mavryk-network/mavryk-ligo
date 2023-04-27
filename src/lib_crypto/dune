@@ -10,7 +10,7 @@
  (libraries
   tezos-stdlib
   data-encoding
-  tezos-lwt-result-stdlib
+  tz-lwtres-std
   lwt
   tezos-hacl
   secp256k1-internal

@@ -263,7 +263,7 @@ compatible, and library vs command-line interface.
     the client context.
   - :package:`tezos-client-genesis` contains the basic activator
     commands available on the genesis protocol.
-  - :package:`tezos-client-base-unix` implements configuration file
+  - :package:`tz-b-c-ux` implements configuration file
     and wallet storage in Unix files, user interaction via the Unix
     console, and terminal based signer plug-ins.
 

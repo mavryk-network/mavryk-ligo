@@ -15,8 +15,8 @@
   tezos-client-alpha
   tezos-scoru-wasm
   tezos-scoru-wasm-helpers
-  tezos-webassembly-interpreter
-  tezos-webassembly-interpreter-extra)
+  tz-wasm-in
+  tz-wasm-in-extra)
  (link_flags
   (:standard)
   (:include %{workspace_root}/static-link-flags.sexp)

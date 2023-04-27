@@ -12,12 +12,12 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-clic"
-  "tezos-protocol-015-PtLimaPt"
-  "tezos-client-015-PtLimaPt"
+  "tp-015"
+  "tc-015"
   "tezos-client-commands"
   "tezos-baking-015-PtLimaPt-commands"
   "tezos-stdlib-unix"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
 ]
 build: [
   ["rm" "-rf" "vendors"]
