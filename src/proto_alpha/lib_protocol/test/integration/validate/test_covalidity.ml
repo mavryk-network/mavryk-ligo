@@ -96,7 +96,7 @@ let print_candidates candidates =
 let covalid_permutation_and_bake ks nb_bootstrap =
   let open Lwt_result_syntax in
   let* state, candidates =
-    covalid ks ~nb_bootstrap ~max_batch_size:Operation_generator.max_batch_size
+    covalid ks ~nb_bootstrap ~max_batch_size:Opgen.max_batch_size
   in
   print_candidates candidates ;
   let* () = sequential_validate state.block candidates in

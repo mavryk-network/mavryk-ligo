@@ -41,5 +41,5 @@
   -open Tezos_protocol_015_PtLimaPt.Protocol
   -open Tezos_micheline
   -open Tz15_testhelpers
-  -open Tezos_client_015_PtLimaPt
+  -open Tc_015
   -open Tp_plugin_015))

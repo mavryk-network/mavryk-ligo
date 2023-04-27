@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_smart_rollup_016_PtMumbai)
+ (name tz_sm_roll_016)
  (public_name tz-scr-016)
  (instrumentation (backend bisect_ppx))
  (libraries

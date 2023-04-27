@@ -19,4 +19,4 @@
   -open Tezos_base
   -open Tezos_protocol_015_PtLimaPt
   -open Tezos_client_base
-  -open Tezos_client_015_PtLimaPt))
+  -open Tc_015))

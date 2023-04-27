@@ -23,7 +23,7 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_micheline
-  -open Tezos_client_015_PtLimaPt
+  -open Tc_015
   -open Tezos_protocol_015_PtLimaPt
   -open Tezos_base_test_helpers
   -open Tezos_015_PtLimaPt_mockup_simulator

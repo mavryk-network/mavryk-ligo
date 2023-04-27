@@ -27,6 +27,6 @@
   -open Tezos_micheline
   -open Tezos_stdlib_unix
   -open Tezos_protocol_015_PtLimaPt
-  -open Tezos_client_015_PtLimaPt
+  -open Tc_015
   -open Tp_plugin_015
   -open Tezos_shell_services))

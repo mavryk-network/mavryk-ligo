@@ -38,7 +38,7 @@ open Qcheck2_helpers
 (** {2 Generators}  *)
 let generate_operation =
   let open Gen in
-  let+ _kind, (_hash, op) = Operation_generator.generate_operation in
+  let+ _kind, (_hash, op) = Opgen.generate_operation in
   op
 
 (** {2 Tests} *)

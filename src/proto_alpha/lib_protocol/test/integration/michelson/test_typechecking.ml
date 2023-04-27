@@ -34,7 +34,7 @@
 open Protocol
 open Alpha_context
 open Micheline
-open Error_monad_operators
+open Errm_ops
 
 let wrap_error_lwt x = x >>= fun x -> Lwt.return @@ Environment.wrap_tzresult x
 

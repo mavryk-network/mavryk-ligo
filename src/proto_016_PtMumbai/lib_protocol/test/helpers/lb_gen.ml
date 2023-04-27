@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-open Liquidity_baking_machine
+open Lb_mach
 open QCheck2.Gen
 
 let total_xtz = 32_000_000_000_000L

@@ -34,7 +34,7 @@ let () =
   Alcotest_lwt.run
     "protocol > integration > michelson"
     [
-      ("global table of constants", Test_global_constants_storage.tests);
+      ("global table of constants", G_constants_storage.tests);
       ("interpretation", Test_interpretation.tests);
       ("lazy storage diff", Test_lazy_storage_diff.tests);
       ("sapling", Test_sapling.tests);

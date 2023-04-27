@@ -165,7 +165,7 @@ let test_consensus_operation_endorsement_for_future_level () =
   init_genesis () >>=? fun (_genesis, pred) ->
   let raw_level = Raw_level.of_int32 (Int32.of_int 10) in
   let level = match raw_level with Ok l -> l | Error _ -> assert false in
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:pred
@@ -183,7 +183,7 @@ let test_consensus_operation_endorsement_for_predecessor_level () =
   init_genesis () >>=? fun (_genesis, pred) ->
   let raw_level = Raw_level.of_int32 (Int32.of_int 0) in
   let level = match raw_level with Ok l -> l | Error _ -> assert false in
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:pred
@@ -202,7 +202,7 @@ let test_consensus_operation_endorsement_for_old_level () =
   Block.bake genesis >>=? fun _next_block ->
   let raw_level = Raw_level.of_int32 (Int32.of_int 0) in
   let level = match raw_level with Ok l -> l | Error _ -> assert false in
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:pred
@@ -219,7 +219,7 @@ let test_consensus_operation_endorsement_for_old_level () =
 let test_consensus_operation_endorsement_for_future_round () =
   init_genesis () >>=? fun (_genesis, pred) ->
   Environment.wrap_tzresult (Round.of_int 21) >>?= fun round ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:pred
@@ -236,7 +236,7 @@ let test_consensus_operation_endorsement_for_future_round () =
 let test_consensus_operation_endorsement_for_old_round () =
   init_genesis ~policy:(By_round 10) () >>=? fun (_genesis, pred) ->
   Environment.wrap_tzresult (Round.of_int 0) >>?= fun round ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:pred
@@ -252,7 +252,7 @@ let test_consensus_operation_endorsement_for_old_round () =
 (** Consensus operation on competing proposal : apply an endorsement on a competing proposal *)
 let test_consensus_operation_endorsement_on_competing_proposal () =
   init_genesis () >>=? fun (_genesis, pred) ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:pred
@@ -270,7 +270,7 @@ let test_consensus_operation_endorsement_on_competing_proposal () =
 let test_wrong_round () =
   init_genesis () >>=? fun (_genesis, b) ->
   Environment.wrap_tzresult (Round.of_int 2) >>?= fun round ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:b
@@ -288,7 +288,7 @@ let test_wrong_level () =
   (* let context = Context.B genesis in*)
   let raw_level = Raw_level.of_int32 (Int32.of_int 0) in
   let level = match raw_level with Ok l -> l | Error _ -> assert false in
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:b
@@ -303,7 +303,7 @@ let test_wrong_level () =
 (** Wrong payload hash : apply an endorsement with an incorrect payload hash *)
 let test_wrong_payload_hash () =
   init_genesis () >>=? fun (_genesis, b) ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:b
@@ -323,7 +323,7 @@ let test_wrong_slot_used () =
   | _x :: y :: _ -> return y
   | _ -> failwith "Slots size should be at least of 2 ")
   >>=? fun slot ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~is_preendorsement:false
     ~endorsed_block:b
@@ -424,7 +424,7 @@ let test_wrong_endorsement_slot_in_mempool_mode () =
 (** Endorsement for next level *)
 let test_endorsement_for_next_level () =
   init_genesis () >>=? fun (genesis, _) ->
-  Consensus_helpers.test_consensus_op_for_next
+  chelpers.test_consensus_op_for_next
     ~genesis
     ~kind:`Endorsement
     ~next:`Level
@@ -432,7 +432,7 @@ let test_endorsement_for_next_level () =
 (** Endorsement for next round *)
 let test_endorsement_for_next_round () =
   init_genesis () >>=? fun (genesis, _) ->
-  Consensus_helpers.test_consensus_op_for_next
+  chelpers.test_consensus_op_for_next
     ~genesis
     ~kind:`Endorsement
     ~next:`Round
@@ -479,10 +479,10 @@ let test_endorsement_grandparent_same_slot () =
   Block.bake b_gp >>=? fun b ->
   Incremental.begin_construction ~mempool_mode:true b >>=? fun i ->
   (* Endorsement on parent *)
-  Consensus_helpers.delegate_of_first_slot (B b) >>=? fun (delegate, slot) ->
+  chelpers.delegate_of_first_slot (B b) >>=? fun (delegate, slot) ->
   Op.endorsement ~delegate b >>=? fun op2 ->
   (* Endorsement on grandparent *)
-  Consensus_helpers.delegate_of_slot slot (B b_gp) >>=? fun delegate ->
+  chelpers.delegate_of_slot slot (B b_gp) >>=? fun delegate ->
   Op.endorsement ~delegate b_gp >>=? fun op1 ->
   (* Both should be accepted by the mempool *)
   Incremental.add_operation i op1 >>=? fun i ->
