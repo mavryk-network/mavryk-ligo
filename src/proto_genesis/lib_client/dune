@@ -9,7 +9,7 @@
   tezos-base
   tezos-shell-services
   tezos-client-base
-  tezos-protocol-environment
+  tpe
   tezos-protocol-genesis
   tezos-client-commands
   tezos-proxy

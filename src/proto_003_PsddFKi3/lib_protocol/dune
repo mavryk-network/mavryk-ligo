@@ -6,7 +6,7 @@
  (public_name tezos-protocol-003-PsddFKi3.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (modules Tp_environment_003_PsddFKi3))
 
@@ -107,8 +107,8 @@
  (public_name tezos-protocol-003-PsddFKi3)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-environment
-  tezos-protocol-environment.sigs
+  tpe
+  tpe.sigs
   tezos-protocol-003-PsddFKi3.raw)
  (flags
   (:standard)
@@ -217,8 +217,8 @@
 (library
  (name tezos_protocol_003_PsddFKi3_functor)
  (libraries
-  tezos-protocol-environment
-  tezos-protocol-environment.sigs)
+  tpe
+  tpe.sigs)
  (flags
   (:standard)
   -w -6-7-9-16-29-32-51-68
@@ -310,7 +310,7 @@
  (libraries
   tezos-protocol-003-PsddFKi3
   tezos-protocol-updater
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

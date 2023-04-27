@@ -18,7 +18,7 @@ depends: [
   "tezos-rpc"
   "tezos-context"
   "tezos-store"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-context-ops"
   "tezos-shell-context"
   "tezos-p2p"

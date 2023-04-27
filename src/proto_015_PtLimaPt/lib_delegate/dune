@@ -11,7 +11,7 @@
   tezos-version
   tezos-protocol-015-PtLimaPt
   tezos-protocol-plugin-015-PtLimaPt
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tezos-client-015-PtLimaPt
@@ -55,7 +55,7 @@
   tezos-base
   tezos-protocol-015-PtLimaPt
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tezos-client-015-PtLimaPt
@@ -84,7 +84,7 @@
  (libraries
   tezos-base
   tezos-protocol-015-PtLimaPt
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tezos-client-015-PtLimaPt

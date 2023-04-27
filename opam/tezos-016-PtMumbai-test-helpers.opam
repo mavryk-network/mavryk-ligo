@@ -18,7 +18,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-protocol-016-PtMumbai"
   "tezos-client-016-PtMumbai"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-protocol-plugin-016-PtMumbai"
   "tezos-shell-services"
   "tezos-plompiler" { >= "1.0.1" & < "2.0.0" }

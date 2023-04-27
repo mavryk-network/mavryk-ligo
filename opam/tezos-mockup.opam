@@ -17,7 +17,7 @@ depends: [
   "tezos-rpc"
   "tezos-p2p-services"
   "tezos-p2p"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-stdlib-unix"
   "tezos-rpc-http"
   "tezos-rpc-http-client"

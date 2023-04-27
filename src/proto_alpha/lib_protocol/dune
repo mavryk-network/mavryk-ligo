@@ -6,7 +6,7 @@
  (public_name tezos-protocol-alpha.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (modules Tp_environment_alpha))
 
@@ -283,8 +283,8 @@
  (public_name tezos-protocol-alpha)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-environment
-  tezos-protocol-environment.sigs
+  tpe
+  tpe.sigs
   tezos-protocol-alpha.raw)
  (flags
   (:standard)
@@ -569,8 +569,8 @@
 (library
  (name tezos_protocol_alpha_functor)
  (libraries
-  tezos-protocol-environment
-  tezos-protocol-environment.sigs)
+  tpe
+  tpe.sigs)
  (flags
   (:standard)
   -nopervasives)
@@ -843,7 +843,7 @@
  (libraries
   tezos-protocol-alpha
   tezos-protocol-updater
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (modules Registerer))
 

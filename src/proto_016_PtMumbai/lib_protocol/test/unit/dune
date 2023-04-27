@@ -10,7 +10,7 @@
   tezos-client-016-PtMumbai
   tezos-client-base
   tezos-protocol-016-PtMumbai.parameters
-  tezos-protocol-environment
+  tpe
   tezos-stdlib-unix
   tezos-protocol-016-PtMumbai
   tezos-test-helpers
