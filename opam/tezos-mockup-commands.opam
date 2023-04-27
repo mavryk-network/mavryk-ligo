@@ -15,7 +15,7 @@ depends: [
   "tezos-client-commands"
   "tezos-client-base"
   "tezos-mockup"
-  "tezos-mockup-registration"
+  "tz-mock-reg"
 ]
 build: [
   ["rm" "-rf" "vendors"]

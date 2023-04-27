@@ -11,7 +11,7 @@
   tezos-crypto
   tezos-micheline
   tezos-micheline-rewriting
-  tezos-protocol-015-PtLimaPt
+  tp-015
   hashcons)
  (flags
   (:standard)

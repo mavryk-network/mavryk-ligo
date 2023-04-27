@@ -3,12 +3,12 @@
 
 (library
  (name tp_016__params)
- (public_name tezos-protocol-016-PtMumbai.parameters)
+ (public_name tp-016.parameters)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tpe
-  tezos-protocol-016-PtMumbai)
+  tp-016)
  (library_flags (:standard -linkall))
  (flags
   (:standard)
@@ -20,8 +20,8 @@
  (name gen)
  (libraries
   tezos-base
-  tezos-protocol-016-PtMumbai.parameters
-  tezos-protocol-016-PtMumbai)
+  tp-016.parameters
+  tp-016)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp)
@@ -50,6 +50,6 @@
  (action (run %{deps} --mainnet)))
 
 (install
- (package tezos-protocol-016-PtMumbai)
+ (package tp-016)
  (section lib)
  (files sandbox-parameters.json test-parameters.json mainnet-parameters.json))

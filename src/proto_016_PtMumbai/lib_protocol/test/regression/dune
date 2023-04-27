@@ -8,10 +8,10 @@
   tezt.core
   tezos-base
   tezt-tezos
-  tezos-protocol-016-PtMumbai
-  tezos-client-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai
-  tezos-016-PtMumbai-test-helpers
+  tp-016
+  tc-016
+  tp-plugin-016
+  tz-016-test-helpers
   tezos-micheline)
  (library_flags (:standard -linkall))
  (flags
@@ -39,7 +39,7 @@
 
 (rule
  (alias runtezt)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (deps
   (glob_files contracts/*.tz)
   (glob_files expected/test_logging.ml/*.out))

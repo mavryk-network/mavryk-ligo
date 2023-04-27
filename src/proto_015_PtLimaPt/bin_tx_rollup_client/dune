@@ -9,10 +9,10 @@
  (libraries
   tezos-base
   tezos-clic
-  tezos-protocol-015-PtLimaPt
-  tezos-client-015-PtLimaPt
-  tezos-client-015-PtLimaPt.commands
-  tezos-client-base-unix
+  tp-015
+  tc-015
+  tc-015.commands
+  tz-b-c-ux
   tezos-stdlib-unix
   tezos-tx-rollup-015-PtLimaPt
   uri)

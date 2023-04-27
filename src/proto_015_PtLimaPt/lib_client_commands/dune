@@ -3,25 +3,25 @@
 
 (library
  (name tc_015_commands)
- (public_name tezos-client-015-PtLimaPt.commands)
+ (public_name tc-015.commands)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tezos-clic
-  tezos-protocol-015-PtLimaPt
-  tezos-protocol-015-PtLimaPt.parameters
+  tp-015
+  tp-015.parameters
   tezos-stdlib-unix
   tpe
   tezos-shell-services
   tezos-mockup
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-mockup-commands
   tezos-client-base
-  tezos-client-015-PtLimaPt
+  tc-015
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
-  tezos-protocol-plugin-015-PtLimaPt
+  tz-b-c-ux
+  tp-plugin-015
   uri)
  (library_flags (:standard -linkall))
  (flags
@@ -40,22 +40,22 @@
 
 (library
  (name tc_015_com_reg)
- (public_name tezos-client-015-PtLimaPt.commands-registration)
+ (public_name tc-015.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tezos-clic
-  tezos-protocol-015-PtLimaPt
-  tezos-protocol-015-PtLimaPt.parameters
+  tp-015
+  tp-015.parameters
   tpe
   tezos-shell-services
   tezos-client-base
-  tezos-client-015-PtLimaPt
+  tc-015
   tezos-client-commands
-  tezos-client-015-PtLimaPt.commands
-  tezos-client-015-PtLimaPt.sapling
+  tc-015.commands
+  tc-015.sapling
   tezos-rpc
-  tezos-protocol-plugin-015-PtLimaPt)
+  tp-plugin-015)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

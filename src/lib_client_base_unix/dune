@@ -3,7 +3,7 @@
 
 (library
  (name tezos_client_base_unix)
- (public_name tezos-client-base-unix)
+ (public_name tz-b-c-ux)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -11,13 +11,13 @@
   tezos-clic
   tezos-rpc
   tezos-rpc-http
-  tezos-rpc-http-client-unix
+  tz-rpc-h-c-ux
   tezos-shell-services
   tezos-stdlib-unix
   tezos-client-base
   tezos-client-commands
   tezos-mockup
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-mockup-commands
   tezos-proxy
   tezos-proxy.rpc

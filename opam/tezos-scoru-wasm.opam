@@ -13,9 +13,9 @@ depends: [
   "tezos-base"
   "tezos-tree-encoding"
   "tezos-lazy-containers"
-  "tezos-webassembly-interpreter"
+  "tz-wasm-in"
   "tezos-context"
-  "tezos-lwt-result-stdlib"
+  "tz-lwtres-std"
   "data-encoding" { >= "0.7.1" & < "1.0.0" }
 ]
 build: [

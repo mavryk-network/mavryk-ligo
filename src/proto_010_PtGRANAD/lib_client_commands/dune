@@ -16,7 +16,7 @@
   tezos-client-010-PtGRANAD
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-protocol-plugin-010-PtGRANAD)
  (library_flags (:standard -linkall))
  (flags

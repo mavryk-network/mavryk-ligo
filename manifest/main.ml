@@ -490,7 +490,7 @@ let _octez_stdlib_unix_tests =
 
 let octez_lwt_result_stdlib_bare_functor_outputs =
   public_lib
-    "tezos-lwt-result-stdlib.bare.functor-outputs"
+    "tz-lwtres-std.bare.functor-outputs"
     ~path:"src/lib_lwt_result_stdlib/bare/functor_outputs"
     ~internal_name:"bare_functor_outputs"
     ~js_compatible:true
@@ -499,7 +499,7 @@ let octez_lwt_result_stdlib_bare_functor_outputs =
 
 let octez_lwt_result_stdlib_bare_sigs =
   public_lib
-    "tezos-lwt-result-stdlib.bare.sigs"
+    "tz-lwtres-std.bare.sigs"
     ~path:"src/lib_lwt_result_stdlib/bare/sigs"
     ~internal_name:"bare_sigs"
     ~js_compatible:true
@@ -508,7 +508,7 @@ let octez_lwt_result_stdlib_bare_sigs =
 
 let octez_lwt_result_stdlib_bare_structs =
   public_lib
-    "tezos-lwt-result-stdlib.bare.structs"
+    "tz-lwtres-std.bare.structs"
     ~path:"src/lib_lwt_result_stdlib/bare/structs"
     ~internal_name:"bare_structs"
     ~js_compatible:true
@@ -517,7 +517,7 @@ let octez_lwt_result_stdlib_bare_structs =
 
 let octez_lwt_result_stdlib_traced_functor_outputs =
   public_lib
-    "tezos-lwt-result-stdlib.traced.functor-outputs"
+    "tz-lwtres-std.traced.functor-outputs"
     ~path:"src/lib_lwt_result_stdlib/traced/functor_outputs"
     ~internal_name:"traced_functor_outputs"
     ~js_compatible:true
@@ -526,7 +526,7 @@ let octez_lwt_result_stdlib_traced_functor_outputs =
 
 let octez_lwt_result_stdlib_traced_sigs =
   public_lib
-    "tezos-lwt-result-stdlib.traced.sigs"
+    "tz-lwtres-std.traced.sigs"
     ~path:"src/lib_lwt_result_stdlib/traced/sigs"
     ~internal_name:"traced_sigs"
     ~js_compatible:true
@@ -541,7 +541,7 @@ let octez_lwt_result_stdlib_traced_sigs =
 
 let octez_lwt_result_stdlib_traced_structs =
   public_lib
-    "tezos-lwt-result-stdlib.traced.structs"
+    "tz-lwtres-std.traced.structs"
     ~path:"src/lib_lwt_result_stdlib/traced/structs"
     ~internal_name:"traced_structs"
     ~js_compatible:true
@@ -555,11 +555,11 @@ let octez_lwt_result_stdlib_traced_structs =
 
 let octez_lwt_result_stdlib =
   public_lib
-    "tezos-lwt-result-stdlib"
+    "tz-lwtres-std"
     ~path:"src/lib_lwt_result_stdlib"
     ~synopsis:"Tezos: error-aware stdlib replacement"
     ~js_compatible:true
-    ~documentation:[Dune.[S "package"; S "tezos-lwt-result-stdlib"]]
+    ~documentation:[Dune.[S "package"; S "tz-lwtres-std"]]
     ~deps:
       [
         lwt;
@@ -572,7 +572,7 @@ let octez_lwt_result_stdlib =
 
 let octez_lwt_result_stdlib_examples_traces =
   public_lib
-    "tezos-lwt-result-stdlib.examples.traces"
+    "tz-lwtres-std.examples.traces"
     ~path:"src/lib_lwt_result_stdlib/examples/traces"
     ~internal_name:"traces"
     ~deps:
@@ -598,7 +598,7 @@ let _octez_lwt_result_stdlib_tests =
       "test_fuzzing_option";
     ]
     ~path:"src/lib_lwt_result_stdlib/test"
-    ~opam:"tezos-lwt-result-stdlib"
+    ~opam:"tz-lwtres-std"
     ~deps:
       [
         octez_lwt_result_stdlib |> open_;
@@ -1191,7 +1191,7 @@ let tree_encoding =
 
 let octez_webassembly_interpreter =
   public_lib
-    "tezos-webassembly-interpreter"
+    "tz-wasm-in"
     ~path:"src/lib_webassembly"
     ~license:"Apache-2.0"
     ~extra_authors:["WebAssembly Authors"]
@@ -1202,7 +1202,7 @@ let octez_webassembly_interpreter =
 
 let octez_webassembly_interpreter_extra =
   public_lib
-    "tezos-webassembly-interpreter-extra"
+    "tz-wasm-in-extra"
     ~path:"src/lib_webassembly/extra"
     ~license:"Apache-2.0"
     ~extra_authors:["WebAssembly Authors"]
@@ -1235,7 +1235,7 @@ let _octez_webassembly_test =
   test
     "main"
     ~path:"src/lib_webassembly/tests"
-    ~opam:"tezos-webassembly-interpreter"
+    ~opam:"tz-wasm-in"
     ~dune:Dune.[[S "include_subdirs"; S "no"]]
     ~deps:[octez_webassembly_interpreter |> open_; alcotest]
 
@@ -2470,7 +2470,7 @@ let octez_rpc_http_client =
 
 let octez_rpc_http_client_unix =
   public_lib
-    "tezos-rpc-http-client-unix"
+    "tz-rpc-h-c-ux"
     ~path:"src/lib_rpc_http"
     ~synopsis:"Tezos: unix implementation of the RPC client"
     ~deps:
@@ -2699,7 +2699,7 @@ let octez_client_commands =
 
 let octez_mockup_registration =
   public_lib
-    "tezos-mockup-registration"
+    "tz-mock-reg"
     ~path:"src/lib_mockup"
     ~synopsis:"Tezos: protocol registration for the mockup mode"
     ~deps:
@@ -2912,7 +2912,7 @@ let _octez_proxy_server_config_tests =
 
 let octez_client_base_unix =
   public_lib
-    "tezos-client-base-unix"
+    "tz-b-c-ux"
     ~path:"src/lib_client_base_unix"
     ~synopsis:
       "Tezos: common helpers for `tezos-client` (unix-specific fragment)"
@@ -2943,7 +2943,7 @@ let _octez_client_base_unix_tests =
   test
     "test_mockup_wallet"
     ~path:"src/lib_client_base_unix/test"
-    ~opam:"tezos-client-base-unix"
+    ~opam:"tz-b-c-ux"
     ~with_macos_security_framework:true
     ~deps:
       [

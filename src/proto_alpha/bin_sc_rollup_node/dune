@@ -12,7 +12,7 @@
   tezos-client-commands
   tezos-stdlib-unix
   tezos-client-base
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-client-alpha
   tezos-context.encoding
   tezos-context.helpers

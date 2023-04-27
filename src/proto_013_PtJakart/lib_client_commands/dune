@@ -14,13 +14,13 @@
   tpe
   tezos-shell-services
   tezos-mockup
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-mockup-commands
   tezos-client-base
   tezos-client-013-PtJakart
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-protocol-plugin-013-PtJakart
   uri)
  (library_flags (:standard -linkall))

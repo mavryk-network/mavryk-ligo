@@ -10,9 +10,9 @@
   tezos-base.unix
   tezos-stdlib-unix
   tezos-crypto
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-micheline
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-base
   tezos-workers
   tezos-shell

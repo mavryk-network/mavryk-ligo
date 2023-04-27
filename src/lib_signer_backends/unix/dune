@@ -16,7 +16,7 @@
   tezos-client-base
   tezos-rpc-http
   tezos-rpc-http-client
-  tezos-rpc-http-client-unix
+  tz-rpc-h-c-ux
   tezos-signer-services
   tezos-signer-backends
   tezos-shell-services

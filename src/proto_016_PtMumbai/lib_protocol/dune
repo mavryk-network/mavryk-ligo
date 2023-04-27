@@ -3,7 +3,7 @@
 
 (library
  (name tp_environment_016_PtMumbai)
- (public_name tezos-protocol-016-PtMumbai.environment)
+ (public_name tp-016.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
@@ -19,10 +19,10 @@
 
 (library
  (name trp_016)
- (public_name tezos-protocol-016-PtMumbai.raw)
+ (public_name tp-016.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-016-PtMumbai.environment)
+  tp-016.environment)
  (library_flags (:standard -linkall))
  (flags
   (:standard)
@@ -278,19 +278,19 @@
 
 (library
  (name tezos_protocol_016_PtMumbai)
- (public_name tezos-protocol-016-PtMumbai)
+ (public_name tp-016)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe
   tpe.sigs
-  tezos-protocol-016-PtMumbai.raw)
+  tp-016.raw)
  (flags
   (:standard)
   -nopervasives)
  (modules Protocol Tezos_protocol_016_PtMumbai))
 
 (install
- (package tezos-protocol-016-PtMumbai)
+ (package tp-016)
  (section lib)
  (files (TEZOS_PROTOCOL as raw/TEZOS_PROTOCOL)))
 
@@ -835,7 +835,7 @@
  (public_name tezos-embedded-protocol-016-PtMumbai)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-protocol-updater
   tpe)
  (library_flags (:standard -linkall))

@@ -19,15 +19,15 @@ depends: [
   "tezos-client-commands"
   "tezos-mockup-commands"
   "tezos-proxy"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
   "tezos-signer-backends"
   "uri" { >= "3.1.0" }
-  "tezos-client-015-PtLimaPt"
+  "tc-015"
   "tezos-baking-015-PtLimaPt-commands"
-  "tezos-protocol-plugin-015-PtLimaPt"
-  "tezos-client-016-PtMumbai"
+  "tp-plugin-015"
+  "tc-016"
   "tezos-baking-016-PtMumbai-commands"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tp-plugin-016"
 ]
 depopts: [
   "tezos-client-genesis"

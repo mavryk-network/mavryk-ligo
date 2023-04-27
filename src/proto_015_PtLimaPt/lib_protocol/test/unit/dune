@@ -7,14 +7,14 @@
   tezos-base
   tezos-base-test-helpers
   tezos-micheline
-  tezos-client-015-PtLimaPt
+  tc-015
   tezos-client-base
-  tezos-protocol-015-PtLimaPt.parameters
+  tp-015.parameters
   tpe
   tezos-stdlib-unix
-  tezos-protocol-015-PtLimaPt
+  tp-015
   tezos-test-helpers
-  tezos-015-PtLimaPt-test-helpers
+  tz-015-test-helpers
   alcotest-lwt
   tezos-stdlib
   tezos-scoru-wasm)
@@ -35,5 +35,5 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-015-PtLimaPt-tests)
+ (package tp-015-tests)
  (action (run %{exe:main.exe} test Unit)))

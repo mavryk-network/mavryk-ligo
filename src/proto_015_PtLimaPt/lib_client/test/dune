@@ -10,8 +10,8 @@
  (libraries
   tezos-base
   tezos-micheline
-  tezos-client-015-PtLimaPt
-  tezos-protocol-015-PtLimaPt
+  tc-015
+  tp-015
   tezos-base-test-helpers
   tezos-test-helpers
   alcotest-lwt
@@ -31,20 +31,20 @@
 
 (rule
  (alias runtest)
- (package tezos-client-015-PtLimaPt)
+ (package tc-015)
  (action (run %{dep:./test_michelson_v1_macros.exe})))
 
 (rule
  (alias runtest)
- (package tezos-client-015-PtLimaPt)
+ (package tc-015)
  (action (run %{dep:./test_client_proto_contracts.exe})))
 
 (rule
  (alias runtest)
- (package tezos-client-015-PtLimaPt)
+ (package tc-015)
  (action (run %{dep:./test_client_proto_context.exe})))
 
 (rule
  (alias runtest)
- (package tezos-client-015-PtLimaPt)
+ (package tc-015)
  (action (run %{dep:./test_proxy.exe})))

@@ -10,23 +10,13 @@ license: "MIT"
 depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
-  "alcotest-lwt" { >= "1.5.0" }
-  "qcheck-alcotest" { >= "0.20" }
-  "tezos-test-helpers"
+  "ppx_expect"
   "tezos-base"
-  "tezos-micheline"
-  "tezos-stdlib-unix"
-  "tezos-protocol-016-PtMumbai"
-  "tezos-client-016-PtMumbai"
-  "tpe"
-  "tezos-protocol-plugin-016-PtMumbai"
-  "tezos-shell-services"
-  "tezos-plompiler" { >= "1.0.1" & < "2.0.0" }
-  "tezos-crypto-dal"
+  "tp-016"
 ]
 build: [
   ["rm" "-rf" "vendors"]
   ["dune" "build" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
-synopsis: "Tezos/Protocol: protocol testing framework"
+synopsis: "Tezos/Protocol: protocol specific library of helpers for `tezos-smart-rollup`"

@@ -9,19 +9,19 @@
   tezos-base
   tezos-clic
   tezos-version
-  tezos-protocol-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai
+  tp-016
+  tp-plugin-016
   tpe
   tezos-shell-services
   tezos-client-base
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-commands
   tezos-stdlib
   tezos-stdlib-unix
   tezos-shell-context
   tezos-context
   tezos-context.memory
-  tezos-rpc-http-client-unix
+  tz-rpc-h-c-ux
   tezos-context-ops
   tezos-rpc
   tezos-rpc-http
@@ -53,12 +53,12 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-stdlib-unix
   tpe
   tezos-shell-services
   tezos-client-base
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-commands
   tezos-baking-016-PtMumbai
   tezos-rpc
@@ -83,11 +83,11 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-016-PtMumbai
+  tp-016
   tpe
   tezos-shell-services
   tezos-client-base
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-commands
   tezos-baking-016-PtMumbai
   tezos-baking-016-PtMumbai-commands

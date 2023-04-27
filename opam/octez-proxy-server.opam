@@ -18,7 +18,7 @@ depends: [
   "lwt" { >= "5.6.0" }
   "tezos-proxy"
   "tezos-proxy-server-config"
-  "tezos-rpc-http-client-unix"
+  "tz-rpc-h-c-ux"
   "tezos-rpc-http-server"
   "tezos-shell-services"
   "tezos-shell-context"
@@ -51,10 +51,10 @@ depopts: [
   "tezos-protocol-plugin-013-PtJakart"
   "tezos-client-014-PtKathma"
   "tezos-protocol-plugin-014-PtKathma"
-  "tezos-client-015-PtLimaPt"
-  "tezos-protocol-plugin-015-PtLimaPt"
-  "tezos-client-016-PtMumbai"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tc-015"
+  "tp-plugin-015"
+  "tc-016"
+  "tp-plugin-016"
   "tezos-client-alpha"
   "tezos-protocol-plugin-alpha"
 ]

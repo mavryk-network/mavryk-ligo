@@ -8,10 +8,10 @@
   tezt.core
   tezos-base
   tezt-tezos
-  tezos-protocol-015-PtLimaPt
-  tezos-client-015-PtLimaPt
-  tezos-protocol-plugin-015-PtLimaPt
-  tezos-015-PtLimaPt-test-helpers
+  tp-015
+  tc-015
+  tp-plugin-015
+  tz-015-test-helpers
   tezos-micheline)
  (library_flags (:standard -linkall))
  (flags
@@ -39,7 +39,7 @@
 
 (rule
  (alias runtezt)
- (package tezos-protocol-015-PtLimaPt-tests)
+ (package tp-015-tests)
  (deps
   (glob_files contracts/*.tz)
   (glob_files expected/test_logging.ml/*.out))

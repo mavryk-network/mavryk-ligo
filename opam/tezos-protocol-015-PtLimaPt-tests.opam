@@ -12,11 +12,11 @@ depends: [
   "ocaml" { >= "4.14" }
   "alcotest-lwt" { with-test & >= "1.5.0" }
   "tezos-base" {with-test}
-  "tezos-protocol-015-PtLimaPt" {with-test}
-  "tezos-015-PtLimaPt-test-helpers" {with-test}
+  "tp-015" {with-test}
+  "tz-015-test-helpers" {with-test}
   "tezos-base-test-helpers" {with-test}
-  "tezos-protocol-plugin-015-PtLimaPt" {with-test}
-  "tezos-client-015-PtLimaPt" {with-test}
+  "tp-plugin-015" {with-test}
+  "tc-015" {with-test}
   "tezos-benchmark" {with-test}
   "tezos-micheline" {with-test}
   "tezos-benchmark-015-PtLimaPt" {with-test}

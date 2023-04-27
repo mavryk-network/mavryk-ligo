@@ -17,10 +17,10 @@ depends: [
   "tezos-micheline-rewriting"
   "tezos-benchmark"
   "tezos-benchmark-type-inference-015-PtLimaPt"
-  "tezos-protocol-015-PtLimaPt"
+  "tp-015"
   "tezos-crypto"
   "hashcons"
-  "tezos-015-PtLimaPt-test-helpers"
+  "tz-015-test-helpers"
   "prbnmcn-stats" { = "0.0.4" }
   "alcotest-lwt" { with-test & >= "1.5.0" }
 ]

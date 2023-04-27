@@ -12,13 +12,13 @@
   tezos-client-commands
   tezos-stdlib-unix
   tezos-client-base
-  tezos-client-base-unix
-  tezos-client-016-PtMumbai
+  tz-b-c-ux
+  tc-016
   tezos-context.encoding
   tezos-context.helpers
-  tezos-protocol-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016
+  tp-plugin-016
+  tp-016.parameters
   tezos-rpc
   tezos-rpc-http
   tezos-rpc-http-server
@@ -26,7 +26,7 @@
   tezos_dal_node_services
   tezos_dal_node_lib
   tezos-shell-services
-  tezos-smart-rollup-016-PtMumbai
+  tz-scr-016
   tezos-smart-rollup-layer2-016-PtMumbai
   tezos-layer2-utils-016-PtMumbai
   tezos_layer2_store

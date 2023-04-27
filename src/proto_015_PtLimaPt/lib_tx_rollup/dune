@@ -9,23 +9,23 @@
   index
   tezos-base
   tezos-crypto
-  tezos-protocol-015-PtLimaPt
-  tezos-client-015-PtLimaPt
+  tp-015
+  tc-015
   tezos-client-commands
   tezos-context.encoding
   tezos-baking-015-PtLimaPt-commands
   tezos-stdlib-unix
   tezos-rpc
   tezos-rpc-http
-  tezos-rpc-http-client-unix
+  tz-rpc-h-c-ux
   tezos-rpc-http-server
   tezos-micheline
   tezos-client-base
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-shell
   tezos-store
   tezos-workers
-  tezos-protocol-plugin-015-PtLimaPt
+  tp-plugin-015
   tezos-injector-015-PtLimaPt)
  (inline_tests (flags -verbose) (modes native))
  (preprocess (pps ppx_expect))

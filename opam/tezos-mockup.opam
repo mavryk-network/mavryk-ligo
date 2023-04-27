@@ -21,7 +21,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-rpc-http"
   "tezos-rpc-http-client"
-  "tezos-mockup-registration"
+  "tz-mock-reg"
   "tezos-base-test-helpers" {with-test}
   "tezos-test-helpers" {with-test}
   "qcheck-alcotest" { with-test & >= "0.20" }

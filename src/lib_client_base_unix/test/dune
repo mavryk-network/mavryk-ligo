@@ -6,7 +6,7 @@
  (libraries
   tezos-base
   tezos-mockup-commands
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-base-test-helpers
   alcotest
   alcotest-lwt)
@@ -20,5 +20,5 @@
 
 (rule
  (alias runtest)
- (package tezos-client-base-unix)
+ (package tz-b-c-ux)
  (action (run %{dep:./test_mockup_wallet.exe})))

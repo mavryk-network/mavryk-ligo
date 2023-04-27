@@ -12,11 +12,11 @@ depends: [
   "ocaml" { >= "4.14" }
   "alcotest-lwt" { with-test & >= "1.5.0" }
   "tezos-base" {with-test}
-  "tezos-protocol-016-PtMumbai" {with-test}
-  "tezos-016-PtMumbai-test-helpers" {with-test}
+  "tp-016" {with-test}
+  "tz-016-test-helpers" {with-test}
   "tezos-base-test-helpers" {with-test}
-  "tezos-protocol-plugin-016-PtMumbai" {with-test}
-  "tezos-client-016-PtMumbai" {with-test}
+  "tp-plugin-016" {with-test}
+  "tc-016" {with-test}
   "tezos-benchmark" {with-test}
   "tezos-micheline" {with-test}
   "tezos-benchmark-016-PtMumbai" {with-test}
@@ -26,7 +26,7 @@ depends: [
   "tezt" { with-test & >= "3.0.0" }
   "tezos-context" {with-test}
   "alcotest" { with-test & >= "1.5.0" }
-  "tezos-smart-rollup-016-PtMumbai" {with-test}
+  "tz-scr-016" {with-test}
   "tezos-crypto-dal" {with-test}
   "tezos-client-base" {with-test}
   "tpe" {with-test}
@@ -34,7 +34,7 @@ depends: [
   "tezos-scoru-wasm-helpers" {with-test}
   "tezos-stdlib" {with-test}
   "tezos-scoru-wasm" {with-test}
-  "tezos-webassembly-interpreter-extra" {with-test}
+  "tz-wasm-in-extra" {with-test}
   "tezt-tezos" {with-test}
 ]
 build: [

@@ -15,13 +15,13 @@ depends: [
   "tezos-clic"
   "tezos-shell-services"
   "tezos-client-base"
-  "tezos-protocol-016-PtMumbai"
-  "tezos-mockup-registration"
+  "tp-016"
+  "tz-mock-reg"
   "tezos-proxy"
   "tezos-signer-backends"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tp-plugin-016"
   "tezos-rpc"
-  "tezos-smart-rollup-016-PtMumbai"
+  "tz-scr-016"
   "uri" { >= "3.1.0" }
   "tezos-micheline" {with-test}
   "tezos-base-test-helpers" {with-test}
@@ -33,7 +33,7 @@ depends: [
   "tezos-mockup"
   "tezos-mockup-commands"
   "tezos-client-commands"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
   "tezos-crypto"
 ]
 build: [

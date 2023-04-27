@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tezos-embedded-protocol-016-PtMumbai"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tp-plugin-016"
   "tezos-shell"
 ]
 build: [

@@ -10,19 +10,19 @@
   tezos-stdlib
   tezos-base
   tezos-error-monad
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016.parameters
   tezos-lazy-containers
   tezos-benchmark
   tezos-benchmark-016-PtMumbai
   tezos-benchmark-type-inference-016-PtMumbai
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-crypto
   tezos-shell-benchmarks
   tezos-micheline
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   tezos-sapling
-  tezos-client-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai
+  tc-016
+  tp-plugin-016
   tpe)
  (library_flags (:standard -linkall))
  (flags

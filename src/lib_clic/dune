@@ -10,7 +10,7 @@
   lwt
   re
   tezos-error-monad
-  tezos-lwt-result-stdlib)
+  tz-lwtres-std)
  (js_of_ocaml)
  (flags
   (:standard)

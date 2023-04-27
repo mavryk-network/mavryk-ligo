@@ -11,11 +11,11 @@
   tezos-base
   tezos-micheline
   tezos-micheline-rewriting
-  tezos-protocol-015-PtLimaPt
+  tp-015
   tezos-benchmark
   tezos-benchmark-type-inference-015-PtLimaPt
   tezos-benchmark-015-PtLimaPt
-  tezos-015-PtLimaPt-test-helpers
+  tz-015-test-helpers
   tezos-error-monad
   alcotest-lwt
   prbnmcn-stats)

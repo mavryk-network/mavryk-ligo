@@ -3,7 +3,7 @@
 
 (library
  (name tp_environment_015_PtLimaPt)
- (public_name tezos-protocol-015-PtLimaPt.environment)
+ (public_name tp-015.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
@@ -19,10 +19,10 @@
 
 (library
  (name trp_015_PtLimaPt)
- (public_name tezos-protocol-015-PtLimaPt.raw)
+ (public_name tp-015.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-015-PtLimaPt.environment)
+  tp-015.environment)
  (library_flags (:standard -linkall))
  (flags
   (:standard)
@@ -262,19 +262,19 @@
 
 (library
  (name tezos_protocol_015_PtLimaPt)
- (public_name tezos-protocol-015-PtLimaPt)
+ (public_name tp-015)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe
   tpe.sigs
-  tezos-protocol-015-PtLimaPt.raw)
+  tp-015.raw)
  (flags
   (:standard)
   -nopervasives)
  (modules Protocol Tezos_protocol_015_PtLimaPt))
 
 (install
- (package tezos-protocol-015-PtLimaPt)
+ (package tp-015)
  (section lib)
  (files (TEZOS_PROTOCOL as raw/TEZOS_PROTOCOL)))
 
@@ -783,7 +783,7 @@
  (public_name tezos-embedded-protocol-015-PtLimaPt)
  (instrumentation (backend bisect_ppx))
  (libraries
-  tezos-protocol-015-PtLimaPt
+  tp-015
   tezos-protocol-updater
   tpe)
  (library_flags (:standard -linkall))

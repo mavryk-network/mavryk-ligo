@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14.0" & < "4.15" }
   "tezos-stdlib"
   "tezos-crypto"
-  "tezos-lwt-result-stdlib"
+  "tz-lwtres-std"
   "tezos-scoru-wasm"
   "data-encoding" { >= "0.7.1" & < "1.0.0" }
   "bls12-381" { >= "5.0.0" & < "5.1.0" }

@@ -10,9 +10,9 @@
   tezos-base.unix
   tezos-stdlib-unix
   tezos-crypto
-  tezos-protocol-015-PtLimaPt
+  tp-015
   tezos-micheline
-  tezos-client-015-PtLimaPt
+  tc-015
   tezos-client-base
   tezos-workers
   tezos-shell)

@@ -10,7 +10,7 @@ license: "MIT"
 depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
-  "tezos-lwt-result-stdlib"
+  "tz-lwtres-std"
   "zarith" { >= "1.12" & < "1.13" }
 ]
 build: [

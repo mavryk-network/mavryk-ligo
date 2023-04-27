@@ -3,11 +3,11 @@
 
 (library
  (name traced_sigs)
- (public_name tezos-lwt-result-stdlib.traced.sigs)
+ (public_name tz-lwtres-std.traced.sigs)
  (instrumentation (backend bisect_ppx))
  (libraries
   lwt
-  tezos-lwt-result-stdlib.bare.sigs
-  tezos-lwt-result-stdlib.bare.structs
-  tezos-lwt-result-stdlib.traced.functor-outputs)
+  tz-lwtres-std.bare.sigs
+  tz-lwtres-std.bare.structs
+  tz-lwtres-std.traced.functor-outputs)
  (js_of_ocaml))

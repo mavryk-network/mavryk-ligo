@@ -3,12 +3,12 @@
 
 (library
  (name tp_015_params)
- (public_name tezos-protocol-015-PtLimaPt.parameters)
+ (public_name tp-015.parameters)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tpe
-  tezos-protocol-015-PtLimaPt)
+  tp-015)
  (library_flags (:standard -linkall))
  (flags
   (:standard)
@@ -20,8 +20,8 @@
  (name gen)
  (libraries
   tezos-base
-  tezos-protocol-015-PtLimaPt.parameters
-  tezos-protocol-015-PtLimaPt)
+  tp-015.parameters
+  tp-015)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp)
@@ -50,6 +50,6 @@
  (action (run %{deps} --mainnet)))
 
 (install
- (package tezos-protocol-015-PtLimaPt)
+ (package tp-015)
  (section lib)
  (files sandbox-parameters.json test-parameters.json mainnet-parameters.json))

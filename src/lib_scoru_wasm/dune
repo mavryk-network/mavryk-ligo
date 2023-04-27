@@ -9,9 +9,9 @@
   tezos-base
   tezos-tree-encoding
   tezos-lazy-containers
-  tezos-webassembly-interpreter
+  tz-wasm-in
   tezos-context.sigs
-  tezos-lwt-result-stdlib
+  tz-lwtres-std
   data-encoding)
  (flags
   (:standard)
