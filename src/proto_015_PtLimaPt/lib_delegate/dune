@@ -37,7 +37,7 @@
   -open Tp_plugin_015
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_015_PtLimaPt
+  -open Tc_015
   -open Tezos_client_commands
   -open Tezos_stdlib
   -open Tezos_stdlib_unix
@@ -72,7 +72,7 @@
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_015_PtLimaPt
+  -open Tc_015
   -open Tezos_client_commands
   -open Tezos_baking_015_PtLimaPt)
  (modules Baking_commands))
@@ -99,7 +99,7 @@
   -open Tezos_protocol_015_PtLimaPt
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_015_PtLimaPt
+  -open Tc_015
   -open Tezos_client_commands
   -open Tezos_baking_015_PtLimaPt
   -open Tezos_baking_015_PtLimaPt_commands)

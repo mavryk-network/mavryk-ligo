@@ -35,7 +35,7 @@
 open Protocol
 open Alpha_context
 open Lwt_result_syntax
-open Error_monad_operators
+open Errm_ops
 
 exception Zk_rollup_test_error of string
 

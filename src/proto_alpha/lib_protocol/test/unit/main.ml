@@ -58,7 +58,7 @@ let () =
       Unit_test.spec "Operation_repr.ml" Test_operation_repr.tests;
       Unit_test.spec
         "Global_constants_storage.ml"
-        Test_global_constants_storage.tests;
+        G_constants_storage.tests;
       Unit_test.spec "fitness" Test_fitness.tests;
       Unit_test.spec "fixed point computation" Test_fixed_point.tests;
       Unit_test.spec "level module" Test_level_module.tests;

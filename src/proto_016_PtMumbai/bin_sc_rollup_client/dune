@@ -34,5 +34,5 @@
   -open Tezos_client_base_unix
   -open Tezos_rpc_http_client_unix
   -open Tezos_protocol_016_PtMumbai
-  -open Tezos_smart_rollup_016_PtMumbai
+  -open Tz_sm_roll_016
   -open Tezos_smart_rollup_layer2_016_PtMumbai))

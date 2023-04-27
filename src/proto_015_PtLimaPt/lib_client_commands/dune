@@ -32,7 +32,7 @@
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_015_PtLimaPt
+  -open Tc_015
   -open Tezos_client_commands
   -open Tezos_client_base_unix
   -open Tp_plugin_015)
@@ -64,7 +64,7 @@
   -open Tp_015_params
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_015_PtLimaPt
+  -open Tc_015
   -open Tezos_client_commands
   -open Tc_015_commands
   -open Tc_sapling_015

@@ -24,7 +24,7 @@
 (*****************************************************************************)
 
 open Tezos_protocol_015_PtLimaPt
-open Tezos_client_015_PtLimaPt
+open Tc_015
 open Protocol
 
 module Proto = struct

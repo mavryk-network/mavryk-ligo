@@ -33,9 +33,9 @@
 
 open Protocol
 open Alpha_context
-open Liquidity_baking_machine
+open Lb_mach
 
-(** We use the “machines” provided by the {! Liquidity_baking_machine}
+(** We use the “machines” provided by the {! Lb_mach}
     module.  Because using the [ConcreteMachine] (hence, the {!
     ValidationMachine} too) is slow, we implement the following
     test-suit architecture:
@@ -238,8 +238,8 @@ let machine_validation_tests =
     QCheck2.Test.make
       ~count:10
       ~name:"Concrete/Symbolic Consistency"
-      ~print:Liquidity_baking_generator.print_scenario
-      (Liquidity_baking_generator.gen_scenario 1_000_000 1_000_000 10)
+      ~print:Lb_gen.print_scenario
+      (Lb_gen.gen_scenario 1_000_000 1_000_000 10)
       (fun (specs, scenario) ->
         extract_qcheck_tzresult
           (let invariant = validate_consistency in
@@ -249,8 +249,8 @@ let machine_validation_tests =
     QCheck2.Test.make
       ~count:10
       ~name:"Storage consistency"
-      ~print:Liquidity_baking_generator.print_scenario
-      (Liquidity_baking_generator.gen_scenario 1_000_000 1_000_000 10)
+      ~print:Lb_gen.print_scenario
+      (Lb_gen.gen_scenario 1_000_000 1_000_000 10)
       (fun (specs, scenario) ->
         extract_qcheck_tzresult
           (let invariant = validate_storage in
@@ -260,8 +260,8 @@ let machine_validation_tests =
     QCheck2.Test.make
       ~count:50_000
       ~name:"Positive pools"
-      ~print:Liquidity_baking_generator.print_scenario
-      (Liquidity_baking_generator.gen_scenario 1_000_000 1_000_000 50)
+      ~print:Lb_gen.print_scenario
+      (Lb_gen.gen_scenario 1_000_000 1_000_000 50)
       (fun (specs, scenario) ->
         extract_qcheck_tzresult
           (let invariant = positive_pools in
@@ -278,8 +278,8 @@ let economic_tests =
     QCheck2.Test.make
       ~count:50_000
       ~name:"No global gain"
-      ~print:Liquidity_baking_generator.print_adversary_scenario
-      (Liquidity_baking_generator.gen_adversary_scenario 1_000_000 1_000_000 50)
+      ~print:Lb_gen.print_adversary_scenario
+      (Lb_gen.gen_adversary_scenario 1_000_000 1_000_000 50)
       (fun (specs, attacker, scenario) ->
         let state, env = SymbolicMachine.build ~subsidy:0L specs in
         let _ =
@@ -289,8 +289,8 @@ let economic_tests =
     QCheck2.Test.make
       ~count:50_000
       ~name:"Remove liquidities is consistent"
-      ~print:Liquidity_baking_generator.print_scenario
-      (Liquidity_baking_generator.gen_scenario 1_000_000 1_000_000 50)
+      ~print:Lb_gen.print_scenario
+      (Lb_gen.gen_scenario 1_000_000 1_000_000 50)
       (fun (specs, scenario) ->
         let state, env = SymbolicMachine.build ~subsidy:0L specs in
         let _ =
@@ -300,8 +300,8 @@ let economic_tests =
     QCheck2.Test.make
       ~count:50_000
       ~name:"Share price only increases"
-      ~print:Liquidity_baking_generator.print_scenario
-      (Liquidity_baking_generator.gen_scenario 1_000_000 1_000_000 50)
+      ~print:Lb_gen.print_scenario
+      (Lb_gen.gen_scenario 1_000_000 1_000_000 50)
       (fun (specs, scenario) ->
         let state, env = SymbolicMachine.build ~subsidy:0L specs in
         let _ =

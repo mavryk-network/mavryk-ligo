@@ -36,14 +36,14 @@
     invariants regarding the execution of these contracts.  To that
     end, we have introduced a set of dedicated types to describe
     arbitrary contexts in terms of account balances (see
-    [Liquidity_baking_machine.specs]), along with [build] functions
+    [Lb_mach.specs]), along with [build] functions
     that turn a description of a context into concrete states.
 
     In this module, we provide QCheck2 generators which allow to
     construct arbitrary specifications for states, and so-called
     scenarios ({i i.e.}, sequences of entrypoint calls). *)
 
-open Liquidity_baking_machine
+open Lb_mach
 
 (** [gen_specs max_tzbtc max_liquidity] constructs arbitrary Liquidity
     Baking [specs] for an initial state, where at most [max_tzbtc] and

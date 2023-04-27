@@ -33,7 +33,7 @@
                   and toggle vote.
 *)
 
-open Liquidity_baking_machine
+open Lb_mach
 open Protocol
 open Test_tez
 
