@@ -21,7 +21,7 @@
   tezos-p2p
   tezos-stdlib-unix
   tezos-shell-services
-  tzp2p-s
+  tezos-p2p-services
   tezos-protocol-updater
   tezos-requester
   tezos-workers

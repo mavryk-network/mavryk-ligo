@@ -15,7 +15,7 @@ depends: [
   "tezos-mockup-proxy"
   "resto-cohttp-self-serving-client" { >= "1.0" }
   "tezos-rpc"
-  "tzp2p-s"
+  "tezos-p2p-services"
   "tezos-p2p"
   "tezos-protocol-environment"
   "tezos-stdlib-unix"

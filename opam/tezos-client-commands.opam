@@ -15,7 +15,7 @@ depends: [
   "tezos-clic"
   "tezos-client-base"
   "tezos-shell-services"
-  "tzp2p-s"
+  "tezos-p2p-services"
   "tezos-stdlib-unix"
   "tezos-signer-backends"
   "data-encoding" { >= "0.7.1" & < "1.0.0" }

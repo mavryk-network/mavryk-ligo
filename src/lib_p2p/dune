@@ -14,7 +14,7 @@
   tezos-base.unix
   tezos-stdlib-unix
   tezos-stdlib
-  tzp2p-s
+  tezos-p2p-services
   tezos-version
   prometheus)
  (flags

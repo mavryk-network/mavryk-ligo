@@ -17,7 +17,7 @@ depends: [
   "tezos-base"
   "tezos-stdlib-unix"
   "tezos-stdlib"
-  "tzp2p-s"
+  "tezos-p2p-services"
   "tezos-version"
   "prometheus" { >= "1.2" }
   "tezos-test-helpers" {with-test}
