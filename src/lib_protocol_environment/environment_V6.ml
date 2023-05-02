@@ -136,18 +136,18 @@ end)
 struct
   (* The protocol V6 only supports 64-bits architectures. We ensure this the
      hard way with a dynamic check. *)
-  let () =
-    match Sys.word_size with
-    | 32 ->
-        Printf.eprintf
-          "FAILURE: Environment V6 does not support 32-bit architectures\n%!" ;
-        Stdlib.exit 1
-    | 64 -> ()
-    | n ->
-        Printf.eprintf
-          "FAILURE: Unknown, unsupported architecture (%d bits)\n%!"
-          n ;
-        Stdlib.exit 1
+  (* let () = *)
+  (*   match Sys.word_size with *)
+  (*   | 32 -> *)
+  (*       Printf.eprintf *)
+  (*         "FAILURE: Environment V6 does not support 32-bit architectures\n%!" ; *)
+  (*       Stdlib.exit 1 *)
+  (*   | 64 -> () *)
+  (*   | n -> *)
+  (*       Printf.eprintf *)
+  (*         "FAILURE: Unknown, unsupported architecture (%d bits)\n%!" *)
+  (*         n ; *)
+  (*       Stdlib.exit 1 *)
 
   module CamlinternalFormatBasics = CamlinternalFormatBasics
   include Stdlib
