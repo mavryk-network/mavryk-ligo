@@ -7,7 +7,7 @@
  (libraries
   tezt.core
   tezos-base
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-test-helpers
   tezos-smart-rollup-layer2-017-PtNairob
   octez_smart_rollup_node_PtNairob

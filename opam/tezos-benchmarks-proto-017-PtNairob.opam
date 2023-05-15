@@ -13,7 +13,7 @@ depends: [
   "tezos-stdlib"
   "tezos-base"
   "tezos-error-monad"
-  "tezos-protocol-017-PtNairob"
+  "tp-017"
   "tezos-lazy-containers"
   "tezos-benchmark"
   "tezos-benchmark-017-PtNairob"

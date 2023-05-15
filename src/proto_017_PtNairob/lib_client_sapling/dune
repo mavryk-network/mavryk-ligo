@@ -14,7 +14,7 @@
   tezos-signer-backends
   tc-017b
   tc-017b.commands
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-protocol-plugin-017-PtNairob)
  (library_flags (:standard -linkall))
  (flags

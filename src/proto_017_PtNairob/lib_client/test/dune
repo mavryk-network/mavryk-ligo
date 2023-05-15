@@ -9,7 +9,7 @@
   tezos-base
   tezos-micheline
   tc-017b
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-base-test-helpers
   tezos-test-helpers
   octez-alcotezt

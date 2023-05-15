@@ -8,7 +8,7 @@
   data-encoding
   tezos-base
   tezos-base.unix
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-client-base
   tc-017b)
  (flags

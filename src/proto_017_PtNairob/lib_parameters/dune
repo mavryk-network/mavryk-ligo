@@ -3,12 +3,12 @@
 
 (library
  (name tezos_protocol_017_PtNairob_parameters)
- (public_name tezos-protocol-017-PtNairob.parameters)
+ (public_name tp-017.parameters)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tezos-protocol-environment
-  tezos-protocol-017-PtNairob)
+  tp-017)
  (library_flags (:standard -linkall))
  (flags
   (:standard)
@@ -20,8 +20,8 @@
  (name gen)
  (libraries
   tezos-base
-  tezos-protocol-017-PtNairob.parameters
-  tezos-protocol-017-PtNairob)
+  tp-017.parameters
+  tp-017)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp)
@@ -49,6 +49,6 @@
  (action (run %{deps} --mainnet)))
 
 (install
- (package tezos-protocol-017-PtNairob)
+ (package tp-017)
  (section lib)
  (files sandbox-parameters.json test-parameters.json mainnet-parameters.json))

@@ -11,8 +11,8 @@
   octez-alcotezt
   tezos-base
   tc-017b
-  tezos-protocol-017-PtNairob
-  tezos-protocol-017-PtNairob.parameters
+  tp-017
+  tp-017.parameters
   tezos-017-PtNairob-test-helpers
   tezos-base-test-helpers)
  (library_flags (:standard -linkall))
@@ -49,7 +49,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-017-PtNairob-tests)
+ (package tp-017-tests)
  (deps (glob_files wasm_kernel/*.wasm))
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))

@@ -7,7 +7,7 @@
   tezos-micheline
   tezos-micheline-rewriting
   tezos-benchmark-type-inference-017-PtNairob
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-error-monad
   tc-017b)
  (link_flags

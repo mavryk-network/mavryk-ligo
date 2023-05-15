@@ -9,7 +9,7 @@
  (libraries
   tezos-base
   tezos-clic
-  tezos-protocol-017-PtNairob
+  tp-017
   tc-017b
   tezos-client-commands
   tezos-baking-017-PtNairob-commands

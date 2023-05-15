@@ -1187,14 +1187,14 @@ opam:tp-016:
 
 # Ignoring unreleased package tp-016-tests.
 
-opam:tezos-protocol-017-PtNairob:
+opam:tp-017:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_5
   variables:
-    package: tezos-protocol-017-PtNairob
+    package: tp-017
 
-# Ignoring unreleased package tezos-protocol-017-PtNairob-tests.
+# Ignoring unreleased package tp-017-tests.
 
 opam:tezos-protocol-alpha:
   extends:

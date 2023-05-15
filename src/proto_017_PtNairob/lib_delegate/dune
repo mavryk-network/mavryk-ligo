@@ -9,7 +9,7 @@
   tezos-base
   tezos-clic
   tezos-version
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-protocol-plugin-017-PtNairob
   tezos-protocol-environment
   tezos-shell-services
@@ -54,7 +54,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-stdlib-unix
   tezos-protocol-environment
   tezos-shell-services
@@ -84,7 +84,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-protocol-environment
   tezos-shell-services
   tezos-client-base

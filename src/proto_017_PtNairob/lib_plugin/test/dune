@@ -15,8 +15,8 @@
   tezos-stdlib-unix
   tezos-micheline
   tezos-protocol-plugin-017-PtNairob
-  tezos-protocol-017-PtNairob
-  tezos-protocol-017-PtNairob.parameters
+  tp-017
+  tp-017.parameters
   tezos-017-PtNairob-test-helpers)
  (library_flags (:standard -linkall))
  (flags

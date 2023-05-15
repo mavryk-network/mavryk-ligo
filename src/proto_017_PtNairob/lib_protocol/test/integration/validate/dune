@@ -8,7 +8,7 @@
   tezt.core
   octez-alcotezt
   tezos-base
-  tezos-protocol-017-PtNairob
+  tp-017
   qcheck-alcotest
   tc-017b
   tezos-test-helpers
@@ -55,7 +55,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-017-PtNairob-tests)
+ (package tp-017-tests)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

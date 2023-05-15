@@ -11,10 +11,10 @@
   tezos-micheline
   tc-017b
   tezos-client-base
-  tezos-protocol-017-PtNairob.parameters
+  tp-017.parameters
   tezos-protocol-environment
   tezos-stdlib-unix
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-test-helpers
   tezos-017-PtNairob-test-helpers
   octez-alcotezt
@@ -86,7 +86,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-017-PtNairob-tests)
+ (package tp-017-tests)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

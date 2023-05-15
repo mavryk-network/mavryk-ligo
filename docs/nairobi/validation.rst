@@ -71,7 +71,7 @@ specified by the :package-api:`Protocol
 module in the :doc:`protocol
 environment<../shell/protocol_environment>` ``V8``, and it is
 implemented by this protocol in the
-:package-api:`Main<tezos-protocol-017-PtNairob/Tezos_raw_protocol_017_PtNairob/Main/index.html>`
+:package-api:`Main<tp-017/Tezos_raw_protocol_017_PtNairob/Main/index.html>`
 module.
 
 The rest of this document is organized as follows: we first describe

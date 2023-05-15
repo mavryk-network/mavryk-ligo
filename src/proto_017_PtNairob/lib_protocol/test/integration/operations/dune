@@ -9,7 +9,7 @@
   tezt.core
   octez-alcotezt
   tezos-base
-  tezos-protocol-017-PtNairob
+  tp-017
   tc-017b
   tezos-017-PtNairob-test-helpers
   tezos-base-test-helpers
@@ -54,7 +54,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-017-PtNairob-tests)
+ (package tp-017-tests)
  (deps (glob_files contracts/*))
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))

@@ -15,7 +15,7 @@ depends: [
   "tezos-crypto"
   "tezos-micheline"
   "tezos-micheline-rewriting"
-  "tezos-protocol-017-PtNairob"
+  "tp-017"
   "hashcons"
   "tc-017b" {with-test}
 ]

@@ -6,13 +6,13 @@
  (public_name tezos-baking-017-PtNairob.mockup-simulator)
  (libraries
   tezos-base
-  tezos-protocol-017-PtNairob
+  tp-017
   tc-017b
   tezos-client-commands
   tezos-baking-017-PtNairob
   tezos-stdlib-unix
   tezos-client-base-unix
-  tezos-protocol-017-PtNairob.parameters
+  tp-017.parameters
   tezos-mockup
   tezos-mockup-proxy
   tezos-mockup-commands

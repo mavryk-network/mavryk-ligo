@@ -13,7 +13,7 @@
   tezos-dac-client-lib
   tc-017b
   tezos-embedded-protocol-017-PtNairob
-  tezos-protocol-017-PtNairob)
+  tp-017)
  (inline_tests (flags -verbose) (modes native))
  (preprocess (pps ppx_expect))
  (library_flags (:standard -linkall))

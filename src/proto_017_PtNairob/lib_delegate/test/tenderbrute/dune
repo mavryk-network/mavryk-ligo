@@ -7,7 +7,7 @@
   tezos-base
   tezos-client-base
   tc-017b
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-baking-017-PtNairob.tenderbrute)
  (link_flags
   (:standard)

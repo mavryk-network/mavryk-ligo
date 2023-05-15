@@ -10,13 +10,13 @@
   tezos-clic
   tezos-shell-services
   tezos-client-base
-  tezos-protocol-017-PtNairob
-  tezos-protocol-017-PtNairob.lifted
+  tp-017
+  tp-017.lifted
   tezos-mockup-registration
   tezos-proxy
   tezos-signer-backends
   tezos-protocol-plugin-017-PtNairob
-  tezos-protocol-017-PtNairob.parameters
+  tp-017.parameters
   tezos-rpc
   tezos-smart-rollup-017-PtNairob
   uri)

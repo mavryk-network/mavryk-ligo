@@ -11,7 +11,7 @@ depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
   "tezos-base"
-  "tezos-protocol-017-PtNairob"
+  "tp-017"
   "tezos-smart-rollup-017-PtNairob"
 ]
 build: [

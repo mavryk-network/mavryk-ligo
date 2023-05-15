@@ -11,9 +11,9 @@
   tezos-base
   tezos-micheline
   tezos-stdlib-unix
-  tezos-protocol-017-PtNairob
+  tp-017
   tc-017b
-  tezos-protocol-017-PtNairob.parameters
+  tp-017.parameters
   tezos-protocol-environment
   tezos-protocol-plugin-017-PtNairob
   tezos-shell-services

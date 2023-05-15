@@ -12,7 +12,7 @@
   tezos-shell-context
   tezos-context
   tp-016
-  tezos-protocol-017-PtNairob
+  tp-017
   tezos-protocol-alpha)
  (library_flags (:standard -linkall))
  (flags

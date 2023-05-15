@@ -158,10 +158,10 @@ The *list* of protocol constants can be found in the OCaml APIs:
 
 - fixed protocol constants are defined in the module
   :package-api:`Constants_repr
-  <tezos-protocol-017-PtNairob/Tezos_raw_protocol_017_PtNairob/Constants_repr/index.html>`
+  <tp-017/Tezos_raw_protocol_017_PtNairob/Constants_repr/index.html>`
 - parametric constants are defined in the module
   :package-api:`Constants_parametric_repr
-  <tezos-protocol-017-PtNairob/Tezos_raw_protocol_017_PtNairob/Constants_parametric_repr/index.html>`
+  <tp-017/Tezos_raw_protocol_017_PtNairob/Constants_parametric_repr/index.html>`
 
 The *values* of protocol constants in any given protocol can be found using specific RPC calls:
 

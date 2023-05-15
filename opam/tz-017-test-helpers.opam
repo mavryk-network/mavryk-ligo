@@ -15,7 +15,7 @@ depends: [
   "tezos-base"
   "tezos-micheline"
   "tezos-stdlib-unix"
-  "tezos-protocol-017-PtNairob"
+  "tp-017"
   "tc-017b"
   "tezos-protocol-environment"
   "tezos-protocol-plugin-017-PtNairob"

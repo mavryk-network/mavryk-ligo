@@ -7,7 +7,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-017-PtNairob
+  tp-017
   tc-017b)
  (inline_tests (flags -verbose) (modes native))
  (preprocess (pps ppx_expect))
