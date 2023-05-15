@@ -122,7 +122,7 @@
    (tezos-protocol-plugin-015-PtLimaPt-registerer -> void_for_linking-tezos-protocol-plugin-015-PtLimaPt-registerer.empty)
    (-> void_for_linking-tezos-protocol-plugin-015-PtLimaPt-registerer.empty))
   tezos-embedded-protocol-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai-registerer
+  tp-plugin-016-registerer
   tezos-embedded-protocol-017-PtNairob
   tezos-protocol-plugin-017-PtNairob-registerer
   (select void_for_linking-tezos-embedded-protocol-alpha from

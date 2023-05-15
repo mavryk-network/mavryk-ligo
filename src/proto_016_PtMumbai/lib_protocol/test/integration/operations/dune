@@ -13,7 +13,7 @@
   tc-016
   tezos-016-PtMumbai-test-helpers
   tezos-base-test-helpers
-  tezos-protocol-plugin-016-PtMumbai)
+  tp-plugin-016)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

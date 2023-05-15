@@ -15,7 +15,7 @@
   tc-016
   tp-016.parameters
   tezos-protocol-environment
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tezos-shell-services
   octez-plompiler
   tezos-crypto-dal)

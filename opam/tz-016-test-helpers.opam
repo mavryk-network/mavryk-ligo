@@ -18,7 +18,7 @@ depends: [
   "tp-016"
   "tc-016"
   "tezos-protocol-environment"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tp-plugin-016"
   "tezos-shell-services"
   "octez-plompiler"
   "tezos-crypto-dal"

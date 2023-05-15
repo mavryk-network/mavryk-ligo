@@ -14,7 +14,7 @@
   qcheck-alcotest
   tezos-stdlib-unix
   tezos-micheline
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tp-016
   tp-016.parameters
   tezos-016-PtMumbai-test-helpers)
@@ -55,7 +55,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-plugin-016-PtMumbai-tests)
+ (package tp-plugin-016-tests)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

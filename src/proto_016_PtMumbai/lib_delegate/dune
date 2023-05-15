@@ -10,7 +10,7 @@
   tezos-clic
   tezos-version
   tp-016
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tezos-protocol-environment
   tezos-shell-services
   tezos-client-base

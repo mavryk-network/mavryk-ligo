@@ -17,7 +17,7 @@
   tezos-micheline
   tezos-benchmark-016-PtMumbai
   tezos-benchmark-type-inference-016-PtMumbai
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tp-016.parameters)
  (library_flags (:standard -linkall))
  (flags

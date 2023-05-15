@@ -24,7 +24,7 @@ depends: [
   "uri" { >= "3.1.0" }
   "tc-016"
   "tezos-baking-016-PtMumbai-commands"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tp-plugin-016"
   "tc-017b"
   "tezos-baking-017-PtNairob-commands"
   "tezos-protocol-plugin-017-PtNairob"

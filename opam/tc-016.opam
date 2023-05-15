@@ -19,7 +19,7 @@ depends: [
   "tezos-mockup-registration"
   "tezos-proxy"
   "tezos-signer-backends"
-  "tezos-protocol-plugin-016-PtMumbai"
+  "tp-plugin-016"
   "tezos-rpc"
   "tezos-smart-rollup-016-PtMumbai"
   "uri" { >= "3.1.0" }

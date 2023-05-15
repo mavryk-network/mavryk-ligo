@@ -103,7 +103,7 @@
    (-> void_for_linking-tezos-protocol-plugin-015-PtLimaPt.empty))
   tc-016.commands-registration
   tezos-baking-016-PtMumbai-commands.registration
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tc-017b.commands-registration
   tezos-baking-017-PtNairob-commands.registration
   tezos-protocol-plugin-017-PtNairob

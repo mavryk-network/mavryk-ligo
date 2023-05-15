@@ -15,7 +15,7 @@
   tc-016
   tc-016.commands
   tp-016
-  tezos-protocol-plugin-016-PtMumbai)
+  tp-plugin-016)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

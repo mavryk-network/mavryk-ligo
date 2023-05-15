@@ -15,7 +15,7 @@
   tezos-mockup-registration
   tezos-proxy
   tezos-signer-backends
-  tezos-protocol-plugin-016-PtMumbai
+  tp-plugin-016
   tp-016.parameters
   tezos-rpc
   tezos-smart-rollup-016-PtMumbai
