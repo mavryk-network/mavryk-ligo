@@ -3,7 +3,7 @@
 
 (library
  (name tezos_protocol_plugin_017_PtNairob)
- (public_name tezos-protocol-plugin-017-PtNairob)
+ (public_name tp-plugin-017)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -19,12 +19,12 @@
 
 (library
  (name tezos_protocol_plugin_017_PtNairob_registerer)
- (public_name tezos-protocol-plugin-017-PtNairob-registerer)
+ (public_name tp-plugin-017-registerer)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
   tezos-embedded-protocol-017-PtNairob
-  tezos-protocol-plugin-017-PtNairob
+  tp-plugin-017
   tezos-shell)
  (flags
   (:standard)

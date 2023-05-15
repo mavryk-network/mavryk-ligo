@@ -18,7 +18,7 @@ depends: [
   "tp-017"
   "tc-017b"
   "tezos-protocol-environment"
-  "tezos-protocol-plugin-017-PtNairob"
+  "tp-plugin-017"
   "tezos-shell-services"
   "octez-plompiler"
   "tezos-crypto-dal"

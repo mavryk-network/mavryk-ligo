@@ -56,7 +56,7 @@ depopts: [
   "tc-016"
   "tp-plugin-016"
   "tc-017b"
-  "tezos-protocol-plugin-017-PtNairob"
+  "tp-plugin-017"
   "tezos-client-alpha"
   "tezos-protocol-plugin-alpha"
 ]

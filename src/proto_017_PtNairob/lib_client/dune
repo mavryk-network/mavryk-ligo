@@ -15,7 +15,7 @@
   tezos-mockup-registration
   tezos-proxy
   tezos-signer-backends
-  tezos-protocol-plugin-017-PtNairob
+  tp-plugin-017
   tp-017.parameters
   tezos-rpc
   tezos-smart-rollup-017-PtNairob

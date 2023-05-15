@@ -15,7 +15,7 @@
   tc-017b
   tp-017.parameters
   tezos-protocol-environment
-  tezos-protocol-plugin-017-PtNairob
+  tp-plugin-017
   tezos-shell-services
   octez-plompiler
   tezos-crypto-dal)

@@ -14,7 +14,7 @@
   qcheck-alcotest
   tezos-stdlib-unix
   tezos-micheline
-  tezos-protocol-plugin-017-PtNairob
+  tp-plugin-017
   tp-017
   tp-017.parameters
   tezos-017-PtNairob-test-helpers)
@@ -55,7 +55,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-plugin-017-PtNairob-tests)
+ (package tp-plugin-017-tests)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

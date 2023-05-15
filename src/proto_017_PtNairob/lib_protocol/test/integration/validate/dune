@@ -14,7 +14,7 @@
   tezos-test-helpers
   tezos-017-PtNairob-test-helpers
   tezos-base-test-helpers
-  tezos-protocol-plugin-017-PtNairob)
+  tp-plugin-017)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

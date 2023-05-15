@@ -14,7 +14,7 @@
   tezos-context.encoding
   tezos-context.helpers
   tp-017
-  tezos-protocol-plugin-017-PtNairob
+  tp-plugin-017
   tp-017.parameters
   tezos-rpc
   tezos-rpc-http

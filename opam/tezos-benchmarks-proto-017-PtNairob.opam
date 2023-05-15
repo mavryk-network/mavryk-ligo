@@ -24,7 +24,7 @@ depends: [
   "tezos-017-PtNairob-test-helpers"
   "tezos-sapling"
   "tc-017b"
-  "tezos-protocol-plugin-017-PtNairob"
+  "tp-plugin-017"
   "tezos-protocol-environment"
 ]
 build: [

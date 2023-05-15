@@ -10,7 +10,7 @@
   tezos-clic
   tezos-version
   tp-017
-  tezos-protocol-plugin-017-PtNairob
+  tp-plugin-017
   tezos-protocol-environment
   tezos-shell-services
   tezos-client-base

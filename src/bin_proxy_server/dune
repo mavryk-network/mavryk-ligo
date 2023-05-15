@@ -112,9 +112,9 @@
   (select void_for_linking-tc-017b from
    (tc-017b -> void_for_linking-tc-017b.empty)
    (-> void_for_linking-tc-017b.empty))
-  (select void_for_linking-tezos-protocol-plugin-017-PtNairob from
-   (tezos-protocol-plugin-017-PtNairob -> void_for_linking-tezos-protocol-plugin-017-PtNairob.empty)
-   (-> void_for_linking-tezos-protocol-plugin-017-PtNairob.empty))
+  (select void_for_linking-tp-plugin-017 from
+   (tp-plugin-017 -> void_for_linking-tp-plugin-017.empty)
+   (-> void_for_linking-tp-plugin-017.empty))
   (select void_for_linking-tezos-client-alpha from
    (tezos-client-alpha -> void_for_linking-tezos-client-alpha.empty)
    (-> void_for_linking-tezos-client-alpha.empty))
@@ -165,6 +165,6 @@
    (write-file void_for_linking-tc-016.empty "")
    (write-file void_for_linking-tp-plugin-016.empty "")
    (write-file void_for_linking-tc-017b.empty "")
-   (write-file void_for_linking-tezos-protocol-plugin-017-PtNairob.empty "")
+   (write-file void_for_linking-tp-plugin-017.empty "")
    (write-file void_for_linking-tezos-client-alpha.empty "")
    (write-file void_for_linking-tezos-protocol-plugin-alpha.empty ""))))

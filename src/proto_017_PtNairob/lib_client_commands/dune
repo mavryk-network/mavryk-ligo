@@ -21,7 +21,7 @@
   tezos-client-commands
   tezos-rpc
   tezos-client-base-unix
-  tezos-protocol-plugin-017-PtNairob
+  tp-plugin-017
   uri)
  (library_flags (:standard -linkall))
  (flags
@@ -55,7 +55,7 @@
   tc-017b.commands
   tc-017b.sapling
   tezos-rpc
-  tezos-protocol-plugin-017-PtNairob)
+  tp-plugin-017)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

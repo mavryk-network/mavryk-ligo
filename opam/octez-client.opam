@@ -27,7 +27,7 @@ depends: [
   "tp-plugin-016"
   "tc-017b"
   "tezos-baking-017-PtNairob-commands"
-  "tezos-protocol-plugin-017-PtNairob"
+  "tp-plugin-017"
 ]
 depopts: [
   "tezos-client-genesis"

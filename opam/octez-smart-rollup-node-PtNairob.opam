@@ -17,7 +17,7 @@ depends: [
   "tc-017b"
   "tezos-context"
   "tp-017"
-  "tezos-protocol-plugin-017-PtNairob"
+  "tp-plugin-017"
   "tezos-rpc"
   "tezos-rpc-http"
   "tezos-rpc-http-server"

@@ -15,7 +15,7 @@
   tc-017b
   tc-017b.commands
   tp-017
-  tezos-protocol-plugin-017-PtNairob)
+  tp-plugin-017)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

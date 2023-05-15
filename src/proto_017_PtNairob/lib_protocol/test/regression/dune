@@ -10,7 +10,7 @@
   tezt-tezos
   tp-017
   tc-017b
-  tezos-protocol-plugin-017-PtNairob
+  tp-plugin-017
   tezos-017-PtNairob-test-helpers
   tezos-micheline)
  (library_flags (:standard -linkall))

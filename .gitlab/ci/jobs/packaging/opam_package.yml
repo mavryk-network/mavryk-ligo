@@ -1375,21 +1375,21 @@ opam:tp-plugin-016-registerer:
 
 # Ignoring unreleased package tp-plugin-016-tests.
 
-opam:tezos-protocol-plugin-017-PtNairob:
+opam:tp-plugin-017:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_3
   variables:
-    package: tezos-protocol-plugin-017-PtNairob
+    package: tp-plugin-017
 
-opam:tezos-protocol-plugin-017-PtNairob-registerer:
+opam:tp-plugin-017-registerer:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-protocol-plugin-017-PtNairob-registerer
+    package: tp-plugin-017-registerer
 
-# Ignoring unreleased package tezos-protocol-plugin-017-PtNairob-tests.
+# Ignoring unreleased package tp-plugin-017-tests.
 
 opam:tezos-protocol-plugin-alpha:
   extends:
