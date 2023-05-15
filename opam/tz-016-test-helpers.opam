@@ -16,7 +16,7 @@ depends: [
   "tezos-micheline"
   "tezos-stdlib-unix"
   "tezos-protocol-016-PtMumbai"
-  "tezos-client-016-PtMumbai"
+  "tc-016"
   "tezos-protocol-environment"
   "tezos-protocol-plugin-016-PtMumbai"
   "tezos-shell-services"

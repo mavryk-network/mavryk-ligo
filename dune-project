@@ -87,7 +87,7 @@
 (package (name tezos-client-013-PtJakart))
 (package (name tezos-client-014-PtKathma))
 (package (name tezos-client-015-PtLimaPt))
-(package (name tezos-client-016-PtMumbai))
+(package (name tc-016))
 (package (name tezos-client-017-PtNairob))
 (package (name tezos-client-alpha))
 (package (name tezos-client-base))

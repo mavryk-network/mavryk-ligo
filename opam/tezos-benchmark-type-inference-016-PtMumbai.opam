@@ -17,7 +17,7 @@ depends: [
   "tezos-micheline-rewriting"
   "tezos-protocol-016-PtMumbai"
   "hashcons"
-  "tezos-client-016-PtMumbai" {with-test}
+  "tc-016" {with-test}
 ]
 build: [
   ["rm" "-r" "vendors"]

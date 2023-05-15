@@ -9,7 +9,7 @@
   tezos-base
   tezos-base-test-helpers
   tezos-micheline
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-base
   tezos-protocol-016-PtMumbai.parameters
   tezos-protocol-environment

@@ -9,7 +9,7 @@
   tezos-base
   tezt-tezos
   tezos-protocol-016-PtMumbai
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-protocol-plugin-016-PtMumbai
   tezos-016-PtMumbai-test-helpers
   tezos-micheline)

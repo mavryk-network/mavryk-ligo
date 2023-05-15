@@ -22,7 +22,7 @@ depends: [
   "tezos-client-base-unix"
   "tezos-signer-backends"
   "uri" { >= "3.1.0" }
-  "tezos-client-016-PtMumbai"
+  "tc-016"
   "tezos-baking-016-PtMumbai-commands"
   "tezos-protocol-plugin-016-PtMumbai"
   "tezos-client-017-PtNairob"

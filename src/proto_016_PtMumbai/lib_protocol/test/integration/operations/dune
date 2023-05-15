@@ -10,7 +10,7 @@
   octez-alcotezt
   tezos-base
   tezos-protocol-016-PtMumbai
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-016-PtMumbai-test-helpers
   tezos-base-test-helpers
   tezos-protocol-plugin-016-PtMumbai)

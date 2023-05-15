@@ -14,7 +14,7 @@
   tezos-client-base
   tezos-client-base-unix
   tezos-client-commands
-  tezos-client-016-PtMumbai
+  tc-016
   octez-smart-rollup-node
   octez_smart_rollup_node_PtMumbai)
  (link_flags

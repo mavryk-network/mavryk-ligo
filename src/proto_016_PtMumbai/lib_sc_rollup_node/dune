@@ -10,7 +10,7 @@
   tezos-stdlib-unix
   tezos-client-base
   tezos-client-base-unix
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-context.encoding
   tezos-context.helpers
   tezos-protocol-016-PtMumbai

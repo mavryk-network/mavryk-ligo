@@ -14,7 +14,7 @@
   tezos-protocol-environment
   tezos-shell-services
   tezos-client-base
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-commands
   tezos-stdlib
   tezos-stdlib-unix
@@ -58,7 +58,7 @@
   tezos-protocol-environment
   tezos-shell-services
   tezos-client-base
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-commands
   tezos-baking-016-PtMumbai
   tezos-rpc
@@ -87,7 +87,7 @@
   tezos-protocol-environment
   tezos-shell-services
   tezos-client-base
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-client-commands
   tezos-baking-016-PtMumbai
   tezos-baking-016-PtMumbai-commands

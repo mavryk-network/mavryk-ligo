@@ -8,7 +8,7 @@
   tezt.core
   tezos-base
   tezos-micheline
-  tezos-client-016-PtMumbai
+  tc-016
   tezos-protocol-016-PtMumbai
   tezos-base-test-helpers
   tezos-test-helpers
@@ -46,7 +46,7 @@
 
 (rule
  (alias runtest)
- (package tezos-client-016-PtMumbai)
+ (package tc-016)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

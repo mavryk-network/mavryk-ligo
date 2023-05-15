@@ -14,7 +14,7 @@ depends: [
   "tezos-context" {with-test}
   "octez-alcotezt" {with-test}
   "tezos-base" {with-test}
-  "tezos-client-016-PtMumbai" {with-test}
+  "tc-016" {with-test}
   "tezos-protocol-016-PtMumbai" {with-test}
   "tezos-016-PtMumbai-test-helpers" {with-test}
   "tezos-base-test-helpers" {with-test}

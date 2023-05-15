@@ -3,7 +3,7 @@
 
 (library
  (name tezos_client_016_PtMumbai)
- (public_name tezos-client-016-PtMumbai)
+ (public_name tc-016)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
