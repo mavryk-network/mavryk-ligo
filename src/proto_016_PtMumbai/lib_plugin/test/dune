@@ -17,7 +17,7 @@
   tp-plugin-016
   tp-016
   tp-016.parameters
-  tezos-016-PtMumbai-test-helpers)
+  tz-016-test-helpers)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

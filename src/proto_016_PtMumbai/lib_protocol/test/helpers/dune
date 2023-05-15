@@ -3,7 +3,7 @@
 
 (library
  (name tezos_016_PtMumbai_test_helpers)
- (public_name tezos-016-PtMumbai-test-helpers)
+ (public_name tz-016-test-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries
   qcheck-alcotest

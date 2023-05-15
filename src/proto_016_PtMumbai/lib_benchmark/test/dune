@@ -15,7 +15,7 @@
   tezos-benchmark
   tezos-benchmark-type-inference-016-PtMumbai
   tezos-benchmark-016-PtMumbai
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   tezos-error-monad
   prbnmcn-stats)
  (link_flags

@@ -20,7 +20,7 @@ depends: [
   "tezos-micheline" {with-test}
   "tp-plugin-016" {with-test}
   "tp-016" {with-test}
-  "tezos-016-PtMumbai-test-helpers" {with-test}
+  "tz-016-test-helpers" {with-test}
 ]
 build: [
   ["rm" "-r" "vendors"]

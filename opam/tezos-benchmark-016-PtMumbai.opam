@@ -20,7 +20,7 @@ depends: [
   "tp-016"
   "tezos-crypto"
   "hashcons"
-  "tezos-016-PtMumbai-test-helpers"
+  "tz-016-test-helpers"
   "prbnmcn-stats" { = "0.0.6" }
 ]
 build: [

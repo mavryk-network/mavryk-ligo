@@ -12,7 +12,7 @@
   tp-016
   tezos-context.merkle_proof_encoding
   tezos-test-helpers
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   octez-alcotezt
   qcheck-alcotest
   tezos-benchmark

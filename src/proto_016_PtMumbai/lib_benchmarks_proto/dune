@@ -19,7 +19,7 @@
   tezos-crypto
   tezos-shell-benchmarks
   tezos-micheline
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   tezos-sapling
   tc-016
   tp-plugin-016

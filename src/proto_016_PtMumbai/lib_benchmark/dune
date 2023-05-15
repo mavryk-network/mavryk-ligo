@@ -16,7 +16,7 @@
   tezos-crypto
   tp-016.parameters
   hashcons
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   prbnmcn-stats)
  (library_flags (:standard -linkall))
  (flags

@@ -11,7 +11,7 @@
   tezos-base
   tp-016
   tc-016
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   tezos-base-test-helpers
   tp-plugin-016)
  (library_flags (:standard -linkall))

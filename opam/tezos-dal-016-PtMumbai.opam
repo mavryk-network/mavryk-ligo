@@ -22,7 +22,7 @@ depends: [
   "tp-016"
   "tezt" { with-test & >= "3.1.0" }
   "tezos-base-test-helpers" {with-test}
-  "tezos-016-PtMumbai-test-helpers" {with-test}
+  "tz-016-test-helpers" {with-test}
   "octez-alcotezt" {with-test}
 ]
 build: [

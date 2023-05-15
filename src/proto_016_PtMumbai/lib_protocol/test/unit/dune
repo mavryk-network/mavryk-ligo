@@ -16,7 +16,7 @@
   tezos-stdlib-unix
   tp-016
   tezos-test-helpers
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   octez-alcotezt
   tezos-scoru-wasm-helpers
   tezos-stdlib

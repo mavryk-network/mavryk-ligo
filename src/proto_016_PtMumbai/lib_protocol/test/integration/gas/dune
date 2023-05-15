@@ -9,7 +9,7 @@
   octez-alcotezt
   tezos-base
   tp-016
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   tezos-base-test-helpers)
  (library_flags (:standard -linkall))
  (flags

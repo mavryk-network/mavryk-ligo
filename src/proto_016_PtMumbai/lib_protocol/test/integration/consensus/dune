@@ -10,7 +10,7 @@
   octez-alcotezt
   tezos-base
   tp-016
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   tezos-base-test-helpers
   tp-016.parameters
   tp-plugin-016)

@@ -12,7 +12,7 @@
   qcheck-alcotest
   tc-016
   tezos-test-helpers
-  tezos-016-PtMumbai-test-helpers
+  tz-016-test-helpers
   tezos-base-test-helpers
   tp-plugin-016)
  (library_flags (:standard -linkall))
