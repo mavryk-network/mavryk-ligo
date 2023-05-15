@@ -9,7 +9,7 @@
   tezos-base
   tezos-micheline
   tc-016
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-base-test-helpers
   tezos-test-helpers
   octez-alcotezt

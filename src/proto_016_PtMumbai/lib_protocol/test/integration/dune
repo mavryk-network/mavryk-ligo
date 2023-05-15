@@ -11,8 +11,8 @@
   octez-alcotezt
   tezos-base
   tc-016
-  tezos-protocol-016-PtMumbai
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016
+  tp-016.parameters
   tezos-016-PtMumbai-test-helpers
   tezos-base-test-helpers)
  (library_flags (:standard -linkall))
@@ -49,7 +49,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (deps (glob_files wasm_kernel/*.wasm))
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))

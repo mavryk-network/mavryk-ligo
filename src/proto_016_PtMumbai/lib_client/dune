@@ -10,13 +10,13 @@
   tezos-clic
   tezos-shell-services
   tezos-client-base
-  tezos-protocol-016-PtMumbai
-  tezos-protocol-016-PtMumbai.lifted
+  tp-016
+  tp-016.lifted
   tezos-mockup-registration
   tezos-proxy
   tezos-signer-backends
   tezos-protocol-plugin-016-PtMumbai
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016.parameters
   tezos-rpc
   tezos-smart-rollup-016-PtMumbai
   uri)

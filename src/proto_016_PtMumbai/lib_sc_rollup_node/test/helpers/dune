@@ -7,8 +7,8 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-016-PtMumbai
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016
+  tp-016.parameters
   tc-016
   tezos-test-helpers
   qcheck-alcotest

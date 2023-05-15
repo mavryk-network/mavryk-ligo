@@ -11,7 +11,7 @@
   tezos-base
   tezos-micheline
   tezos-micheline-rewriting
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-benchmark
   tezos-benchmark-type-inference-016-PtMumbai
   tezos-benchmark-016-PtMumbai

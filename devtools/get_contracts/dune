@@ -7,7 +7,7 @@
   tezos-micheline
   tezos-base
   tezos-store
-  tezos-protocol-016-PtMumbai
+  tp-016
   tc-016
   tezos-protocol-017-PtNairob
   tc-017b

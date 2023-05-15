@@ -9,10 +9,10 @@
   tezt.core
   octez-alcotezt
   tezos-base
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-016-PtMumbai-test-helpers
   tezos-base-test-helpers
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016.parameters
   tezos-protocol-plugin-016-PtMumbai)
  (library_flags (:standard -linkall))
  (flags
@@ -56,7 +56,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

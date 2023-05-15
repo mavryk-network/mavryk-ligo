@@ -10,7 +10,7 @@ license: "MIT"
 depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
-  "tezos-protocol-016-PtMumbai"
+  "tp-016"
   "tezos-protocol-updater"
   "tezos-protocol-environment"
 ]

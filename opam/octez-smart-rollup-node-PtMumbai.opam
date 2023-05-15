@@ -16,7 +16,7 @@ depends: [
   "tezos-client-base-unix"
   "tc-016"
   "tezos-context"
-  "tezos-protocol-016-PtMumbai"
+  "tp-016"
   "tezos-protocol-plugin-016-PtMumbai"
   "tezos-rpc"
   "tezos-rpc-http"

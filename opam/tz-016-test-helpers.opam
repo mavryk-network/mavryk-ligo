@@ -15,7 +15,7 @@ depends: [
   "tezos-base"
   "tezos-micheline"
   "tezos-stdlib-unix"
-  "tezos-protocol-016-PtMumbai"
+  "tp-016"
   "tc-016"
   "tezos-protocol-environment"
   "tezos-protocol-plugin-016-PtMumbai"

@@ -8,7 +8,7 @@
   tezt.core
   octez-alcotezt
   tezos-base
-  tezos-protocol-016-PtMumbai
+  tp-016
   qcheck-alcotest
   tc-016
   tezos-test-helpers
@@ -55,7 +55,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

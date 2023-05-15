@@ -11,10 +11,10 @@
   tezos-micheline
   tc-016
   tezos-client-base
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016.parameters
   tezos-protocol-environment
   tezos-stdlib-unix
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-test-helpers
   tezos-016-PtMumbai-test-helpers
   octez-alcotezt
@@ -88,7 +88,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

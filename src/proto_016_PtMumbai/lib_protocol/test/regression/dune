@@ -8,7 +8,7 @@
   tezt.core
   tezos-base
   tezt-tezos
-  tezos-protocol-016-PtMumbai
+  tp-016
   tc-016
   tezos-protocol-plugin-016-PtMumbai
   tezos-016-PtMumbai-test-helpers
@@ -40,7 +40,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (deps
   (glob_files contracts/*.tz)
   (glob_files expected/test_logging.ml/*.out))

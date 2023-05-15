@@ -12,9 +12,9 @@
   tezos-micheline-rewriting
   tezos-benchmark
   tezos-benchmark-type-inference-016-PtMumbai
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-crypto
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016.parameters
   hashcons
   tezos-016-PtMumbai-test-helpers
   prbnmcn-stats)

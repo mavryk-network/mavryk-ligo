@@ -1178,14 +1178,14 @@ opam:tezos-protocol-015-PtLimaPt:
   variables:
     package: tezos-protocol-015-PtLimaPt
 
-opam:tezos-protocol-016-PtMumbai:
+opam:tp-016:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_5
   variables:
-    package: tezos-protocol-016-PtMumbai
+    package: tp-016
 
-# Ignoring unreleased package tezos-protocol-016-PtMumbai-tests.
+# Ignoring unreleased package tp-016-tests.
 
 opam:tezos-protocol-017-PtNairob:
   extends:

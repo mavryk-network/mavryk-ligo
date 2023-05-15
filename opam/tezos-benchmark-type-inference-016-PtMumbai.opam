@@ -15,7 +15,7 @@ depends: [
   "tezos-crypto"
   "tezos-micheline"
   "tezos-micheline-rewriting"
-  "tezos-protocol-016-PtMumbai"
+  "tp-016"
   "hashcons"
   "tc-016" {with-test}
 ]

@@ -7,7 +7,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-smart-rollup-016-PtMumbai)
  (flags
   (:standard)

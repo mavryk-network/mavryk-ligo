@@ -15,7 +15,7 @@ depends: [
   "octez-alcotezt" {with-test}
   "tezos-base" {with-test}
   "tc-016" {with-test}
-  "tezos-protocol-016-PtMumbai" {with-test}
+  "tp-016" {with-test}
   "tezos-016-PtMumbai-test-helpers" {with-test}
   "tezos-base-test-helpers" {with-test}
   "tezos-protocol-plugin-016-PtMumbai" {with-test}

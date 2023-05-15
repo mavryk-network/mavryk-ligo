@@ -9,11 +9,11 @@
   tezos-base
   tezos-micheline
   tc-016
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-base-test-helpers
   tezos-baking-016-PtMumbai.mockup-simulator
   tezos-baking-016-PtMumbai
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016.parameters
   tezos-crypto
   octez-alcotezt
   uri)

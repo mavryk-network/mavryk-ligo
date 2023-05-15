@@ -8,7 +8,7 @@
   data-encoding
   tezos-base
   tezos-base.unix
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-client-base
   tc-016)
  (flags

@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "ppx_expect"
   "tezos-base"
-  "tezos-protocol-016-PtMumbai"
+  "tp-016"
   "tc-016"
 ]
 build: [

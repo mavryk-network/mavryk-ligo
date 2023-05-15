@@ -15,8 +15,8 @@
   tezos-stdlib-unix
   tezos-micheline
   tezos-protocol-plugin-016-PtMumbai
-  tezos-protocol-016-PtMumbai
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016
+  tp-016.parameters
   tezos-016-PtMumbai-test-helpers)
  (library_flags (:standard -linkall))
  (flags

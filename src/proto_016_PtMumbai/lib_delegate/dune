@@ -9,7 +9,7 @@
   tezos-base
   tezos-clic
   tezos-version
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-protocol-plugin-016-PtMumbai
   tezos-protocol-environment
   tezos-shell-services
@@ -53,7 +53,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-stdlib-unix
   tezos-protocol-environment
   tezos-shell-services
@@ -83,7 +83,7 @@
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-protocol-environment
   tezos-shell-services
   tezos-client-base

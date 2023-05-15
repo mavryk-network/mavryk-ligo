@@ -9,7 +9,7 @@
   tezos-base
   tezos-micheline
   tc-016
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-context.merkle_proof_encoding
   tezos-test-helpers
   tezos-016-PtMumbai-test-helpers
@@ -21,7 +21,7 @@
   tezos-smart-rollup-016-PtMumbai
   tezos-crypto-dal
   tezos-base-test-helpers
-  tezos-protocol-016-PtMumbai.parameters)
+  tp-016.parameters)
  (library_flags (:standard -linkall))
  (flags
   (:standard)
@@ -73,7 +73,7 @@
 
 (rule
  (alias runtest)
- (package tezos-protocol-016-PtMumbai-tests)
+ (package tp-016-tests)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

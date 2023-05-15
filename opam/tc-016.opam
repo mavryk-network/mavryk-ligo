@@ -15,7 +15,7 @@ depends: [
   "tezos-clic"
   "tezos-shell-services"
   "tezos-client-base"
-  "tezos-protocol-016-PtMumbai"
+  "tp-016"
   "tezos-mockup-registration"
   "tezos-proxy"
   "tezos-signer-backends"

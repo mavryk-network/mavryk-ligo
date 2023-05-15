@@ -7,7 +7,7 @@
  (libraries
   tezt.core
   tezos-base
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-test-helpers
   tezos-smart-rollup-layer2-016-PtMumbai
   octez_smart_rollup_node_PtMumbai

@@ -14,7 +14,7 @@
   tezos-signer-backends
   tc-016
   tc-016.commands
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-protocol-plugin-016-PtMumbai)
  (library_flags (:standard -linkall))
  (flags

@@ -10,12 +10,12 @@
   tezos-stdlib
   tezos-base
   tezos-error-monad
-  tezos-protocol-016-PtMumbai.parameters
+  tp-016.parameters
   tezos-lazy-containers
   tezos-benchmark
   tezos-benchmark-016-PtMumbai
   tezos-benchmark-type-inference-016-PtMumbai
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-crypto
   tezos-shell-benchmarks
   tezos-micheline

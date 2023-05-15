@@ -7,7 +7,7 @@
   tezos-base
   tezos-client-base
   tc-016
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-baking-016-PtMumbai.tenderbrute)
  (link_flags
   (:standard)

@@ -7,7 +7,7 @@
   tezos-micheline
   tezos-micheline-rewriting
   tezos-benchmark-type-inference-016-PtMumbai
-  tezos-protocol-016-PtMumbai
+  tp-016
   tezos-error-monad
   tc-016)
  (link_flags
