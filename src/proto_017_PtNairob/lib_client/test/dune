@@ -8,7 +8,7 @@
   tezt.core
   tezos-base
   tezos-micheline
-  tezos-client-017-PtNairob
+  tc-017b
   tezos-protocol-017-PtNairob
   tezos-base-test-helpers
   tezos-test-helpers
@@ -46,7 +46,7 @@
 
 (rule
  (alias runtest)
- (package tezos-client-017-PtNairob)
+ (package tc-017b)
  (enabled_if (<> false %{env:RUNTEZTALIAS=true}))
  (action (run %{dep:./main.exe})))
 

@@ -15,7 +15,7 @@ depends: [
   "octez-protocol-compiler"
   "tezos-stdlib-unix"
   "tezos-dal-node-lib"
-  "tezos-client-017-PtNairob"
+  "tc-017b"
   "tezos-protocol-plugin-017-PtNairob"
   "tezos-embedded-protocol-017-PtNairob"
   "tezos-layer2-utils-017-PtNairob"

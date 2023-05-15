@@ -649,12 +649,12 @@ opam:tc-016:
   variables:
     package: tc-016
 
-opam:tezos-client-017-PtNairob:
+opam:tc-017b:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-client-017-PtNairob
+    package: tc-017b
 
 opam:tezos-client-alpha:
   extends:

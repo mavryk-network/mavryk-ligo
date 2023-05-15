@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tezos-clic"
   "tezos-protocol-017-PtNairob"
-  "tezos-client-017-PtNairob"
+  "tc-017b"
   "tezos-client-commands"
   "tezos-baking-017-PtNairob-commands"
   "tezos-stdlib-unix"

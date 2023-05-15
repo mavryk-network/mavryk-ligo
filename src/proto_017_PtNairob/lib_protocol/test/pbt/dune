@@ -8,7 +8,7 @@
   tezt.core
   tezos-base
   tezos-micheline
-  tezos-client-017-PtNairob
+  tc-017b
   tezos-protocol-017-PtNairob
   tezos-context.merkle_proof_encoding
   tezos-test-helpers

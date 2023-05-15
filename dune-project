@@ -88,7 +88,7 @@
 (package (name tezos-client-014-PtKathma))
 (package (name tezos-client-015-PtLimaPt))
 (package (name tc-016))
-(package (name tezos-client-017-PtNairob))
+(package (name tc-017b))
 (package (name tezos-client-alpha))
 (package (name tezos-client-base))
 (package (name tezos-client-base-unix))

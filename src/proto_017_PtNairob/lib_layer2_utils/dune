@@ -8,7 +8,7 @@
  (libraries
   tezos-base
   tezos-protocol-017-PtNairob
-  tezos-client-017-PtNairob)
+  tc-017b)
  (inline_tests (flags -verbose) (modes native))
  (preprocess (pps ppx_expect))
  (library_flags (:standard -linkall))

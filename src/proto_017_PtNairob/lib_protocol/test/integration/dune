@@ -10,7 +10,7 @@
   tezos-context
   octez-alcotezt
   tezos-base
-  tezos-client-017-PtNairob
+  tc-017b
   tezos-protocol-017-PtNairob
   tezos-protocol-017-PtNairob.parameters
   tezos-017-PtNairob-test-helpers

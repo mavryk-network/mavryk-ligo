@@ -10,7 +10,7 @@
   tezos-base.unix
   tezos-protocol-017-PtNairob
   tezos-client-base
-  tezos-client-017-PtNairob)
+  tc-017b)
  (flags
   (:standard)
   -open Data_encoding

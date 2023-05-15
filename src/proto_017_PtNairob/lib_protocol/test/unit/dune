@@ -9,7 +9,7 @@
   tezos-base
   tezos-base-test-helpers
   tezos-micheline
-  tezos-client-017-PtNairob
+  tc-017b
   tezos-client-base
   tezos-protocol-017-PtNairob.parameters
   tezos-protocol-environment

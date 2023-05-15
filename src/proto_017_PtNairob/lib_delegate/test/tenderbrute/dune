@@ -6,7 +6,7 @@
  (libraries
   tezos-base
   tezos-client-base
-  tezos-client-017-PtNairob
+  tc-017b
   tezos-protocol-017-PtNairob
   tezos-baking-017-PtNairob.tenderbrute)
  (link_flags

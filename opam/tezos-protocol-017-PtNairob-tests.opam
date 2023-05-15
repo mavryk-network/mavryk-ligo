@@ -14,7 +14,7 @@ depends: [
   "tezos-context" {with-test}
   "octez-alcotezt" {with-test}
   "tezos-base" {with-test}
-  "tezos-client-017-PtNairob" {with-test}
+  "tc-017b" {with-test}
   "tezos-protocol-017-PtNairob" {with-test}
   "tezos-017-PtNairob-test-helpers" {with-test}
   "tezos-base-test-helpers" {with-test}

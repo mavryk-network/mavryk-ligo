@@ -32,7 +32,7 @@ depopts: [
   "tezos-client-014-PtKathma"
   "tezos-client-015-PtLimaPt"
   "tc-016"
-  "tezos-client-017-PtNairob"
+  "tc-017b"
   "tezos-client-alpha"
 ]
 build: [

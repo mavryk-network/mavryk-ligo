@@ -3,7 +3,7 @@
 
 (library
  (name tezos_client_017_PtNairob)
- (public_name tezos-client-017-PtNairob)
+ (public_name tc-017b)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base

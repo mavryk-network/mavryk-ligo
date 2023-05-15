@@ -16,7 +16,7 @@ depends: [
   "tezos-protocol-environment"
   "tezos-shell-services"
   "tezos-client-base"
-  "tezos-client-017-PtNairob"
+  "tc-017b"
   "tezos-client-commands"
   "tezos-baking-017-PtNairob"
   "tezos-rpc"

@@ -104,7 +104,7 @@
   tc-016.commands-registration
   tezos-baking-016-PtMumbai-commands.registration
   tezos-protocol-plugin-016-PtMumbai
-  tezos-client-017-PtNairob.commands-registration
+  tc-017b.commands-registration
   tezos-baking-017-PtNairob-commands.registration
   tezos-protocol-plugin-017-PtNairob
   (select void_for_linking-tezos-client-alpha-commands-registration from
