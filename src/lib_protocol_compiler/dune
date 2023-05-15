@@ -9,7 +9,7 @@
   tezos-base
   tezos-base.unix
   tezos-version
-  tezos-protocol-environment.sigs
+  tpe.sigs
   tezos-stdlib-unix
   compiler-libs.common
   lwt.unix
@@ -24,17 +24,17 @@
 
 (rule
  (targets embedded-interfaces-env)
- (deps (package tezos-protocol-environment))
+ (deps (package tpe))
  (action
   (with-stdout-to
    %{targets}
    (run
     bin/cmis_of_cma.exe
-    %{lib:tezos-protocol-environment.sigs:tezos_protocol_environment_sigs.cmxa}))))
+    %{lib:tpe.sigs:tezos_protocol_environment_sigs.cmxa}))))
 
 (rule
  (targets embedded_cmis_env.ml)
- (deps (package tezos-protocol-environment))
+ (deps (package tpe))
  (action
   (run
    %{bin:ocp-ocamlres} -format variants -o %{targets}

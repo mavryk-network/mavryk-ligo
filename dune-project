@@ -183,7 +183,7 @@
 (package (name tezos-protocol-alpha-tests)(allow_empty))
 (package (name tezos-protocol-demo-counter))
 (package (name tezos-protocol-demo-noops))
-(package (name tezos-protocol-environment))
+(package (name tpe))
 (package (name tezos-protocol-genesis))
 (package (name tezos-protocol-plugin-007-PsDELPH1))
 (package (name tezos-protocol-plugin-007-PsDELPH1-registerer))

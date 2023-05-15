@@ -14,7 +14,7 @@
   tp-016
   tc-016
   tp-016.parameters
-  tezos-protocol-environment
+  tpe
   tp-plugin-016
   tezos-shell-services
   octez-plompiler

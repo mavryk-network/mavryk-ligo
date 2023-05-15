@@ -25,7 +25,7 @@ depends: [
   "tezos-sapling"
   "tc-016"
   "tp-plugin-016"
-  "tezos-protocol-environment"
+  "tpe"
 ]
 build: [
   ["rm" "-r" "vendors"]

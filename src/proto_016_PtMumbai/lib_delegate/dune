@@ -11,7 +11,7 @@
   tezos-version
   tp-016
   tp-plugin-016
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tc-016
@@ -55,7 +55,7 @@
   tezos-base
   tp-016
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tc-016
@@ -84,7 +84,7 @@
  (libraries
   tezos-base
   tp-016
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tc-016

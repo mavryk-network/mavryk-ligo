@@ -11,7 +11,7 @@
   tezos-version
   tp-017
   tp-plugin-017
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tc-017b
@@ -56,7 +56,7 @@
   tezos-base
   tp-017
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tc-017b
@@ -85,7 +85,7 @@
  (libraries
   tezos-base
   tp-017
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tc-017b

@@ -10,7 +10,7 @@
   octez-alcotezt
   tezos-test-helpers
   tezos-base
-  tezos-protocol-environment)
+  tpe)
  (library_flags (:standard -linkall))
  (flags
   (:standard)

@@ -15,7 +15,7 @@ depends: [
   "tezos-base"
   "tezos-clic"
   "tezos-client-base"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-rpc"
   "tezos-shell-services"
   "tezos-context"

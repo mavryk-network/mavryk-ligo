@@ -12,7 +12,7 @@
   tc-016
   tezos-client-base
   tp-016.parameters
-  tezos-protocol-environment
+  tpe
   tezos-stdlib-unix
   tp-016
   tezos-test-helpers

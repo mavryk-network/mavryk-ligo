@@ -13,7 +13,7 @@ depends: [
   "tezos-base"
   "tp-017"
   "tezos-stdlib-unix"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-shell-services"
   "tezos-client-base"
   "tc-017b"

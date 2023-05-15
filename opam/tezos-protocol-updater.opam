@@ -14,7 +14,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-micheline"
   "tezos-shell-services"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-shell-context"
   "octez-protocol-compiler"
   "tezos-context"

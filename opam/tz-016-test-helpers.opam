@@ -17,7 +17,7 @@ depends: [
   "tezos-stdlib-unix"
   "tp-016"
   "tc-016"
-  "tezos-protocol-environment"
+  "tpe"
   "tp-plugin-016"
   "tezos-shell-services"
   "octez-plompiler"

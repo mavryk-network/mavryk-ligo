@@ -15,7 +15,7 @@ depends: [
   "tezos-version"
   "tp-017"
   "tp-plugin-017"
-  "tezos-protocol-environment"
+  "tpe"
   "tezos-shell-services"
   "tezos-client-base"
   "tc-017b"

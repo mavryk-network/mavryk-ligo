@@ -11,7 +11,7 @@
   tp-017
   tp-017.parameters
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-mockup
   tezos-mockup-registration
@@ -47,7 +47,7 @@
   tezos-clic
   tp-017
   tp-017.parameters
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tc-017b

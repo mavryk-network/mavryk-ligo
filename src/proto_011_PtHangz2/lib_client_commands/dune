@@ -10,7 +10,7 @@
   tezos-clic
   tezos-protocol-011-PtHangz2
   tezos-stdlib-unix
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-mockup
   tezos-mockup-registration
@@ -45,7 +45,7 @@
   tezos-base
   tezos-clic
   tezos-protocol-011-PtHangz2
-  tezos-protocol-environment
+  tpe
   tezos-shell-services
   tezos-client-base
   tezos-client-011-PtHangz2

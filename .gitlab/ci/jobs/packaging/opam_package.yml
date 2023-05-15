@@ -1219,12 +1219,12 @@ opam:tezos-protocol-demo-noops:
   variables:
     package: tezos-protocol-demo-noops
 
-opam:tezos-protocol-environment:
+opam:tpe:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-protocol-environment
+    package: tpe
 
 opam:tezos-protocol-genesis:
   extends:
