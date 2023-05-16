@@ -18,7 +18,7 @@ depends: [
   "tezos-signer-services"
   "tezos-rpc-http"
   "tezos-rpc-http-server"
-  "tezos-rpc-http-client-unix"
+  "tz-rpc-h-c-ux"
   "tezos-stdlib-unix"
   "tezos-stdlib"
   "tezos-signer-backends"

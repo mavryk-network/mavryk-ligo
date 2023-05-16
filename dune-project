@@ -219,7 +219,7 @@
 (package (name tezos-rpc))
 (package (name tezos-rpc-http))
 (package (name tezos-rpc-http-client))
-(package (name tezos-rpc-http-client-unix))
+(package (name tz-rpc-h-c-ux))
 (package (name tezos-rpc-http-server))
 (package (name tezos-sapling))
 (package (name tezos-sc-rollup-node-test)(allow_empty))

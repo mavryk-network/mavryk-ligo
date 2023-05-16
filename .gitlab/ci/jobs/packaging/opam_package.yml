@@ -1456,12 +1456,12 @@ opam:tezos-rpc-http-client:
   variables:
     package: tezos-rpc-http-client
 
-opam:tezos-rpc-http-client-unix:
+opam:tz-rpc-h-c-ux:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-rpc-http-client-unix
+    package: tz-rpc-h-c-ux
 
 opam:tezos-rpc-http-server:
   extends:

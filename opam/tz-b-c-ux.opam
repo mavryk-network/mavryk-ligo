@@ -14,7 +14,7 @@ depends: [
   "tezos-clic"
   "tezos-rpc"
   "tezos-rpc-http"
-  "tezos-rpc-http-client-unix"
+  "tz-rpc-h-c-ux"
   "tezos-shell-services"
   "tezos-stdlib-unix"
   "tezos-client-base"

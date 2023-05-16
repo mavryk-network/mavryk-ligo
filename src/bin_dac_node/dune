@@ -16,7 +16,7 @@
   tezos-rpc-http
   tezos-rpc-http-server
   tezos-protocol-updater
-  tezos-rpc-http-client-unix
+  tz-rpc-h-c-ux
   tezos-stdlib-unix
   tezos-stdlib
   tezos_dac_node_lib
