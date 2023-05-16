@@ -12,7 +12,7 @@
   tp-017
   tezos-context.merkle_proof_encoding
   tezos-test-helpers
-  tezos-017-PtNairob-test-helpers
+  tz-017-test-helpers
   octez-alcotezt
   qcheck-alcotest
   tezos-benchmark

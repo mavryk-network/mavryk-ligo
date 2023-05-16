@@ -16,7 +16,7 @@
   tezos-stdlib-unix
   tp-017
   tezos-test-helpers
-  tezos-017-PtNairob-test-helpers
+  tz-017-test-helpers
   octez-alcotezt
   tezos-scoru-wasm-helpers
   tezos-stdlib

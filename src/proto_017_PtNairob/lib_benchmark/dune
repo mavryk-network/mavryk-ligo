@@ -16,7 +16,7 @@
   tezos-crypto
   tp-017.parameters
   hashcons
-  tezos-017-PtNairob-test-helpers
+  tz-017-test-helpers
   prbnmcn-stats)
  (library_flags (:standard -linkall))
  (flags

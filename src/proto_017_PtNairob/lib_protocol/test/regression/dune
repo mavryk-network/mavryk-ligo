@@ -11,7 +11,7 @@
   tp-017
   tc-017b
   tp-plugin-017
-  tezos-017-PtNairob-test-helpers
+  tz-017-test-helpers
   tezos-micheline)
  (library_flags (:standard -linkall))
  (flags

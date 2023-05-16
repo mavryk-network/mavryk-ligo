@@ -20,7 +20,7 @@ depends: [
   "tp-017"
   "tezos-crypto"
   "hashcons"
-  "tezos-017-PtNairob-test-helpers"
+  "tz-017-test-helpers"
   "prbnmcn-stats" { = "0.0.6" }
 ]
 build: [

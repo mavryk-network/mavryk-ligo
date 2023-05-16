@@ -16,7 +16,7 @@ depends: [
   "tezos-base" {with-test}
   "tc-017b" {with-test}
   "tp-017" {with-test}
-  "tezos-017-PtNairob-test-helpers" {with-test}
+  "tz-017-test-helpers" {with-test}
   "tezos-base-test-helpers" {with-test}
   "tp-plugin-017" {with-test}
   "tezos-benchmark" {with-test}

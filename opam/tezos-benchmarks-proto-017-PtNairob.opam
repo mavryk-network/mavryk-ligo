@@ -21,7 +21,7 @@ depends: [
   "tezos-crypto"
   "tezos-shell-benchmarks"
   "tezos-micheline"
-  "tezos-017-PtNairob-test-helpers"
+  "tz-017-test-helpers"
   "tezos-sapling"
   "tc-017b"
   "tp-plugin-017"

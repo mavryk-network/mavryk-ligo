@@ -13,7 +13,7 @@
   tc-017b
   tp-017
   tp-017.parameters
-  tezos-017-PtNairob-test-helpers
+  tz-017-test-helpers
   tezos-base-test-helpers)
  (library_flags (:standard -linkall))
  (flags

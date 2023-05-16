@@ -10,7 +10,7 @@
   tezos-dac-017-PtNairob
   tp-017
   tezos-base-test-helpers
-  tezos-017-PtNairob-test-helpers
+  tz-017-test-helpers
   tezos-dac-lib
   tezos_dac_node_lib
   octez-alcotezt)

@@ -10,7 +10,7 @@
   tezos-dal-017-PtNairob
   tp-017
   tezos-base-test-helpers
-  tezos-017-PtNairob-test-helpers
+  tz-017-test-helpers
   octez-alcotezt)
  (library_flags (:standard -linkall))
  (flags

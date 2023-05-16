@@ -12,7 +12,7 @@
   qcheck-alcotest
   tc-017b
   tezos-test-helpers
-  tezos-017-PtNairob-test-helpers
+  tz-017-test-helpers
   tezos-base-test-helpers
   tp-plugin-017)
  (library_flags (:standard -linkall))
