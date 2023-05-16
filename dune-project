@@ -238,7 +238,7 @@
 (package (name tezos-shell-services))
 (package (name tezos-signer-backends))
 (package (name tezos-signer-services))
-(package (name tezos-smart-rollup-016-PtMumbai))
+(package (name tz-scr-016))
 (package (name tz-scr-017))
 (package (name tezos-smart-rollup-alpha))
 (package (name tezos-smart-rollup-layer2-016-PtMumbai))

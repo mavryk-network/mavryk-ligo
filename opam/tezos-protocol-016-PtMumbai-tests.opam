@@ -25,7 +25,7 @@ depends: [
   "tezos-benchmark-type-inference-016-PtMumbai" {with-test}
   "qcheck-alcotest" { with-test & >= "0.20" }
   "tezos-test-helpers" {with-test}
-  "tezos-smart-rollup-016-PtMumbai" {with-test}
+  "tz-scr-016" {with-test}
   "tezos-crypto-dal" {with-test}
   "tezt-tezos" {with-test}
   "tezos-client-base" {with-test}

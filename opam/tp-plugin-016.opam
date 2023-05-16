@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "tezos-base"
   "tp-016"
-  "tezos-smart-rollup-016-PtMumbai"
+  "tz-scr-016"
 ]
 build: [
   ["rm" "-r" "vendors"]

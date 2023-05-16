@@ -18,7 +18,7 @@
   tp-plugin-016
   tp-016.parameters
   tezos-rpc
-  tezos-smart-rollup-016-PtMumbai
+  tz-scr-016
   uri)
  (inline_tests (flags -verbose) (modes native))
  (preprocess (pps ppx_expect))
