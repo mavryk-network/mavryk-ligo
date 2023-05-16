@@ -12,7 +12,7 @@ depends: [
   "ocaml" { >= "4.14" }
   "data-encoding" { >= "0.7.1" & < "1.0.0" }
   "tezos-base"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
   "tezos-client-base"
   "tezos-clic"
   "tezos-stdlib-unix"

@@ -91,7 +91,7 @@
 (package (name tc-017b))
 (package (name tezos-client-alpha))
 (package (name tezos-client-base))
-(package (name tezos-client-base-unix))
+(package (name tz-b-c-ux))
 (package (name tezos-client-commands))
 (package (name tezos-client-demo-counter))
 (package (name tezos-client-genesis))

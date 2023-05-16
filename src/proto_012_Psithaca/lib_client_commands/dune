@@ -19,7 +19,7 @@
   tezos-client-012-Psithaca
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-protocol-plugin-012-Psithaca
   uri)
  (library_flags (:standard -linkall))

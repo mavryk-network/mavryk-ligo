@@ -20,7 +20,7 @@
   tezos-client-alpha
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-protocol-plugin-alpha
   uri)
  (library_flags (:standard -linkall))

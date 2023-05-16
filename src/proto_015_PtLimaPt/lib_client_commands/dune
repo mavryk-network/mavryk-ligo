@@ -20,7 +20,7 @@
   tezos-client-015-PtLimaPt
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-protocol-plugin-015-PtLimaPt
   uri)
  (library_flags (:standard -linkall))

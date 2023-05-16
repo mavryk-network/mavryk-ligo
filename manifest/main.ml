@@ -3707,7 +3707,7 @@ let _octez_proxy_server_config_tests =
 
 let octez_client_base_unix =
   public_lib
-    "tezos-client-base-unix"
+    "tz-b-c-ux"
     ~path:"src/lib_client_base_unix"
     ~synopsis:
       "Tezos: common helpers for `tezos-client` (unix-specific fragment)"
@@ -3738,7 +3738,7 @@ let _octez_client_base_unix_tests =
   tezt
     ["test_mockup_wallet"]
     ~path:"src/lib_client_base_unix/test"
-    ~opam:"tezos-client-base-unix"
+    ~opam:"tz-b-c-ux"
     ~with_macos_security_framework:true
     ~deps:
       [

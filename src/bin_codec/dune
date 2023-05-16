@@ -10,7 +10,7 @@
   data-encoding
   tezos-base
   tezos-base.unix
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-client-base
   tezos-clic
   tezos-stdlib-unix

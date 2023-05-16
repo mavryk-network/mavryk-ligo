@@ -670,12 +670,12 @@ opam:tezos-client-base:
   variables:
     package: tezos-client-base
 
-opam:tezos-client-base-unix:
+opam:tz-b-c-ux:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_2
   variables:
-    package: tezos-client-base-unix
+    package: tz-b-c-ux
 
 opam:tezos-client-commands:
   extends:

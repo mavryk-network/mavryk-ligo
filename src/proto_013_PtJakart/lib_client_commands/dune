@@ -20,7 +20,7 @@
   tezos-client-013-PtJakart
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-protocol-plugin-013-PtJakart
   uri)
  (library_flags (:standard -linkall))

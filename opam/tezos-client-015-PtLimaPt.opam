@@ -27,7 +27,7 @@ depends: [
   "tezos-mockup"
   "tezos-mockup-commands"
   "tezos-client-commands"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
   "tezos-crypto"
 ]
 build: [

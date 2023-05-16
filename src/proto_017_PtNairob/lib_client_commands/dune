@@ -20,7 +20,7 @@
   tc-017b
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-b-c-ux
   tp-plugin-017
   uri)
  (library_flags (:standard -linkall))

@@ -23,7 +23,7 @@ depends: [
   "tezos-stdlib-unix"
   "tpe"
   "tezos-client-commands"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
 ]
 build: [
   ["rm" "-r" "vendors"]

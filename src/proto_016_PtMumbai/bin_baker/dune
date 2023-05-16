@@ -14,7 +14,7 @@
   tezos-client-commands
   tezos-baking-016-PtMumbai-commands
   tezos-stdlib-unix
-  tezos-client-base-unix)
+  tz-b-c-ux)
  (link_flags
   (:standard)
   (:include %{workspace_root}/static-link-flags.sexp)

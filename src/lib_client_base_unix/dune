@@ -3,7 +3,7 @@
 
 (library
  (name tezos_client_base_unix)
- (public_name tezos-client-base-unix)
+ (public_name tz-b-c-ux)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base

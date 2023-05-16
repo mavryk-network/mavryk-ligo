@@ -20,7 +20,7 @@
   tezos-client-014-PtKathma
   tezos-client-commands
   tezos-rpc
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-protocol-plugin-014-PtKathma
   uri)
  (library_flags (:standard -linkall))

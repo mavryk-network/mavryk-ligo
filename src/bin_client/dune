@@ -17,7 +17,7 @@
   tezos-client-commands
   tezos-mockup-commands
   tezos-proxy
-  tezos-client-base-unix
+  tz-b-c-ux
   tezos-signer-backends.unix
   uri
   (select void_for_linking-tezos-client-genesis from

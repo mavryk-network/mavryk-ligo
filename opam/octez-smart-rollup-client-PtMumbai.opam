@@ -14,7 +14,7 @@ depends: [
   "tp-016"
   "tezos-client-commands"
   "tezos-client-base"
-  "tezos-client-base-unix"
+  "tz-b-c-ux"
   "tc-016"
   "tezos-smart-rollup-016-PtMumbai"
   "tezos-smart-rollup-layer2-016-PtMumbai"
