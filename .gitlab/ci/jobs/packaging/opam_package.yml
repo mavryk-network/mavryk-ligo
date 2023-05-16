@@ -1556,12 +1556,12 @@ opam:tezos-smart-rollup-016-PtMumbai:
   variables:
     package: tezos-smart-rollup-016-PtMumbai
 
-opam:tezos-smart-rollup-017-PtNairob:
+opam:tz-scr-017:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_4
   variables:
-    package: tezos-smart-rollup-017-PtNairob
+    package: tz-scr-017
 
 opam:tezos-smart-rollup-alpha:
   extends:

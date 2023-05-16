@@ -239,7 +239,7 @@
 (package (name tezos-signer-backends))
 (package (name tezos-signer-services))
 (package (name tezos-smart-rollup-016-PtMumbai))
-(package (name tezos-smart-rollup-017-PtNairob))
+(package (name tz-scr-017))
 (package (name tezos-smart-rollup-alpha))
 (package (name tezos-smart-rollup-layer2-016-PtMumbai))
 (package (name tezos-smart-rollup-layer2-017-PtNairob))

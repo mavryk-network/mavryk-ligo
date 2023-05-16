@@ -16,7 +16,7 @@ depends: [
   "tezos-client-base"
   "tz-b-c-ux"
   "tc-017b"
-  "tezos-smart-rollup-017-PtNairob"
+  "tz-scr-017"
   "tezos-smart-rollup-layer2-017-PtNairob"
   "tezos-clic"
 ]

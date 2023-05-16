@@ -21,7 +21,7 @@ depends: [
   "tezos-signer-backends"
   "tp-plugin-017"
   "tezos-rpc"
-  "tezos-smart-rollup-017-PtNairob"
+  "tz-scr-017"
   "uri" { >= "3.1.0" }
   "tezos-stdlib-unix"
   "tpe"
