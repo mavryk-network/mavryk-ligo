@@ -9,7 +9,7 @@
   tezos-base
   tezos-base-test-helpers
   tezos-micheline
-  tc-017b
+  tc-017
   tezos-client-base
   tp-017.parameters
   tpe

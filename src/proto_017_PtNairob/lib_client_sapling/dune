@@ -3,7 +3,7 @@
 
 (library
  (name tezos_client_sapling_017_PtNairob)
- (public_name tc-017b.sapling)
+ (public_name tc-017.sapling)
  (instrumentation (backend bisect_ppx))
  (libraries
   tezos-base
@@ -12,8 +12,8 @@
   tezos-stdlib-unix
   tezos-client-base
   tezos-signer-backends
-  tc-017b
-  tc-017b.commands
+  tc-017
+  tc-017.commands
   tp-017
   tp-plugin-017)
  (library_flags (:standard -linkall))

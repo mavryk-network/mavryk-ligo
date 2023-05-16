@@ -8,7 +8,7 @@
   tezt.core
   tezos-base
   tezos-micheline
-  tc-017b
+  tc-017
   tp-017
   tezos-context.merkle_proof_encoding
   tezos-test-helpers

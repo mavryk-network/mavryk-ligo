@@ -23,7 +23,7 @@ depends: [
   "tezos-micheline"
   "tz-017-test-helpers"
   "tezos-sapling"
-  "tc-017b"
+  "tc-017"
   "tp-plugin-017"
   "tpe"
 ]

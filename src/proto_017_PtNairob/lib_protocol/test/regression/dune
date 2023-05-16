@@ -9,7 +9,7 @@
   tezos-base
   tezt-tezos
   tp-017
-  tc-017b
+  tc-017
   tp-plugin-017
   tz-017-test-helpers
   tezos-micheline)

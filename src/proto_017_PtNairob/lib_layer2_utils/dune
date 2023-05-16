@@ -8,7 +8,7 @@
  (libraries
   tezos-base
   tp-017
-  tc-017b)
+  tc-017)
  (inline_tests (flags -verbose) (modes native))
  (preprocess (pps ppx_expect))
  (library_flags (:standard -linkall))

@@ -10,7 +10,7 @@
   tezos-base
   tp-017
   qcheck-alcotest
-  tc-017b
+  tc-017
   tezos-test-helpers
   tz-017-test-helpers
   tezos-base-test-helpers

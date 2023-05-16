@@ -9,7 +9,7 @@
   tezos-benchmark-type-inference-017-PtNairob
   tp-017
   tezos-error-monad
-  tc-017b)
+  tc-017)
  (link_flags
   (:standard)
   (:include %{workspace_root}/macos-link-flags.sexp))

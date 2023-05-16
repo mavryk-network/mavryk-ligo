@@ -55,7 +55,7 @@ depopts: [
   "tezos-protocol-plugin-015-PtLimaPt"
   "tc-016"
   "tp-plugin-016"
-  "tc-017b"
+  "tc-017"
   "tp-plugin-017"
   "tezos-client-alpha"
   "tezos-protocol-plugin-alpha"

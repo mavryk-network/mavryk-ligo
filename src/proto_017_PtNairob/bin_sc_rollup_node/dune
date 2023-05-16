@@ -14,7 +14,7 @@
   tezos-client-base
   tz-b-c-ux
   tezos-client-commands
-  tc-017b
+  tc-017
   octez-smart-rollup-node
   octez_smart_rollup_node_PtNairob)
  (link_flags

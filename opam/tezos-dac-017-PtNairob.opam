@@ -16,7 +16,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-dac-lib"
   "tezos-dac-client-lib"
-  "tc-017b"
+  "tc-017"
   "tezos-embedded-protocol-017-PtNairob"
   "tp-017"
   "tezt" { with-test & >= "3.1.0" }

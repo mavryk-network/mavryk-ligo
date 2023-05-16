@@ -9,7 +9,7 @@
   tezos-base
   tp-017
   tp-017.parameters
-  tc-017b
+  tc-017
   tezos-test-helpers
   qcheck-alcotest
   qcheck-core

@@ -8,7 +8,7 @@
   tezt.core
   tezos-base
   tezos-micheline
-  tc-017b
+  tc-017
   tp-017
   tezos-base-test-helpers
   tezos-baking-017-PtNairob.mockup-simulator

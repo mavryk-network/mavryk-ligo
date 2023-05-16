@@ -25,7 +25,7 @@ depends: [
   "tc-016"
   "tezos-baking-016-PtMumbai-commands"
   "tp-plugin-016"
-  "tc-017b"
+  "tc-017"
   "tezos-baking-017-PtNairob-commands"
   "tp-plugin-017"
 ]

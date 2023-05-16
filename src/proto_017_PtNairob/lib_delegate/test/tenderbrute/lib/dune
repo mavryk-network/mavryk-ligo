@@ -10,7 +10,7 @@
   tezos-base.unix
   tp-017
   tezos-client-base
-  tc-017b)
+  tc-017)
  (flags
   (:standard)
   -open Data_encoding

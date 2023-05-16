@@ -18,7 +18,7 @@ depends: [
   "tpe"
   "tezos-shell-services"
   "tezos-client-base"
-  "tc-017b"
+  "tc-017"
   "tezos-client-commands"
   "tezos-stdlib"
   "tezos-stdlib-unix"

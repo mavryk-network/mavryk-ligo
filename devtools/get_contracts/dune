@@ -10,7 +10,7 @@
   tp-016
   tc-016
   tp-017
-  tc-017b
+  tc-017
   tezos-protocol-alpha
   tezos-client-alpha)
  (library_flags (:standard -linkall))

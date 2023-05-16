@@ -13,7 +13,7 @@ depends: [
   "ppx_expect"
   "tezos-base"
   "tp-017"
-  "tc-017b"
+  "tc-017"
 ]
 build: [
   ["rm" "-r" "vendors"]

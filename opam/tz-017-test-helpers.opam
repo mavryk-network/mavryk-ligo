@@ -16,7 +16,7 @@ depends: [
   "tezos-micheline"
   "tezos-stdlib-unix"
   "tp-017"
-  "tc-017b"
+  "tc-017"
   "tpe"
   "tp-plugin-017"
   "tezos-shell-services"

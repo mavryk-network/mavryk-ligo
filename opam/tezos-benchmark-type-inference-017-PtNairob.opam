@@ -17,7 +17,7 @@ depends: [
   "tezos-micheline-rewriting"
   "tp-017"
   "hashcons"
-  "tc-017b" {with-test}
+  "tc-017" {with-test}
 ]
 build: [
   ["rm" "-r" "vendors"]

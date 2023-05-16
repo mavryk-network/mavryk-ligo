@@ -14,7 +14,7 @@ depends: [
   "tezos-stdlib-unix"
   "tezos-client-base"
   "tz-b-c-ux"
-  "tc-017b"
+  "tc-017"
   "tezos-context"
   "tp-017"
   "tp-plugin-017"
