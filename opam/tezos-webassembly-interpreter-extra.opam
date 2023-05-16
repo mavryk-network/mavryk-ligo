@@ -10,7 +10,7 @@ license: "Apache-2.0"
 depends: [
   "dune" { >= "3.0" }
   "ocaml" { >= "4.14" }
-  "tezos-webassembly-interpreter"
+  "tz-wasm-in"
   "lwt" { >= "5.6.0" }
   "tezos-lazy-containers"
 ]

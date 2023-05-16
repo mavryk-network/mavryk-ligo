@@ -17,7 +17,7 @@ depends: [
   "tezos-context"
   "tezos-scoru-wasm"
   "tezos-scoru-wasm-fast"
-  "tezos-webassembly-interpreter-extra"
+  "tz-wasm-in-extra"
 ]
 build: [
   ["rm" "-r" "vendors"]

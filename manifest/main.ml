@@ -2011,7 +2011,7 @@ let _lazy_containers_tests =
 
 let octez_webassembly_interpreter =
   public_lib
-    "tezos-webassembly-interpreter"
+    "tz-wasm-in"
     ~path:"src/lib_webassembly"
     ~license:"Apache-2.0"
     ~extra_authors:["WebAssembly Authors"]
@@ -2029,7 +2029,7 @@ let octez_webassembly_interpreter =
 
 let octez_webassembly_interpreter_extra =
   public_lib
-    "tezos-webassembly-interpreter-extra"
+    "tz-wasm-in-extra"
     ~path:"src/lib_webassembly/extra"
     ~license:"Apache-2.0"
     ~extra_authors:["WebAssembly Authors"]
@@ -2062,7 +2062,7 @@ let _octez_webassembly_test =
   tezt
     ["smallint"]
     ~path:"src/lib_webassembly/tests"
-    ~opam:"tezos-webassembly-interpreter"
+    ~opam:"tz-wasm-in"
     ~dune:Dune.[[S "include_subdirs"; S "no"]]
     ~deps:[octez_webassembly_interpreter |> open_; alcotezt]
 

@@ -33,7 +33,7 @@ let make_features () =
   let features = new_ () in
   (* These features map to proposals in the WebAssembly spec. They must be kept
      in sync with the features available through Octez' WebAssembly interpreter
-     (tezos-webassembly-interpreter). *)
+     (tz-wasm-in). *)
   ignore (bulk_memory features false : bool) ;
   ignore (memory64 features false : bool) ;
   ignore (module_linking features false : bool) ;

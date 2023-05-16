@@ -12,7 +12,7 @@
   tezos-context.disk
   tezos-base-test-helpers
   tezos-test-helpers
-  tezos-webassembly-interpreter
+  tz-wasm-in
   qcheck-alcotest
   octez-alcotezt)
  (library_flags (:standard -linkall))

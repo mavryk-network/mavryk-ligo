@@ -16,7 +16,7 @@ depends: [
   "tezos-context" {with-test}
   "tezos-base-test-helpers" {with-test}
   "tezos-test-helpers" {with-test}
-  "tezos-webassembly-interpreter" {with-test}
+  "tz-wasm-in" {with-test}
   "qcheck-alcotest" { with-test & >= "0.20" }
   "octez-alcotezt" {with-test}
 ]

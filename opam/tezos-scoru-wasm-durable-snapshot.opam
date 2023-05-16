@@ -14,7 +14,7 @@ depends: [
   "ppx_deriving"
   "tezos-base"
   "tezos-tree-encoding"
-  "tezos-webassembly-interpreter-extra"
+  "tz-wasm-in-extra"
 ]
 build: [
   ["rm" "-r" "vendors"]

@@ -1648,19 +1648,19 @@ opam:tezos-wasmer:
   variables:
     package: tezos-wasmer
 
-opam:tezos-webassembly-interpreter:
+opam:tz-wasm-in:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-webassembly-interpreter
+    package: tz-wasm-in
 
-opam:tezos-webassembly-interpreter-extra:
+opam:tz-wasm-in-extra:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_6
   variables:
-    package: tezos-webassembly-interpreter-extra
+    package: tz-wasm-in-extra
 
 opam:tezos-workers:
   extends:

@@ -8,7 +8,7 @@
  (libraries
   tezos-base
   tezos-tree-encoding
-  tezos-webassembly-interpreter-extra)
+  tz-wasm-in-extra)
  (preprocess (staged_pps ppx_import ppx_deriving.show))
  (flags
   (:standard)

@@ -17,8 +17,8 @@ depends: [
   "tezos-scoru-wasm"
   "octez-smart-rollup-wasm-benchmark-lib"
   "tezos-scoru-wasm-helpers"
-  "tezos-webassembly-interpreter"
-  "tezos-webassembly-interpreter-extra"
+  "tz-wasm-in"
+  "tz-wasm-in-extra"
 ]
 build: [
   ["rm" "-r" "vendors"]

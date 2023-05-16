@@ -34,7 +34,7 @@ depends: [
   "tezos-scoru-wasm-helpers" {with-test}
   "tezos-stdlib" {with-test}
   "tezos-scoru-wasm" {with-test}
-  "tezos-webassembly-interpreter-extra" {with-test}
+  "tz-wasm-in-extra" {with-test}
 ]
 build: [
   ["rm" "-r" "vendors"]

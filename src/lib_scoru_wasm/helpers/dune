@@ -12,7 +12,7 @@
   tezos-context.disk
   tezos-scoru-wasm
   tezos-scoru-wasm-fast
-  tezos-webassembly-interpreter-extra)
+  tz-wasm-in-extra)
  (preprocess (staged_pps ppx_import ppx_deriving.show))
  (flags
   (:standard)
