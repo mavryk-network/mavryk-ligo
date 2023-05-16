@@ -12,7 +12,7 @@
   tezos-client-base
   tezos-protocol-012-Psithaca
   tezos-protocol-012-Psithaca.lifted
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-proxy
   tezos-signer-backends
   tezos-protocol-plugin-012-Psithaca

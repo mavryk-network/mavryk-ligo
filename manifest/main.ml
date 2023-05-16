@@ -3491,7 +3491,7 @@ let octez_client_commands =
 
 let octez_mockup_registration =
   public_lib
-    "tezos-mockup-registration"
+    "tz-mock-reg"
     ~path:"src/lib_mockup"
     ~synopsis:"Tezos: protocol registration for the mockup mode"
     ~deps:

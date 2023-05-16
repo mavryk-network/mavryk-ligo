@@ -14,7 +14,7 @@
   tpe
   tezos-shell-services
   tezos-mockup
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-mockup-commands
   tezos-client-base
   tezos-client-014-PtKathma

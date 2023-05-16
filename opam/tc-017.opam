@@ -16,7 +16,7 @@ depends: [
   "tezos-shell-services"
   "tezos-client-base"
   "tp-017"
-  "tezos-mockup-registration"
+  "tz-mock-reg"
   "tezos-proxy"
   "tezos-signer-backends"
   "tp-plugin-017"

@@ -12,7 +12,7 @@
   tezos-client-base
   tp-016
   tp-016.lifted
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-proxy
   tezos-signer-backends
   tp-plugin-016

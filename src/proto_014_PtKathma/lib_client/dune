@@ -12,7 +12,7 @@
   tezos-client-base
   tezos-protocol-014-PtKathma
   tezos-protocol-014-PtKathma.lifted
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-proxy
   tezos-signer-backends
   tezos-protocol-plugin-014-PtKathma

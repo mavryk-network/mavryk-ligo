@@ -153,7 +153,7 @@
 (package (name tezos-mockup))
 (package (name tezos-mockup-commands))
 (package (name tezos-mockup-proxy))
-(package (name tezos-mockup-registration))
+(package (name tz-mock-reg))
 (package (name tezos-openapi))
 (package (name tezos-p2p))
 (package (name tezos-p2p-services))

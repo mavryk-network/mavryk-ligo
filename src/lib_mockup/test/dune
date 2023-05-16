@@ -11,7 +11,7 @@
   tezos-test-helpers
   tezos-rpc
   tezos-mockup
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-client-base
   qcheck-alcotest
   octez-alcotezt)

@@ -17,7 +17,7 @@
   tezos-client-base
   tezos-client-commands
   tezos-mockup
-  tezos-mockup-registration
+  tz-mock-reg
   tezos-mockup-commands
   tezos-proxy
   tezos-proxy.rpc

@@ -1029,12 +1029,12 @@ opam:tezos-mockup-proxy:
   variables:
     package: tezos-mockup-proxy
 
-opam:tezos-mockup-registration:
+opam:tz-mock-reg:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_5
   variables:
-    package: tezos-mockup-registration
+    package: tz-mock-reg
 
 # Ignoring unreleased package tezos-openapi.
 
