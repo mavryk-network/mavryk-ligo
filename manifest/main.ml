@@ -555,7 +555,7 @@ let _octez_stdlib_test_unix =
 
 let octez_lwt_result_stdlib_bare_functor_outputs =
   public_lib
-    "tezos-lwt-result-stdlib.bare.functor-outputs"
+    "tz-lwtres-std.bare.functor-outputs"
     ~path:"src/lib_lwt_result_stdlib/bare/functor_outputs"
     ~internal_name:"bare_functor_outputs"
     ~js_compatible:true
@@ -564,7 +564,7 @@ let octez_lwt_result_stdlib_bare_functor_outputs =
 
 let octez_lwt_result_stdlib_bare_sigs =
   public_lib
-    "tezos-lwt-result-stdlib.bare.sigs"
+    "tz-lwtres-std.bare.sigs"
     ~path:"src/lib_lwt_result_stdlib/bare/sigs"
     ~internal_name:"bare_sigs"
     ~js_compatible:true
@@ -573,7 +573,7 @@ let octez_lwt_result_stdlib_bare_sigs =
 
 let octez_lwt_result_stdlib_bare_structs =
   public_lib
-    "tezos-lwt-result-stdlib.bare.structs"
+    "tz-lwtres-std.bare.structs"
     ~path:"src/lib_lwt_result_stdlib/bare/structs"
     ~internal_name:"bare_structs"
     ~js_compatible:true
@@ -582,7 +582,7 @@ let octez_lwt_result_stdlib_bare_structs =
 
 let octez_lwt_result_stdlib_traced_functor_outputs =
   public_lib
-    "tezos-lwt-result-stdlib.traced.functor-outputs"
+    "tz-lwtres-std.traced.functor-outputs"
     ~path:"src/lib_lwt_result_stdlib/traced/functor_outputs"
     ~internal_name:"traced_functor_outputs"
     ~js_compatible:true
@@ -591,7 +591,7 @@ let octez_lwt_result_stdlib_traced_functor_outputs =
 
 let octez_lwt_result_stdlib_traced_sigs =
   public_lib
-    "tezos-lwt-result-stdlib.traced.sigs"
+    "tz-lwtres-std.traced.sigs"
     ~path:"src/lib_lwt_result_stdlib/traced/sigs"
     ~internal_name:"traced_sigs"
     ~js_compatible:true
@@ -606,7 +606,7 @@ let octez_lwt_result_stdlib_traced_sigs =
 
 let octez_lwt_result_stdlib_traced_structs =
   public_lib
-    "tezos-lwt-result-stdlib.traced.structs"
+    "tz-lwtres-std.traced.structs"
     ~path:"src/lib_lwt_result_stdlib/traced/structs"
     ~internal_name:"traced_structs"
     ~js_compatible:true
@@ -620,11 +620,11 @@ let octez_lwt_result_stdlib_traced_structs =
 
 let octez_lwt_result_stdlib =
   public_lib
-    "tezos-lwt-result-stdlib"
+    "tz-lwtres-std"
     ~path:"src/lib_lwt_result_stdlib"
     ~synopsis:"Tezos: error-aware stdlib replacement"
     ~js_compatible:true
-    ~documentation:[Dune.[S "package"; S "tezos-lwt-result-stdlib"]]
+    ~documentation:[Dune.[S "package"; S "tz-lwtres-std"]]
     ~deps:
       [
         lwt;
@@ -637,7 +637,7 @@ let octez_lwt_result_stdlib =
 
 let octez_lwt_result_stdlib_examples_traces =
   public_lib
-    "tezos-lwt-result-stdlib.examples.traces"
+    "tz-lwtres-std.examples.traces"
     ~path:"src/lib_lwt_result_stdlib/examples/traces"
     ~internal_name:"traces"
     ~deps:
@@ -664,7 +664,7 @@ let _octez_lwt_result_stdlib_tests =
       "test_fuzzing_map_against_stdlib";
     ]
     ~path:"src/lib_lwt_result_stdlib/test"
-    ~opam:"tezos-lwt-result-stdlib"
+    ~opam:"tz-lwtres-std"
     ~deps:
       [
         octez_lwt_result_stdlib |> open_;

@@ -147,7 +147,7 @@
 (package (name tezos-layer2-utils-alpha))
 (package (name tezos-lazy-containers))
 (package (name tezos-lazy-containers-tests)(allow_empty))
-(package (name tezos-lwt-result-stdlib))
+(package (name tz-lwtres-std))
 (package (name tezos-micheline))
 (package (name tezos-micheline-rewriting))
 (package (name tezos-mockup))

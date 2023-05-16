@@ -9,7 +9,7 @@
   tezos-stdlib
   data-encoding
   tezos-error-monad
-  tezos-lwt-result-stdlib
+  tz-lwtres-std
   lwt_log.core
   uri)
  (js_of_ocaml)

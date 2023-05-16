@@ -10,7 +10,7 @@
   tezt.core
   tezos-stdlib
   tezos-error-monad
-  tezos-lwt-result-stdlib
+  tz-lwtres-std
   zarith
   zarith_stubs_js
   data-encoding

@@ -8,7 +8,7 @@
  (libraries
   tezos-stdlib
   tezos-crypto
-  tezos-lwt-result-stdlib
+  tz-lwtres-std
   tezos-scoru-wasm
   data-encoding
   bls12-381

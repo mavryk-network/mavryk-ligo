@@ -12,7 +12,7 @@
   tezos-webassembly-interpreter
   tezos-context.sigs
   tezos-context.memory
-  tezos-lwt-result-stdlib
+  tz-lwtres-std
   data-encoding)
  (flags
   (:standard)

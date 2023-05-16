@@ -992,12 +992,12 @@ opam:tezos-lazy-containers:
 
 # Ignoring unreleased package tezos-lazy-containers-tests.
 
-opam:tezos-lwt-result-stdlib:
+opam:tz-lwtres-std:
   extends:
     - .opam_template
     - .rules_template__trigger_opam_batch_7
   variables:
-    package: tezos-lwt-result-stdlib
+    package: tz-lwtres-std
 
 opam:tezos-micheline:
   extends:

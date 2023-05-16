@@ -8,7 +8,7 @@
  (libraries
   unix
   tezos-error-monad
-  tezos-lwt-result-stdlib
+  tz-lwtres-std
   tezos-event-logging
   tezos-stdlib
   data-encoding

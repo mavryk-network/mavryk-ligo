@@ -18,7 +18,7 @@ depends: [
   "tezt" { with-test & >= "3.1.0" }
   "tezos-stdlib" {with-test}
   "tezos-error-monad" {with-test}
-  "tezos-lwt-result-stdlib" {with-test}
+  "tz-lwtres-std" {with-test}
   "zarith" { with-test & >= "1.12" & < "1.13" }
   "zarith_stubs_js" {with-test}
   "data-encoding" { with-test & >= "0.7.1" & < "1.0.0" }

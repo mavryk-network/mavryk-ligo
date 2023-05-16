@@ -10,7 +10,7 @@
   tezos-clic
   tezos-stdlib-unix
   tezos-error-monad
-  tezos-lwt-result-stdlib)
+  tz-lwtres-std)
  (flags
   (:standard)
   -open Tezos_stdlib
