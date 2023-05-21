@@ -15,5 +15,5 @@
  (flags
   (:standard)
   -open Tezos_base.TzPervasives
-  -open Tezos_protocol_016_PtMumbai
+  -open Tp_016
   -open Tezos_client_016_PtMumbai))

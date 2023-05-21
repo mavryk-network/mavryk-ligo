@@ -24,8 +24,8 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_client_016_PtMumbai
-  -open Tezos_protocol_016_PtMumbai
-  -open Tezos_protocol_016_PtMumbai_parameters
+  -open Tp_016
+  -open Tp_016_parameters
   -open Tezos_016_PtMumbai_test_helpers
   -open Tz16_testhelpers
   -open Tezos_base_test_helpers)

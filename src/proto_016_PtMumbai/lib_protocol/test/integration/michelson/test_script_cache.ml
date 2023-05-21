@@ -303,7 +303,7 @@ let test_size_adds_entries_sizes () =
 
 *)
 let defined_size_limit =
-  Tezos_protocol_016_PtMumbai_parameters.Default_parameters.constants_mainnet
+  Tp_016_parameters.Default_parameters.constants_mainnet
     .cache_script_size
 
 let test_size_limit_is_in_constants_repr () =

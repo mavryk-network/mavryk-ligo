@@ -13,7 +13,7 @@
   (:standard)
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
-  -open Tezos_protocol_016_PtMumbai
+  -open Tp_016
   -open Tezos_smart_rollup_016_PtMumbai)
  (modules (:standard \ Plugin_registerer)))
 
