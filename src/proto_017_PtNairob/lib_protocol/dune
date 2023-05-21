@@ -2,16 +2,16 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_017_PtNairob)
+ (name tpe_017)
  (public_name tp-017.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_017_PtNairob))
+ (modules Tpe_017))
 
 (rule
- (targets tezos_protocol_environment_017_PtNairob.ml)
+ (targets tpe_017.ml)
  (action
   (write-file
    %{targets}
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_017_PtNairob
-  -open Tezos_protocol_environment_017_PtNairob.Pervasives
-  -open Tezos_protocol_environment_017_PtNairob.Error_monad)
+  -open Tpe_017
+  -open Tpe_017.Pervasives
+  -open Tpe_017.Error_monad)
  (modules
   Misc
   Non_empty_string
@@ -309,7 +309,7 @@
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_017_PtNairob\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpe_017\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)
