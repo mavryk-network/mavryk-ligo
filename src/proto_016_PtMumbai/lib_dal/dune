@@ -29,4 +29,4 @@
   -open Tezos_protocol_plugin_016_PtMumbai
   -open Tezos_embedded_protocol_016_PtMumbai
   -open Tezos_layer2_utils_016_PtMumbai
-  -open Tp016_parameters))
+  -open Tezos_protocol_016_PtMumbai))

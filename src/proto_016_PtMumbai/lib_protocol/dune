@@ -277,7 +277,7 @@
   Main))
 
 (library
- (name tp016_parameters)
+ (name tezos_protocol_016_PtMumbai)
  (public_name tp-016)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -287,7 +287,7 @@
  (flags
   (:standard)
   -nopervasives)
- (modules Protocol Tp016_parameters))
+ (modules Protocol Tezos_protocol_016_PtMumbai))
 
 (install
  (package tp-016)
@@ -302,7 +302,7 @@
    "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtMumbai2TmsJHNGRkD8v8YDbtao7BLUC3wjASn1inAKLFCjaH1\"\nlet name = Tpe_016.Name.name\ninclude Trp_016\ninclude Trp_016.Main\n")))
 
 (rule
- (targets tp016_parameters.ml)
+ (targets tezos_protocol_016_PtMumbai.ml)
  (action
   (write-file
    %{targets}
@@ -563,7 +563,7 @@
  (action (run %{bin:octez-protocol-compiler} -warn-error +a .)))
 
 (library
- (name tp016_parameters_lifted)
+ (name tezos_protocol_016_PtMumbai_lifted)
  (public_name tp-016.lifted)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -573,7 +573,7 @@
  (flags
   (:standard)
   -nopervasives
-  -open Tp016_parameters)
+  -open Tezos_protocol_016_PtMumbai)
  (modules Lifted_protocol))
 
 (rule
@@ -584,7 +584,7 @@
    "\ninclude Environment.Lift (Protocol)\nlet hash = Protocol.hash\n")))
 
 (library
- (name tp016_parameters_functor)
+ (name tezos_protocol_016_PtMumbai_functor)
  (libraries
   tpe
   tpe.sigs)

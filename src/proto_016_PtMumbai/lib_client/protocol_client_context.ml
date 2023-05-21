@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-module Lifted_protocol = Tp016_parameters_lifted.Lifted_protocol
+module Lifted_protocol = Tezos_protocol_016_PtMumbai_lifted.Lifted_protocol
 module Alpha_block_services =
   Block_services.Make (Lifted_protocol) (Lifted_protocol)
 

@@ -69,7 +69,7 @@ let reveal_hash_hex data =
   "00" ^ hash
 
 let reveal_hash_b58_mumbai_arith data =
-  Tp016_parameters.Protocol.Sc_rollup_reveal_hash.(
+  Tezos_protocol_016_PtMumbai.Protocol.Sc_rollup_reveal_hash.(
     hash_string ~scheme:Blake2B [data] |> to_b58check)
 
 type reveal_hash = {message : string; filename : string}

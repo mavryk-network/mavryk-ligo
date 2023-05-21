@@ -1,20 +1,20 @@
 ; This file was automatically generated, do not edit.
 ; Edit file manifest/main.ml instead.
 
-(library
- (name tp016_parameters)
- (public_name tp-016.parameters)
- (instrumentation (backend bisect_ppx))
- (libraries
-  tezos-base
-  tpe
-  tp-016)
- (library_flags (:standard -linkall))
- (flags
-  (:standard)
-  -open Tezos_base.TzPervasives
-  -open Tp016_parameters)
- (modules (:standard \ gen)))
+; (library
+;  (name tezos_protocol_016_PtMumbai_parameters)
+;  (public_name tp-016.parameters)
+;  (instrumentation (backend bisect_ppx))
+;  (libraries
+;   tezos-base
+;   tpe
+;   tp-016)
+;  (library_flags (:standard -linkall))
+;  (flags
+;   (:standard)
+;   -open Tezos_base.TzPervasives
+;   -open Tezos_protocol_016_PtMumbai)
+;  (modules (:standard \ gen)))
 
 ; (executable
 ;  (name gen)
@@ -29,8 +29,8 @@
 ;  (flags
 ;   (:standard)
 ;   -open Tezos_base.TzPervasives
-;   -open Tp016_parameters_parameters
-;   -open Tp016_parameters)
+;   -open Tezos_protocol_016_PtMumbai_parameters
+;   -open Tezos_protocol_016_PtMumbai)
 ;  (modules gen))
 
 ; (rule

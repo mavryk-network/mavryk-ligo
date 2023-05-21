@@ -29,6 +29,6 @@
   -open Tezos_micheline_rewriting
   -open Tezos_benchmark
   -open Tezos_benchmark_type_inference_016_PtMumbai
-  -open Tp016_parameters
+  -open Tezos_protocol_016_PtMumbai
   -open Tz16_testhelpers)
  (private_modules kernel rules state_space))

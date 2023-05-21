@@ -378,7 +378,7 @@ end
 (** {2 Tezos Constants} *)
 
 let default_subsidy =
-  let open Tp016_parameters_parameters in
+  let open Tezos_protocol_016_PtMumbai_parameters in
   Tez.to_mutez @@ Default_parameters.constants_test.liquidity_baking_subsidy
 
 let security_deposit = 640_000_000L
