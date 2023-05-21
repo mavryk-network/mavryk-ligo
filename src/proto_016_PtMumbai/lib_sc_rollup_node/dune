@@ -51,7 +51,7 @@
   -open Tezos_client_016_PtMumbai
   -open Tp_016
   -open Tezos_protocol_plugin_016_PtMumbai
-  -open Tp_016_parameters
+  -open Tp_016_params
   -open Tezos_workers
   -open Tezos_dal_node_lib
   -open Tezos_shell_services

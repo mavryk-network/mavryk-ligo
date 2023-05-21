@@ -25,7 +25,7 @@
   -open Tp_016
   -open Tz16_testhelpers
   -open Tezos_base_test_helpers
-  -open Tp_016_parameters
+  -open Tp_016_params
   -open Tezos_protocol_plugin_016_PtMumbai)
  (modules
   test_baking

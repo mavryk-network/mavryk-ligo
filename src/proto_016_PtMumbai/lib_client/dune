@@ -31,5 +31,5 @@
   -open Tezos_client_base
   -open Tp_016
   -open Tezos_protocol_plugin_016_PtMumbai
-  -open Tp_016_parameters
+  -open Tp_016_params
   -open Tezos_smart_rollup_016_PtMumbai))

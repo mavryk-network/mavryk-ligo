@@ -374,7 +374,7 @@ let pick_addr_endorser ctxt =
   | _ -> assert false
 
 let init_params =
-  Tp_016_parameters.Default_parameters
+  Tp_016_params.Default_parameters
   .parameters_of_constants
     {Context.default_test_constants with consensus_threshold = 0}
 

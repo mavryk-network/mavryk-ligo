@@ -432,7 +432,7 @@ struct
 end
 
 let tests =
-  let open Tp_016_parameters.Default_parameters in
+  let open Tp_016_params.Default_parameters in
   let module Test = Make (struct
     let name = "test"
 

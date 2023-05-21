@@ -32,7 +32,7 @@
   -open Tezos_protocol_plugin_016_PtMumbai
   -open Tp_016
   -open Tp_016.Protocol
-  -open Tp_016_parameters
+  -open Tp_016_params
   -open Tz16_testhelpers)
  (modules
   test_consensus_filter

@@ -28,7 +28,7 @@
   (:standard)
   -open Tezos_base.TzPervasives
   -open Tp_016
-  -open Tp_016_parameters
+  -open Tp_016_params
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
   -open Tezos_client_base
@@ -61,7 +61,7 @@
   (:standard)
   -open Tezos_base.TzPervasives
   -open Tp_016
-  -open Tp_016_parameters
+  -open Tp_016_params
   -open Tezos_shell_services
   -open Tezos_client_base
   -open Tezos_client_016_PtMumbai

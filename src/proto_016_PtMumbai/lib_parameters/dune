@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 ; (library
-;  (name tp_016_parameters)
+;  (name tp_016_params)
 ;  (public_name tp-016.parameters)
 ;  (instrumentation (backend bisect_ppx))
 ;  (libraries
@@ -29,7 +29,7 @@
 ;  (flags
 ;   (:standard)
 ;   -open Tezos_base.TzPervasives
-;   -open Tp_016_parameters
+;   -open Tp_016_params
 ;   -open Tp_016)
 ;  (modules gen))
 

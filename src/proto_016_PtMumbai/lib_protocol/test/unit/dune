@@ -33,7 +33,7 @@
   -open Tezos_base_test_helpers
   -open Tezos_micheline
   -open Tezos_client_016_PtMumbai
-  -open Tp_016_parameters
+  -open Tp_016_params
   -open Tp_016
   -open Tezos_test_helpers
   -open Tz16_testhelpers
