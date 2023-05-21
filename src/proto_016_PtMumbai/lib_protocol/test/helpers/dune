@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_016_PtMumbai_test_helpers)
+ (name tz16_testhelpers)
  (public_name tz-016-test-helpers)
  (instrumentation (backend bisect_ppx))
  (libraries

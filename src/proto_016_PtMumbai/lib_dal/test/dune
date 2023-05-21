@@ -22,7 +22,7 @@
   -open Tezos_dal_016_PtMumbai
   -open Tp016_parameters
   -open Tezos_base_test_helpers
-  -open Tezos_016_PtMumbai_test_helpers
+  -open Tz16_testhelpers
   -open Octez_alcotezt)
  (modules test_dal_slot_frame_encoding test_dac_pages_encoding test_helpers))
 

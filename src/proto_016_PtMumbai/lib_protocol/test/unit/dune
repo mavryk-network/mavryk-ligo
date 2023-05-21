@@ -36,7 +36,7 @@
   -open Tp016_parameters_parameters
   -open Tp016_parameters
   -open Tezos_test_helpers
-  -open Tezos_016_PtMumbai_test_helpers
+  -open Tz16_testhelpers
   -open Octez_alcotezt
   -open Tezos_scoru_wasm_helpers
   -open Tezos_stdlib
