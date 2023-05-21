@@ -1,20 +1,20 @@
 ; This file was automatically generated, do not edit.
 ; Edit file manifest/main.ml instead.
 
-; (library
-;  (name tezos_protocol_017_PtNairob_parameters)
-;  (public_name tp-017.parameters)
-;  (instrumentation (backend bisect_ppx))
-;  (libraries
-;   tezos-base
-;   tpe
-;   tp-017)
-;  (library_flags (:standard -linkall))
-;  (flags
-;   (:standard)
-;   -open Tezos_base.TzPervasives
-;   -open Tezos_protocol_017_PtNairob)
-;  (modules (:standard \ gen)))
+(library
+ (name tp017_parameters)
+ (public_name tp-017.parameters)
+ (instrumentation (backend bisect_ppx))
+ (libraries
+  tezos-base
+  tpe
+  tp-017)
+ (library_flags (:standard -linkall))
+ (flags
+  (:standard)
+  -open Tezos_base.TzPervasives
+  -open Tezos_protocol_017_PtNairob)
+ (modules (:standard \ gen)))
 
 ; (executable
 ;  (name gen)

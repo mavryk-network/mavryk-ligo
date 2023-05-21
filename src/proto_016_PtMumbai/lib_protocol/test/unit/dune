@@ -33,8 +33,8 @@
   -open Tezos_base_test_helpers
   -open Tezos_micheline
   -open Tezos_client_016_PtMumbai
-  -open Tezos_protocol_016_PtMumbai_parameters
-  -open Tezos_protocol_016_PtMumbai
+  -open Tp016_parameters_parameters
+  -open Tp016_parameters
   -open Tezos_test_helpers
   -open Tezos_016_PtMumbai_test_helpers
   -open Octez_alcotezt

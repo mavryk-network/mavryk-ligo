@@ -2,16 +2,16 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_017_PtNairob)
+ (name tp_environment_017)
  (public_name tp-017.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_017_PtNairob))
+ (modules Tp_environment_017))
 
 (rule
- (targets tezos_protocol_environment_017_PtNairob.ml)
+ (targets tp_environment_017.ml)
  (action
   (write-file
    %{targets}
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_017_PtNairob
-  -open Tezos_protocol_environment_017_PtNairob.Pervasives
-  -open Tezos_protocol_environment_017_PtNairob.Error_monad)
+  -open Tp_environment_017
+  -open Tp_environment_017.Pervasives
+  -open Tp_environment_017.Error_monad)
  (modules
   Misc
   Non_empty_string
@@ -302,14 +302,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtNairobiyssHuh87hEhfVBGCVrK3WnS8Z2FT4ymB5tAa4r1nQf\"\nlet name = Tezos_protocol_environment_017_PtNairob.Name.name\ninclude Tezos_raw_protocol_017_PtNairob\ninclude Tezos_raw_protocol_017_PtNairob.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtNairobiyssHuh87hEhfVBGCVrK3WnS8Z2FT4ymB5tAa4r1nQf\"\nlet name = Tp_environment_017.Name.name\ninclude Tezos_raw_protocol_017_PtNairob\ninclude Tezos_raw_protocol_017_PtNairob.Main\n")))
 
 (rule
  (targets tezos_protocol_017_PtNairob.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_017_PtNairob\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tp_environment_017\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

@@ -206,7 +206,7 @@ let get_seed_computation ctxt =
 let get_constants ctxt = Alpha_services.Constants.all rpc_ctxt ctxt
 
 let default_test_constants =
-  Tezos_protocol_016_PtMumbai_parameters.Default_parameters.constants_test
+  Tp016_parameters_parameters.Default_parameters.constants_test
 
 let get_baking_reward_fixed_portion ctxt =
   get_constants ctxt
@@ -543,7 +543,7 @@ let init_with_constants_gen tup constants =
   let n = tup_n tup in
   let*? bootstrap_accounts, contracts = create_bootstrap_accounts n in
   let parameters =
-    Tezos_protocol_016_PtMumbai_parameters.Default_parameters
+    Tp016_parameters_parameters.Default_parameters
     .parameters_of_constants
       ~bootstrap_accounts
       constants
@@ -573,7 +573,7 @@ let init_with_parameters1 = init_with_parameters_gen T1
 let init_with_parameters2 = init_with_parameters_gen T2
 
 let default_raw_context () =
-  let open Tezos_protocol_016_PtMumbai_parameters in
+  let open Tp016_parameters_parameters in
   let initial_account = Account.new_account () in
   let bootstrap_accounts =
     Account.make_bootstrap_account

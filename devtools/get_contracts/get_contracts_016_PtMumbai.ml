@@ -22,7 +22,7 @@
 (* DEALINGS IN THE SOFTWARE.                                                 *)
 (*                                                                           *)
 (*****************************************************************************)
-open Tezos_protocol_016_PtMumbai
+open Tp016_parameters
 open Tezos_client_016_PtMumbai
 open Protocol
 
