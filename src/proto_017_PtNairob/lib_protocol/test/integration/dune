@@ -26,7 +26,7 @@
   -open Tezos_client_017_PtNairob
   -open Tezos_protocol_017_PtNairob
   -open Tezos_protocol_017_PtNairob_parameters
-  -open Tezos_017_PtNairob_test_helpers
+  -open Tz17_testhelpers
   -open Tezos_base_test_helpers)
  (modules
   test_constants

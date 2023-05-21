@@ -36,7 +36,7 @@
   -open Tezos_protocol_017_PtNairob_parameters
   -open Tezos_protocol_017_PtNairob
   -open Tezos_test_helpers
-  -open Tezos_017_PtNairob_test_helpers
+  -open Tz17_testhelpers
   -open Octez_alcotezt
   -open Tezos_scoru_wasm_helpers
   -open Tezos_stdlib

@@ -30,5 +30,5 @@
   -open Tezos_benchmark
   -open Tezos_benchmark_type_inference_017_PtNairob
   -open Tezos_protocol_017_PtNairob
-  -open Tezos_017_PtNairob_test_helpers)
+  -open Tz17_testhelpers)
  (private_modules kernel rules state_space))

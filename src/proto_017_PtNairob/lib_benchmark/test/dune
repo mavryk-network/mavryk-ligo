@@ -29,7 +29,7 @@
   -open Tezos_benchmark
   -open Tezos_benchmark_type_inference_017_PtNairob
   -open Tezos_benchmark_017_PtNairob
-  -open Tezos_017_PtNairob_test_helpers))
+  -open Tz17_testhelpers))
 
 (rule
  (alias runtest_micheline_rewriting_data)

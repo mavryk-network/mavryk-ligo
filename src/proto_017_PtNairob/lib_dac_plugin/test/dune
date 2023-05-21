@@ -24,7 +24,7 @@
   -open Tezos_dac_017_PtNairob
   -open Tezos_protocol_017_PtNairob
   -open Tezos_base_test_helpers
-  -open Tezos_017_PtNairob_test_helpers
+  -open Tz17_testhelpers
   -open Tezos_dac_lib
   -open Tezos_dac_node_lib
   -open Octez_alcotezt)

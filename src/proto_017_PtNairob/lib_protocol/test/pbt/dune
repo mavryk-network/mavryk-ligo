@@ -32,7 +32,7 @@
   -open Tezos_client_017_PtNairob
   -open Tezos_protocol_017_PtNairob
   -open Tezos_test_helpers
-  -open Tezos_017_PtNairob_test_helpers
+  -open Tz17_testhelpers
   -open Octez_alcotezt
   -open Tezos_benchmark_017_PtNairob
   -open Tezos_benchmark_type_inference_017_PtNairob

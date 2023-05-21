@@ -22,7 +22,7 @@
   -open Tezos_dal_017_PtNairob
   -open Tezos_protocol_017_PtNairob
   -open Tezos_base_test_helpers
-  -open Tezos_017_PtNairob_test_helpers
+  -open Tz17_testhelpers
   -open Octez_alcotezt)
  (modules test_dal_slot_frame_encoding test_helpers))
 
