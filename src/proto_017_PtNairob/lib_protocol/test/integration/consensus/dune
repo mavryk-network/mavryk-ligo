@@ -25,7 +25,7 @@
   -open Tezos_protocol_017_PtNairob
   -open Tz17_testhelpers
   -open Tezos_base_test_helpers
-  -open Tezos_protocol_017_PtNairob_parameters
+  -open Tp_017_params
   -open Tezos_protocol_plugin_017_PtNairob)
  (modules
   test_baking

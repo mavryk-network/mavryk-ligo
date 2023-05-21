@@ -31,5 +31,5 @@
   -open Tezos_client_base
   -open Tezos_protocol_017_PtNairob
   -open Tezos_protocol_plugin_017_PtNairob
-  -open Tezos_protocol_017_PtNairob_parameters
+  -open Tp_017_params
   -open Tezos_smart_rollup_017_PtNairob))

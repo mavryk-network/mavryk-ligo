@@ -51,7 +51,7 @@
   -open Tezos_client_017_PtNairob
   -open Tezos_protocol_017_PtNairob
   -open Tezos_protocol_plugin_017_PtNairob
-  -open Tezos_protocol_017_PtNairob_parameters
+  -open Tp_017_params
   -open Tezos_workers
   -open Tezos_dal_node_lib
   -open Tezos_shell_services

@@ -28,5 +28,5 @@
   -open Tezos_baking_017_PtNairob
   -open Tezos_stdlib_unix
   -open Tezos_client_base_unix
-  -open Tezos_protocol_017_PtNairob_parameters
+  -open Tp_017_params
   -open Tenderbrute_017_PtNairob))

@@ -314,7 +314,7 @@ let check_constants_consistency constants =
 
 let prepare_main_init_params ?bootstrap_contracts commitments constants
     bootstrap_accounts =
-  let open Tezos_protocol_017_PtNairob_parameters in
+  let open Tp_017_params in
   let parameters =
     Default_parameters.parameters_of_constants
       ~bootstrap_accounts
@@ -415,7 +415,7 @@ let genesis_with_parameters parameters =
       ~seed_nonce_hash:None
       ()
   in
-  let open Tezos_protocol_017_PtNairob_parameters in
+  let open Tp_017_params in
   let json = Default_parameters.json_of_parameters parameters in
   let proto_params =
     Data_encoding.Binary.to_bytes_exn Data_encoding.json json
@@ -460,7 +460,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     ?blocks_per_cycle ?cycles_per_voting_period ?sc_rollup_enable
     ?sc_rollup_arith_pvm_enable ?dal_enable ?zk_rollup_enable
     ?hard_gas_limit_per_block ?nonce_revelation_threshold () =
-  let open Tezos_protocol_017_PtNairob_parameters in
+  let open Tp_017_params in
   let constants = Default_parameters.constants_test in
   let min_proposal_quorum =
     Option.value ~default:constants.min_proposal_quorum min_proposal_quorum

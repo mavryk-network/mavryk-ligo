@@ -39,7 +39,7 @@
   -open Tezos_smart_rollup_017_PtNairob
   -open Tezos_crypto_dal
   -open Tezos_base_test_helpers
-  -open Tezos_protocol_017_PtNairob_parameters)
+  -open Tp_017_params)
  (modules
   liquidity_baking_pbt
   saturation_fuzzing
