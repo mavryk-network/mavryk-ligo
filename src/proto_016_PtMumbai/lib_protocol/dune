@@ -2,16 +2,16 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_016_PtMumbai)
+ (name tpe_016)
  (public_name tp-016.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_016_PtMumbai))
+ (modules Tpe_016))
 
 (rule
- (targets tezos_protocol_environment_016_PtMumbai.ml)
+ (targets tpe_016.ml)
  (action
   (write-file
    %{targets}
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_016_PtMumbai
-  -open Tezos_protocol_environment_016_PtMumbai.Pervasives
-  -open Tezos_protocol_environment_016_PtMumbai.Error_monad)
+  -open Tpe_016
+  -open Tpe_016.Pervasives
+  -open Tpe_016.Error_monad)
  (modules
   Misc
   Non_empty_string
@@ -299,14 +299,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtMumbai2TmsJHNGRkD8v8YDbtao7BLUC3wjASn1inAKLFCjaH1\"\nlet name = Tezos_protocol_environment_016_PtMumbai.Name.name\ninclude Tezos_raw_protocol_016_PtMumbai\ninclude Tezos_raw_protocol_016_PtMumbai.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtMumbai2TmsJHNGRkD8v8YDbtao7BLUC3wjASn1inAKLFCjaH1\"\nlet name = Tpe_016.Name.name\ninclude Tezos_raw_protocol_016_PtMumbai\ninclude Tezos_raw_protocol_016_PtMumbai.Main\n")))
 
 (rule
  (targets tp016_parameters.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_016_PtMumbai\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpe_016\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)
