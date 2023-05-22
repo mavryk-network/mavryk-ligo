@@ -71,14 +71,14 @@ let input_and_pos_and_wrong_pos : (int * int * bytes list) QCheck2.Gen.t =
 (* ------ tests ------------------------------------------------------------- *)
 
 let test_scons_scons_tr_equiv ~count =
-  let open Merkle_list_helper in
+  let open Merkle_list in
   QCheck2.Test.make ~count ~name:"scons_scons_tr_equiv" input (fun input ->
       let snoc = List.fold_left snoc nil input in
       let snoc_tr = List.fold_left snoc_tr nil input in
       Internal_for_tests.equal snoc snoc_tr)
 
 let test_scons_compute_equiv ~count =
-  let open Merkle_list_helper in
+  let open Merkle_list in
   QCheck2.Test.make ~count ~name:"scons_compute_equiv" input (fun input ->
       let snoc = List.fold_left snoc nil input |> root in
       let compute = compute input in
@@ -87,7 +87,7 @@ let test_scons_compute_equiv ~count =
 let ok_exn = function Ok x -> x | Error _ -> raise (Invalid_argument "ok_exn")
 
 let test_check_path ~count =
-  let open Merkle_list_helper in
+  let open Merkle_list in
   QCheck2.Test.make ~count ~name:"check_path" input_and_pos (fun (pos, input) ->
       let tree = List.fold_left snoc nil input in
       let hash = root tree in
@@ -95,7 +95,7 @@ let test_check_path ~count =
       ok_exn @@ check_path path pos (Stdlib.List.nth input pos) hash)
 
 let test_check_path_wrong ~count =
-  let open Merkle_list_helper in
+  let open Merkle_list in
   QCheck2.Test.make
     ~count
     ~name:"check_path_wrong"

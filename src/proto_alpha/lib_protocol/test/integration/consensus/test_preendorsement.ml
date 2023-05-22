@@ -59,7 +59,7 @@ let test_consensus_operation_preendorsement_for_future_level () =
   init_genesis () >>=? fun (_genesis, pred) ->
   let raw_level = Raw_level.of_int32 (Int32.of_int 10) in
   let level = match raw_level with Ok l -> l | Error _ -> assert false in
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~endorsed_block:pred
     ~level
@@ -77,7 +77,7 @@ let test_consensus_operation_preendorsement_for_old_level () =
   Block.bake grandparent >>=? fun pred ->
   let raw_level = Raw_level.of_int32 (Int32.of_int 0) in
   let level = match raw_level with Ok l -> l | Error _ -> assert false in
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~endorsed_block:pred
     ~level
@@ -93,7 +93,7 @@ let test_consensus_operation_preendorsement_for_old_level () =
 let test_consensus_operation_preendorsement_for_future_round () =
   init_genesis () >>=? fun (_genesis, pred) ->
   Environment.wrap_tzresult (Round.of_int 21) >>?= fun round ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~endorsed_block:pred
     ~round
@@ -104,7 +104,7 @@ let test_consensus_operation_preendorsement_for_future_round () =
 let test_consensus_operation_preendorsement_for_old_round () =
   init_genesis ~policy:(By_round 10) () >>=? fun (_genesis, pred) ->
   Environment.wrap_tzresult (Round.of_int 0) >>?= fun round ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~endorsed_block:pred
     ~round
@@ -124,7 +124,7 @@ let test_consensus_operation_preendorsement_on_competing_proposal () =
 (** Unexpected preendorsements in block : apply a preendorsement with an incorrect round *)
 let test_unexpected_preendorsements_in_blocks () =
   init_genesis () >>=? fun (_genesis, pred) ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~endorsed_block:pred
     ~error:(function
@@ -139,7 +139,7 @@ let test_too_high_round () =
   let raw_level = Raw_level.of_int32 (Int32.of_int 2) in
   let level = match raw_level with Ok l -> l | Error _ -> assert false in
   Environment.wrap_tzresult (Round.of_int 1) >>?= fun round ->
-  Consensus_helpers.test_consensus_operation
+  chelpers.test_consensus_operation
     ~loc:__LOC__
     ~endorsed_block:pred
     ~round
@@ -167,7 +167,7 @@ let test_duplicate_preendorsement () =
 (** Preendorsement for next level *)
 let test_preendorsement_for_next_level () =
   init_genesis () >>=? fun (genesis, _) ->
-  Consensus_helpers.test_consensus_op_for_next
+  chelpers.test_consensus_op_for_next
     ~genesis
     ~kind:`Preendorsement
     ~next:`Level
@@ -175,7 +175,7 @@ let test_preendorsement_for_next_level () =
 (** Preendorsement for next round *)
 let test_preendorsement_for_next_round () =
   init_genesis () >>=? fun (genesis, _) ->
-  Consensus_helpers.test_consensus_op_for_next
+  chelpers.test_consensus_op_for_next
     ~genesis
     ~kind:`Preendorsement
     ~next:`Round

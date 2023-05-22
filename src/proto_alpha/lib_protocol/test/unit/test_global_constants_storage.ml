@@ -40,7 +40,7 @@ open QCheck2
 open Qcheck2_helpers
 open Michelson_v1_primitives
 open Michelson_v1_printer
-open Test_global_constants
+open G_constants
 
 (** [get] on a nonexistent global constant
     returns an error. *)

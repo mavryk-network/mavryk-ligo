@@ -33,7 +33,7 @@
 
 open Protocol
 open Alpha_context
-open Operation_generator
+open Opgen
 open QCheck2
 
 let lt = -1

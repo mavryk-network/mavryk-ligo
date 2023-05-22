@@ -55,7 +55,7 @@ let is_manager_op ((_ : Operation_hash.t), op) =
     [Operation.compare]. *)
 let test_random_ops () =
   let ops =
-    let open Operation_generator in
+    let open Opgen in
     QCheck2.Gen.(generate ~n:100 (pair generate_operation generate_operation))
   in
   List.iter
@@ -118,8 +118,8 @@ let generate_manager_op_with_fee_and_gas ~fee_in_mutez ~gas =
         (* This function is only called on a manager operation. *) assert false
   in
   (* Generate a random manager operation. *)
-  let* batch_size = int_range 1 Operation_generator.max_batch_size in
-  let* op = Operation_generator.generate_manager_operation batch_size in
+  let* batch_size = int_range 1 Opgen.max_batch_size in
+  let* op = Opgen.generate_manager_operation batch_size in
   (* Modify its fee and gas to match the [fee_in_mutez] and [gas] inputs. *)
   let {shell = _; protocol_data = Operation_data protocol_data} = op in
   let* contents = set_fee_and_gas fee_in_mutez gas protocol_data.contents in

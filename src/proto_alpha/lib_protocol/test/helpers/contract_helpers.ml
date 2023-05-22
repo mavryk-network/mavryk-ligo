@@ -25,7 +25,7 @@
 
 open Protocol
 open Alpha_context
-open Error_monad_operators
+open Errm_ops
 
 (** Initializes 2 addresses to do only operations plus one that will be
     used to bake. *)

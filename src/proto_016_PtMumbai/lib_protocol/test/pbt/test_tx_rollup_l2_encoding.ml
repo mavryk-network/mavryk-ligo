@@ -82,7 +82,7 @@ let public_key_hash =
 let public_key_hash_gen =
   let open QCheck2.Gen in
   let+ seed = seed_gen in
-  let pkh, _, _ = Tx_rollup_l2_helpers.gen_l1_address ~seed () in
+  let pkh, _, _ = Txroll_l2_helpers.gen_l1_address ~seed () in
   pkh
 
 let ticket_hash : Protocol.Alpha_context.Ticket_hash.t =
@@ -93,7 +93,7 @@ let ticket_hash : Protocol.Alpha_context.Ticket_hash.t =
     Tezos_crypto.Signature.Public_key_hash.of_b58check_exn ticketer_b58
   in
   let ticketer = Protocol.Alpha_context.Contract.Implicit ticketer_pkh in
-  Tx_rollup_l2_helpers.make_unit_ticket_key ticketer l2_address
+  Txroll_l2_helpers.make_unit_ticket_key ticketer l2_address
 
 let idx_ticket_hash_idx_gen :
     Protocol.Alpha_context.Ticket_hash.t either QCheck2.Gen.t =
@@ -159,7 +159,7 @@ let batch =
 let indexes_gen =
   let open QCheck2.Gen in
   let ticket_hash_gen =
-    match Tx_rollup_l2_helpers.gen_n_ticket_hash 1 with
+    match Txroll_l2_helpers.gen_n_ticket_hash 1 with
     | [ticket] -> pure ticket
     | _ -> assert false
   in

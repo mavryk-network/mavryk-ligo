@@ -137,7 +137,7 @@ module Test_Big_map = struct
       |> List.map (fun (k, v) -> (Expr.from_string k, Expr.from_string v))
     in
     let* big_map_id, ctxt =
-      Big_map_helpers.make_big_map
+      Bmaphelpers.make_big_map
         block
         ~source
         ~key_type:"int"
@@ -185,7 +185,7 @@ module Test_Big_map = struct
           key_values
       in
       let* big_map_id, ctxt =
-        Big_map_helpers.make_big_map
+        Bmaphelpers.make_big_map
           block
           ~source
           ~key_type:"int"

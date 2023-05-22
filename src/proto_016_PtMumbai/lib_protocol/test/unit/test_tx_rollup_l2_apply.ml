@@ -34,7 +34,7 @@
 *)
 
 open Tztest
-open Tx_rollup_l2_helpers
+open Txroll_l2_helpers
 open Protocol
 open Alpha_context
 open Apply_l2

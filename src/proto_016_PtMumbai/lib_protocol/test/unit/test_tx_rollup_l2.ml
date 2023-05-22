@@ -34,7 +34,7 @@
 *)
 
 open Tztest
-open Tx_rollup_l2_helpers
+open Txroll_l2_helpers
 open Protocol
 open Tx_rollup_l2_context_sig
 
@@ -333,7 +333,7 @@ let gen_n_ticket_hash n =
           List.map2
             ~when_different_lengths:[]
             (fun contract (_, _, address) ->
-              Tx_rollup_l2_helpers.make_unit_ticket_key contract address)
+              Txroll_l2_helpers.make_unit_ticket_key contract address)
             contracts
             addressess
         in
