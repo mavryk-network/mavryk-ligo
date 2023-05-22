@@ -42,14 +42,14 @@ val may_patch_protocol :
   user_activated_upgrades:User_activated.upgrades ->
   user_activated_protocol_overrides:User_activated.protocol_overrides ->
   level:Int32.t ->
-  Tezos_protocol_environment.validation_result ->
-  Tezos_protocol_environment.validation_result Lwt.t
+  Tp_environment.validation_result ->
+  Tp_environment.validation_result Lwt.t
 
 val update_testchain_status :
-  Tezos_protocol_environment.Context.t ->
+  Tp_environment.Context.t ->
   predecessor_hash:Block_hash.t ->
   Time.Protocol.t ->
-  Tezos_protocol_environment.Context.t Lwt.t
+  Tp_environment.Context.t Lwt.t
 
 (** [check_proto_environment_version_increasing hash before after]
     returns successfully if the environment version stays the same or
@@ -61,7 +61,7 @@ val check_proto_environment_version_increasing :
 (** [init_test_chain] must only be called on a forking block. *)
 val init_test_chain :
   Chain_id.t ->
-  Tezos_protocol_environment.Context.t ->
+  Tp_environment.Context.t ->
   Block_header.t ->
   Block_header.t tzresult Lwt.t
 
@@ -88,7 +88,7 @@ type result = {
 
 type apply_result = {
   result : result;
-  cache : Tezos_protocol_environment.Context.cache;
+  cache : Tp_environment.Context.cache;
 }
 
 val result_encoding : result Data_encoding.t
@@ -110,7 +110,7 @@ type apply_environment = {
   chain_id : Chain_id.t;  (** chain_id of the current branch *)
   predecessor_block_header : Block_header.t;
       (** header of the predecessor block being validated *)
-  predecessor_context : Tezos_protocol_environment.Context.t;
+  predecessor_context : Tp_environment.Context.t;
       (** context associated to the predecessor block *)
   predecessor_resulting_context_hash : Context_hash.t;
       (** predecessor block resulting context hash *)
@@ -141,10 +141,10 @@ type apply_environment = {
     hash is computed, using `Context.hash`. Set to false by default. *)
 val apply :
   ?simulate:bool ->
-  ?cached_result:apply_result * Tezos_protocol_environment.Context.t ->
+  ?cached_result:apply_result * Tp_environment.Context.t ->
   ?should_precheck:bool ->
   apply_environment ->
-  cache:Tezos_protocol_environment.Context.source_of_cache ->
+  cache:Tp_environment.Context.source_of_cache ->
   Block_header.t ->
   Operation.t list list ->
   apply_result tzresult Lwt.t
@@ -161,9 +161,9 @@ val precheck :
   chain_id:Chain_id.t ->
   predecessor_block_header:Block_header.t ->
   predecessor_block_hash:Block_hash.t ->
-  predecessor_context:Tezos_protocol_environment.Context.t ->
+  predecessor_context:Tp_environment.Context.t ->
   predecessor_resulting_context_hash:Context_hash.t ->
-  cache:Tezos_protocol_environment.Context.source_of_cache ->
+  cache:Tp_environment.Context.source_of_cache ->
   Block_header.t ->
   Operation.t list list ->
   unit tzresult Lwt.t
@@ -177,7 +177,7 @@ val preapply :
   protocol_data:bytes ->
   live_blocks:Block_hash.Set.t ->
   live_operations:Operation_hash.Set.t ->
-  predecessor_context:Tezos_protocol_environment.Context.t ->
+  predecessor_context:Tp_environment.Context.t ->
   predecessor_resulting_context_hash:Context_hash.t ->
   predecessor_shell_header:Block_header.shell_header ->
   predecessor_hash:Block_hash.t ->
@@ -186,7 +186,7 @@ val preapply :
   predecessor_ops_metadata_hash:Operation_metadata_list_list_hash.t option ->
   Operation.t list list ->
   ((Block_header.shell_header * error Preapply_result.t list)
-  * (apply_result * Tezos_protocol_environment.Context.t))
+  * (apply_result * Tp_environment.Context.t))
   tzresult
   Lwt.t
 
@@ -195,10 +195,10 @@ val preapply :
 val recompute_metadata :
   chain_id:Chain_id.t ->
   predecessor_block_header:Block_header.t ->
-  predecessor_context:Tezos_protocol_environment.Context.t ->
+  predecessor_context:Tp_environment.Context.t ->
   predecessor_block_metadata_hash:Block_metadata_hash.t option ->
   predecessor_ops_metadata_hash:Operation_metadata_list_list_hash.t option ->
   block_header:Block_header.t ->
   operations:Operation.t trace trace ->
-  cache:Tezos_protocol_environment.Context.source_of_cache ->
+  cache:Tp_environment.Context.source_of_cache ->
   ((bytes * Block_metadata_hash.t option) * ops_metadata) tzresult Lwt.t

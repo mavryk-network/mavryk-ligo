@@ -22,8 +22,8 @@
 (* DEALINGS IN THE SOFTWARE.                                                 *)
 (*                                                                           *)
 (*****************************************************************************)
-open Tezos_protocol_016_PtMumbai
-open Tezos_client_016_PtMumbai
+open Tp_016
+open Tc_016
 open Protocol
 
 module Proto = struct

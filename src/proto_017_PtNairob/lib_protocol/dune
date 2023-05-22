@@ -2,23 +2,23 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_017_PtNairob)
+ (name tpe_017)
  (public_name tp-017.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_017_PtNairob))
+ (modules Tpe_017))
 
 (rule
- (targets tezos_protocol_environment_017_PtNairob.ml)
+ (targets tpe_017.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"017-PtNairob\" end\ninclude Tezos_protocol_environment.V9.Make(Name)()\n")))
+   "module Name = struct let name = \"017-PtNairob\" end\ninclude Tp_environment.V9.Make(Name)()\n")))
 
 (library
- (name tezos_raw_protocol_017_PtNairob)
+ (name trp_017)
  (public_name tp-017.raw)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_017_PtNairob
-  -open Tezos_protocol_environment_017_PtNairob.Pervasives
-  -open Tezos_protocol_environment_017_PtNairob.Error_monad)
+  -open Tpe_017
+  -open Tpe_017.Pervasives
+  -open Tpe_017.Error_monad)
  (modules
   Misc
   Non_empty_string
@@ -280,7 +280,7 @@
   Main))
 
 (library
- (name tezos_protocol_017_PtNairob)
+ (name tp_017)
  (public_name tp-017)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -290,7 +290,7 @@
  (flags
   (:standard)
   -nopervasives)
- (modules Protocol Tezos_protocol_017_PtNairob))
+ (modules Protocol Tp_017))
 
 (install
  (package tp-017)
@@ -302,14 +302,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtNairobiyssHuh87hEhfVBGCVrK3WnS8Z2FT4ymB5tAa4r1nQf\"\nlet name = Tezos_protocol_environment_017_PtNairob.Name.name\ninclude Tezos_raw_protocol_017_PtNairob\ninclude Tezos_raw_protocol_017_PtNairob.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtNairobiyssHuh87hEhfVBGCVrK3WnS8Z2FT4ymB5tAa4r1nQf\"\nlet name = Tpe_017.Name.name\ninclude Trp_017\ninclude Trp_017.Main\n")))
 
 (rule
- (targets tezos_protocol_017_PtNairob.ml)
+ (targets tp_017.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_017_PtNairob\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpe_017\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)
@@ -569,7 +569,7 @@
  (action (run %{bin:octez-protocol-compiler} -warn-error +a .)))
 
 (library
- (name tezos_protocol_017_PtNairob_lifted)
+ (name tp_017_lifted)
  (public_name tp-017.lifted)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -579,7 +579,7 @@
  (flags
   (:standard)
   -nopervasives
-  -open Tezos_protocol_017_PtNairob)
+  -open Tp_017)
  (modules Lifted_protocol))
 
 (rule
@@ -590,7 +590,7 @@
    "\ninclude Environment.Lift (Protocol)\nlet hash = Protocol.hash\n")))
 
 (library
- (name tezos_protocol_017_PtNairob_functor)
+ (name tp_017_functor)
  (libraries
   tpe
   tpe.sigs)

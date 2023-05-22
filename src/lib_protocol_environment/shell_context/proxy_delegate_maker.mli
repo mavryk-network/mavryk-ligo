@@ -34,7 +34,7 @@
     is typically useful for tests. *)
 val of_memory_tree :
   Tezos_context_memory.Context.tree ->
-  Tezos_protocol_environment.Proxy_delegate.t
+  Tp_environment.Proxy_delegate.t
 
 (** [of_memory_context m] creates a delegate that is backed by the tree underlying [m].
     This is an alternative to delegating to a distant endpoint by doing RPCs
@@ -46,7 +46,7 @@ val of_memory_tree :
     it requires a full-fledged context instead of a tree (a context contains
     a tree, so a context is harder to obtain). *)
 val of_memory_context :
-  Tezos_context_memory.Context.t -> Tezos_protocol_environment.Proxy_delegate.t
+  Tezos_context_memory.Context.t -> Tp_environment.Proxy_delegate.t
 
 (** [make_index context_path] creates an index that is suitable for being
     passed to {!of_index}. *)
@@ -61,4 +61,4 @@ val make_index : context_path:string -> Tezos_context.Context.index Lwt.t
 val of_index :
   index:Tezos_context.Context.index ->
   Tezos_crypto.Hashed.Context_hash.t ->
-  Tezos_protocol_environment.Proxy_delegate.t tzresult Lwt.t
+  Tp_environment.Proxy_delegate.t tzresult Lwt.t

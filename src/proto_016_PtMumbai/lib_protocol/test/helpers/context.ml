@@ -206,7 +206,7 @@ let get_seed_computation ctxt =
 let get_constants ctxt = Alpha_services.Constants.all rpc_ctxt ctxt
 
 let default_test_constants =
-  Tezos_protocol_016_PtMumbai_parameters.Default_parameters.constants_test
+  Tp_016_params.Default_parameters.constants_test
 
 let get_baking_reward_fixed_portion ctxt =
   get_constants ctxt
@@ -259,7 +259,7 @@ module Vote = struct
     Alpha_services.Voting.current_proposal rpc_ctxt ctxt
 
   let get_protocol (b : Block.t) =
-    Tezos_protocol_environment.Context.get_protocol b.context
+    Tp_environment.Context.get_protocol b.context
 
   let get_participation_ema (b : Block.t) =
     Environment.Context.find b.context ["votes"; "participation_ema"]
@@ -543,7 +543,7 @@ let init_with_constants_gen tup constants =
   let n = tup_n tup in
   let*? bootstrap_accounts, contracts = create_bootstrap_accounts n in
   let parameters =
-    Tezos_protocol_016_PtMumbai_parameters.Default_parameters
+    Tp_016_params.Default_parameters
     .parameters_of_constants
       ~bootstrap_accounts
       constants
@@ -573,7 +573,7 @@ let init_with_parameters1 = init_with_parameters_gen T1
 let init_with_parameters2 = init_with_parameters_gen T2
 
 let default_raw_context () =
-  let open Tezos_protocol_016_PtMumbai_parameters in
+  let open Tp_016_params in
   let initial_account = Account.new_account () in
   let bootstrap_accounts =
     Account.make_bootstrap_account
@@ -592,8 +592,8 @@ let default_raw_context () =
     Data_encoding.Binary.to_bytes_exn Data_encoding.json json
   in
   let protocol_param_key = ["protocol_parameters"] in
-  Tezos_protocol_environment.Context.(
-    let empty = Tezos_protocol_environment.Memory_context.empty in
+  Tp_environment.Context.(
+    let empty = Tp_environment.Memory_context.empty in
     add empty ["version"] (Bytes.of_string "genesis") >>= fun ctxt ->
     add ctxt protocol_param_key proto_params)
   >>= fun context ->

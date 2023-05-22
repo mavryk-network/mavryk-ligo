@@ -31,7 +31,7 @@
     Subject:    This module tests that Michelson instructions related to block time are correct.
 *)
 
-open Tezos_protocol_016_PtMumbai_parameters
+open Tp_016_params
 open Protocol
 open Alpha_context
 

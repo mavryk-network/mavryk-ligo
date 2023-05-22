@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_000_Ps9mPmXa)
+ (name tp_environment_000_Ps9mPmXa)
  (public_name tezos-protocol-000-Ps9mPmXa.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_000_Ps9mPmXa))
+ (modules Tp_environment_000_Ps9mPmXa))
 
 (rule
- (targets tezos_protocol_environment_000_Ps9mPmXa.ml)
+ (targets tp_environment_000_Ps9mPmXa.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"000-Ps9mPmXa\" end\ninclude Tezos_protocol_environment.V0.Make(Name)()\n")))
+   "module Name = struct let name = \"000-Ps9mPmXa\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_000_Ps9mPmXa)
@@ -29,9 +29,9 @@
   -w -6-7-9-16-29-32-51-68
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_000_Ps9mPmXa
-  -open Tezos_protocol_environment_000_Ps9mPmXa.Pervasives
-  -open Tezos_protocol_environment_000_Ps9mPmXa.Error_monad)
+  -open Tp_environment_000_Ps9mPmXa
+  -open Tp_environment_000_Ps9mPmXa.Pervasives
+  -open Tp_environment_000_Ps9mPmXa.Error_monad)
  (modules Data Services Main))
 
 (library
@@ -58,14 +58,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"Ps9mPmXaRzmzk35gbAYNCAw6UXdE2qoABTHbN2oEEc1qM7CwT9P\"\nlet name = Tezos_protocol_environment_000_Ps9mPmXa.Name.name\ninclude Tezos_raw_protocol_000_Ps9mPmXa\ninclude Tezos_raw_protocol_000_Ps9mPmXa.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"Ps9mPmXaRzmzk35gbAYNCAw6UXdE2qoABTHbN2oEEc1qM7CwT9P\"\nlet name = Tp_environment_000_Ps9mPmXa.Name.name\ninclude Tezos_raw_protocol_000_Ps9mPmXa\ninclude Tezos_raw_protocol_000_Ps9mPmXa.Main\n")))
 
 (rule
  (targets tezos_protocol_000_Ps9mPmXa.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_000_Ps9mPmXa\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tp_environment_000_Ps9mPmXa\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

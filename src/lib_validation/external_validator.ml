@@ -265,7 +265,7 @@ let run ~readonly ~using_std_channel input output =
      [Terminate] request is received.
      TODO: https://gitlab.com/tezos/tezos/-/issues/5177
   *)
-  let rec loop (cache : Tezos_protocol_environment.Context.block_cache option)
+  let rec loop (cache : Tp_environment.Context.block_cache option)
       cached_result =
     let*! recved =
       External_validation.recv input External_validation.request_encoding

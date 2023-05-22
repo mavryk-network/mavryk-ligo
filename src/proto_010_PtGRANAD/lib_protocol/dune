@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_010_PtGRANAD)
+ (name tp_environment_010_PtGRANAD)
  (public_name tezos-protocol-010-PtGRANAD.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_010_PtGRANAD))
+ (modules Tp_environment_010_PtGRANAD))
 
 (rule
- (targets tezos_protocol_environment_010_PtGRANAD.ml)
+ (targets tp_environment_010_PtGRANAD.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"010-PtGRANAD\" end\ninclude Tezos_protocol_environment.V2.Make(Name)()\n")))
+   "module Name = struct let name = \"010-PtGRANAD\" end\ninclude Tp_environment.V2.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_010_PtGRANAD)
@@ -29,9 +29,9 @@
   -w -6-7-9-16-29-32-51-68
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_010_PtGRANAD
-  -open Tezos_protocol_environment_010_PtGRANAD.Pervasives
-  -open Tezos_protocol_environment_010_PtGRANAD.Error_monad)
+  -open Tp_environment_010_PtGRANAD
+  -open Tp_environment_010_PtGRANAD.Pervasives
+  -open Tp_environment_010_PtGRANAD.Error_monad)
  (modules
   Misc
   Storage_description
@@ -142,14 +142,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtGRANADsDU8R9daYKAgWnQYAJ64omN1o3KMGVCykShA97vQbvV\"\nlet name = Tezos_protocol_environment_010_PtGRANAD.Name.name\ninclude Tezos_raw_protocol_010_PtGRANAD\ninclude Tezos_raw_protocol_010_PtGRANAD.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtGRANADsDU8R9daYKAgWnQYAJ64omN1o3KMGVCykShA97vQbvV\"\nlet name = Tp_environment_010_PtGRANAD.Name.name\ninclude Tezos_raw_protocol_010_PtGRANAD\ninclude Tezos_raw_protocol_010_PtGRANAD.Main\n")))
 
 (rule
  (targets tezos_protocol_010_PtGRANAD.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_010_PtGRANAD\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tp_environment_010_PtGRANAD\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

@@ -32,7 +32,7 @@ type t = {
   hash : Block_hash.t;
   header : Block_header.t;
   operations : Operation.packed list;
-  context : Tezos_protocol_environment.Context.t;  (** Resulting context *)
+  context : Tp_environment.Context.t;  (** Resulting context *)
 }
 
 type block = t
@@ -141,6 +141,7 @@ val genesis :
   ?zk_rollup_enable:bool ->
   ?hard_gas_limit_per_block:Gas.Arith.integral ->
   ?nonce_revelation_threshold:int32 ->
+  ?initial_timestamp:Timestamp.time ->
   Parameters.bootstrap_account list ->
   block tzresult Lwt.t
 
@@ -303,6 +304,7 @@ val prepare_initial_context_params :
   ?zk_rollup_enable:bool ->
   ?hard_gas_limit_per_block:Gas.Arith.integral ->
   ?nonce_revelation_threshold:int32 ->
+  ?initial_timestamp:Timestamp.time ->
   unit ->
   ( Constants.Parametric.t * Block_header.shell_header * Block_hash.t,
     tztrace )

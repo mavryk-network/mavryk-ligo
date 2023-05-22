@@ -28,7 +28,7 @@ open Environment_protocol_T
 
 module type T = sig
   include
-    Tezos_protocol_environment_sigs.V8.T
+    Tp_environment_sigs.V8.T
       with type Format.formatter = Format.formatter
        and type 'a Seq.node = 'a Seq.node
        and type 'a Seq.t = unit -> 'a Seq.node
@@ -102,9 +102,9 @@ module type T = sig
        and module Sapling = Tezos_sapling.Core.Validator
        and type ('a, 'b) Either.t = ('a, 'b) Stdlib.Either.t
        and type Bls.Primitive.Fr.t = Bls12_381.Fr.t
-       and type Plonk.proof = Tezos_protocol_environment_structs.V8.Plonk.proof
+       and type Plonk.proof = Tp_environment_structs.V8.Plonk.proof
        and type Plonk.public_parameters =
-        Tezos_protocol_environment_structs.V8.Plonk.verifier_public_parameters
+        Tp_environment_structs.V8.Plonk.verifier_public_parameters
        and type Dal.parameters = Tezos_crypto_dal.Cryptobox.Verifier.parameters
        and type Dal.commitment = Tezos_crypto_dal.Cryptobox.Verifier.commitment
        and type Dal.commitment_proof =

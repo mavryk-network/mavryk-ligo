@@ -31,11 +31,11 @@
 
 module type T = sig
   (** Similar to the same type in the protocol,
-      see {!Tezos_protocol_environment.PROTOCOL.operation} *)
+      see {!Tp_environment.PROTOCOL.operation} *)
   type protocol_operation
 
   (** Similar to the same type in the protocol,
-      see {!Tezos_protocol_environment.PROTOCOL} *)
+      see {!Tp_environment.PROTOCOL} *)
   type validation_state
 
   (** Type {!Shell_plugin.FILTER.Mempool.state}. *)
@@ -138,7 +138,7 @@ module type T = sig
     (** Return the filter_state component of the state. *)
     val get_filter_state : t -> filter_state
 
-    (** Type {!Tezos_protocol_environment.PROTOCOL.Mempool.t}. *)
+    (** Type {!Tp_environment.PROTOCOL.Mempool.t}. *)
     type mempool
 
     (** Modify the [mempool] field of the internal state [t]. *)
@@ -168,7 +168,7 @@ module Internal_for_tests : sig
     val context :
       chain_store ->
       Store.Block.t ->
-      Tezos_protocol_environment.Context.t tzresult Lwt.t
+      Tp_environment.Context.t tzresult Lwt.t
 
     (** [chain_id store] returns the {!Chain_id.t} to which [store]
         corresponds *)

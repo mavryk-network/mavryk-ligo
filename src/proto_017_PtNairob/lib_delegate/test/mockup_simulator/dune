@@ -21,12 +21,12 @@
   (:standard)
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
-  -open Tezos_protocol_017_PtNairob
-  -open Tezos_protocol_017_PtNairob.Protocol
-  -open Tezos_client_017_PtNairob
+  -open Tp_017
+  -open Tp_017.Protocol
+  -open Tc_017
   -open Tezos_client_commands
   -open Tezos_baking_017_PtNairob
   -open Tezos_stdlib_unix
   -open Tezos_client_base_unix
-  -open Tezos_protocol_017_PtNairob_parameters
+  -open Tp_017_params
   -open Tenderbrute_017_PtNairob))

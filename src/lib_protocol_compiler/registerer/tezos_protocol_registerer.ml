@@ -24,47 +24,47 @@
 (*****************************************************************************)
 
 module type PROTOCOL_V0 = functor
-  (Env : Tezos_protocol_environment_sigs.V0.T)
+  (Env : Tp_environment_sigs.V0.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V1 = functor
-  (Env : Tezos_protocol_environment_sigs.V1.T)
+  (Env : Tp_environment_sigs.V1.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V2 = functor
-  (Env : Tezos_protocol_environment_sigs.V2.T)
+  (Env : Tp_environment_sigs.V2.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V3 = functor
-  (Env : Tezos_protocol_environment_sigs.V3.T)
+  (Env : Tp_environment_sigs.V3.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V4 = functor
-  (Env : Tezos_protocol_environment_sigs.V4.T)
+  (Env : Tp_environment_sigs.V4.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V5 = functor
-  (Env : Tezos_protocol_environment_sigs.V5.T)
+  (Env : Tp_environment_sigs.V5.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V6 = functor
-  (Env : Tezos_protocol_environment_sigs.V6.T)
+  (Env : Tp_environment_sigs.V6.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V7 = functor
-  (Env : Tezos_protocol_environment_sigs.V7.T)
+  (Env : Tp_environment_sigs.V7.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V8 = functor
-  (Env : Tezos_protocol_environment_sigs.V8.T)
+  (Env : Tp_environment_sigs.V8.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V9 = functor
-  (Env : Tezos_protocol_environment_sigs.V9.T)
+  (Env : Tp_environment_sigs.V9.T)
   -> Env.Updater.PROTOCOL
 
 module type PROTOCOL_V10 = functor
-  (Env : Tezos_protocol_environment_sigs.V10.T)
+  (Env : Tp_environment_sigs.V10.T)
   -> Env.Updater.PROTOCOL
 
 module VersionTable = Protocol_hash.Table

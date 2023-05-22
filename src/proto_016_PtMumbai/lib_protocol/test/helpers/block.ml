@@ -34,7 +34,7 @@ type t = {
   hash : Block_hash.t;
   header : Block_header.t;
   operations : Operation.packed list;
-  context : Tezos_protocol_environment.Context.t;
+  context : Tp_environment.Context.t;
 }
 
 type block = t
@@ -327,7 +327,7 @@ let check_constants_consistency constants =
 
 let prepare_main_init_params ?bootstrap_contracts commitments constants
     bootstrap_accounts =
-  let open Tezos_protocol_016_PtMumbai_parameters in
+  let open Tp_016_params in
   let parameters =
     Default_parameters.parameters_of_constants
       ~bootstrap_accounts
@@ -339,8 +339,8 @@ let prepare_main_init_params ?bootstrap_contracts commitments constants
   let proto_params =
     Data_encoding.Binary.to_bytes_exn Data_encoding.json json
   in
-  Tezos_protocol_environment.Context.(
-    let empty = Tezos_protocol_environment.Memory_context.empty in
+  Tp_environment.Context.(
+    let empty = Tp_environment.Memory_context.empty in
     add empty ["version"] (Bytes.of_string "genesis") >>= fun ctxt ->
     add ctxt protocol_param_key proto_params)
 
@@ -428,13 +428,13 @@ let genesis_with_parameters parameters =
       ~seed_nonce_hash:None
       ()
   in
-  let open Tezos_protocol_016_PtMumbai_parameters in
+  let open Tp_016_params in
   let json = Default_parameters.json_of_parameters parameters in
   let proto_params =
     Data_encoding.Binary.to_bytes_exn Data_encoding.json json
   in
-  Tezos_protocol_environment.Context.(
-    let empty = Tezos_protocol_environment.Memory_context.empty in
+  Tp_environment.Context.(
+    let empty = Tp_environment.Memory_context.empty in
     add empty ["version"] (Bytes.of_string "genesis") >>= fun ctxt ->
     add ctxt protocol_param_key proto_params)
   >>= fun ctxt ->
@@ -477,8 +477,9 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     ?blocks_per_cycle ?cycles_per_voting_period ?tx_rollup_enable
     ?tx_rollup_sunset_level ?tx_rollup_origination_size ?sc_rollup_enable
     ?sc_rollup_arith_pvm_enable ?dal_enable ?zk_rollup_enable
-    ?hard_gas_limit_per_block ?nonce_revelation_threshold () =
-  let open Tezos_protocol_016_PtMumbai_parameters in
+    ?hard_gas_limit_per_block ?nonce_revelation_threshold
+    ?(initial_timestamp = Time.Protocol.epoch) () =
+  let open Tp_016_params in
   let constants = Default_parameters.constants_test in
   let min_proposal_quorum =
     Option.value ~default:constants.min_proposal_quorum min_proposal_quorum
@@ -604,7 +605,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     Forge.make_shell
       ~level
       ~predecessor:hash
-      ~timestamp:Time.Protocol.epoch
+      ~timestamp:initial_timestamp
       ~fitness
       ~operations_hash:Operation_list_list_hash.zero
   in
@@ -620,6 +621,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?tx_rollup_origination_size ?sc_rollup_enable ?sc_rollup_arith_pvm_enable
     ?dal_enable ?zk_rollup_enable ?hard_gas_limit_per_block
     ?nonce_revelation_threshold
+    ?initial_timestamp
     (bootstrap_accounts : Parameters.bootstrap_account list) =
   prepare_initial_context_params
     ?consensus_threshold
@@ -642,6 +644,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?zk_rollup_enable
     ?hard_gas_limit_per_block
     ?nonce_revelation_threshold
+    ?initial_timestamp
     ()
   >>=? fun (constants, shell, hash) ->
   validate_bootstrap_accounts bootstrap_accounts constants.minimal_stake

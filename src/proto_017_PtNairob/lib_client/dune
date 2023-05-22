@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_client_017_PtNairob)
+ (name tc_017)
  (public_name tc-017)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -29,7 +29,7 @@
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_protocol_017_PtNairob
+  -open Tp_017
   -open Tezos_protocol_plugin_017_PtNairob
-  -open Tezos_protocol_017_PtNairob_parameters
+  -open Tp_017_params
   -open Tezos_smart_rollup_017_PtNairob))

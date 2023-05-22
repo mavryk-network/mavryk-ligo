@@ -28,7 +28,7 @@
     by nodes. It is the "main" kind of context. It abstracts away
     {!Tezos_context.Context}, by hiding the internals, and making it
     an instance of the generic {!Protocol_environment.Context.t}.
-    Other [*_context] modules of {!Tezos_protocol_environment}, i.e.
+    Other [*_context] modules of {!Tp_environment}, i.e.
     siblings of this file, are backed by different type of values coming
     from {!Tezos_context}.
 
@@ -46,7 +46,7 @@
     {!Shell_context} are harder to initialize and use than {!Memory_context};
     making them less amenable to testing for example. *)
 
-open Tezos_protocol_environment
+open Tp_environment
 
 (** The additional kind identifying {!Shell_context} values. Used to
     detect at runtime when a shell context is expected, to disambiguate

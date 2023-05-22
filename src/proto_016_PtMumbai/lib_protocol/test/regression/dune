@@ -20,10 +20,10 @@
   -open Tezt_core.Base
   -open Tezos_base.TzPervasives
   -open Tezt_tezos
-  -open Tezos_protocol_016_PtMumbai
-  -open Tezos_client_016_PtMumbai
+  -open Tp_016
+  -open Tc_016
   -open Tezos_protocol_plugin_016_PtMumbai
-  -open Tezos_016_PtMumbai_test_helpers
+  -open Tz16_testhelpers
   -open Tezos_micheline)
  (modules test_logging))
 

@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_client_017_PtNairob_commands)
+ (name tc_017_commands)
  (public_name tc-017.commands)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -27,19 +27,19 @@
  (flags
   (:standard)
   -open Tezos_base.TzPervasives
-  -open Tezos_protocol_017_PtNairob
-  -open Tezos_protocol_017_PtNairob_parameters
+  -open Tp_017
+  -open Tp_017_params
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_client_commands
   -open Tezos_client_base_unix
   -open Tezos_protocol_plugin_017_PtNairob)
  (modules (:standard \ alpha_commands_registration)))
 
 (library
- (name tezos_client_017_PtNairob_commands_registration)
+ (name tc_017_commands_registration)
  (public_name tc-017.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -60,13 +60,13 @@
  (flags
   (:standard)
   -open Tezos_base.TzPervasives
-  -open Tezos_protocol_017_PtNairob
-  -open Tezos_protocol_017_PtNairob_parameters
+  -open Tp_017
+  -open Tp_017_params
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_client_commands
-  -open Tezos_client_017_PtNairob_commands
+  -open Tc_017_commands
   -open Tezos_client_sapling_017_PtNairob
   -open Tezos_protocol_plugin_017_PtNairob)
  (modules alpha_commands_registration))

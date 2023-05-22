@@ -477,7 +477,7 @@ let manager_parameters : Parameters.t -> ctxt_req -> Parameters.t =
 let init_ctxt_only ctxtreq =
   let open Lwt_result_syntax in
   let initial_params =
-    Tezos_protocol_016_PtMumbai_parameters.Default_parameters
+    Tp_016_params.Default_parameters
     .parameters_of_constants
       {Context.default_test_constants with consensus_threshold = 0}
   in
