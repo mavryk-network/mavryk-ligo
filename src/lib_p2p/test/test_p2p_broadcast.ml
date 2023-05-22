@@ -89,16 +89,16 @@ module Simple = struct
     let* () = lwt_debug "Connect to %a" P2p_point.Id.pp point in
     let* r = P2p_connect_handler.connect connect_handler point ~timeout in
     match r with
-    | Error (Tezos_p2p_services.P2p_errors.Connected :: _) -> (
+    | Error (Tz_p2p_s.P2p_errors.Connected :: _) -> (
         match P2p_pool.Connection.find_by_point pool point with
         | Some conn -> return_ok conn
         | None -> failwith "Woops...")
     | Error
-        ((( Tezos_p2p_services.P2p_errors.Connection_refused
-          | Tezos_p2p_services.P2p_errors.Pending_connection
-          | Tezos_p2p_services.P2p_errors.Rejected_socket_connection
-          | Tezos_p2p_services.P2p_errors.Rejected_by_nack _ | Canceled
-          | Timeout | Tezos_p2p_services.P2p_errors.Rejected _ ) as head_err)
+        ((( Tz_p2p_s.P2p_errors.Connection_refused
+          | Tz_p2p_s.P2p_errors.Pending_connection
+          | Tz_p2p_s.P2p_errors.Rejected_socket_connection
+          | Tz_p2p_s.P2p_errors.Rejected_by_nack _ | Canceled
+          | Timeout | Tz_p2p_s.P2p_errors.Rejected _ ) as head_err)
         :: _) ->
         let* () =
           lwt_debug
@@ -107,25 +107,25 @@ module Simple = struct
             point
             (fun ppf err ->
               match err with
-              | Tezos_p2p_services.P2p_errors.Connection_refused ->
+              | Tz_p2p_s.P2p_errors.Connection_refused ->
                   Format.fprintf ppf "connection refused"
-              | Tezos_p2p_services.P2p_errors.Pending_connection ->
+              | Tz_p2p_s.P2p_errors.Pending_connection ->
                   Format.fprintf ppf "pending connection"
-              | Tezos_p2p_services.P2p_errors.Rejected_socket_connection ->
+              | Tz_p2p_s.P2p_errors.Rejected_socket_connection ->
                   Format.fprintf ppf "rejected"
-              | Tezos_p2p_services.P2p_errors.Rejected_by_nack
+              | Tz_p2p_s.P2p_errors.Rejected_by_nack
                   {alternative_points = Some alternative_points; _} ->
                   Format.fprintf
                     ppf
                     "rejected (nack_v1, peer list: @[<h>%a@])"
                     P2p_point.Id.pp_list
                     alternative_points
-              | Tezos_p2p_services.P2p_errors.Rejected_by_nack
+              | Tz_p2p_s.P2p_errors.Rejected_by_nack
                   {alternative_points = None; _} ->
                   Format.fprintf ppf "rejected (nack_v0)"
               | Canceled -> Format.fprintf ppf "canceled"
               | Timeout -> Format.fprintf ppf "timeout"
-              | Tezos_p2p_services.P2p_errors.Rejected {peer; motive} ->
+              | Tz_p2p_s.P2p_errors.Rejected {peer; motive} ->
                   Format.fprintf
                     ppf
                     "rejected (%a) motive:%a"

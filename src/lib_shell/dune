@@ -44,7 +44,7 @@
   -open Tezos_p2p
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
-  -open Tezos_p2p_services
+  -open Tz_p2p_s
   -open Tezos_protocol_updater
   -open Tezos_requester
   -open Tezos_workers

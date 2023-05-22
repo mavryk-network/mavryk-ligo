@@ -25,7 +25,7 @@
   -open Tezos_stdlib_unix
   -open Tezos_stdlib
   -open Tezos_p2p
-  -open Tezos_p2p_services
+  -open Tz_p2p_s
   -open Tezos_test_helpers
   -open Tezos_base_test_helpers
   -open Tezos_event_logging_test_helpers

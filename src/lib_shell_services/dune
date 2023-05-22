@@ -20,5 +20,5 @@
   (:standard)
   -open Tezos_base.TzPervasives
   -open Tezos_base
-  -open Tezos_p2p_services
+  -open Tz_p2p_s
   -open Tezos_version))

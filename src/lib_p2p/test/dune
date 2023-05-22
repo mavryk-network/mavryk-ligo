@@ -38,7 +38,7 @@
   -open Tezos_base_test_helpers
   -open Tezos_event_logging_test_helpers
   -open Tezos_p2p_test_common
-  -open Tezos_p2p_services
+  -open Tz_p2p_s
   -open Octez_alcotezt))
 
 (rule

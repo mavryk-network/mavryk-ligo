@@ -68,14 +68,14 @@ let connect ?proof_of_work_target ?(target_id = id1) sched addr port id =
   return auth_fd
 
 let is_connection_closed = function
-  | Error (Tezos_p2p_services.P2p_errors.Connection_closed :: _) -> true
+  | Error (Tz_p2p_s.P2p_errors.Connection_closed :: _) -> true
   | Ok _ -> false
   | Error err ->
       log_notice "Error: %a" pp_print_trace err ;
       false
 
 let is_decoding_error = function
-  | Error (Tezos_p2p_services.P2p_errors.Decoding_error _ :: _) -> true
+  | Error (Tz_p2p_s.P2p_errors.Decoding_error _ :: _) -> true
   | Ok _ -> false
   | Error err ->
       log_notice "Error: %a" pp_print_trace err ;
@@ -112,7 +112,7 @@ module Crypto_test = struct
     let* () =
       fail_unless
         (msg_length <= max_content_length)
-        Tezos_p2p_services.P2p_errors.Invalid_message_size
+        Tz_p2p_s.P2p_errors.Invalid_message_size
     in
     let encrypted_length = tag_length + msg_length in
     let payload_length = header_length + encrypted_length in
@@ -159,7 +159,7 @@ module Crypto_test = struct
            remote_nonce
            tag
            msg)
-        Tezos_p2p_services.P2p_errors.Decipher_error
+        Tz_p2p_s.P2p_errors.Decipher_error
     in
     return msg
 
@@ -260,7 +260,7 @@ end
 *)
 module Nacked = struct
   let is_rejected = function
-    | Error (Tezos_p2p_services.P2p_errors.Rejected_by_nack _ :: _) -> true
+    | Error (Tz_p2p_s.P2p_errors.Rejected_by_nack _ :: _) -> true
     | Ok _ -> false
     | Error err ->
         log_notice "Error: %a" pp_print_trace err ;

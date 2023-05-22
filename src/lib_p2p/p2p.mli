@@ -140,7 +140,7 @@ val faked_network :
 (** Main network initialization function *)
 val create :
   config:config ->
-  limits:Tezos_p2p_services.P2p_limits.t ->
+  limits:Tz_p2p_s.P2p_limits.t ->
   'peer_meta P2p_params.peer_meta_config ->
   'conn_meta P2p_params.conn_meta_config ->
   'msg P2p_params.message_config ->
