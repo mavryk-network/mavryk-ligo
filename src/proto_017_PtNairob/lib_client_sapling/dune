@@ -25,5 +25,5 @@
   -open Tezos_client_base
   -open Tezos_client_017_PtNairob
   -open Tezos_client_017_PtNairob_commands
-  -open Tezos_protocol_017_PtNairob
+  -open Tp_017
   -open Tezos_protocol_plugin_017_PtNairob))

@@ -20,7 +20,7 @@
   -open Tezt_core.Base
   -open Tezos_base.TzPervasives
   -open Tezt_tezos
-  -open Tezos_protocol_017_PtNairob
+  -open Tp_017
   -open Tezos_client_017_PtNairob
   -open Tezos_protocol_plugin_017_PtNairob
   -open Tz17_testhelpers

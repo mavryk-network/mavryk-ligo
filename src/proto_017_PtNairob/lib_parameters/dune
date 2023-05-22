@@ -13,7 +13,7 @@
  (flags
   (:standard)
   -open Tezos_base.TzPervasives
-  -open Tezos_protocol_017_PtNairob)
+  -open Tp_017)
  (modules (:standard \ gen)))
 
 ; (executable
@@ -30,7 +30,7 @@
 ;   (:standard)
 ;   -open Tezos_base.TzPervasives
 ;   -open Tp_017_params
-;   -open Tezos_protocol_017_PtNairob)
+;   -open Tp_017)
 ;  (modules gen))
 
 ; (rule

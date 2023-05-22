@@ -30,8 +30,8 @@
   -open Tezos_test_helpers
   -open Tezos_micheline
   -open Tezos_protocol_plugin_017_PtNairob
-  -open Tezos_protocol_017_PtNairob
-  -open Tezos_protocol_017_PtNairob.Protocol
+  -open Tp_017
+  -open Tp_017.Protocol
   -open Tp_017_params
   -open Tz17_testhelpers)
  (modules

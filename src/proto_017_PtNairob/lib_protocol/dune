@@ -280,7 +280,7 @@
   Main))
 
 (library
- (name tezos_protocol_017_PtNairob)
+ (name tp_017)
  (public_name tp-017)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -290,7 +290,7 @@
  (flags
   (:standard)
   -nopervasives)
- (modules Protocol Tezos_protocol_017_PtNairob))
+ (modules Protocol Tp_017))
 
 (install
  (package tp-017)
@@ -305,7 +305,7 @@
    "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtNairobiyssHuh87hEhfVBGCVrK3WnS8Z2FT4ymB5tAa4r1nQf\"\nlet name = Tpe_017.Name.name\ninclude Trp_017\ninclude Trp_017.Main\n")))
 
 (rule
- (targets tezos_protocol_017_PtNairob.ml)
+ (targets tp_017.ml)
  (action
   (write-file
    %{targets}
@@ -569,7 +569,7 @@
  (action (run %{bin:octez-protocol-compiler} -warn-error +a .)))
 
 (library
- (name tezos_protocol_017_PtNairob_lifted)
+ (name tp_017_lifted)
  (public_name tp-017.lifted)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -579,7 +579,7 @@
  (flags
   (:standard)
   -nopervasives
-  -open Tezos_protocol_017_PtNairob)
+  -open Tp_017)
  (modules Lifted_protocol))
 
 (rule
@@ -590,7 +590,7 @@
    "\ninclude Environment.Lift (Protocol)\nlet hash = Protocol.hash\n")))
 
 (library
- (name tezos_protocol_017_PtNairob_functor)
+ (name tp_017_functor)
  (libraries
   tpe
   tpe.sigs)

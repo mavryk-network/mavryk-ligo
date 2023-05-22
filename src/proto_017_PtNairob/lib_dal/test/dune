@@ -20,7 +20,7 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_dal_017_PtNairob
-  -open Tezos_protocol_017_PtNairob
+  -open Tp_017
   -open Tezos_base_test_helpers
   -open Tz17_testhelpers
   -open Octez_alcotezt)

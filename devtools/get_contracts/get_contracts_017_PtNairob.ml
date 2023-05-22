@@ -22,7 +22,7 @@
 (* DEALINGS IN THE SOFTWARE.                                                 *)
 (*                                                                           *)
 (*****************************************************************************)
-open Tezos_protocol_017_PtNairob
+open Tp_017
 open Tezos_client_017_PtNairob
 open Protocol
 

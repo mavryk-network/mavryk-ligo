@@ -37,8 +37,8 @@
   -open Tezos_benchmark
   -open Tezos_benchmark_017_PtNairob
   -open Tezos_benchmark_type_inference_017_PtNairob
-  -open Tezos_protocol_017_PtNairob
-  -open Tezos_protocol_017_PtNairob.Protocol
+  -open Tp_017
+  -open Tp_017.Protocol
   -open Tezos_micheline
   -open Tz17_testhelpers
   -open Tezos_client_017_PtNairob

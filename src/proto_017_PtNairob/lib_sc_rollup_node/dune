@@ -49,7 +49,7 @@
   -open Tezos_client_base
   -open Tezos_client_base_unix
   -open Tezos_client_017_PtNairob
-  -open Tezos_protocol_017_PtNairob
+  -open Tp_017
   -open Tezos_protocol_plugin_017_PtNairob
   -open Tp_017_params
   -open Tezos_workers
