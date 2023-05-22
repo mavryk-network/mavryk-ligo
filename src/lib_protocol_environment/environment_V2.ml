@@ -30,7 +30,7 @@ open Environment_protocol_T
 
 module type T = sig
   include
-    Tezos_protocol_environment_sigs.V2.T
+    Tp_environment_sigs.V2.T
       with type Format.formatter = Format.formatter
        and type 'a Data_encoding.t = 'a Data_encoding.t
        and type 'a Data_encoding.lazy_t = 'a Data_encoding.lazy_t
@@ -119,7 +119,7 @@ struct
      shadow modules from [Stdlib]/[Base]/etc. with backwards compatible
      versions. Thus we open the module, hiding the incompatible, newer modules.
   *)
-  open Tezos_protocol_environment_structs.V2
+  open Tp_environment_structs.V2
   module Pervasives = Stdlib
   module Compare = Compare
   module List = List
@@ -471,7 +471,7 @@ struct
         (struct
           let id = Format.asprintf "proto.%s." Param.name
         end)
-        (Tezos_protocol_environment_structs.V2.Error_monad_trace_eval)
+        (Tp_environment_structs.V2.Error_monad_trace_eval)
 
     let error_encoding = Data_encoding.dynamic_size error_encoding
   end
@@ -596,7 +596,7 @@ struct
   end
 
   module RPC_directory = struct
-    include Tezos_protocol_environment_structs.V2.RPC_directory
+    include Tp_environment_structs.V2.RPC_directory
 
     let gen_register dir service handler =
       let open Lwt_syntax in

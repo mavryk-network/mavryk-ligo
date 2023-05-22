@@ -148,7 +148,7 @@ type result = {
 
 type apply_result = {
   result : result;
-  cache : Tezos_protocol_environment.Context.cache;
+  cache : Tp_environment.Context.cache;
 }
 
 let check_proto_environment_version_increasing block_hash before after =
@@ -249,7 +249,7 @@ let preapply_result_encoding :
        (list (Preapply_result.encoding Tezos_rpc.Error.encoding)))
 
 let may_force_protocol_upgrade ~user_activated_upgrades ~level
-    (validation_result : Tezos_protocol_environment.validation_result) =
+    (validation_result : Tp_environment.validation_result) =
   let open Lwt_syntax in
   match
     Block_header.get_forced_protocol_upgrade ~user_activated_upgrades ~level
@@ -257,7 +257,7 @@ let may_force_protocol_upgrade ~user_activated_upgrades ~level
   | None -> return validation_result
   | Some hash ->
       let* context =
-        Tezos_protocol_environment.Context.set_protocol
+        Tp_environment.Context.set_protocol
           validation_result.context
           hash
       in
@@ -267,7 +267,7 @@ let may_force_protocol_upgrade ~user_activated_upgrades ~level
     voted protocols *)
 let may_patch_protocol ~user_activated_upgrades
     ~user_activated_protocol_overrides ~level
-    (validation_result : Tezos_protocol_environment.validation_result) =
+    (validation_result : Tp_environment.validation_result) =
   let open Lwt_syntax in
   let context = validation_result.context in
   let* protocol = Context_ops.get_protocol context in
@@ -283,7 +283,7 @@ let may_patch_protocol ~user_activated_upgrades
         validation_result
   | Some replacement_protocol ->
       let* context =
-        Tezos_protocol_environment.Context.set_protocol
+        Tp_environment.Context.set_protocol
           validation_result.context
           replacement_protocol
       in
@@ -384,7 +384,7 @@ module Make (Proto : Registered_protocol.T) = struct
     let open Lwt_result_syntax in
     let* () =
       fail_unless
-        (match quota.Tezos_protocol_environment.max_op with
+        (match quota.Tp_environment.max_op with
         | None -> true
         | Some max -> Compare.List_length_with.(ops <= max))
         (let max = Option.value ~default:~-1 quota.max_op in
@@ -600,7 +600,7 @@ module Make (Proto : Registered_protocol.T) = struct
 
   let may_init_new_protocol chain_id new_protocol
       (block_header : Proto.block_header) block_hash
-      (validation_result : Tezos_protocol_environment.validation_result) =
+      (validation_result : Tp_environment.validation_result) =
     let open Lwt_result_syntax in
     if Protocol_hash.equal new_protocol Proto.hash then
       return
@@ -1110,7 +1110,7 @@ module Make (Proto : Registered_protocol.T) = struct
         validation_result
     in
     let*! protocol =
-      Tezos_protocol_environment.Context.get_protocol validation_result.context
+      Tp_environment.Context.get_protocol validation_result.context
     in
     let proto_level =
       if Protocol_hash.equal protocol Proto.hash then
@@ -1125,7 +1125,7 @@ module Make (Proto : Registered_protocol.T) = struct
            new_protocol_env_version,
            proto_expected_context_hash ) =
       if Protocol_hash.equal protocol Proto.hash then
-        let (Tezos_protocol_environment.Context.Context {cache; _}) =
+        let (Tp_environment.Context.Context {cache; _}) =
           validation_result.context
         in
         return
@@ -1149,7 +1149,7 @@ module Make (Proto : Registered_protocol.T) = struct
             let* validation_result =
               NewProto.init chain_id validation_result.context shell_header
             in
-            let (Tezos_protocol_environment.Context.Context {cache; _}) =
+            let (Tp_environment.Context.Context {cache; _}) =
               validation_result.context
             in
             let*! () =
@@ -1322,7 +1322,7 @@ type apply_environment = {
   max_operations_ttl : int;
   chain_id : Chain_id.t;
   predecessor_block_header : Block_header.t;
-  predecessor_context : Tezos_protocol_environment.Context.t;
+  predecessor_context : Tp_environment.Context.t;
   predecessor_resulting_context_hash : Context_hash.t;
   predecessor_block_metadata_hash : Block_metadata_hash.t option;
   predecessor_ops_metadata_hash : Operation_metadata_list_list_hash.t option;

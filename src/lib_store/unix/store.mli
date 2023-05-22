@@ -210,8 +210,8 @@ type chain_store
 *)
 val init :
   ?patch_context:
-    (Tezos_protocol_environment.Context.t ->
-    Tezos_protocol_environment.Context.t tzresult Lwt.t) ->
+    (Tp_environment.Context.t ->
+    Tp_environment.Context.t tzresult Lwt.t) ->
   ?commit_genesis:(chain_id:Chain_id.t -> Context_hash.t tzresult Lwt.t) ->
   ?history_mode:History_mode.t ->
   ?readonly:bool ->
@@ -457,17 +457,17 @@ module Block : sig
       context of the [block] which may differ from its block header's
       one depending on the block's associated protocol semantics. *)
   val context_exn :
-    chain_store -> block -> Tezos_protocol_environment.Context.t Lwt.t
+    chain_store -> block -> Tp_environment.Context.t Lwt.t
 
   (** [context_opt chain_store block] optional version of
       [context_exn]. *)
   val context_opt :
-    chain_store -> block -> Tezos_protocol_environment.Context.t option Lwt.t
+    chain_store -> block -> Tp_environment.Context.t option Lwt.t
 
   (** [context chain_store block] error monad version of
       [context_exn]. *)
   val context :
-    chain_store -> block -> Tezos_protocol_environment.Context.t tzresult Lwt.t
+    chain_store -> block -> Tp_environment.Context.t tzresult Lwt.t
 
   (** [context_exists chain_store block] tests the existence of the
       [block]'s commit in the context. *)

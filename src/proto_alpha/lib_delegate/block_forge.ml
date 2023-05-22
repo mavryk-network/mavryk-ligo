@@ -86,7 +86,7 @@ let finalize_block_header ~shell_header ~validation_result ~operations_hash
   let open Lwt_result_syntax in
   let* fitness =
     match validation_result with
-    | Some {Tezos_protocol_environment.fitness; _} -> return fitness
+    | Some {Tp_environment.fitness; _} -> return fitness
     | None ->
         let*? level =
           Environment.wrap_tzresult @@ Raw_level.of_int32
@@ -126,7 +126,7 @@ let retain_live_operations_only ~live_blocks operation_pool =
    block. This function returns true if the block is the last of an [adoption]
    period. It can also return true if an [user_activated_upgrades] is given. *)
 let check_protocol_changed ~user_activated_upgrades ~level
-    ~(validation_result : Tezos_protocol_environment.validation_result option)
+    ~(validation_result : Tp_environment.validation_result option)
     ~(incremental : Baking_simulator.incremental) =
   let open Lwt_result_syntax in
   match

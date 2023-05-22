@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment)
+ (name tp_environment)
  (public_name tpe)
  (instrumentation (backend bisect_ppx))
  (libraries

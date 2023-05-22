@@ -253,7 +253,7 @@ module Vote = struct
     Alpha_services.Voting.current_proposal rpc_ctxt ctxt
 
   let get_protocol (b : Block.t) =
-    Tezos_protocol_environment.Context.get_protocol b.context
+    Tp_environment.Context.get_protocol b.context
 
   let get_delegate_proposal_count ctxt pkh =
     Alpha_services.Voting.delegate_proposal_count rpc_ctxt ctxt pkh
@@ -570,8 +570,8 @@ let default_raw_context () =
     Data_encoding.Binary.to_bytes_exn Data_encoding.json json
   in
   let protocol_param_key = ["protocol_parameters"] in
-  Tezos_protocol_environment.Context.(
-    let empty = Tezos_protocol_environment.Memory_context.empty in
+  Tp_environment.Context.(
+    let empty = Tp_environment.Memory_context.empty in
     add empty ["version"] (Bytes.of_string "genesis") >>= fun ctxt ->
     add ctxt protocol_param_key proto_params)
   >>= fun context ->

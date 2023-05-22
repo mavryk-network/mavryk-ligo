@@ -28,7 +28,7 @@ open Alpha_context
 
 type incremental = {
   predecessor : Baking_state.block_info;
-  context : Tezos_protocol_environment.Context.t;
+  context : Tp_environment.Context.t;
   state : validation_state * application_state option;
   rev_operations : Operation.packed list;
   header : Tezos_base.Block_header.shell_header;
@@ -76,6 +76,6 @@ val add_operation :
     and its results returned. *)
 val finalize_construction :
   incremental ->
-  (Tezos_protocol_environment.validation_result * block_header_metadata) option
+  (Tp_environment.validation_result * block_header_metadata) option
   tzresult
   Lwt.t

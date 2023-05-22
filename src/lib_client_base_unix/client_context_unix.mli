@@ -51,7 +51,7 @@ class unix_mockup :
   -> mem_only:bool
   -> mockup_env:Tezos_mockup_registration.Registration.mockup_environment
   -> chain_id:Chain_id.t
-  -> rpc_context:Tezos_protocol_environment.rpc_context
+  -> rpc_context:Tp_environment.rpc_context
   -> protocol_data:bytes
   -> Client_context.full
 

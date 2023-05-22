@@ -30,7 +30,7 @@
    %{targets}
    (run
     bin/cmis_of_cma.exe
-    %{lib:tpe.sigs:tezos_protocol_environment_sigs.cmxa}))))
+    %{lib:tpe.sigs:tp_environment_sigs.cmxa}))))
 
 (rule
  (targets embedded_cmis_env.ml)

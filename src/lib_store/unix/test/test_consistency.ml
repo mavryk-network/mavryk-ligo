@@ -40,7 +40,7 @@ let register_protocol ~hash ~sources =
   let module M = struct
     include
       Registered_protocol.Register_embedded_V9
-        (Tezos_protocol_environment_demo_noops)
+        (Tp_environment_demo_noops)
         (Tezos_protocol_demo_noops.Protocol)
         (struct
           let hash = Some hash

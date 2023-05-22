@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_environment_009_PsFLoren)
+ (name tp_environment_009_PsFLoren)
  (public_name tezos-protocol-009-PsFLoren.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tezos_protocol_environment_009_PsFLoren))
+ (modules Tp_environment_009_PsFLoren))
 
 (rule
- (targets tezos_protocol_environment_009_PsFLoren.ml)
+ (targets tp_environment_009_PsFLoren.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"009-PsFLoren\" end\ninclude Tezos_protocol_environment.V2.Make(Name)()\n")))
+   "module Name = struct let name = \"009-PsFLoren\" end\ninclude Tp_environment.V2.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_009_PsFLoren)
@@ -29,9 +29,9 @@
   -w -6-7-9-16-29-32-51-68
   -nostdlib
   -nopervasives
-  -open Tezos_protocol_environment_009_PsFLoren
-  -open Tezos_protocol_environment_009_PsFLoren.Pervasives
-  -open Tezos_protocol_environment_009_PsFLoren.Error_monad)
+  -open Tp_environment_009_PsFLoren
+  -open Tp_environment_009_PsFLoren.Pervasives
+  -open Tp_environment_009_PsFLoren.Error_monad)
  (modules
   Misc
   Storage_description
@@ -137,14 +137,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsFLorenaUUuikDWvMDr6fGBRG8kt3e3D3fHoXK1j1BFRxeSH4i\"\nlet name = Tezos_protocol_environment_009_PsFLoren.Name.name\ninclude Tezos_raw_protocol_009_PsFLoren\ninclude Tezos_raw_protocol_009_PsFLoren.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsFLorenaUUuikDWvMDr6fGBRG8kt3e3D3fHoXK1j1BFRxeSH4i\"\nlet name = Tp_environment_009_PsFLoren.Name.name\ninclude Tezos_raw_protocol_009_PsFLoren\ninclude Tezos_raw_protocol_009_PsFLoren.Main\n")))
 
 (rule
  (targets tezos_protocol_009_PsFLoren.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tezos_protocol_environment_009_PsFLoren\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tp_environment_009_PsFLoren\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

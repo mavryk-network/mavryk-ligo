@@ -15,7 +15,7 @@
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"016-PtMumbai\" end\ninclude Tezos_protocol_environment.V8.Make(Name)()\n")))
+   "module Name = struct let name = \"016-PtMumbai\" end\ninclude Tp_environment.V8.Make(Name)()\n")))
 
 (library
  (name trp_016)

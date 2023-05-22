@@ -26,10 +26,10 @@
 module type T = sig
   val hash : Protocol_hash.t
 
-  include Tezos_protocol_environment.PROTOCOL
+  include Tp_environment.PROTOCOL
 
   val complete_b58prefix :
-    Tezos_protocol_environment.Context.t -> string -> string list Lwt.t
+    Tp_environment.Context.t -> string -> string list Lwt.t
 end
 
 type t = (module T)
@@ -42,7 +42,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V0.Make (Name) () in
+      let module Env = Tp_environment.V0.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -62,7 +62,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V1.Make (Name) () in
+      let module Env = Tp_environment.V1.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -82,7 +82,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V2.Make (Name) () in
+      let module Env = Tp_environment.V2.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -102,7 +102,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V3.Make (Name) () in
+      let module Env = Tp_environment.V3.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -122,7 +122,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V4.Make (Name) () in
+      let module Env = Tp_environment.V4.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -142,7 +142,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V5.Make (Name) () in
+      let module Env = Tp_environment.V5.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -162,7 +162,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V6.Make (Name) () in
+      let module Env = Tp_environment.V6.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -182,7 +182,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V7.Make (Name) () in
+      let module Env = Tp_environment.V7.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -202,7 +202,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V8.Make (Name) () in
+      let module Env = Tp_environment.V8.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -222,7 +222,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V9.Make (Name) () in
+      let module Env = Tp_environment.V9.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -242,7 +242,7 @@ let build hash =
       let module Name = struct
         let name = Protocol_hash.to_b58check hash
       end in
-      let module Env = Tezos_protocol_environment.V10.Make (Name) () in
+      let module Env = Tp_environment.V10.Make (Name) () in
       Some
         (module struct
           module Raw = F (Env)
@@ -322,7 +322,7 @@ module type Source_sig = sig
 end
 
 module Register_embedded_V0
-    (Env : Tezos_protocol_environment.V0.T)
+    (Env : Tp_environment.V0.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -351,7 +351,7 @@ struct
 end
 
 module Register_embedded_V1
-    (Env : Tezos_protocol_environment.V1.T)
+    (Env : Tp_environment.V1.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -380,7 +380,7 @@ struct
 end
 
 module Register_embedded_V2
-    (Env : Tezos_protocol_environment.V2.T)
+    (Env : Tp_environment.V2.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -409,7 +409,7 @@ struct
 end
 
 module Register_embedded_V3
-    (Env : Tezos_protocol_environment.V3.T)
+    (Env : Tp_environment.V3.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -438,7 +438,7 @@ struct
 end
 
 module Register_embedded_V4
-    (Env : Tezos_protocol_environment.V4.T)
+    (Env : Tp_environment.V4.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -467,7 +467,7 @@ struct
 end
 
 module Register_embedded_V5
-    (Env : Tezos_protocol_environment.V5.T)
+    (Env : Tp_environment.V5.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -496,7 +496,7 @@ struct
 end
 
 module Register_embedded_V6
-    (Env : Tezos_protocol_environment.V6.T)
+    (Env : Tp_environment.V6.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -525,7 +525,7 @@ struct
 end
 
 module Register_embedded_V7
-    (Env : Tezos_protocol_environment.V7.T)
+    (Env : Tp_environment.V7.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -554,7 +554,7 @@ struct
 end
 
 module Register_embedded_V8
-    (Env : Tezos_protocol_environment.V8.T)
+    (Env : Tp_environment.V8.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -583,7 +583,7 @@ struct
 end
 
 module Register_embedded_V9
-    (Env : Tezos_protocol_environment.V9.T)
+    (Env : Tp_environment.V9.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
@@ -612,7 +612,7 @@ struct
 end
 
 module Register_embedded_V10
-    (Env : Tezos_protocol_environment.V10.T)
+    (Env : Tp_environment.V10.T)
     (Proto : Env.Updater.PROTOCOL)
     (Source : Source_sig) =
 struct
