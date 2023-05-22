@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 open Tp_017
-open Tezos_client_017_PtNairob
+open Tc_017
 open Protocol
 
 module Proto = struct

@@ -23,7 +23,7 @@
   -open Octez_alcotezt
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tp_017
   -open Tp_017_params
   -open Tz17_testhelpers

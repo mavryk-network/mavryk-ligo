@@ -25,6 +25,6 @@
   -open Tezos_stdlib_unix
   -open Tezos_dac_lib
   -open Tezos_dac_client_lib
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_embedded_protocol_017_PtNairob
   -open Tp_017))

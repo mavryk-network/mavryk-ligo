@@ -30,7 +30,7 @@
   -open Tp_017
   -open Tz17_testhelpers
   -open Tezos_base_test_helpers
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_micheline
   -open Tezos_benchmark_017_PtNairob
   -open Tezos_benchmark_type_inference_017_PtNairob

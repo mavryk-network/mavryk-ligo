@@ -38,7 +38,7 @@
   -open Tezos_protocol_plugin_017_PtNairob
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_client_commands
   -open Tezos_stdlib
   -open Tezos_stdlib_unix
@@ -73,7 +73,7 @@
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_client_commands
   -open Tezos_baking_017_PtNairob)
  (modules Baking_commands))
@@ -100,7 +100,7 @@
   -open Tp_017
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_client_commands
   -open Tezos_baking_017_PtNairob
   -open Tezos_baking_017_PtNairob_commands)

@@ -41,5 +41,5 @@
   -open Tp_017.Protocol
   -open Tezos_micheline
   -open Tz17_testhelpers
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_protocol_plugin_017_PtNairob))

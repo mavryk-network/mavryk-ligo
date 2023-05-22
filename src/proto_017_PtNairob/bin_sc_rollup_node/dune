@@ -31,6 +31,6 @@
   -open Tezos_client_base
   -open Tezos_client_base_unix
   -open Tezos_client_commands
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Octez_smart_rollup_node
   -open Octez_smart_rollup_node_PtNairob))

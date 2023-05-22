@@ -23,6 +23,6 @@
   -open Tezos_client_commands
   -open Tezos_client_base
   -open Tezos_client_base_unix
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tezos_smart_rollup_017_PtNairob
   -open Tezos_smart_rollup_layer2_017_PtNairob))

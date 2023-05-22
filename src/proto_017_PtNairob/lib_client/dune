@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_client_017_PtNairob)
+ (name tc_017)
  (public_name tc-017)
  (instrumentation (backend bisect_ppx))
  (libraries

@@ -48,7 +48,7 @@
   -open Tezos_stdlib_unix
   -open Tezos_client_base
   -open Tezos_client_base_unix
-  -open Tezos_client_017_PtNairob
+  -open Tc_017
   -open Tp_017
   -open Tezos_protocol_plugin_017_PtNairob
   -open Tp_017_params

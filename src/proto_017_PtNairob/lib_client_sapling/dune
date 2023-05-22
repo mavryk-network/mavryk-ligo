@@ -23,7 +23,7 @@
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_stdlib_unix
   -open Tezos_client_base
-  -open Tezos_client_017_PtNairob
-  -open Tezos_client_017_PtNairob_commands
+  -open Tc_017
+  -open Tc_017_commands
   -open Tp_017
   -open Tezos_protocol_plugin_017_PtNairob))
