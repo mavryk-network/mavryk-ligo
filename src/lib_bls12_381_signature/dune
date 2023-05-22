@@ -14,9 +14,8 @@
  (modules bls12_381_signature)
  (foreign_stubs
   (language c)
-  (flags (-Wall -Wextra :standard))
   (names blst_bindings_stubs))
- (c_library_flags (-Wall -Wextra :standard -lpthread)))
+ (c_library_flags (:standard -lpthread)))
 
 (rule
  (targets needed-wasm-names)
