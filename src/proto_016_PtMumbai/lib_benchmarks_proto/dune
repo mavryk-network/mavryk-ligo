@@ -41,5 +41,5 @@
   -open Tp_016.Protocol
   -open Tezos_micheline
   -open Tz16_testhelpers
-  -open Tezos_client_016_PtMumbai
+  -open Tc_016
   -open Tezos_protocol_plugin_016_PtMumbai))

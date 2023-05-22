@@ -37,7 +37,7 @@
   -open Tezos_protocol_plugin_016_PtMumbai
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_016_PtMumbai
+  -open Tc_016
   -open Tezos_client_commands
   -open Tezos_stdlib
   -open Tezos_stdlib_unix
@@ -72,7 +72,7 @@
   -open Tezos_stdlib_unix
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_016_PtMumbai
+  -open Tc_016
   -open Tezos_client_commands
   -open Tezos_baking_016_PtMumbai)
  (modules Baking_commands))
@@ -99,7 +99,7 @@
   -open Tp_016
   -open Tezos_shell_services
   -open Tezos_client_base
-  -open Tezos_client_016_PtMumbai
+  -open Tc_016
   -open Tezos_client_commands
   -open Tezos_baking_016_PtMumbai
   -open Tezos_baking_016_PtMumbai_commands)

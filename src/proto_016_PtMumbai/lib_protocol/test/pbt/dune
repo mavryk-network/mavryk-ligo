@@ -29,7 +29,7 @@
   -open Tezt_core.Base
   -open Tezos_base.TzPervasives
   -open Tezos_micheline
-  -open Tezos_client_016_PtMumbai
+  -open Tc_016
   -open Tp_016
   -open Tezos_test_helpers
   -open Tz16_testhelpers
