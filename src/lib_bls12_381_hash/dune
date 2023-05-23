@@ -19,4 +19,4 @@
    anemoi
    poseidon
    griffin))
- (c_library_flags (-Wall -Wextra :standard -lpthread)))
+ (c_library_flags (:standard -lpthread)))
