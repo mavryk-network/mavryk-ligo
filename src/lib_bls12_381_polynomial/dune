@@ -18,5 +18,4 @@
    caml_bls12_381_polynomial_ec_array_stubs
    caml_bls12_381_polynomial_fft_stubs
    bls12_381_polynomial_polynomial
-   bls12_381_polynomial_fft))
- (c_library_flags (-Wall -Wextra :standard)))
+   bls12_381_polynomial_fft)))
