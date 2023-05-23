@@ -13,6 +13,7 @@ depends: [
   "ppx_deriving"
   "tz-lwtres-std"
   "tezos-stdlib"
+  "tezos-tree-encoding"
   "tezos-error-monad"
   "zarith" { >= "1.12" & < "1.13" }
   "tezos-lazy-containers"
