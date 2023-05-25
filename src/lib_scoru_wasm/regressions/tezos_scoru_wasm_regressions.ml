@@ -68,7 +68,7 @@ module Prover = struct
     type proof = Context_binary.Proof.tree Context_binary.Proof.t
 
     let proof_encoding =
-      Tezos_context_merkle_proof_encoding.Merkle_proof_encoding.V2.Tree2
+      Tzctx_mp_enc.Merkle_proof_encoding.V2.Tree2
       .tree_proof_encoding
 
     let kinded_hash_to_state_hash :

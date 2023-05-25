@@ -4,7 +4,7 @@
 (env (_ (env-vars (NODE_PRELOAD hacl-wasm,ocaml-bls12-381,secp256k1-wasm))))
 
 (library
- (name tezos_context_merkle_proof_encoding)
+ (name tzctx_mp_enc)
  (public_name tezos-context.merkle_proof_encoding)
  (instrumentation (backend bisect_ppx))
  (libraries

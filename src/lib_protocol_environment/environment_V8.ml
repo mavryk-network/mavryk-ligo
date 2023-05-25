@@ -1097,7 +1097,7 @@ struct
     module type PROOF_ENCODING = Tezos_context_sigs.Context.PROOF_ENCODING
 
     module Proof_encoding =
-      Tezos_context_merkle_proof_encoding.Merkle_proof_encoding
+      Tzctx_mp_enc.Merkle_proof_encoding
 
     let complete ctxt s = Base58.complete ctxt s
   end
