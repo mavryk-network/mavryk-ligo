@@ -29,7 +29,7 @@
   -open Octez_alcotezt
   -open Tezos_test_helpers
   -open Tezos_micheline
-  -open Tezos_protocol_plugin_016_PtMumbai
+  -open Tp_plugin_016
   -open Tp_016
   -open Tp_016.Protocol
   -open Tp_016_params

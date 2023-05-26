@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_plugin_016_PtMumbai)
+ (name tp_plugin_016)
  (public_name tp-plugin-016)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -18,7 +18,7 @@
  (modules (:standard \ Plugin_registerer)))
 
 (library
- (name tezos_protocol_plugin_016_PtMumbai_registerer)
+ (name tp_plugin_016_registerer)
  (public_name tp-plugin-016-registerer)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -31,6 +31,6 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_embedded_protocol_016_PtMumbai
-  -open Tezos_protocol_plugin_016_PtMumbai
+  -open Tp_plugin_016
   -open Tezos_shell)
  (modules Plugin_registerer))

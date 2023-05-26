@@ -42,4 +42,4 @@
   -open Tezos_micheline
   -open Tz16_testhelpers
   -open Tc_016
-  -open Tezos_protocol_plugin_016_PtMumbai))
+  -open Tp_plugin_016))

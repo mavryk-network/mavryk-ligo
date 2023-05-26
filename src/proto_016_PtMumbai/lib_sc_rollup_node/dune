@@ -50,7 +50,7 @@
   -open Tezos_client_base_unix
   -open Tc_016
   -open Tp_016
-  -open Tezos_protocol_plugin_016_PtMumbai
+  -open Tp_plugin_016
   -open Tp_016_params
   -open Tezos_workers
   -open Tezos_dal_node_lib

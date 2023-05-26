@@ -30,6 +30,6 @@
   -open Tezos_shell_services
   -open Tezos_client_base
   -open Tp_016
-  -open Tezos_protocol_plugin_016_PtMumbai
+  -open Tp_plugin_016
   -open Tp_016_params
   -open Tz_scr_016))

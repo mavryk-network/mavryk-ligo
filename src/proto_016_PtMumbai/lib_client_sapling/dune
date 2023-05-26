@@ -26,4 +26,4 @@
   -open Tc_016
   -open Tc_016_commands
   -open Tp_016
-  -open Tezos_protocol_plugin_016_PtMumbai))
+  -open Tp_plugin_016))
