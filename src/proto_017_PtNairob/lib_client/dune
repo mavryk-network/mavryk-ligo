@@ -32,4 +32,4 @@
   -open Tp_017
   -open Tezos_protocol_plugin_017_PtNairob
   -open Tp_017_params
-  -open Tezos_smart_rollup_017_PtNairob))
+  -open Tz_scr_017))

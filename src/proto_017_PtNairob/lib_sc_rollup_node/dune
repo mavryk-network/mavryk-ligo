@@ -55,7 +55,7 @@
   -open Tezos_workers
   -open Tezos_dal_node_lib
   -open Tezos_shell_services
-  -open Tezos_smart_rollup_017_PtNairob
+  -open Tz_scr_017
   -open Tezos_smart_rollup_layer2_017_PtNairob
   -open Tezos_layer2_utils_017_PtNairob
   -open Tezos_layer2_store
