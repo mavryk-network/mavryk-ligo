@@ -67,6 +67,6 @@
   -open Tc_017
   -open Tezos_client_commands
   -open Tc_017_commands
-  -open Tezos_client_sapling_017_PtNairob
+  -open Tc_sapling_017
   -open Tp_plugin_017)
  (modules alpha_commands_registration))
