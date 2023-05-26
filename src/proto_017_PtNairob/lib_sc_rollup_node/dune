@@ -50,7 +50,7 @@
   -open Tezos_client_base_unix
   -open Tc_017
   -open Tp_017
-  -open Tezos_protocol_plugin_017_PtNairob
+  -open Tp_plugin_017
   -open Tp_017_params
   -open Tezos_workers
   -open Tezos_dal_node_lib

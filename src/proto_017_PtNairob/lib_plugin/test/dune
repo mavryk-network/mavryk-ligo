@@ -29,7 +29,7 @@
   -open Octez_alcotezt
   -open Tezos_test_helpers
   -open Tezos_micheline
-  -open Tezos_protocol_plugin_017_PtNairob
+  -open Tp_plugin_017
   -open Tp_017
   -open Tp_017.Protocol
   -open Tp_017_params

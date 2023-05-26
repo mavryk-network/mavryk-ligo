@@ -2,7 +2,7 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tezos_protocol_plugin_017_PtNairob)
+ (name tp_plugin_017)
  (public_name tp-plugin-017)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -18,7 +18,7 @@
  (modules (:standard \ Plugin_registerer)))
 
 (library
- (name tezos_protocol_plugin_017_PtNairob_registerer)
+ (name tp_plugin_017_registerer)
  (public_name tp-plugin-017-registerer)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -31,6 +31,6 @@
   -open Tezos_base.TzPervasives
   -open Tezos_base.TzPervasives.Error_monad.Legacy_monad_globals
   -open Tezos_embedded_protocol_017_PtNairob
-  -open Tezos_protocol_plugin_017_PtNairob
+  -open Tp_plugin_017
   -open Tezos_shell)
  (modules Plugin_registerer))

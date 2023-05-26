@@ -26,4 +26,4 @@
   -open Tc_017
   -open Tc_017_commands
   -open Tp_017
-  -open Tezos_protocol_plugin_017_PtNairob))
+  -open Tp_plugin_017))

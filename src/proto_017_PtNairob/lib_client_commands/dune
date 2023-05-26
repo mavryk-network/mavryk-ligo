@@ -35,7 +35,7 @@
   -open Tc_017
   -open Tezos_client_commands
   -open Tezos_client_base_unix
-  -open Tezos_protocol_plugin_017_PtNairob)
+  -open Tp_plugin_017)
  (modules (:standard \ alpha_commands_registration)))
 
 (library
@@ -68,5 +68,5 @@
   -open Tezos_client_commands
   -open Tc_017_commands
   -open Tezos_client_sapling_017_PtNairob
-  -open Tezos_protocol_plugin_017_PtNairob)
+  -open Tp_plugin_017)
  (modules alpha_commands_registration))

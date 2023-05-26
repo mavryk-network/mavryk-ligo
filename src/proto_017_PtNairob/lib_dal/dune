@@ -26,7 +26,7 @@
   -open Tezos_stdlib_unix
   -open Tezos_dal_node_lib
   -open Tc_017
-  -open Tezos_protocol_plugin_017_PtNairob
+  -open Tp_plugin_017
   -open Tezos_embedded_protocol_017_PtNairob
   -open Tezos_layer2_utils_017_PtNairob
   -open Tp_017))

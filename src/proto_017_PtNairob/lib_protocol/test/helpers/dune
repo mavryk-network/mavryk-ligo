@@ -28,6 +28,6 @@
   -open Tezos_stdlib_unix
   -open Tp_017
   -open Tc_017
-  -open Tezos_protocol_plugin_017_PtNairob
+  -open Tp_plugin_017
   -open Tezos_shell_services
   -open Tezos_crypto_dal))

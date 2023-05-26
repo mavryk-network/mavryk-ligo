@@ -30,6 +30,6 @@
   -open Tezos_shell_services
   -open Tezos_client_base
   -open Tp_017
-  -open Tezos_protocol_plugin_017_PtNairob
+  -open Tp_plugin_017
   -open Tp_017_params
   -open Tz_scr_017))
