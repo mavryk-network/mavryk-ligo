@@ -35,7 +35,7 @@ open Protocol
 open Alpha_context
 
 let make_context () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block, _contract = Context.init1 () in
   let* incr = Incremental.begin_construction block in
   return (Incremental.alpha_ctxt incr)
@@ -48,14 +48,14 @@ let hash_key ctxt ~ticketer ~ty ~contents ~owner =
   Alpha_context.Ticket_hash.make ctxt ~ticketer ~ty ~contents ~owner
 
 let assert_balance ctxt ~loc key expected =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*@ balance, _ = Ticket_balance.get_balance ctxt key in
   match balance with
   | Some b -> Assert.equal_int ~loc (Z.to_int b) expected
   | None -> failwith "Expected balance %d" expected
 
 let assert_no_balance ctxt key =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*@ balance, _ = Ticket_balance.get_balance ctxt key in
   match balance with
   | Some b -> failwith "Expected empty (none) balance but got %d" (Z.to_int b)
@@ -66,7 +66,7 @@ let adjust_balance ctxt key delta =
 
 let assert_non_overlapping_keys ~loc ~ticketer1 ~ticketer2 ~contents1 ~contents2
     ~ty1 ~ty2 ~owner1 ~owner2 =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = make_context () in
   let*?@ k1, ctxt =
     hash_key ctxt ~ticketer:ticketer1 ~ty:ty1 ~contents:contents1 ~owner:owner1
@@ -146,7 +146,7 @@ let test_non_overlapping_keys_owner () =
     the intended effect.
   *)
 let test_ticket_balance_single_update () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = make_context () in
   let*?@ alice_red, ctxt = make_key ctxt "alice_red" in
   let*@ _, ctxt = adjust_balance ctxt alice_red 1 in
@@ -155,7 +155,7 @@ let test_ticket_balance_single_update () =
 (** Test that updating the ticket-balance table with different keys
     updates both entries. *)
 let test_ticket_balance_different_owners () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = make_context () in
   let*?@ alice_red, ctxt = make_key ctxt "alice_red" in
   let*?@ alice_blue, ctxt = make_key ctxt "alice_blue" in
@@ -168,7 +168,7 @@ let test_ticket_balance_different_owners () =
 (** Test updating the same entry with multiple updates yields
     the net result of all balance updates *)
 let test_ticket_balance_multiple_updates () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = make_context () in
   let*?@ alice_red, ctxt = make_key ctxt "alice_red" in
   let*@ _, ctxt = adjust_balance ctxt alice_red 1 in
@@ -179,7 +179,7 @@ let test_ticket_balance_multiple_updates () =
 (** Test that with no updates to the table, no balance is present in
     the table *)
 let test_empty_balance () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = make_context () in
   let*?@ alice_red, ctxt = make_key ctxt "alice_red" in
   assert_no_balance ctxt alice_red
@@ -187,7 +187,7 @@ let test_empty_balance () =
 (** Test that adding one entry with positive balance and then
     updating with a negative balance also removes the entry *)
 let test_empty_balance_after_update () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = make_context () in
   let*?@ alice_red, ctxt = make_key ctxt "alice_red" in
   let*@ _, ctxt = adjust_balance ctxt alice_red 1 in
@@ -197,7 +197,7 @@ let test_empty_balance_after_update () =
 (** Test that attempting to update an entry with a negative balance
     results in an error. *)
 let test_negative_balance () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = make_context () in
   let*?@ alice_red, ctxt = make_key ctxt "alice_red" in
   let*! res = wrap @@ adjust_balance ctxt alice_red (-1) in
@@ -207,7 +207,7 @@ let test_negative_balance () =
     resulting in extra storage space and negative for ones that frees up storage.
     *)
 let test_storage_space () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = make_context () in
   let*?@ alice_red, ctxt = make_key ctxt "alice_red" in
   (* Space for adding an entry is 65 for the key plus 1 for the value. *)

@@ -86,7 +86,7 @@ let init_refutation ~size ?init_tick start_hash =
   (choice, step)
 
 let two_stakers_in_conflict () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt, rollup, genesis_hash, refuter, defender, staker3 =
     T.originate_rollup_and_deposit_with_three_stakers ()
   in
@@ -151,7 +151,7 @@ very evenly spread through the total tick-duration. Formally, the
 maximum tick-distance between two consecutive states in a dissection
 may not be more than half of the total tick-duration. *)
 let test_poorly_distributed_dissection () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ( ctxt,
          rollup,
          refuter,
@@ -190,7 +190,7 @@ let test_poorly_distributed_dissection () =
     (function D.Dissection_invalid_distribution _ -> true | _ -> false)
 
 let test_single_valid_game_move () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ( ctxt,
          rollup,
          refuter,
@@ -235,7 +235,7 @@ module Arith_pvm = Sc_rollup_helpers.Arith_pvm
 (** Test that sending a invalid serialized inbox proof to
     {Sc_rollup_proof_repr.valid} is rejected. *)
 let test_invalid_serialized_inbox_proof () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let open Alpha_context in
   let rollup = Sc_rollup.Address.zero in
   let level = Raw_level.(succ root) in
@@ -284,7 +284,7 @@ let test_invalid_serialized_inbox_proof () =
     (( = ) Sc_rollup_proof_repr.Sc_rollup_invalid_serialized_inbox_proof)
 
 let test_first_move_with_swapped_commitment () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ( ctxt,
          rollup,
          refuter,
@@ -314,7 +314,7 @@ let test_first_move_with_swapped_commitment () =
           (player, opponent_commitment_hash)))
 
 let test_first_move_from_invalid_player () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ( ctxt,
          rollup,
          _refuter,
@@ -343,7 +343,7 @@ let test_first_move_from_invalid_player () =
           (staker3, player_commitment_hash)))
 
 let test_first_move_with_invalid_opponent () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ( ctxt,
          rollup,
          refuter,
@@ -372,7 +372,7 @@ let test_first_move_with_invalid_opponent () =
           (staker3, opponent_commitment_hash)))
 
 let test_first_move_with_invalid_ancestor () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ( ctxt,
          rollup,
          refuter,

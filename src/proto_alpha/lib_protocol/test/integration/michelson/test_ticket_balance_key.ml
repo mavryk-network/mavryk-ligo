@@ -35,18 +35,18 @@ open Protocol
 open Alpha_context
 
 let new_ctxt () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block, _contract = Context.init1 () in
   let* incr = Incremental.begin_construction block in
   return @@ Incremental.alpha_ctxt incr
 
 let make_contract ticketer =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*?@ x = Contract.of_b58check ticketer in
   return x
 
 let make_ex_token ctxt ~ticketer ~ty ~content =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*?@ Script_ir_translator.Ex_comparable_ty cty, ctxt =
     let node = Micheline.root @@ Expr.from_string ty in
     Script_ir_translator.parse_comparable_ty ctxt node
@@ -59,7 +59,7 @@ let make_ex_token ctxt ~ticketer ~ty ~content =
   return (Ticket_token.Ex_token {contents_type = cty; ticketer; contents}, ctxt)
 
 let make_key ctxt ~ticketer ~ty ~content ~owner =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ex_token, ctxt = make_ex_token ctxt ~ticketer ~ty ~content in
   let* owner = make_contract owner in
   let*@ key, ctxt =
@@ -78,7 +78,7 @@ let not_equal_script_hash ~loc msg key1 key2 =
 
 let assert_keys ~ticketer1 ~ticketer2 ~ty1 ~ty2 ~amount1 ~amount2 ~content1
     ~content2 ~owner1 ~owner2 assert_condition =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = new_ctxt () in
   let* key1, ctxt =
     make_key ctxt ~ticketer:ticketer1 ~ty:ty1 ~content:content1 ~owner:owner1

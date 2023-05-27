@@ -321,7 +321,7 @@ let publish_op_and_dummy_commitment ~sender ?compressed_state ?predecessor
 
 (* Verify that parameters and unparsed parameters match. *)
 let verify_params ctxt ~parameters_ty ~parameters ~unparsed_parameters =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let show exp = Expr.to_string @@ exp in
   let unparse ctxt parameters =
     Script_ir_translator.unparse_data
@@ -356,7 +356,7 @@ let verify_params ctxt ~parameters_ty ~parameters ~unparsed_parameters =
    Also checks each transaction operation for type mismatches etc. *)
 let verify_execute_outbox_message_operations incr rollup ~loc ~operations
     ~expected_transactions =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let ctxt = Incremental.alpha_ctxt incr in
   let validate_and_extract_operation_params ctxt op =
     match op with
@@ -560,7 +560,7 @@ let cement_commitments ?challenge_window_in_blocks block rollup staker hashes =
     hashes
 
 let publish_and_cement_commitment incr ~baker ~originator rollup commitment =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block = publish_commitment incr originator rollup commitment in
   let* constants = Context.get_constants (B block) in
   let* block =
@@ -636,7 +636,7 @@ let adjust_ticket_token_balance_of_rollup ctxt rollup ticket_token ~delta =
 (** A version of execute outbox message that output ignores proof validation. *)
 let execute_outbox_message_without_proof_validation incr rollup
     ~cemented_commitment outbox_message =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*@ res, ctxt =
     Sc_rollup_operations.Internal_for_tests.execute_outbox_message
       (Incremental.alpha_ctxt incr)
@@ -665,7 +665,7 @@ let execute_outbox_message incr ~originator rollup ~output_proof
   Incremental.begin_construction block
 
 let assert_ticket_token_balance ~loc incr token owner expected =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let ctxt = Incremental.alpha_ctxt incr in
   let*@ balance, _ =
     let* key_hash, ctxt = Ticket_balance_key.of_ex_token ctxt ~owner token in
@@ -693,7 +693,7 @@ let balances ctxt contract =
   return {liquid; frozen}
 
 let check_balances_evolution bal_before {liquid; frozen} ~action =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* {liquid = expected_liquid; frozen = expected_frozen} =
     match action with
     | `Freeze amount ->
@@ -785,7 +785,7 @@ let recover_bond_with_success i contract rollup =
     The comitter tries to withdraw stake before and after cementing. Only the
     second attempt is expected to succeed. *)
 let test_publish_cement_and_recover_bond () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block, contracts, rollup = init_and_originate Context.T2 in
   let _, contract = contracts in
   let* block = bake_blocks_until_next_inbox_level block rollup in
@@ -858,7 +858,7 @@ let test_publish_fails_on_double_stake () =
     cement one of the commitments; it checks that this fails because the
     commitment is contested. *)
 let test_cement_fails_on_conflict () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt, contracts, rollup = init_and_originate Context.T3 in
   let* ctxt = bake_blocks_until_next_inbox_level ctxt rollup in
   let _, contract1, contract2 = contracts in
@@ -897,7 +897,7 @@ let test_cement_fails_on_conflict () =
 
 let commit_and_cement_after_n_bloc ?expect_apply_failure block contract rollup n
     =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block = bake_blocks_until_next_inbox_level block rollup in
   let* i = Incremental.begin_construction block in
   let* commitment = dummy_commitment (I i) rollup in
@@ -1071,7 +1071,7 @@ let assert_equal_expr ~loc e1 e2 =
   Assert.equal_string ~loc s1 s2
 
 let test_originating_with_valid_type () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block, contract = context_init Context.T1 in
   let assert_parameters_ty parameters_ty =
     let* block, rollup = sc_originate block contract ~parameters_ty in

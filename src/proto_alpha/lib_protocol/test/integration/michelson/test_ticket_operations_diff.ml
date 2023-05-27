@@ -71,7 +71,7 @@ let assert_fails ~loc ?error m =
   | Error err_res -> aux err_res
 
 let big_map_updates_of_key_values ctxt key_values =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   List.fold_right_es
     (fun (key, value) (kvs, ctxt) ->
       let*@ key_hash, ctxt =
@@ -92,7 +92,7 @@ let big_map_updates_of_key_values ctxt key_values =
     ([], ctxt)
 
 let new_int_key_big_map ctxt contract ~value_type entries =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*@ ctxt, big_map_id = Big_map.fresh ~temporary:false ctxt in
   let key_type = Expr.from_string "int" in
   let value_type = Expr.from_string value_type in
@@ -118,7 +118,7 @@ let assert_equal_string_list ~loc msg =
 
 let string_of_ticket_token ctxt
     (Ticket_token.Ex_token {ticketer; contents_type; contents}) =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*@ x, _ =
     Script_ir_unparser.unparse_comparable_data
       ctxt
@@ -150,7 +150,7 @@ let string_of_destination_and_amounts cas =
 
 let string_of_ticket_operations_diff ctxt
     {ticket_token; total_amount; destinations} =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ticket_token = string_of_ticket_token ctxt ticket_token in
   let destinations = string_of_destination_and_amounts destinations in
   return
@@ -162,7 +162,7 @@ let string_of_ticket_operations_diff ctxt
 
 let assert_equal_ticket_token_diffs ctxt ~loc ticket_diffs
     ~(expected : ticket_token_diff list) =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   (* Sort destinations by contract and the strings alphabetically so that order
      does not matter for comparison. *)
   let sorted_strings ticket_diffs =
@@ -205,7 +205,7 @@ let init () =
   (baker, src1, block)
 
 let originate block ~script ~storage ~sender ~baker ~forges_tickets =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let code = Expr.toplevel_from_string script in
   let storage = Expr.from_string storage in
   let* operation, destination =
@@ -232,7 +232,7 @@ let originate block ~script ~storage ~sender ~baker ~forges_tickets =
   Incremental.finalize_block incr >|=? fun block -> (destination, script, block)
 
 let two_ticketers block =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt =
     Incremental.begin_construction block >|=? Incremental.alpha_ctxt
   in
@@ -245,7 +245,7 @@ let nat n = Script_int.(abs @@ of_int n)
 
 let origination_operation block ~sender ~baker ~script ~storage ~forges_tickets
     =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* orig_contract, (code, storage), block =
     originate block ~script ~storage ~sender ~baker ~forges_tickets
   in
@@ -301,7 +301,7 @@ let delegation_operation ~sender =
     {sender; operation = Delegation None; nonce = 1}
 
 let originate block ~sender ~baker ~script ~storage ~forges_tickets =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* orig_contract, _script, block =
     originate block ~script ~storage ~sender ~baker ~forges_tickets
   in
@@ -311,7 +311,7 @@ let originate block ~sender ~baker ~script ~storage ~forges_tickets =
   return (orig_contract, incr)
 
 let transfer_operation ~incr ~sender ~destination ~parameters_ty ~parameters =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let ctxt = Incremental.alpha_ctxt incr in
   let*@ params_node, ctxt =
     Script_ir_translator.unparse_data
@@ -381,12 +381,12 @@ let make_ticket (ticketer, contents, amount) =
   >>?= fun amount -> return {ticketer; contents; amount}
 
 let make_tickets ts =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* elements = List.map_es make_ticket ts in
   return @@ Script_list.of_list elements
 
 let transfer_tickets_operation ~incr ~sender ~destination tickets =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*? parameters_ty = Environment.wrap_tzresult list_ticket_string_ty in
   let*@ parameters = make_tickets tickets in
   transfer_operation ~incr ~sender ~destination ~parameters_ty ~parameters
@@ -394,7 +394,7 @@ let transfer_tickets_operation ~incr ~sender ~destination tickets =
 (** Test that no tickets are returned for operations that do not contain
     tickets. *)
 let test_non_ticket_operations () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* _baker, sender, block = init () in
   let* incr = Incremental.begin_construction block in
   let operations = [delegation_operation ~sender:(Contract sender)] in
@@ -403,7 +403,7 @@ let test_non_ticket_operations () =
 
 (** Test transfer to a contract that does not take tickets. *)
 let test_transfer_to_non_ticket_contract () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* orig_contract, incr =
     originate
@@ -427,7 +427,7 @@ let test_transfer_to_non_ticket_contract () =
 
 (** Test transfer an empty list of tickets. *)
 let test_transfer_empty_ticket_list () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* orig_contract, incr =
     originate
@@ -458,7 +458,7 @@ let five = Ticket_amount.add three two
 
 (** Test transfer a list of one ticket. *)
 let test_transfer_one_ticket () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let* orig_contract, incr =
@@ -496,7 +496,7 @@ let test_transfer_one_ticket () =
     zero-tickets are disabled as well as when the parameters do not contain any
     zero-amount tickets. *)
 let test_transfer_multiple_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let* orig_contract, incr =
@@ -547,7 +547,7 @@ let test_transfer_multiple_tickets () =
 
 (** Test transfer a list of tickets of different types. *)
 let test_transfer_different_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer1, ticketer2 = two_ticketers block in
   let* destination, incr =
@@ -618,7 +618,7 @@ let test_transfer_different_tickets () =
 
 (** Test transfer to two contracts with different types of tickets. *)
 let test_transfer_to_two_contracts_with_different_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let parameters =
@@ -698,7 +698,7 @@ let test_transfer_to_two_contracts_with_different_tickets () =
 
 (** Test originate a contract that does not contain tickets. *)
 let test_originate_non_ticket_contract () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* _orig_contract, operation, incr =
     origination_operation
@@ -714,7 +714,7 @@ let test_originate_non_ticket_contract () =
 
 (** Test originate a contract with an empty list of tickets. *)
 let test_originate_with_empty_tickets_list () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let storage = "{}" in
   let* _orig_contract, operation, incr =
@@ -731,7 +731,7 @@ let test_originate_with_empty_tickets_list () =
 
 (** Test originate a contract with a single ticket. *)
 let test_originate_with_one_ticket () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let storage =
@@ -762,7 +762,7 @@ let test_originate_with_one_ticket () =
 
 (** Test originate a contract with multiple tickets. *)
 let test_originate_with_multiple_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let storage =
@@ -814,7 +814,7 @@ let test_originate_with_multiple_tickets () =
 
 (** Test originate a contract with multiple tickets of different types. *)
 let test_originate_with_different_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer1, ticketer2 = two_ticketers block in
   let storage =
@@ -892,7 +892,7 @@ let test_originate_with_different_tickets () =
 
 (** Test originate two contracts with multiple tickets of different types. *)
 let test_originate_two_contracts_with_different_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let storage =
@@ -962,7 +962,7 @@ let test_originate_two_contracts_with_different_tickets () =
 
 (** Test originate and transfer tickets. *)
 let test_originate_and_transfer () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let ticketer_addr = Contract.to_b58check ticketer in
@@ -1039,7 +1039,7 @@ let test_originate_and_transfer () =
 
 (** Test originate a contract with a big-map with tickets inside. *)
 let test_originate_big_map_with_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, ticketer, block = init () in
   let* operation, originated =
     Op.contract_origination_hash (B block) ticketer ~script:Op.dummy_script
@@ -1098,7 +1098,7 @@ let test_originate_big_map_with_tickets () =
 
 (** Test transfer a big-map with tickets. *)
 let test_transfer_big_map_with_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, ticketer_contract, block = init () in
   let* operation, originated =
     Op.contract_origination_hash
@@ -1184,7 +1184,7 @@ let test_transfer_big_map_with_tickets () =
 (** Test transferring a list of multiple tickets where two of them have zero
     amounts fails. *)
 let test_transfer_fails_on_multiple_zero_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let* orig_contract, incr =
@@ -1214,7 +1214,7 @@ let test_transfer_fails_on_multiple_zero_tickets () =
 
 (** Test that zero-amount tickets are detected and that an error is yielded. *)
 let test_fail_on_zero_amount_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* baker, sender, block = init () in
   let* ticketer = one_ticketer block in
   let storage =

@@ -36,13 +36,13 @@ open Alpha_context
 open Script_typed_ir
 
 let new_ctxt () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block, _contract = Context.init1 () in
   let+ incr = Incremental.begin_construction block in
   Incremental.alpha_ctxt incr
 
 let parse_and_project (ty : ((_, _) lambda, _) ty) (node : Script.node) =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = new_ctxt () in
   let elab_conf = Script_ir_translator_config.make ~legacy:false () in
   let*@ lam, _ctxt =
@@ -56,7 +56,7 @@ let parse_and_project (ty : ((_, _) lambda, _) ty) (node : Script.node) =
           Prim (dummy_location, Michelson_v1_primitives.D_Lambda_rec, [node], []))
 
 let node_of_string str =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*? parsed =
     Micheline_parser.no_parsing_error
     @@ Michelson_v1_parser.parse_expression ~check:false str
@@ -71,7 +71,7 @@ let node_to_string node =
        (Micheline.strip_locations node))
 
 let assert_lambda_normalizes_to ~loc ty str expected =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* node = node_of_string str in
   let* node_normalized = parse_and_project ty node in
   let str_normalized = node_to_string node_normalized in
@@ -80,7 +80,7 @@ let assert_lambda_normalizes_to ~loc ty str expected =
   Assert.equal_string ~loc expected str_normalized
 
 let assert_normalizes_to ~loc ty str expected =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* () = assert_lambda_normalizes_to ~loc ty str expected in
   let* () =
     assert_lambda_normalizes_to
@@ -92,7 +92,7 @@ let assert_normalizes_to ~loc ty str expected =
   return_unit
 
 let test_lambda_normalization () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*?@ ty =
     Script_typed_ir.(lambda_t Micheline.dummy_location unit_t never_t)
   in

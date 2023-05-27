@@ -39,7 +39,7 @@ let assert_equal_string_list ~loc msg =
   Assert.assert_equal_list ~loc String.equal msg Format.pp_print_string
 
 let string_list_of_ex_token_diffs ctxt token_diffs =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let accum (xs, ctxt)
       (Ticket_token.Ex_token {ticketer; contents_type; contents}, amount) =
     let*@ x, ctxt =
@@ -65,7 +65,7 @@ let string_list_of_ex_token_diffs ctxt token_diffs =
   return (List.rev xs, ctxt)
 
 let make_ex_token ctxt ~ticketer ~type_exp ~content_exp =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*?@ Script_ir_translator.Ex_comparable_ty contents_type, ctxt =
     let node = Micheline.root @@ Expr.from_string type_exp in
     Script_ir_translator.parse_comparable_ty ctxt node
@@ -78,7 +78,7 @@ let make_ex_token ctxt ~ticketer ~type_exp ~content_exp =
   return (Ticket_token.Ex_token {ticketer; contents_type; contents}, ctxt)
 
 let assert_equal_balances ~loc ctxt given expected =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt, tbs1 =
     List.fold_left_map_es
       (fun ctxt ((ticketer, content), delta) ->
@@ -100,7 +100,7 @@ let assert_equal_balances ~loc ctxt given expected =
     (List.sort String.compare tbs2)
 
 let updates_of_key_values ctxt key_values =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   List.fold_right_es
     (fun (key, value) (kvs, ctxt) ->
       let*@ key_hash, ctxt =
@@ -127,7 +127,7 @@ let make_alloc big_map_id alloc updates =
     (Update {init = Lazy_storage.Alloc alloc; updates})
 
 let init () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block, source = Context.init1 () in
   let* operation, originated =
     Op.contract_origination_hash (B block) source ~script:Op.dummy_script
@@ -137,7 +137,7 @@ let init () =
   return (originated, Incremental.alpha_ctxt inc)
 
 let setup ctxt contract ~key_type ~value_type entries =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*@ ctxt, big_map_id = Big_map.fresh ~temporary:false ctxt in
   let key_type = Expr.from_string key_type in
   let value_type = Expr.from_string value_type in
@@ -146,7 +146,7 @@ let setup ctxt contract ~key_type ~value_type entries =
   return (alloc, big_map_id, contract, ctxt)
 
 let new_big_map ctxt contract ~key_type ~value_type entries =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* alloc, big_map_id, contract, ctxt =
     setup ctxt contract ~key_type ~value_type
     @@ List.map (fun (k, v) -> (k, Some v)) entries
@@ -158,7 +158,7 @@ let new_big_map ctxt contract ~key_type ~value_type entries =
   return (big_map_id, ctxt)
 
 let alloc_diff ctxt contract ~key_type ~value_type entries =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* allocations, _, _, ctxt =
     setup
       ctxt
@@ -170,14 +170,14 @@ let alloc_diff ctxt contract ~key_type ~value_type entries =
   return (allocations, ctxt)
 
 let remove_diff ctxt contract ~key_type ~value_type ~existing_entries =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* big_map_id, ctxt =
     new_big_map ctxt contract ~key_type ~value_type existing_entries
   in
   return (Lazy_storage.make Lazy_storage.Kind.Big_map big_map_id Remove, ctxt)
 
 let copy_diff ctxt contract ~key_type ~value_type ~existing_entries ~updates =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* big_map_id, ctxt =
     new_big_map ctxt contract ~key_type ~value_type existing_entries
   in
@@ -192,7 +192,7 @@ let copy_diff ctxt contract ~key_type ~value_type ~existing_entries ~updates =
 
 let existing_diff ctxt contract ~key_type ~value_type ~existing_entries ~updates
     =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* big_map_id, ctxt =
     new_big_map ctxt contract ~key_type ~value_type existing_entries
   in
@@ -207,7 +207,7 @@ let existing_diff ctxt contract ~key_type ~value_type ~existing_entries ~updates
 (** Test that no ticket-tokens are extracted from a diff for allocating an empty
     big-map. *)
 let test_allocate_new_empty () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     alloc_diff ctxt contract ~key_type:"int" ~value_type:"ticket string" []
@@ -220,7 +220,7 @@ let test_allocate_new_empty () =
 (** Test that no ticket-tokens are extracted from a lazy-diff of a big-map
     that does not contain tickets. *)
 let test_allocate_new_no_tickets () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     alloc_diff
@@ -238,7 +238,7 @@ let test_allocate_new_no_tickets () =
 (** Test that ticket-tokens can be extracted from a lazy-diff for allocating a
     new big-map. *)
 let test_allocate_new () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     alloc_diff
@@ -268,7 +268,7 @@ let test_allocate_new () =
 (** Test that ticket-tokens with negative balances are extracted from a
     lazy-diff that removes a big-map. *)
 let test_remove_big_map () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     remove_diff
@@ -299,7 +299,7 @@ let test_remove_big_map () =
 (** Test that there are no ticket-token balance deltas extracted from a
     lazy-diff that applies no updates. *)
 let test_no_updates_to_existing_big_map () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     existing_diff
@@ -324,7 +324,7 @@ let test_no_updates_to_existing_big_map () =
     extracted from a lazy-diff that modifies an existing big-map.
  *)
 let test_update_existing_big_map () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     existing_diff
@@ -367,7 +367,7 @@ let test_update_existing_big_map () =
     multiple updates to the same key.
  *)
 let test_update_same_key_multiple_times_existing_big_map () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     existing_diff
@@ -404,7 +404,7 @@ let test_update_same_key_multiple_times_existing_big_map () =
     multiple removals of the same item.
  *)
 let test_remove_same_key_multiple_times_existing_big_map () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     existing_diff
@@ -436,7 +436,7 @@ let test_remove_same_key_multiple_times_existing_big_map () =
     multiple additions and removals of the same item.
  *)
 let test_update_and_remove_same_key_multiple_times_existing_big_map () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     existing_diff
@@ -475,7 +475,7 @@ let test_update_and_remove_same_key_multiple_times_existing_big_map () =
 (** Test that the extracted ticket-tokens from a lazy diff for copying a big-map
     reflects the tokens of the source as well as the updates. *)
 let test_copy_big_map () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     copy_diff
@@ -507,7 +507,7 @@ let test_copy_big_map () =
 (** Test that the extracted ticket-tokens from a lazy diff for copying a big-map
     reflects the tokens of the source as well as the updates. *)
 let test_copy_big_map_with_updates () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     copy_diff
@@ -552,7 +552,7 @@ let test_copy_big_map_with_updates () =
     with multiple updates to the same key reflects the tokens of the source as
     well as the updates. *)
 let test_copy_big_map_with_updates_to_same_key () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff, ctxt =
     copy_diff
@@ -592,7 +592,7 @@ let test_copy_big_map_with_updates_to_same_key () =
 
 (** Test combinations of lazy-diffs. *)
 let test_mix_lazy_diffs () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* contract, ctxt = init () in
   let* diff_copy, ctxt =
     copy_diff

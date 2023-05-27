@@ -73,7 +73,7 @@ let int_map_gen =
          | Error _ -> Stdlib.failwith "Failed to construct map")
 
 let pp_int_map fmt map =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let pp =
     Assert.pp_print_list (fun fmt (k, v) -> Format.fprintf fmt "(%d, %d)" k v)
   in

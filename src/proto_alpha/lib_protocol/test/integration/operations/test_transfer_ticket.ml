@@ -40,7 +40,7 @@ open Tezos_micheline
    The ticket balance is inspected for correctness.
 *)
 let test_mint_deposit_withdraw_implicit_transfer () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block, (account, another_account) =
     Context.init2 ~consensus_threshold:0 ()
   in
@@ -144,7 +144,7 @@ let test_mint_deposit_withdraw_implicit_transfer () =
    parameter type under the given entrypoint.
 *)
 let test_contract_as_ticket_transfer_destination () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* block, (account, another_account) =
     Context.init2 ~consensus_threshold:0 ()
   in

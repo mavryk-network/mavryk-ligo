@@ -341,7 +341,7 @@ let test_empty_merkelized_payload_hashes_proof_fails () =
    skip list than testing merkelized payload. But it was easier to test with a
    skip-list with hashes as pointer. *)
 let test_invalid_merkelized_payload_hashes_proof_fails (payloads, index) =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let make_proof = Merkelized_payload_hashes.Internal_for_tests.make_proof in
   let hd ~__LOC__ l = List.hd l |> opt_get ~__LOC__ in
   let tl ~__LOC__ l = List.tl l |> opt_get ~__LOC__ in
@@ -427,7 +427,7 @@ let test_invalid_merkelized_payload_hashes_proof_fails (payloads, index) =
 
 (** A node produces an inbox inclusion proof and the protocol verify it. *)
 let test_inclusion_proof_production (payloads_for_levels, level) =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*? node_inbox, proto_inbox =
     construct_node_and_protocol_inbox
       ~inbox_creation_level:Raw_level.root
@@ -452,7 +452,7 @@ let test_inclusion_proof_production (payloads_for_levels, level) =
 (** A node produces an inclusion proof and the protocol fails to verify it
     against the snapshot of the next (empty) level. *)
 let test_inclusion_proof_verification (payloads_for_levels, level) =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let inbox_creation_level = Raw_level.root in
   let*? node_inbox, proto_inbox =
     construct_node_and_protocol_inbox ~inbox_creation_level payloads_for_levels
@@ -709,7 +709,7 @@ let test_payloads_proof_out_of_bound_index payloads =
 
 (** Produce an inbox proof and verify it. *)
 let test_inbox_proof_production (payloads_for_levels, level, message_counter) =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let exp_message = first_after payloads_for_levels level message_counter in
   let*? node_inbox, proto_inbox =
     construct_node_and_protocol_inbox
@@ -748,7 +748,7 @@ let test_invalid_inbox_proof_fails
   QCheck2.assume
     ((not (Raw_level.equal level level'))
     && not (Z.equal message_counter message_counter')) ;
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let*? node_inbox, proto_inbox =
     construct_node_and_protocol_inbox
       ~inbox_creation_level:Raw_level.root

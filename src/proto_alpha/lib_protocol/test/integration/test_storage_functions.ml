@@ -102,7 +102,7 @@ module Table =
      This test checks that it is possible to add values to a
      Carbonated_data_set_storage and iterate over them. *)
 let test_fold_keys_unaccounted () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = Context.default_raw_context () in
   let*@ ctxt, _ = Table.init ctxt 1 in
   let*@ ctxt, _ = Table.init ctxt 2 in
@@ -124,7 +124,7 @@ let test_fold_keys_unaccounted () =
 
 (** Test that [length] returns the number of elements for a given path. *)
 let test_length () =
-  let open Lwt_result_wrap_syntax in
+  let open Lwtres_wrapsyn in
   let* ctxt = Context.default_raw_context () in
   (* Add a tree to the context:
      root:
