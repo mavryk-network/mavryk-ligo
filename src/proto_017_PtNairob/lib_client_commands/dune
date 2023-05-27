@@ -36,10 +36,10 @@
   -open Tezos_client_commands
   -open Tezos_client_base_unix
   -open Tp_plugin_017)
- (modules (:standard \ alpha_commands_registration)))
+ (modules (:standard \ alpha_comreg)))
 
 (library
- (name tc_017_commands_registration)
+ (name tc_017_comreg)
  (public_name tc-017.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -69,4 +69,4 @@
   -open Tc_017_commands
   -open Tc_sapling_017
   -open Tp_plugin_017)
- (modules alpha_commands_registration))
+ (modules alpha_comreg))

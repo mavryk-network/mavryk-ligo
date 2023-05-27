@@ -26,10 +26,10 @@
   -open Tezos_client_base
   -open Tezos_client_001_PtCJ7pwo
   -open Tezos_client_commands)
- (modules (:standard \ alpha_commands_registration)))
+ (modules (:standard \ alpha_comreg)))
 
 (library
- (name tezos_client_001_PtCJ7pwo_commands_registration)
+ (name tezos_client_001_PtCJ7pwo_comreg)
  (public_name tezos-client-001-PtCJ7pwo.commands-registration)
  (libraries
   tezos-base
@@ -53,4 +53,4 @@
   -open Tezos_client_001_PtCJ7pwo
   -open Tezos_client_commands
   -open Tezos_client_001_PtCJ7pwo_commands)
- (modules alpha_commands_registration))
+ (modules alpha_comreg))

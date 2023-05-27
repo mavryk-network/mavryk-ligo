@@ -4315,9 +4315,9 @@ module Protocol : sig
 
   val client_commands_exn : t -> target
 
-  val client_commands_registration : t -> target option
+  val client_comreg : t -> target option
 
-  val baking_commands_registration : t -> target option
+  val baking_comreg : t -> target option
 
   val plugin : t -> target option
 
@@ -4438,8 +4438,8 @@ end = struct
     embedded : target;
     client : target option;
     client_commands : target option;
-    client_commands_registration : target option;
-    baking_commands_registration : target option;
+    client_comreg : target option;
+    baking_comreg : target option;
     plugin : target option;
     plugin_registerer : target option;
     dal : target option;
@@ -4450,8 +4450,8 @@ end = struct
     baking : target option;
   }
 
-  let make ?client ?client_commands ?client_commands_registration
-      ?baking_commands_registration ?plugin ?plugin_registerer ?dal ?dac
+  let make ?client ?client_commands ?client_comreg
+      ?baking_comreg ?plugin ?plugin_registerer ?dal ?dac
       ?test_helpers ?parameters ?benchmarks_proto ?baking ~status ~name ~main
       ~embedded () =
     {
@@ -4461,8 +4461,8 @@ end = struct
       embedded;
       client;
       client_commands;
-      client_commands_registration;
-      baking_commands_registration;
+      client_comreg;
+      baking_comreg;
       plugin;
       plugin_registerer;
       dal;
@@ -4509,9 +4509,9 @@ end = struct
 
   let client_commands_exn p = mandatory "client-commands" p p.client_commands
 
-  let client_commands_registration p = p.client_commands_registration
+  let client_comreg p = p.client_comreg
 
-  let baking_commands_registration p = p.baking_commands_registration
+  let baking_comreg p = p.baking_comreg
 
   let plugin p = p.plugin
 
@@ -5617,7 +5617,7 @@ let hash = Protocol.hash
           ]
         ~bisect_ppx:(if N.(number >= 008) then Yes else No)
         ~linkall:true
-        ~all_modules_except:["alpha_commands_registration"]
+        ~all_modules_except:["alpha_comreg"]
     in
     let client_sapling =
       only_if (N.(number >= 011) && not_overridden) @@ fun () ->
@@ -5641,7 +5641,7 @@ let hash = Protocol.hash
           ]
         ~linkall:true
     in
-    let client_commands_registration =
+    let client_comreg =
       only_if (N.(number >= 001) && not_overridden) @@ fun () ->
       public_lib
         (sf "tezos-client-%s.commands-registration" name_dash)
@@ -5669,7 +5669,7 @@ let hash = Protocol.hash
           ]
         ~bisect_ppx:(if N.(number >= 008) then Yes else No)
         ~linkall:true
-        ~modules:["alpha_commands_registration"]
+        ~modules:["alpha_comreg"]
     in
     let baking =
       only_if active @@ fun () ->
@@ -5711,8 +5711,8 @@ let hash = Protocol.hash
         ~linkall:true
         ~all_modules_except:
           (if N.(number <= 011) then
-           ["Delegate_commands"; "Delegate_commands_registration"]
-          else ["Baking_commands"; "Baking_commands_registration"])
+           ["Delegate_commands"; "Delegate_comreg"]
+          else ["Baking_commands"; "Baking_comreg"])
     in
     let tenderbrute =
       only_if (active && N.(number >= 013)) @@ fun () ->
@@ -5834,7 +5834,7 @@ let hash = Protocol.hash
             else "Baking_commands");
           ]
     in
-    let baking_commands_registration =
+    let baking_comreg =
       only_if active @@ fun () ->
       public_lib
         (sf "tezos-baking-%s-commands.registration" name_dash)
@@ -5855,8 +5855,8 @@ let hash = Protocol.hash
         ~linkall:true
         ~modules:
           [
-            (if N.(number <= 011) then "Delegate_commands_registration"
-            else "Baking_commands_registration");
+            (if N.(number <= 011) then "Delegate_comreg"
+            else "Baking_comreg");
           ]
     in
     let daemon daemon =
@@ -6433,8 +6433,8 @@ let hash = Protocol.hash
          ~embedded
          ?client
          ?client_commands
-         ?client_commands_registration
-         ?baking_commands_registration
+         ?client_comreg
+         ?baking_comreg
          ?plugin
          ?plugin_registerer
          ?dal
@@ -6495,7 +6495,7 @@ let hash = Protocol.hash
 
   let all = List.rev !all_rev
 
-  let active = List.filter (fun p -> p.baking_commands_registration <> None) all
+  let active = List.filter (fun p -> p.baking_comreg <> None) all
 
   let all_optionally (get_packages : (t -> target option) list) =
     let get_targets_for_protocol protocol =
@@ -6942,10 +6942,10 @@ let _octez_client =
         List.filter_map
           Fun.id
           [
-            (match Protocol.client_commands_registration protocol with
+            (match Protocol.client_comreg protocol with
             | None -> Protocol.client protocol
             | x -> x);
-            Protocol.baking_commands_registration protocol;
+            Protocol.baking_comreg protocol;
             Protocol.plugin protocol;
           ]
       in

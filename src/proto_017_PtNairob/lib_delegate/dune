@@ -46,7 +46,7 @@
   -open Tezos_context
   -open Tezos_context_ops
   -open Tezos_rpc_http)
- (modules (:standard \ Baking_commands Baking_commands_registration)))
+ (modules (:standard \ Baking_commands Baking_comreg)))
 
 (library
  (name tezos_baking_017_PtNairob_commands)
@@ -79,7 +79,7 @@
  (modules Baking_commands))
 
 (library
- (name tezos_baking_017_PtNairob_commands_registration)
+ (name tezos_baking_017_PtNairob_comreg)
  (public_name tezos-baking-017-PtNairob-commands.registration)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -104,4 +104,4 @@
   -open Tezos_client_commands
   -open Tezos_baking_017_PtNairob
   -open Tezos_baking_017_PtNairob_commands)
- (modules Baking_commands_registration))
+ (modules Baking_comreg))

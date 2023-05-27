@@ -26,10 +26,10 @@
   -open Tezos_client_base
   -open Tezos_client_002_PsYLVpVv
   -open Tezos_client_commands)
- (modules (:standard \ alpha_commands_registration)))
+ (modules (:standard \ alpha_comreg)))
 
 (library
- (name tezos_client_002_PsYLVpVv_commands_registration)
+ (name tezos_client_002_PsYLVpVv_comreg)
  (public_name tezos-client-002-PsYLVpVv.commands-registration)
  (libraries
   tezos-base
@@ -53,4 +53,4 @@
   -open Tezos_client_002_PsYLVpVv
   -open Tezos_client_commands
   -open Tezos_client_002_PsYLVpVv_commands)
- (modules alpha_commands_registration))
+ (modules alpha_comreg))

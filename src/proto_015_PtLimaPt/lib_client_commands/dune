@@ -36,10 +36,10 @@
   -open Tezos_client_commands
   -open Tezos_client_base_unix
   -open Tezos_protocol_plugin_015_PtLimaPt)
- (modules (:standard \ alpha_commands_registration)))
+ (modules (:standard \ alpha_comreg)))
 
 (library
- (name tezos_client_015_PtLimaPt_commands_registration)
+ (name tezos_client_015_PtLimaPt_comreg)
  (public_name tezos-client-015-PtLimaPt.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -69,4 +69,4 @@
   -open Tezos_client_015_PtLimaPt_commands
   -open Tezos_client_sapling_015_PtLimaPt
   -open Tezos_protocol_plugin_015_PtLimaPt)
- (modules alpha_commands_registration))
+ (modules alpha_comreg))

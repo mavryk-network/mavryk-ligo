@@ -35,10 +35,10 @@
   -open Tezos_client_commands
   -open Tezos_client_base_unix
   -open Tezos_protocol_plugin_012_Psithaca)
- (modules (:standard \ alpha_commands_registration)))
+ (modules (:standard \ alpha_comreg)))
 
 (library
- (name tezos_client_012_Psithaca_commands_registration)
+ (name tezos_client_012_Psithaca_comreg)
  (public_name tezos-client-012-Psithaca.commands-registration)
  (instrumentation (backend bisect_ppx))
  (libraries
@@ -67,4 +67,4 @@
   -open Tezos_client_012_Psithaca_commands
   -open Tezos_client_sapling_012_Psithaca
   -open Tezos_protocol_plugin_012_Psithaca)
- (modules alpha_commands_registration))
+ (modules alpha_comreg))
