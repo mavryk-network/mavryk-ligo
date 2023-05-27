@@ -29,7 +29,7 @@ open Environment_protocol_T
 
 module type T = sig
   include
-    Tp_environment_sigs.V3.T
+    Tpenv_sigs.V3.T
       with type Format.formatter = Format.formatter
        and type 'a Data_encoding.t = 'a Data_encoding.t
        and type 'a Data_encoding.lazy_t = 'a Data_encoding.lazy_t

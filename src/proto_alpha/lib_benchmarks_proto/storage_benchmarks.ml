@@ -60,8 +60,8 @@ let default_raw_context () =
   in
   let protocol_param_key = ["protocol_parameters"] in
   let*! context =
-    Tp_environment.Context.(
-      let empty = Tp_environment.Memory_context.empty in
+    Tpenv.Context.(
+      let empty = Tpenv.Memory_context.empty in
       let*! ctxt = add empty ["version"] (Bytes.of_string "genesis") in
       add ctxt protocol_param_key proto_params)
   in

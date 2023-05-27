@@ -19,7 +19,7 @@
   -open Octez_alcotezt
   -open Tezos_test_helpers
   -open Tezos_base.TzPervasives
-  -open Tp_environment)
+  -open Tpenv)
  (modules test_proxy_context))
 
 (executable

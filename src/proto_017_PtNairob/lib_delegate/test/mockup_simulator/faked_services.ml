@@ -92,7 +92,7 @@ module type Mocked_services_hooks = sig
       rpc_context constructed from the context at the requested block. *)
   val rpc_context_callback :
     Block_services.block ->
-    Tp_environment.rpc_context tzresult Lwt.t
+    Tpenv.rpc_context tzresult Lwt.t
 
   (** Return raw protocol data as a block. *)
   val raw_protocol_data : Block_services.block -> Bytes.t tzresult Lwt.t

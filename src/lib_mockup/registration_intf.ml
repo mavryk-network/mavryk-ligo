@@ -26,7 +26,7 @@
 (** Type of a mockup environment *)
 type t = {
   chain : Chain_id.t;
-  rpc_context : Tp_environment.rpc_context;
+  rpc_context : Tpenv.rpc_context;
   protocol_data : bytes;
 }
 
@@ -35,7 +35,7 @@ type mockup_context = t
 module type PROTOCOL = sig
   val hash : Protocol_hash.t
 
-  include Tp_environment.PROTOCOL
+  include Tpenv.PROTOCOL
 end
 
 (** The module type of a mockup environment. Modules of this type should be
@@ -68,7 +68,7 @@ module type MOCKUP = sig
       module type of
         Tezos_shell_services.Block_services.Make (Protocol) (Protocol)
 
-  val directory : Tp_environment.rpc_context Tezos_rpc.Directory.t
+  val directory : Tpenv.rpc_context Tezos_rpc.Directory.t
 
   val init :
     cctxt:Tezos_client_base.Client_context.printer ->

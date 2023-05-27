@@ -29,7 +29,7 @@ open Environment_protocol_T
 
 module type T = sig
   include
-    Tp_environment_sigs.V5.T
+    Tpenv_sigs.V5.T
       with type Format.formatter = Format.formatter
        and type 'a Seq.node = 'a Seq.node
        and type 'a Seq.t = unit -> 'a Seq.node

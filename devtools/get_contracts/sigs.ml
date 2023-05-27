@@ -28,7 +28,7 @@ module Time = Time.Protocol
 module type MAIN = sig
   val main :
     output_dir:string ->
-    Tp_environment.Context.t ->
+    Tpenv.Context.t ->
     head:Tezos_store.Store.Block.t ->
     unit tzresult Lwt.t
 end
@@ -43,7 +43,7 @@ module type PROTOCOL = sig
       level:Int32.t ->
       predecessor_timestamp:Time.t ->
       timestamp:Time.t ->
-      Tp_environment.Context.t ->
+      Tpenv.Context.t ->
       t tzresult Lwt.t
   end
 

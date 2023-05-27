@@ -39,8 +39,8 @@ type config = {
   context_root : string;
   protocol_root : string;
   patch_context :
-    (Tp_environment.Context.t ->
-    Tp_environment.Context.t tzresult Lwt.t)
+    (Tpenv.Context.t ->
+    Tpenv.Context.t tzresult Lwt.t)
     option;
   p2p : (P2p.config * P2p_limits.t) option;
   target : (Block_hash.t * int32) option;

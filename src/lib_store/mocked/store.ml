@@ -1812,10 +1812,10 @@ let init ?patch_context ?commit_genesis ?history_mode ?(readonly = false)
     Option.map
       (fun f ctxt ->
         let ctxt =
-          Tp_environment.Memory_context.wrap_memory_context ctxt
+          Tpenv.Memory_context.wrap_memory_context ctxt
         in
         let+ ctxt = f ctxt in
-        Tp_environment.Memory_context.unwrap_memory_context ctxt)
+        Tpenv.Memory_context.unwrap_memory_context ctxt)
       patch_context
   in
   let store_dir = Naming.store_dir ~dir_path:store_dir in

@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_007_PsDELPH1)
+ (name tpenv_007_PsDELPH1)
  (public_name tezos-protocol-007-PsDELPH1.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tp_environment_007_PsDELPH1))
+ (modules Tpenv_007_PsDELPH1))
 
 (rule
- (targets tp_environment_007_PsDELPH1.ml)
+ (targets tpenv_007_PsDELPH1.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"007-PsDELPH1\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
+   "module Name = struct let name = \"007-PsDELPH1\" end\ninclude Tpenv.V0.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_007_PsDELPH1)
@@ -29,9 +29,9 @@
   -w -6-7-9-16-29-32-51-68
   -nostdlib
   -nopervasives
-  -open Tp_environment_007_PsDELPH1
-  -open Tp_environment_007_PsDELPH1.Pervasives
-  -open Tp_environment_007_PsDELPH1.Error_monad)
+  -open Tpenv_007_PsDELPH1
+  -open Tpenv_007_PsDELPH1.Pervasives
+  -open Tpenv_007_PsDELPH1.Error_monad)
  (modules
   Misc
   Storage_description
@@ -129,14 +129,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsDELPH1Kxsxt8f9eWbxQeRxkjfbxoqM52jvs5Y5fBxWWh4ifpo\"\nlet name = Tp_environment_007_PsDELPH1.Name.name\ninclude Tezos_raw_protocol_007_PsDELPH1\ninclude Tezos_raw_protocol_007_PsDELPH1.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsDELPH1Kxsxt8f9eWbxQeRxkjfbxoqM52jvs5Y5fBxWWh4ifpo\"\nlet name = Tpenv_007_PsDELPH1.Name.name\ninclude Tezos_raw_protocol_007_PsDELPH1\ninclude Tezos_raw_protocol_007_PsDELPH1.Main\n")))
 
 (rule
  (targets tezos_protocol_007_PsDELPH1.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tp_environment_007_PsDELPH1\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpenv_007_PsDELPH1\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

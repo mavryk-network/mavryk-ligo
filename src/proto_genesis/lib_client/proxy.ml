@@ -34,7 +34,7 @@ module ProtoRpc : Tezos_proxy.Proxy_proto.PROTO_RPC = struct
   let failure_is_permanent _ = false
 
   let do_rpc (pgi : Tezos_proxy.Proxy.proxy_getter_input)
-      (key : Tp_environment.Proxy_context.M.key) =
+      (key : Tpenv.Proxy_context.M.key) =
     let chain = pgi.chain in
     let block = pgi.block in
     Tezos_proxy.Logger.emit
@@ -72,7 +72,7 @@ let () =
         Tezos_proxy.Proxy_getter.make_delegate ctx p_rpc hash
       in
       return
-        (Tp_environment.Proxy_context.empty
+        (Tpenv.Proxy_context.empty
         @@ Some (module ProxyDelegation))
 
     let merkle_tree _ _ _ = failwith "%s" msg

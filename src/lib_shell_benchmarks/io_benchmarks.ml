@@ -24,7 +24,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 open Benchmarks_shell
-module Context = Tp_environment.Context
+module Context = Tpenv.Context
 module Shell_monad = Tezos_error_monad.Error_monad
 module Key_map = Io_helpers.Key_map
 
@@ -289,7 +289,7 @@ module Context_size_dependent_read_bench : Benchmark.S = struct
     let closure context =
       match
         Lwt_main.run
-          (Tp_environment.Context.find context random_key)
+          (Tpenv.Context.find context random_key)
       with
       | Some _ -> ()
       | None ->
@@ -362,7 +362,7 @@ module Context_size_dependent_write_bench : Benchmark.S = struct
   let tags = ["io"]
 
   let write_storage context key bytes =
-    Lwt_main.run (Tp_environment.Context.add context key bytes)
+    Lwt_main.run (Tpenv.Context.add context key bytes)
 
   let make_bench rng_state cfg () =
     let insertions =

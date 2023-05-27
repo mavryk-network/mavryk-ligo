@@ -1235,8 +1235,8 @@ let initial_context chain_id (header : Block_header.shell_header)
   let proto_params =
     Data_encoding.Binary.to_bytes_exn Data_encoding.json json
   in
-  Tp_environment.Context.(
-    let empty = Tp_environment.Memory_context.empty in
+  Tpenv.Context.(
+    let empty = Tpenv.Memory_context.empty in
     add empty ["version"] (Bytes.of_string "genesis") >>= fun ctxt ->
     add ctxt ["protocol_parameters"] proto_params)
   >>= fun ctxt ->
@@ -1279,7 +1279,7 @@ let initial_context chain_id (header : Block_header.shell_header)
       reason, the mockup mode loads the cache lazily.
       See {!Environment_context.source_of_cache}.
   *)
-  Tp_environment.Context.load_cache
+  Tpenv.Context.load_cache
     predecessor
     context
     `Lazy
@@ -1423,7 +1423,7 @@ let mem_init :
       {
         chain = chain_id;
         rpc_context =
-          Tp_environment.
+          Tpenv.
             {block_hash = hash; block_header = shell_header; context};
         protocol_data;
       }
@@ -1432,14 +1432,14 @@ let migrate :
     Tezos_mockup_registration.Registration.mockup_context ->
     Tezos_mockup_registration.Registration.mockup_context tzresult Lwt.t =
  fun {chain; rpc_context; protocol_data} ->
-  let Tp_environment.{block_hash; context; block_header} =
+  let Tpenv.{block_hash; context; block_header} =
     rpc_context
   in
   Environment.Updater.activate context Protocol.hash >>= fun context ->
   Protocol.Main.init context block_header >|= Environment.wrap_tzresult
   >>=? fun {context; _} ->
   let rpc_context =
-    Tp_environment.{block_hash; block_header; context}
+    Tpenv.{block_hash; block_header; context}
   in
   return
     Tezos_mockup_registration.Registration_intf.

@@ -51,7 +51,7 @@ and values of random sizes.
 After preparing the context, the cache is cleared by commiting and
 reloading.
 It then measures the time taken to access a random key in the
-domain of the key-value store (`Tp_environment.Context.get`).
+domain of the key-value store (`Tpenv.Context.get`).
 
 ### `Context_size_dependent_write_bench`
 

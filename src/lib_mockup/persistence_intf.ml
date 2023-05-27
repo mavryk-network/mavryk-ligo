@@ -69,7 +69,7 @@ module type S = sig
   val overwrite_mockup :
     protocol_hash:Protocol_hash.t ->
     chain_id:Chain_id.t ->
-    rpc_context:Tp_environment.rpc_context ->
+    rpc_context:Tpenv.rpc_context ->
     protocol_data:bytes ->
     base_dir:string ->
     unit tzresult Lwt.t

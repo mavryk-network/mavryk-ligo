@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_008_PtEdoTez)
+ (name tpenv_008_PtEdoTez)
  (public_name tezos-protocol-008-PtEdoTez.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tp_environment_008_PtEdoTez))
+ (modules Tpenv_008_PtEdoTez))
 
 (rule
- (targets tp_environment_008_PtEdoTez.ml)
+ (targets tpenv_008_PtEdoTez.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"008-PtEdoTez\" end\ninclude Tp_environment.V1.Make(Name)()\n")))
+   "module Name = struct let name = \"008-PtEdoTez\" end\ninclude Tpenv.V1.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_008_PtEdoTez)
@@ -29,9 +29,9 @@
   -w -6-7-9-16-29-32-51-68
   -nostdlib
   -nopervasives
-  -open Tp_environment_008_PtEdoTez
-  -open Tp_environment_008_PtEdoTez.Pervasives
-  -open Tp_environment_008_PtEdoTez.Error_monad)
+  -open Tpenv_008_PtEdoTez
+  -open Tpenv_008_PtEdoTez.Pervasives
+  -open Tpenv_008_PtEdoTez.Error_monad)
  (modules
   Misc
   Storage_description
@@ -134,14 +134,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtEdoTezd3RHSC31mpxxo1npxFjoWWcFgQtxapi51Z8TLu6v6Uq\"\nlet name = Tp_environment_008_PtEdoTez.Name.name\ninclude Tezos_raw_protocol_008_PtEdoTez\ninclude Tezos_raw_protocol_008_PtEdoTez.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtEdoTezd3RHSC31mpxxo1npxFjoWWcFgQtxapi51Z8TLu6v6Uq\"\nlet name = Tpenv_008_PtEdoTez.Name.name\ninclude Tezos_raw_protocol_008_PtEdoTez\ninclude Tezos_raw_protocol_008_PtEdoTez.Main\n")))
 
 (rule
  (targets tezos_protocol_008_PtEdoTez.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tp_environment_008_PtEdoTez\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpenv_008_PtEdoTez\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

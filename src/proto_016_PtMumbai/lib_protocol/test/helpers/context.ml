@@ -259,7 +259,7 @@ module Vote = struct
     Alpha_services.Voting.current_proposal rpc_ctxt ctxt
 
   let get_protocol (b : Block.t) =
-    Tp_environment.Context.get_protocol b.context
+    Tpenv.Context.get_protocol b.context
 
   let get_participation_ema (b : Block.t) =
     Environment.Context.find b.context ["votes"; "participation_ema"]
@@ -592,8 +592,8 @@ let default_raw_context () =
     Data_encoding.Binary.to_bytes_exn Data_encoding.json json
   in
   let protocol_param_key = ["protocol_parameters"] in
-  Tp_environment.Context.(
-    let empty = Tp_environment.Memory_context.empty in
+  Tpenv.Context.(
+    let empty = Tpenv.Memory_context.empty in
     add empty ["version"] (Bytes.of_string "genesis") >>= fun ctxt ->
     add ctxt protocol_param_key proto_params)
   >>= fun context ->

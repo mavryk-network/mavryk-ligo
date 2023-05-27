@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-module Context = Tp_environment.Context
+module Context = Tpenv.Context
 
 type t = {
   total : int;

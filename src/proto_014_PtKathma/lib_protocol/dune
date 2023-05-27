@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_014_PtKathma)
+ (name tpenv_014_PtKathma)
  (public_name tezos-protocol-014-PtKathma.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tp_environment_014_PtKathma))
+ (modules Tpenv_014_PtKathma))
 
 (rule
- (targets tp_environment_014_PtKathma.ml)
+ (targets tpenv_014_PtKathma.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"014-PtKathma\" end\ninclude Tp_environment.V6.Make(Name)()\n")))
+   "module Name = struct let name = \"014-PtKathma\" end\ninclude Tpenv.V6.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_014_PtKathma)
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tp_environment_014_PtKathma
-  -open Tp_environment_014_PtKathma.Pervasives
-  -open Tp_environment_014_PtKathma.Error_monad)
+  -open Tpenv_014_PtKathma
+  -open Tpenv_014_PtKathma.Pervasives
+  -open Tpenv_014_PtKathma.Error_monad)
  (modules
   Misc
   Non_empty_string
@@ -259,14 +259,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg\"\nlet name = Tp_environment_014_PtKathma.Name.name\ninclude Tezos_raw_protocol_014_PtKathma\ninclude Tezos_raw_protocol_014_PtKathma.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg\"\nlet name = Tpenv_014_PtKathma.Name.name\ninclude Tezos_raw_protocol_014_PtKathma\ninclude Tezos_raw_protocol_014_PtKathma.Main\n")))
 
 (rule
  (targets tezos_protocol_014_PtKathma.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tp_environment_014_PtKathma\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpenv_014_PtKathma\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

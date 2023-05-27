@@ -213,7 +213,7 @@ let build_raw_rpc_directory (module Proto : Block_services.PROTO)
         max_block_header_length = Next_proto.max_block_length;
         operation_list_quota =
           List.map
-            (fun {Tp_environment.max_size; max_op} ->
+            (fun {Tpenv.max_size; max_op} ->
               {Tezos_shell_services.Block_services.max_size; max_op})
             Next_proto.validation_passes;
       }
@@ -786,7 +786,7 @@ let build_raw_rpc_directory (module Proto : Block_services.PROTO)
                ~timestamp
            in
            let* context =
-             Tp_environment.Context.load_cache
+             Tpenv.Context.load_cache
                predecessor
                predecessor_context
                `Lazy
@@ -794,7 +794,7 @@ let build_raw_rpc_directory (module Proto : Block_services.PROTO)
            in
            return
              {
-               Tp_environment.block_hash = Store.Block.hash block;
+               Tpenv.block_hash = Store.Block.hash block;
                block_header = Store.Block.shell_header block;
                context;
              }

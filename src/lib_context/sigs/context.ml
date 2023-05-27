@@ -496,7 +496,7 @@ end
     implementations. This is the module type that the {e shell} expects for its
     operation. As such, it should be a strict superset of the interface exposed
     to the protocol (see module type {!S} above and
-    {!Tp_environment.Environment_context_intf.S}).
+    {!Tpenv.Environment_context_intf.S}).
 
     The main purpose of this module type is to keep the on-disk and in-memory
     implementations in sync.

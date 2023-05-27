@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_002_PsYLVpVv)
+ (name tpenv_002_PsYLVpVv)
  (public_name tezos-protocol-002-PsYLVpVv.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tp_environment_002_PsYLVpVv))
+ (modules Tpenv_002_PsYLVpVv))
 
 (rule
- (targets tp_environment_002_PsYLVpVv.ml)
+ (targets tpenv_002_PsYLVpVv.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"002-PsYLVpVv\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
+   "module Name = struct let name = \"002-PsYLVpVv\" end\ninclude Tpenv.V0.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_002_PsYLVpVv)
@@ -29,9 +29,9 @@
   -w -6-7-9-16-29-32-51-68
   -nostdlib
   -nopervasives
-  -open Tp_environment_002_PsYLVpVv
-  -open Tp_environment_002_PsYLVpVv.Pervasives
-  -open Tp_environment_002_PsYLVpVv.Error_monad)
+  -open Tpenv_002_PsYLVpVv
+  -open Tpenv_002_PsYLVpVv.Pervasives
+  -open Tpenv_002_PsYLVpVv.Error_monad)
  (modules
   Misc
   Storage_description
@@ -125,14 +125,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsYLVpVvgbLhAhoqAkMFUo6gudkJ9weNXhUYCiLDzcUpFpkk8Wt\"\nlet name = Tp_environment_002_PsYLVpVv.Name.name\ninclude Tezos_raw_protocol_002_PsYLVpVv\ninclude Tezos_raw_protocol_002_PsYLVpVv.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsYLVpVvgbLhAhoqAkMFUo6gudkJ9weNXhUYCiLDzcUpFpkk8Wt\"\nlet name = Tpenv_002_PsYLVpVv.Name.name\ninclude Tezos_raw_protocol_002_PsYLVpVv\ninclude Tezos_raw_protocol_002_PsYLVpVv.Main\n")))
 
 (rule
  (targets tezos_protocol_002_PsYLVpVv.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tp_environment_002_PsYLVpVv\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpenv_002_PsYLVpVv\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

@@ -67,8 +67,8 @@ type error += Cannot_reconstruct of History_mode.t
     changed to archive. *)
 val reconstruct :
   ?patch_context:
-    (Tp_environment.Context.t ->
-    Tp_environment.Context.t tzresult Lwt.t) ->
+    (Tpenv.Context.t ->
+    Tpenv.Context.t tzresult Lwt.t) ->
   store_dir:string ->
   context_dir:string ->
   Genesis.t ->

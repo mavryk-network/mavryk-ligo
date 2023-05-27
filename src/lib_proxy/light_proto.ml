@@ -30,7 +30,7 @@ module Proof = Tezos_context_sigs.Context.Proof_types
 module type PROTO_RPCS = sig
   val merkle_tree :
     Proxy.proxy_getter_input ->
-    Tp_environment.Proxy_context.M.key ->
+    Tpenv.Proxy_context.M.key ->
     Proof.merkle_leaf_kind ->
     Proof.tree Proof.t option tzresult Lwt.t
 end

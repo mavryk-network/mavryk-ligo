@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_demo_noops)
+ (name tpenv_demo_noops)
  (public_name tezos-protocol-demo-noops.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tp_environment_demo_noops))
+ (modules Tpenv_demo_noops))
 
 (rule
- (targets tp_environment_demo_noops.ml)
+ (targets tpenv_demo_noops.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"demo-noops\" end\ninclude Tp_environment.V10.Make(Name)()\n")))
+   "module Name = struct let name = \"demo-noops\" end\ninclude Tpenv.V10.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_demo_noops)
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tp_environment_demo_noops
-  -open Tp_environment_demo_noops.Pervasives
-  -open Tp_environment_demo_noops.Error_monad)
+  -open Tpenv_demo_noops
+  -open Tpenv_demo_noops.Pervasives
+  -open Tpenv_demo_noops.Error_monad)
  (modules Main))
 
 (library
@@ -56,14 +56,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"ProtoDemoNoopsDemoNoopsDemoNoopsDemoNoopsDemo6XBoYp\"\nlet name = Tp_environment_demo_noops.Name.name\ninclude Tezos_raw_protocol_demo_noops\ninclude Tezos_raw_protocol_demo_noops.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"ProtoDemoNoopsDemoNoopsDemoNoopsDemoNoopsDemo6XBoYp\"\nlet name = Tpenv_demo_noops.Name.name\ninclude Tezos_raw_protocol_demo_noops\ninclude Tezos_raw_protocol_demo_noops.Main\n")))
 
 (rule
  (targets tezos_protocol_demo_noops.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tp_environment_demo_noops\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpenv_demo_noops\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

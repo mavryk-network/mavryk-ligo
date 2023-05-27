@@ -2,6 +2,6 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_sigs_internals)
+ (name tpenv_sigs_internals)
  (public_name tpe.sigs-internals)
  (instrumentation (backend bisect_ppx)))

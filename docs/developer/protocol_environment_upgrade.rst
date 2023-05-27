@@ -32,7 +32,7 @@ The following steps are roughly the steps taken in the `V6 bootstrap MR <https:/
 
 3. Copy the existing compatibility layer if any (see details in `Struct compatibility layer <#struct-compatibility-layer>`__).
 
-   * Update  ``src/lib_protocol_environment/structs/tp_environment_structs.ml`` to add a new submodule ``V<N>`` by copying the submodule ``V<N-1>``.
+   * Update  ``src/lib_protocol_environment/structs/tpenv_structs.ml`` to add a new submodule ``V<N>`` by copying the submodule ``V<N-1>``.
 
 4. Copy and adapt the environment functor:
 
@@ -73,7 +73,7 @@ Struct compatibility layer
 
 The struct compatibility layer is for providing compatibility between a signature of the protocol environment (which is set in stone) and the interface of an external library that provides it (which might change from version to version). E.g., at the time of the V0 environment the OCaml Stdlib did not include an ``Option`` module and so a custom one was provided in the whole of the Tezos project including the protocol environment; later, when the Tezos project switched to the now available and standard ``Stdlib.Option`` module, the struct compatibility module ``src/lib_protocol_environment/structs/v0_option.ml`` was added.
 
-More recent protocol environments generally need less struct compatibility modules. Occasionally, the most recent environment needs no compatibility layer at all. You can know if this is the case by checking the file ``src/lib_protocol_environment/structs/tp_environment_structs.ml``: if the submodule ``V<N>`` exists and is not empty then there is a compatibility layer, otherwise there isn't.
+More recent protocol environments generally need less struct compatibility modules. Occasionally, the most recent environment needs no compatibility layer at all. You can know if this is the case by checking the file ``src/lib_protocol_environment/structs/tpenv_structs.ml``: if the submodule ``V<N>`` exists and is not empty then there is a compatibility layer, otherwise there isn't.
 
 Either way, the instructions in the list above are sufficient for creating the new environment.
 
@@ -95,7 +95,7 @@ How to activate
 
 To activate the environment you will need to change the following files, adding references to ``V<N>`` to match the references to ``V<N-1>``:
 
-* ``src/lib_protocol_environment/tp_environment.ml[i]``
+* ``src/lib_protocol_environment/tpenv.ml[i]``
 * ``src/lib_protocol_updater/registered_protocol.ml[i]``
 * ``src/lib_protocol_compiler/registerer/tezos_protocol_registerer.ml[i]``
 

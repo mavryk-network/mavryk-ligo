@@ -75,7 +75,7 @@ module type TREE = sig
 
   (** [get t key] returns the tree of data mapped by [key], if any. *)
   val get :
-    t -> key -> Tp_environment.Proxy_context.M.tree option Lwt.t
+    t -> key -> Tpenv.Proxy_context.M.tree option Lwt.t
 
   (** [add_leaf t key raw_ctxt] returns a variant of [t] where [key] is
       mapped to [raw_ctxt]. When this function is called, it transforms

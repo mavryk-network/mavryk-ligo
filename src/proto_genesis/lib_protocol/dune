@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_genesis)
+ (name tpenv_genesis)
  (public_name tezos-protocol-genesis.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tp_environment_genesis))
+ (modules Tpenv_genesis))
 
 (rule
- (targets tp_environment_genesis.ml)
+ (targets tpenv_genesis.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"genesis\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
+   "module Name = struct let name = \"genesis\" end\ninclude Tpenv.V0.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_genesis)
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tp_environment_genesis
-  -open Tp_environment_genesis.Pervasives
-  -open Tp_environment_genesis.Error_monad)
+  -open Tpenv_genesis
+  -open Tpenv_genesis.Pervasives
+  -open Tpenv_genesis.Error_monad)
  (modules Data Services Main))
 
 (library
@@ -56,14 +56,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"ProtoGenesisGenesisGenesisGenesisGenesisGenesk612im\"\nlet name = Tp_environment_genesis.Name.name\ninclude Tezos_raw_protocol_genesis\ninclude Tezos_raw_protocol_genesis.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"ProtoGenesisGenesisGenesisGenesisGenesisGenesk612im\"\nlet name = Tpenv_genesis.Name.name\ninclude Tezos_raw_protocol_genesis\ninclude Tezos_raw_protocol_genesis.Main\n")))
 
 (rule
  (targets tezos_protocol_genesis.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tp_environment_genesis\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpenv_genesis\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

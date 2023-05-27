@@ -42,7 +42,7 @@ module type FILTER = sig
 
         Called only once when a prevalidator starts. *)
     val init :
-      Tp_environment.Context.t ->
+      Tpenv.Context.t ->
       head:Tezos_base.Block_header.shell_header ->
       state tzresult Lwt.t
 
@@ -50,7 +50,7 @@ module type FILTER = sig
 
         Parts of the old [state] are recycled, so that this function
         is more efficient than [init] and does not need a
-        [Tp_environment.Context.t] argument. *)
+        [Tpenv.Context.t] argument. *)
     val flush :
       state -> head:Tezos_base.Block_header.shell_header -> state tzresult Lwt.t
 
@@ -123,7 +123,7 @@ module type RPC = sig
   module Proto : Registered_protocol.T
 
   val rpc_services :
-    Tp_environment.rpc_context Tezos_rpc.Directory.directory
+    Tpenv.rpc_context Tezos_rpc.Directory.directory
 end
 
 (** Dummy filter that does nothing *)

@@ -37,9 +37,9 @@ module Make (Registration : Registration.S) = struct
   include Persistence_intf
 
   let rpc_context_encoding :
-      Tp_environment.rpc_context Data_encoding.t =
+      Tpenv.rpc_context Data_encoding.t =
     let open Data_encoding in
-    let open Tp_environment in
+    let open Tpenv in
     conv
       (fun {block_hash; block_header; context} ->
         (block_hash, block_header, context))
@@ -54,7 +54,7 @@ module Make (Registration : Registration.S) = struct
     type t = {
       protocol_hash : Protocol_hash.t;
       chain_id : Chain_id.t;
-      rpc_context : Tp_environment.rpc_context;
+      rpc_context : Tpenv.rpc_context;
       protocol_data : bytes;
     }
 
@@ -219,7 +219,7 @@ module Make (Registration : Registration.S) = struct
               ~timestamp
           in
           let* context =
-            Tp_environment.Context.load_cache
+            Tpenv.Context.load_cache
               predecessor
               persisted_mockup.rpc_context.context
               `Lazy

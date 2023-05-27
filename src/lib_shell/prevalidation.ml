@@ -33,7 +33,7 @@ module type CHAIN_STORE = sig
   val context :
     chain_store ->
     Store.Block.t ->
-    Tp_environment.Context.t tzresult Lwt.t
+    Tpenv.Context.t tzresult Lwt.t
 
   val chain_id : chain_store -> Chain_id.t
 end
@@ -123,7 +123,7 @@ module MakeAbstract (Chain_store : CHAIN_STORE) (Filter : Shell_plugin.FILTER) :
     validation_info : Proto.Mempool.validation_info;
     mempool : Proto.Mempool.t;
     head : Block_header.shell_header;
-    context : Tp_environment.Context.t;
+    context : Tpenv.Context.t;
   }
 
   let create_aux chain_store head timestamp =

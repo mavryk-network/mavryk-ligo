@@ -49,7 +49,7 @@ module type PARSER = sig
     Operation_hash.t -> Operation.t -> protocol_operation operation tzresult
 end
 
-module MakeParser (Proto : Tp_environment.PROTOCOL) :
+module MakeParser (Proto : Tpenv.PROTOCOL) :
   PARSER with type protocol_operation = Proto.operation = struct
   type protocol_operation = Proto.operation
 

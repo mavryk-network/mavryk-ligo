@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_alpha)
+ (name tpenv_alpha)
  (public_name tezos-protocol-alpha.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tp_environment_alpha))
+ (modules Tpenv_alpha))
 
 (rule
- (targets tp_environment_alpha.ml)
+ (targets tpenv_alpha.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"alpha\" end\ninclude Tp_environment.V10.Make(Name)()\n")))
+   "module Name = struct let name = \"alpha\" end\ninclude Tpenv.V10.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_alpha)
@@ -28,9 +28,9 @@
   (:standard)
   -nostdlib
   -nopervasives
-  -open Tp_environment_alpha
-  -open Tp_environment_alpha.Pervasives
-  -open Tp_environment_alpha.Error_monad)
+  -open Tpenv_alpha
+  -open Tpenv_alpha.Pervasives
+  -open Tpenv_alpha.Error_monad)
  (modules
   Misc
   Non_empty_string
@@ -294,14 +294,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK\"\nlet name = Tp_environment_alpha.Name.name\ninclude Tezos_raw_protocol_alpha\ninclude Tezos_raw_protocol_alpha.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK\"\nlet name = Tpenv_alpha.Name.name\ninclude Tezos_raw_protocol_alpha\ninclude Tezos_raw_protocol_alpha.Main\n")))
 
 (rule
  (targets tezos_protocol_alpha.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tp_environment_alpha\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpenv_alpha\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

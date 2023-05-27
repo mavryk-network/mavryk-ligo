@@ -34,7 +34,7 @@ open Environment_protocol_T
 
 module type T = sig
   include
-    Tp_environment_sigs.V5.T
+    Tpenv_sigs.V5.T
       with type Format.formatter = Format.formatter
        and type 'a Seq.node = 'a Seq.node
        and type 'a Seq.t = unit -> 'a Seq.node
@@ -181,7 +181,7 @@ struct
 
   module Compare = Compare
   module Either = Either
-  module Seq = Tp_environment_structs.V5.Seq
+  module Seq = Tpenv_structs.V5.Seq
   module List = Tezos_error_monad.TzLwtreslib.List
   module Char = Char
   module Bytes = Bytes
@@ -247,7 +247,7 @@ struct
   module Lwt = Lwt
 
   module Data_encoding = struct
-    include Tp_environment_structs.V5.Data_encoding
+    include Tpenv_structs.V5.Data_encoding
 
     type tag_size = [`Uint8 | `Uint16]
 
@@ -616,7 +616,7 @@ struct
         (Tezos_error_monad.TzLwtreslib.Monad)
 
     (* Backwards compatibility additions (dont_wait, trace helpers) *)
-    include Tp_environment_structs.V5.Error_monad_infix_globals
+    include Tpenv_structs.V5.Error_monad_infix_globals
 
     let fail e = Lwt.return_error (TzTrace.make e)
 
@@ -696,7 +696,7 @@ struct
   module Fitness = Fitness
   module Operation = Operation
   module Block_header = Block_header
-  module Bounded = Tp_environment_structs.V5.Bounded
+  module Bounded = Tpenv_structs.V5.Bounded
   module Protocol = Protocol
   module RPC_arg = Tezos_rpc.Arg
   module RPC_path = Tezos_rpc.Path
@@ -733,7 +733,7 @@ struct
   end
 
   module RPC_directory = struct
-    include Tp_environment_structs.V5.RPC_directory
+    include Tpenv_structs.V5.RPC_directory
 
     let gen_register dir service handler =
       let open Lwt_syntax in

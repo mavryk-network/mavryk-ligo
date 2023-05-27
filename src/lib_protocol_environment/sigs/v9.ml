@@ -3,7 +3,7 @@
 # 1 "v9.in.ml"
 module type T = sig
   module CamlinternalFormatBasics : module type of struct
-    include Tp_environment_sigs_internals.CamlinternalFormatBasics
+    include Tpenv_sigs_internals.CamlinternalFormatBasics
   end
 
   module Pervasives : sig

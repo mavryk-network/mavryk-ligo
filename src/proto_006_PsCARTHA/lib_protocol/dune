@@ -2,20 +2,20 @@
 ; Edit file manifest/main.ml instead.
 
 (library
- (name tp_environment_006_PsCARTHA)
+ (name tpenv_006_PsCARTHA)
  (public_name tezos-protocol-006-PsCARTHA.environment)
  (instrumentation (backend bisect_ppx))
  (libraries
   tpe)
  (library_flags (:standard -linkall))
- (modules Tp_environment_006_PsCARTHA))
+ (modules Tpenv_006_PsCARTHA))
 
 (rule
- (targets tp_environment_006_PsCARTHA.ml)
+ (targets tpenv_006_PsCARTHA.ml)
  (action
   (write-file
    %{targets}
-   "module Name = struct let name = \"006-PsCARTHA\" end\ninclude Tp_environment.V0.Make(Name)()\n")))
+   "module Name = struct let name = \"006-PsCARTHA\" end\ninclude Tpenv.V0.Make(Name)()\n")))
 
 (library
  (name tezos_raw_protocol_006_PsCARTHA)
@@ -29,9 +29,9 @@
   -w -6-7-9-16-29-32-51-68
   -nostdlib
   -nopervasives
-  -open Tp_environment_006_PsCARTHA
-  -open Tp_environment_006_PsCARTHA.Pervasives
-  -open Tp_environment_006_PsCARTHA.Error_monad)
+  -open Tpenv_006_PsCARTHA
+  -open Tpenv_006_PsCARTHA.Pervasives
+  -open Tpenv_006_PsCARTHA.Error_monad)
  (modules
   Misc
   Storage_description
@@ -127,14 +127,14 @@
  (action
   (write-file
    %{targets}
-   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsCARTHAGazKbHtnKfLzQg3kms52kSRpgnDY982a9oYsSXRLQEb\"\nlet name = Tp_environment_006_PsCARTHA.Name.name\ninclude Tezos_raw_protocol_006_PsCARTHA\ninclude Tezos_raw_protocol_006_PsCARTHA.Main\n")))
+   "\nlet hash = Tezos_crypto.Hashed.Protocol_hash.of_b58check_exn \"PsCARTHAGazKbHtnKfLzQg3kms52kSRpgnDY982a9oYsSXRLQEb\"\nlet name = Tpenv_006_PsCARTHA.Name.name\ninclude Tezos_raw_protocol_006_PsCARTHA\ninclude Tezos_raw_protocol_006_PsCARTHA.Main\n")))
 
 (rule
  (targets tezos_protocol_006_PsCARTHA.ml)
  (action
   (write-file
    %{targets}
-   "\nmodule Environment = Tp_environment_006_PsCARTHA\nmodule Protocol = Protocol\n")))
+   "\nmodule Environment = Tpenv_006_PsCARTHA\nmodule Protocol = Protocol\n")))
 
 (rule
  (alias runtest_compile_protocol)

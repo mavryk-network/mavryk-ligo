@@ -23,7 +23,7 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-open Tp_environment
+open Tpenv
 open Context
 
 module C = struct

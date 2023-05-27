@@ -25,7 +25,7 @@
 
 open Protocol
 open Alpha_context
-open Tp_environment
+open Tpenv
 
 type simulation_result = {
   validation_result : validation_result option;

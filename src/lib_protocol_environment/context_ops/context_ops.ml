@@ -25,11 +25,11 @@
 
 (* Backend-agnostic operations on the context *)
 
-module Environment_context = Tp_environment.Context
-module Memory_context = Tp_environment.Memory_context
+module Environment_context = Tpenv.Context
+module Memory_context = Tpenv.Memory_context
 
 let err_implementation_mismatch =
-  Tp_environment.err_implementation_mismatch
+  Tpenv.err_implementation_mismatch
 
 (** Values of type [index] are used to [checkout] contexts specified by their hash. *)
 type index =

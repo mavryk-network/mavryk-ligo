@@ -172,7 +172,7 @@ module type S = sig
   type filter_config
 
   (** Similar to the type [operation] from the protocol,
-      see {!Tp_environment.PROTOCOL} *)
+      see {!Tpenv.PROTOCOL} *)
   type protocol_operation
 
   (** Type instantiated by {!Prevalidation.t} *)

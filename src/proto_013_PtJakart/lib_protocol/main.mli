@@ -27,14 +27,14 @@
 
     This module is the  entrypoint to the protocol for shells and other
     embedders.  This signature is an instance of
-    {{!Tp_environment_sigs.V5.T.Updater.PROTOCOL} the
+    {{!Tpenv_sigs.V5.T.Updater.PROTOCOL} the
     [Updater.PROTOCOL] signature} from the
     {{:https://tezos.gitlab.io/shell/the_big_picture.html#the-economic-protocol-environment-and-compiler}
     Protocol Environment}.
 
     Each Protocol depends on a version of the Protocol Environment. For the
     currently developed protocol, this is normally the latest version.  You can
-    see {{!Tp_environment_sigs} the full list of versions here}.
+    see {{!Tpenv_sigs} the full list of versions here}.
 
     For details on how Protocol and Environment interact, see
     {{:https://tezos.gitlab.io/shell/the_big_picture.html} this overview}.
@@ -56,7 +56,7 @@ type validation_mode =
       predecessor_level : Alpha_context.Level.t;
     }
       (** Full Validation of a block. See
-          {!val:Tp_environment_sigs.V5.T.Updater.PROTOCOL.begin_application}**)
+          {!val:Tpenv_sigs.V5.T.Updater.PROTOCOL.begin_application}**)
   | Partial_application of {
       block_header : Alpha_context.Block_header.t;
       fitness : Alpha_context.Fitness.t;
@@ -68,7 +68,7 @@ type validation_mode =
       (** [Partial_application] is use in chain bootstrapping - not all checks
          are done. Special case of [Application] to allow quick rejection of bad
          blocks. See
-         {!val:Tp_environment_sigs.V5.T.Updater.PROTOCOL.begin_partial_application}
+         {!val:Tpenv_sigs.V5.T.Updater.PROTOCOL.begin_partial_application}
        *)
   | Partial_construction of {
       predecessor : Block_hash.t;
@@ -77,7 +77,7 @@ type validation_mode =
       predecessor_round : Alpha_context.Round.t;
     }
       (** Shell/mempool-only construction of a virtual block. See
-          {!val:Tp_environment_sigs.V5.T.Updater.PROTOCOL.begin_construction} *)
+          {!val:Tpenv_sigs.V5.T.Updater.PROTOCOL.begin_construction} *)
   | Full_construction of {
       predecessor : Block_hash.t;
       payload_producer : Alpha_context.public_key_hash;
@@ -89,7 +89,7 @@ type validation_mode =
       predecessor_round : Alpha_context.Round.t;
     }
       (** Baker-only block construction for baking in. See
-          {!val:Tp_environment_sigs.V5.T.Updater.PROTOCOL.begin_construction}
+          {!val:Tpenv_sigs.V5.T.Updater.PROTOCOL.begin_construction}
        *)
 
 type validation_state = {

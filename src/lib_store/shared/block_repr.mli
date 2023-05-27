@@ -43,7 +43,7 @@ type contents = {
     representation is tightly linked to
     {!Tezos_validation.Block_validation.type-result} which also has a
     strong dependency to
-    {!Tp_environment.validation_result}.
+    {!Tpenv.validation_result}.
 
     Some fields exposed by {!Tezos_validation.Block_validation.type-result}
     are unnecessary hence the lack of direct link. *)

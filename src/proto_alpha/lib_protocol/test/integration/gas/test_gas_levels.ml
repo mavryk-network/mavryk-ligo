@@ -54,7 +54,7 @@ let dummy_context () =
     ~predecessor_timestamp:Time.Protocol.epoch
     ~timestamp:Time.Protocol.epoch
     (* ~fitness:[] *)
-    (block.context : Tp_environment.Context.t)
+    (block.context : Tpenv.Context.t)
   >|= Environment.wrap_tzresult
 
 let consume_gas_lwt context gas =
