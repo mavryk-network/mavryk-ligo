@@ -72,6 +72,7 @@ module Arith = struct
   let equal = S.equal
 
   let of_int_opt = S.of_int_opt
+  let to_int = S.wont_saturate
 
   let fatally_saturated_int i =
     failwith (string_of_int i ^ " should not be saturated.")

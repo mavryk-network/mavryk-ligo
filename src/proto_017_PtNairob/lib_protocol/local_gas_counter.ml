@@ -70,7 +70,7 @@ let update_context (Local_gas_counter gas_counter) (Outdated_context ctxt) =
   [@@ocaml.inline always]
 
 let local_gas_counter ctxt =
-  Local_gas_counter (Gas.remaining_operation_gas ctxt :> int)
+  Local_gas_counter (Gas.Arith.to_int (Gas.remaining_operation_gas ctxt))
   [@@ocaml.inline always]
 
 let local_gas_counter_and_outdated_context ctxt =
@@ -83,7 +83,7 @@ let use_gas_counter_in_context ctxt gas_counter f =
   [@@ocaml.inline always]
 
 let consume_opt (Local_gas_counter gas_counter) (cost : Gas.cost) =
-  let gas_counter = gas_counter - (cost :> int) in
+  let gas_counter = gas_counter - (Saturation_repr.wont_saturate cost) in
   if Compare.Int.(gas_counter < 0) then None
   else Some (Local_gas_counter gas_counter)
   [@@ocaml.inline always]

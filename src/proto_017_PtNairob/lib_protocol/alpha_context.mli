@@ -376,9 +376,11 @@ module Gas : sig
 
   *)
 
-  module Arith :
-    Fixed_point_repr.Safe
-      with type 'a t = private Saturation_repr.may_saturate Saturation_repr.t
+module Arith : sig
+  include Fixed_point_repr.Full
+    with type 'a t = private Saturation_repr.may_saturate Saturation_repr.t
+  val to_int: 'a t -> int
+end
 
   (** For maintenance operations or for testing, gas can be
      [Unaccounted]. Otherwise, the computation is [Limited] by the

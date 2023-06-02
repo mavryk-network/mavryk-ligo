@@ -66,7 +66,7 @@ let run ctxt m =
   let open Local_gas_counter in
   match Gas.level ctxt with
   | Gas.Unaccounted -> (
-      match m (Local_gas_counter (Saturation_repr.saturated :> int)) with
+      match m (Local_gas_counter Saturation_repr.saturated_int) with
       | Some (res, _new_gas_counter) -> ok (res, ctxt)
       | None -> error Gas.Operation_quota_exceeded)
   | Limited {remaining = _} -> (

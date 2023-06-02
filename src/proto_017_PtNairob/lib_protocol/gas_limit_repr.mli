@@ -39,9 +39,11 @@
     All computations on gas are performed in saturation arithmetic (see
     [Saturation_repr]) bounded between [0] and [2 ^ 62 - 1]*)
 
-module Arith :
-  Fixed_point_repr.Full
+module Arith : sig
+  include Fixed_point_repr.Full
     with type 'a t = private Saturation_repr.may_saturate Saturation_repr.t
+  val to_int: 'a t -> int
+end
 
 type t = Unaccounted | Limited of {remaining : Arith.fp}
 
