@@ -159,13 +159,13 @@ struct
   (* The protocol V8 only supports 64-bits architectures. We ensure this the
      hard way with a dynamic check. *)
   let () =
-    match Sys.word_size with
-    | 32 ->
+    match Sys.word_size, Sys.backend_type with
+    | 64, _  | _, Sys.Other "js_of_ocaml" -> ()
+    | 32, _ ->
         Printf.eprintf
           "FAILURE: Environment V8 does not support 32-bit architectures\n%!" ;
         Stdlib.exit 1
-    | 64 -> ()
-    | n ->
+    | n, _ ->
         Printf.eprintf
           "FAILURE: Unknown, unsupported architecture (%d bits)\n%!"
           n ;
