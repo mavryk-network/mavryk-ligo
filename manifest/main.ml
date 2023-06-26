@@ -7532,6 +7532,7 @@ let octez_scoru_wasm_regressions =
 let exclude filename =
   let is_proto_ name = String.starts_with ~prefix:"proto_" name in
   match String.split_on_char '/' filename with
+  | ["src"; "configurator"; "dune"] -> true
   (* Dune files in src/proto_*/parameters only have a (copy_files) stanza
      (no library / executable / test). *)
   | "src" :: maybe_proto :: "parameters" :: _ when is_proto_ maybe_proto -> true
