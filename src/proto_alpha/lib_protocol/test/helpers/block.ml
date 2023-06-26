@@ -602,7 +602,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?blocks_per_cycle ?cycles_per_voting_period ?sc_rollup_enable
     ?sc_rollup_arith_pvm_enable ?dal_enable ?zk_rollup_enable
     ?hard_gas_limit_per_block ?nonce_revelation_threshold
-    (bootstrap_accounts : Parameters.bootstrap_account list) =
+    ?initial_timestamp (bootstrap_accounts : Parameters.bootstrap_account list) =
   prepare_initial_context_params
     ?consensus_threshold
     ?min_proposal_quorum
