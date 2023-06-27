@@ -33,5 +33,5 @@ x-opam-monorepo-opam-provided: [
   "tezos-rust-libs"
   "tezos-sapling-parameters"
 ]
-build: [["rm" "-r" "vendors" "contrib"] ["dune" "build" "-p" name "-j" jobs]]
+build: [["rm" "-rf" "vendors" "contrib"] ["dune" "build" "-p" name "-j" jobs]]
 synopsis: "OCaml library for the Sapling protocol, using librustzcash"
