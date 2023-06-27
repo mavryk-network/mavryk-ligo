@@ -14,7 +14,7 @@ depends: [
   "tezos-protocol-015-PtLimaPt"
 ]
 build: [
-  ["rm" "-r" "vendors" "contrib"]
+  ["rm" "-rf" "vendors" "contrib"]
   ["dune" "build" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
