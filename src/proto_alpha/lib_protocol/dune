@@ -272,6 +272,7 @@
   tezos-protocol-alpha.raw)
  (flags
   (:standard)
+  (:include ../../../win32-flags.sexp)
   -nopervasives)
  (modules Protocol Tezos_protocol_alpha))
 
