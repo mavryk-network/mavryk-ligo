@@ -520,7 +520,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     ?level ?cost_per_byte ?issuance_weights ?origination_size ?blocks_per_cycle
     ?cycles_per_voting_period ?sc_rollup_enable ?sc_rollup_arith_pvm_enable
     ?dal_enable ?zk_rollup_enable ?hard_gas_limit_per_block
-    ?nonce_revelation_threshold ?dal () =
+    ?nonce_revelation_threshold ?dal ?(initial_timestamp = Time.Protocol.epoch) () =
   let open Tezos_protocol_018_Proxford_parameters in
   let constants = Default_parameters.constants_test in
   let min_proposal_quorum =
@@ -610,7 +610,7 @@ let prepare_initial_context_params ?consensus_threshold ?min_proposal_quorum
     Forge.make_shell
       ~level
       ~predecessor:hash
-      ~timestamp:Time.Protocol.epoch
+      ~timestamp:initial_timestamp
       ~fitness
       ~operations_hash:Operation_list_list_hash.zero
   in
@@ -622,7 +622,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?bootstrap_contracts ?level ?cost_per_byte ?issuance_weights
     ?origination_size ?blocks_per_cycle ?cycles_per_voting_period
     ?sc_rollup_enable ?sc_rollup_arith_pvm_enable ?dal_enable ?zk_rollup_enable
-    ?hard_gas_limit_per_block ?nonce_revelation_threshold ?dal
+    ?hard_gas_limit_per_block ?nonce_revelation_threshold ?dal ?initial_timestamp
     (bootstrap_accounts : Parameters.bootstrap_account list) =
   prepare_initial_context_params
     ?consensus_threshold
@@ -640,6 +640,7 @@ let genesis ?commitments ?consensus_threshold ?min_proposal_quorum
     ?hard_gas_limit_per_block
     ?nonce_revelation_threshold
     ?dal
+    ?initial_timestamp
     ()
   >>=? fun (constants, shell, hash) ->
   validate_bootstrap_accounts bootstrap_accounts constants.minimal_stake
