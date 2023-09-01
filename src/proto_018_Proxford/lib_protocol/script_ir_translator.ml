@@ -955,7 +955,7 @@ and parse_big_map_value_ty ctxt ~stack_depth ~legacy value_ty =
     ~legacy
     ~allow_lazy_storage:false
     ~allow_operation:false
-    ~allow_contract:false
+    ~allow_contract:legacy
     ~allow_ticket:true
     ~ret:Don't_parse_entrypoints
     value_ty
@@ -967,7 +967,7 @@ let parse_packable_ty ctxt ~stack_depth ~legacy node =
     ~legacy
     ~allow_lazy_storage:false
     ~allow_operation:false
-    ~allow_contract:false
+    ~allow_contract:legacy
       (* type contract is forbidden in UNPACK because of
          https://gitlab.com/tezos/tezos/-/issues/301 *)
     ~allow_ticket:false
@@ -1005,7 +1005,7 @@ let parse_normal_storage_ty ctxt ~stack_depth ~legacy node =
     ~legacy
     ~allow_lazy_storage:true
     ~allow_operation:false
-    ~allow_contract:false
+    ~allow_contract:legacy
     ~allow_ticket:true
     ~ret:Don't_parse_entrypoints
     node
@@ -3437,7 +3437,7 @@ and parse_instr :
         ( capture,
           Item_t (Lambda_t (Pair_t (capture_ty, arg_ty, _, _), ret, _), rest) )
     ) ->
-      check_packable ~allow_contract:false loc capture_ty >>?= fun () ->
+      check_packable ~allow_contract:legacy loc capture_ty >>?= fun () ->
       check_item_ty ctxt capture capture_ty loc I_APPLY 1 2
       >>?= fun (Eq, ctxt) ->
       check_var_annot loc annot >>?= fun () ->
@@ -3510,7 +3510,7 @@ and parse_instr :
   | Prim (loc, I_FAILWITH, [], annot), Item_t (v, _rest) ->
       Lwt.return
         ( error_unexpected_annot loc annot >>? fun () ->
-          check_packable ~allow_contract:false loc v >|? fun () ->
+          check_packable ~allow_contract:legacy loc v >|? fun () ->
           let instr = {apply = (fun _k -> IFailwith (loc, v))} in
           let descr aft = {loc; instr; bef = stack_ty; aft} in
           log_stack loc stack_ty Bot_t ;
@@ -4303,7 +4303,7 @@ and parse_instr :
       typed ctxt loc instr (Item_t (option_bytes_t, rest))
   (* Events *)
   | Prim (loc, I_EMIT, [], annot), Item_t (data, rest) ->
-      check_packable ~allow_contract:false loc data >>?= fun () ->
+      check_packable ~allow_contract:legacy loc data >>?= fun () ->
       parse_entrypoint_annot_strict loc annot >>?= fun tag ->
       unparse_ty ~loc:() ctxt data >>?= fun (unparsed_ty, ctxt) ->
       Gas.consume ctxt (Script.strip_locations_cost unparsed_ty)
