@@ -148,7 +148,7 @@ let () =
   in
   register @@ def "parameters" [] Protocol.Parameters_repr.encoding ;
   register ~pp:Protocol.Alpha_context.Tez.pp
-  @@ def "mav" [] Protocol.Alpha_context.Tez.encoding ;
+  @@ def "tez" [] Protocol.Alpha_context.Tez.encoding ;
   register ~pp:Protocol.Alpha_context.Timestamp.pp
   @@ def "timestamp" [] Protocol.Alpha_context.Timestamp.encoding ;
   register ~pp:Protocol.Alpha_context.Raw_level.pp

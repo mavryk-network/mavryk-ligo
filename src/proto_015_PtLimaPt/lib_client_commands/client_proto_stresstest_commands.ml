@@ -28,10 +28,10 @@ open Alpha_context
 module Smart_contracts = Client_proto_stresstest_contracts
 
 type transfer_strategy =
-  | Fixed_amount of {mumav : Tez.t}  (** Amount to transfer *)
+  | Fixed_amount of {mutez : Tez.t}  (** Amount to transfer *)
   | Evaporation of {fraction : float}
       (** Maximum fraction of current wealth to transfer.
-          Minimum amount is 1 mumav regardless of total wealth. *)
+          Minimum amount is 1 mutez regardless of total wealth. *)
 
 type limit =
   | Abs of int  (** Absolute level at which we should stop  *)
@@ -44,7 +44,7 @@ type parameters = {
   tps : float;  (** Transaction per seconds target *)
   strategy : transfer_strategy;
   regular_transfer_fee : Tez.t;
-      (** fees for each transfer (except for transfers to smart contracts), in mumav *)
+      (** fees for each transfer (except for transfers to smart contracts), in mutez *)
   regular_transfer_gas_limit : Gas.Arith.integral;
       (** gas limit per operation (except for transfers to smart contracts) *)
   storage_limit : Z.t;  (** storage limit per operation *)
@@ -135,8 +135,8 @@ let default_parameters =
     seed = 0x533D;
     fresh_probability = 0.001;
     tps = 5.0;
-    strategy = Fixed_amount {mumav = Tez.one};
-    regular_transfer_fee = Tez.of_mumav_exn 2_000L;
+    strategy = Fixed_amount {mutez = Tez.one};
+    regular_transfer_fee = Tez.of_mutez_exn 2_000L;
     regular_transfer_gas_limit = Gas.Arith.integral_of_int_exn 1_600;
     (* [gas_limit] corresponds to a slight overapproximation of the
        gas needed to inject an operation. It was obtained by simulating
@@ -207,11 +207,11 @@ let parse_strategy s =
   | ["fixed"; parameter] -> (
       match int_of_string parameter with
       | exception _ -> Error "invalid integer literal"
-      | mumav when mumav <= 0 -> Error "negative amount"
-      | mumav -> (
-          match Tez.of_mumav (Int64.of_int mumav) with
-          | None -> Error "invalid mumav"
-          | Some mumav -> Ok (Fixed_amount {mumav})))
+      | mutez when mutez <= 0 -> Error "negative amount"
+      | mutez -> (
+          match Tez.of_mutez (Int64.of_int mutez) with
+          | None -> Error "invalid mutez"
+          | Some mutez -> Ok (Fixed_amount {mutez})))
   | ["evaporation"; parameter] -> (
       match float_of_string parameter with
       | exception _ -> Error "invalid float literal"
@@ -443,13 +443,13 @@ let rec sample_transfer (cctxt : Protocol_client_context.full) chain block
     (parameters : parameters) (state : state) =
   let open Lwt_result_syntax in
   let*! src = sample_source_from_pool state cctxt in
-  let* mav =
+  let* tez =
     Alpha_services.Contract.balance
       cctxt
       (chain, block)
       (Contract.Implicit src.pkh)
   in
-  if Tez.(mav = zero) then
+  if Tez.(tez = zero) then
     let*! () =
       log Debug (fun () ->
           cctxt#message
@@ -481,15 +481,15 @@ let rec sample_transfer (cctxt : Protocol_client_context.full) chain block
     in
     let amount =
       match parameters.strategy with
-      | Fixed_amount {mumav} -> mumav
+      | Fixed_amount {mutez} -> mutez
       | Evaporation {fraction} ->
-          let mumav = Int64.to_float (Tez.to_mumav mav) in
-          let max_fraction = Int64.of_float (mumav *. fraction) in
+          let mutez = Int64.to_float (Tez.to_mutez tez) in
+          let max_fraction = Int64.of_float (mutez *. fraction) in
           let amount =
             if max_fraction = 0L then 1L
             else max 1L (Random.State.int64 state.rng_state max_fraction)
           in
-          Tez.of_mumav_exn amount
+          Tez.of_mutez_exn amount
     in
     return {src; dst; fee; gas_limit; amount; counter = None; fresh_dst = fresh}
 
@@ -1001,7 +1001,7 @@ let strategy_arg =
   let open Clic in
   arg
     ~long:"strategy"
-    ~placeholder:"fixed:mumav | evaporation:[0;1]"
+    ~placeholder:"fixed:mutez | evaporation:[0;1]"
     ~doc:"wealth redistribution strategy"
     (parameter (fun (cctxt : Protocol_client_context.full) s ->
          match parse_strategy s with
@@ -1334,7 +1334,7 @@ let estimate_transaction_cost ?smart_contracts
       dst;
       fee;
       gas_limit;
-      amount = Tez.of_mumav_exn (Int64.of_int 1);
+      amount = Tez.of_mutez_exn (Int64.of_int 1);
       counter = Some transf_counter;
       fresh_dst = false;
     }

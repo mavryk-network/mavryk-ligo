@@ -115,7 +115,7 @@ module Internal_for_tests : sig
     | `TLambda
     | `TList
     | `TMap
-    | `TMumav
+    | `TMutez
     | `TNat
     | `TOperation
     | `TOption

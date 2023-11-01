@@ -48,7 +48,7 @@ val find : Signature.Public_key_hash.t -> t tzresult Lwt.t
 
 val find_alternate : Signature.Public_key_hash.t -> t
 
-(** 4.000.000.000 mav *)
+(** 4.000.000.000 tez *)
 val default_initial_balance : Tez.t
 
 (** [generate_accounts ?initial_balances n] : generates [n] random

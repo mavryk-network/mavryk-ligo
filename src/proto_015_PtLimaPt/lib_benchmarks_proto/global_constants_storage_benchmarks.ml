@@ -208,7 +208,7 @@ module Micheline_sampler = struct
       T_signature;
       T_string;
       T_bytes;
-      T_mumav;
+      T_mutez;
       T_timestamp;
       T_unit;
       T_operation;

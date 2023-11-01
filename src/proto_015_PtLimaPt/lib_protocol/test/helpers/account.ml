@@ -75,7 +75,7 @@ let dummy_account =
   in
   new_account ~seed ()
 
-let default_initial_balance = Tez.of_mumav_exn 4_000_000_000_000L
+let default_initial_balance = Tez.of_mutez_exn 4_000_000_000_000L
 
 let generate_accounts ?rng_state ?(initial_balances = []) ?bootstrap_delegations
     n : (t * Tez.t * Signature.Public_key_hash.t option) list =
@@ -83,7 +83,7 @@ let generate_accounts ?rng_state ?(initial_balances = []) ?bootstrap_delegations
   let amount i =
     match List.nth_opt initial_balances i with
     | None -> default_initial_balance
-    | Some a -> Tez.of_mumav_exn a
+    | Some a -> Tez.of_mutez_exn a
   in
   let rng_state =
     match rng_state with

@@ -94,19 +94,19 @@ let contract_originate block account =
           UNPAIR;
           IF_LEFT {
             # transfer_non_zero
-            PUSH mumav 1;
+            PUSH mutez 1;
             PUSH int 42;
             TRANSFER_TOKENS;
           } {
             IF_LEFT {
               # transfer_int
-              PUSH mumav 0;
+              PUSH mutez 0;
               PUSH int 42;
               TRANSFER_TOKENS;
             } {
               IF_LEFT {
                 # transfer_zero_ticket
-                PUSH mumav 0;
+                PUSH mutez 0;
                 PUSH nat 0;
                 PUSH string "ticket payload";
                 TICKET;
@@ -115,7 +115,7 @@ let contract_originate block account =
               } {
                 IF_LEFT {
                   # transfer ticket
-                  PUSH mumav 0;
+                  PUSH mutez 0;
                   PUSH nat 137;
                   PUSH string "G";
                   TICKET;

@@ -329,7 +329,7 @@ let delegated_implicit_bootstrap_contract () =
   let ctxt = Incremental.alpha_ctxt i in
   Delegate.delegated_balance ctxt to_pkh >>= fun result ->
   Lwt.return @@ Environment.wrap_tzresult result >>=? fun amount ->
-  Assert.equal_tez ~loc:__LOC__ amount (Tez.of_mumav_exn 4000000000000L)
+  Assert.equal_tez ~loc:__LOC__ amount (Tez.of_mutez_exn 4000000000000L)
 
 let tests_bootstrap_contracts =
   [
@@ -340,7 +340,7 @@ let tests_bootstrap_contracts =
     Tztest.tztest
       "bootstrap contracts can change their delegate (small fee)"
       `Quick
-      (bootstrap_delegate_cannot_change ~fee:Tez.one_mumav);
+      (bootstrap_delegate_cannot_change ~fee:Tez.one_mutez);
     Tztest.tztest
       "bootstrap contracts can change their delegate (max fee)"
       `Quick
@@ -348,7 +348,7 @@ let tests_bootstrap_contracts =
     Tztest.tztest
       "bootstrap contracts cannot remove their delegation (small fee)"
       `Quick
-      (bootstrap_delegate_cannot_be_removed ~fee:Tez.one_mumav);
+      (bootstrap_delegate_cannot_be_removed ~fee:Tez.one_mutez);
     Tztest.tztest
       "bootstrap contracts cannot remove their delegation (max fee)"
       `Quick
@@ -357,7 +357,7 @@ let tests_bootstrap_contracts =
       "contracts not registered as delegate can remove their delegation (small \
        fee)"
       `Quick
-      (delegate_can_be_changed_from_unregistered_contract ~fee:Tez.one_mumav);
+      (delegate_can_be_changed_from_unregistered_contract ~fee:Tez.one_mutez);
     Tztest.tztest
       "contracts not registered as delegate can remove their delegation (max \
        fee)"
@@ -367,7 +367,7 @@ let tests_bootstrap_contracts =
       "contracts not registered as delegate can remove their delegation (small \
        fee)"
       `Quick
-      (delegate_can_be_removed_from_unregistered_contract ~fee:Tez.one_mumav);
+      (delegate_can_be_removed_from_unregistered_contract ~fee:Tez.one_mutez);
     Tztest.tztest
       "contracts not registered as delegate can remove their delegation (max \
        fee)"
@@ -376,7 +376,7 @@ let tests_bootstrap_contracts =
     Tztest.tztest
       "bootstrap keys are already registered as delegate keys (small fee)"
       `Quick
-      (bootstrap_manager_already_registered_delegate ~fee:Tez.one_mumav);
+      (bootstrap_manager_already_registered_delegate ~fee:Tez.one_mutez);
     Tztest.tztest
       "bootstrap keys are already registered as delegate keys (max fee)"
       `Quick
@@ -384,13 +384,13 @@ let tests_bootstrap_contracts =
     Tztest.tztest
       "bootstrap manager can be delegate (init origination, small fee)"
       `Quick
-      (delegate_to_bootstrap_by_origination ~fee:Tez.one_mumav);
+      (delegate_to_bootstrap_by_origination ~fee:Tez.one_mutez);
     (* balance enough for fee but not for fee + origination burn + dummy script storage cost *)
     Tztest.tztest
       "bootstrap manager can be delegate (init origination, edge case)"
       `Quick
       (delegate_to_bootstrap_by_origination
-         ~fee:(Tez.of_mumav_exn 3_999_999_705_000L));
+         ~fee:(Tez.of_mutez_exn 3_999_999_705_000L));
     (* fee bigger than bootstrap's initial balance*)
     Tztest.tztest
       "bootstrap manager can be delegate (init origination, large fee)"
@@ -509,7 +509,7 @@ let test_unregistered_delegate_key_init_origination ~fee () =
         | _ -> false)
 
 (** Delegation when delegate key is not assigned. Delegate account is
-    initialized. If fees are higher than initial credit (10 mav),
+    initialized. If fees are higher than initial credit (10 tez),
     [Balance_too_low] is raised. Otherwise, fees are still debited. The
     implicit contract has no delegate. *)
 let test_unregistered_delegate_key_init_delegation ~fee () =
@@ -557,7 +557,7 @@ let test_unregistered_delegate_key_init_delegation ~fee () =
         | _ -> false)
 
 (** Re-delegation when a delegate key was already assigned. If fees
-    are higher than initial credit (10 mav), [Balance_too_low] is
+    are higher than initial credit (10 tez), [Balance_too_low] is
     raised. Otherwise, fees are not debited and the implicit contract
     delegate remains unchanged. *)
 let test_unregistered_delegate_key_switch_delegation ~fee () =
@@ -1197,10 +1197,10 @@ let test_double_registration () =
   let pkh = Account.(account.pkh) in
   let impl_contract = Contract.Implicit pkh in
   (* credit 1μꜩ+ check balance *)
-  Op.transaction ~force_reveal:true (B b) bootstrap impl_contract Tez.one_mumav
+  Op.transaction ~force_reveal:true (B b) bootstrap impl_contract Tez.one_mutez
   >>=? fun create_contract ->
   Block.bake ~operation:create_contract b >>=? fun b ->
-  Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.one_mumav >>=? fun _ ->
+  Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.one_mutez >>=? fun _ ->
   (* self-delegation *)
   Op.delegation ~force_reveal:true (B b) impl_contract (Some pkh)
   >>=? fun self_delegation ->
@@ -1218,16 +1218,16 @@ let test_double_registration_when_empty () =
   let pkh = Account.(account.pkh) in
   let impl_contract = Contract.Implicit pkh in
   (* credit 1μꜩ+ check balance *)
-  Op.transaction ~force_reveal:true (B b) bootstrap impl_contract Tez.one_mumav
+  Op.transaction ~force_reveal:true (B b) bootstrap impl_contract Tez.one_mutez
   >>=? fun create_contract ->
   Block.bake ~operation:create_contract b >>=? fun b ->
-  Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.one_mumav >>=? fun _ ->
+  Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.one_mutez >>=? fun _ ->
   (* self delegation *)
   Op.delegation ~force_reveal:true (B b) impl_contract (Some pkh)
   >>=? fun self_delegation ->
   Block.bake ~operation:self_delegation b >>=? fun b ->
   (* empty the delegate account *)
-  Op.transaction (B b) impl_contract bootstrap Tez.one_mumav
+  Op.transaction (B b) impl_contract bootstrap Tez.one_mutez
   >>=? fun empty_contract ->
   Block.bake ~operation:empty_contract b >>=? fun b ->
   Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.zero >>=? fun _ ->
@@ -1244,24 +1244,24 @@ let test_double_registration_when_recredited () =
   let pkh = Account.(account.pkh) in
   let impl_contract = Contract.Implicit pkh in
   (* credit 1μꜩ+ check balance *)
-  Op.transaction ~force_reveal:true (B b) bootstrap impl_contract Tez.one_mumav
+  Op.transaction ~force_reveal:true (B b) bootstrap impl_contract Tez.one_mutez
   >>=? fun create_contract ->
   Block.bake ~operation:create_contract b >>=? fun b ->
-  Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.one_mumav >>=? fun _ ->
+  Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.one_mutez >>=? fun _ ->
   (* self delegation *)
   Op.delegation ~force_reveal:true (B b) impl_contract (Some pkh)
   >>=? fun self_delegation ->
   Block.bake ~operation:self_delegation b >>=? fun b ->
   (* empty the delegate account *)
-  Op.transaction ~force_reveal:true (B b) impl_contract bootstrap Tez.one_mumav
+  Op.transaction ~force_reveal:true (B b) impl_contract bootstrap Tez.one_mutez
   >>=? fun empty_contract ->
   Block.bake ~operation:empty_contract b >>=? fun b ->
   Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.zero >>=? fun _ ->
   (* credit 1μꜩ+ check balance *)
-  Op.transaction (B b) bootstrap impl_contract Tez.one_mumav
+  Op.transaction (B b) bootstrap impl_contract Tez.one_mutez
   >>=? fun create_contract ->
   Block.bake ~operation:create_contract b >>=? fun b ->
-  Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.one_mumav >>=? fun _ ->
+  Assert.balance_is ~loc:__LOC__ (B b) impl_contract Tez.one_mutez >>=? fun _ ->
   (* second self-delegation *)
   Op.delegation (B b) impl_contract (Some pkh) >>=? fun second_registration ->
   Incremental.begin_construction b >>=? fun i ->
@@ -1371,7 +1371,7 @@ let tests_delegate_registration =
     Tztest.tztest
       "unregistered delegate key (origination, small fee)"
       `Quick
-      (test_unregistered_delegate_key_init_origination ~fee:Tez.one_mumav);
+      (test_unregistered_delegate_key_init_origination ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key (origination, edge case fee)"
       `Quick
@@ -1383,7 +1383,7 @@ let tests_delegate_registration =
     Tztest.tztest
       "unregistered delegate key (init with delegation, small fee)"
       `Quick
-      (test_unregistered_delegate_key_init_delegation ~fee:Tez.one_mumav);
+      (test_unregistered_delegate_key_init_delegation ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key (init with delegation, max fee)"
       `Quick
@@ -1391,7 +1391,7 @@ let tests_delegate_registration =
     Tztest.tztest
       "unregistered delegate key (switch with delegation, small fee)"
       `Quick
-      (test_unregistered_delegate_key_switch_delegation ~fee:Tez.one_mumav);
+      (test_unregistered_delegate_key_switch_delegation ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key (switch with delegation, max fee)"
       `Quick
@@ -1401,93 +1401,93 @@ let tests_delegate_registration =
       "unregistered delegate key - credit/debit 1μꜩ (origination, small fee)"
       `Quick
       (test_unregistered_delegate_key_init_origination_credit_debit
-         ~fee:Tez.one_mumav
-         ~amount:Tez.one_mumav);
+         ~fee:Tez.one_mutez
+         ~amount:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit/debit 1μꜩ (origination, large fee)"
       `Quick
       (test_unregistered_delegate_key_init_origination_credit_debit
          ~fee:max_tez
-         ~amount:Tez.one_mumav);
+         ~amount:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit/debit 1μꜩ (init with delegation, \
        small fee)"
       `Quick
       (test_unregistered_delegate_key_init_delegation_credit_debit
-         ~amount:Tez.one_mumav
-         ~fee:Tez.one_mumav);
+         ~amount:Tez.one_mutez
+         ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit/debit 1μꜩ (init with delegation, \
        large fee)"
       `Quick
       (test_unregistered_delegate_key_init_delegation_credit_debit
-         ~amount:Tez.one_mumav
+         ~amount:Tez.one_mutez
          ~fee:max_tez);
     Tztest.tztest
       "unregistered delegate key - credit/debit 1μꜩ (switch with delegation, \
        small fee)"
       `Quick
       (test_unregistered_delegate_key_switch_delegation_credit_debit
-         ~amount:Tez.one_mumav
-         ~fee:Tez.one_mumav);
+         ~amount:Tez.one_mutez
+         ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit/debit 1μꜩ (switch with delegation, \
        large fee)"
       `Quick
       (test_unregistered_delegate_key_switch_delegation_credit_debit
-         ~amount:Tez.one_mumav
+         ~amount:Tez.one_mutez
          ~fee:max_tez);
     (* credit 1μꜩ, no self-delegation *)
     Tztest.tztest
       "unregistered delegate key - credit 1μꜩ (origination, small fee)"
       `Quick
       (test_unregistered_delegate_key_init_origination_credit
-         ~fee:Tez.one_mumav
-         ~amount:Tez.one_mumav);
+         ~fee:Tez.one_mutez
+         ~amount:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit 1μꜩ (origination, edge case fee)"
       `Quick
       (test_unregistered_delegate_key_init_origination_credit
          ~fee:(of_int 3_999_488)
-         ~amount:Tez.one_mumav);
+         ~amount:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit 1μꜩ (origination, large fee)"
       `Quick
       (test_unregistered_delegate_key_init_origination_credit
          ~fee:(of_int 10_000_000)
-         ~amount:Tez.one_mumav);
+         ~amount:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit 1μꜩ (init with delegation, small fee)"
       `Quick
       (test_unregistered_delegate_key_init_delegation_credit
-         ~amount:Tez.one_mumav
-         ~fee:Tez.one_mumav);
+         ~amount:Tez.one_mutez
+         ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit 1μꜩ (init with delegation, large fee)"
       `Quick
       (test_unregistered_delegate_key_init_delegation_credit
-         ~amount:Tez.one_mumav
+         ~amount:Tez.one_mutez
          ~fee:max_tez);
     Tztest.tztest
       "unregistered delegate key - credit 1μꜩ (switch with delegation, small \
        fee)"
       `Quick
       (test_unregistered_delegate_key_switch_delegation_credit
-         ~amount:Tez.one_mumav
-         ~fee:Tez.one_mumav);
+         ~amount:Tez.one_mutez
+         ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered delegate key - credit 1μꜩ (switch with delegation, large \
        fee)"
       `Quick
       (test_unregistered_delegate_key_switch_delegation_credit
-         ~amount:Tez.one_mumav
+         ~amount:Tez.one_mutez
          ~fee:max_tez);
     (* self delegation on unrevealed and unregistered contract *)
     Tztest.tztest
       "unregistered and unrevealed self-delegation (small fee)"
       `Quick
       (test_unregistered_and_unrevealed_self_delegate_key_init_delegation
-         ~fee:Tez.one_mumav);
+         ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered and unrevealed self-delegation (large fee)"
       `Quick
@@ -1498,7 +1498,7 @@ let tests_delegate_registration =
       "unregistered and revealed self-delegation (small fee)"
       `Quick
       (test_unregistered_and_revealed_self_delegate_key_init_delegation
-         ~fee:Tez.one_mumav);
+         ~fee:Tez.one_mutez);
     Tztest.tztest
       "unregistered and revealed self-delegation  large fee)"
       `Quick
@@ -1523,38 +1523,38 @@ let tests_delegate_registration =
     Tztest.tztest
       "failed self-delegation: credit & debit 1μꜩ"
       `Quick
-      (test_failed_self_delegation_emptied_implicit_contract Tez.one_mumav);
+      (test_failed_self_delegation_emptied_implicit_contract Tez.one_mutez);
     (* credit 1μtz, delegate, debit 1μtz *)
     Tztest.tztest
       "empty delegated contract is not deleted: credit 1μꜩ, delegate & debit \
        1μꜩ"
       `Quick
-      (test_emptying_delegated_implicit_contract_fails Tez.one_mumav);
+      (test_emptying_delegated_implicit_contract_fails Tez.one_mutez);
     (*** valid registration ***)
     (* valid registration: credit 1 μꜩ, self delegation *)
     Tztest.tztest
       "valid delegate registration: credit 1μꜩ, self delegation (init with \
        delegation)"
       `Quick
-      (test_valid_delegate_registration_init_delegation_credit Tez.one_mumav);
+      (test_valid_delegate_registration_init_delegation_credit Tez.one_mutez);
     Tztest.tztest
       "valid delegate registration: credit 1μꜩ, self delegation (switch with \
        delegation)"
       `Quick
-      (test_valid_delegate_registration_switch_delegation_credit Tez.one_mumav);
+      (test_valid_delegate_registration_switch_delegation_credit Tez.one_mutez);
     (* valid registration: credit 1 μꜩ, self delegation, debit 1μꜩ *)
     Tztest.tztest
       "valid delegate registration: credit 1μꜩ, self delegation, debit 1μꜩ \
        (init with delegation)"
       `Quick
       (test_valid_delegate_registration_init_delegation_credit_debit
-         Tez.one_mumav);
+         Tez.one_mutez);
     Tztest.tztest
       "valid delegate registration: credit 1μꜩ, self delegation, debit 1μꜩ \
        (switch with delegation)"
       `Quick
       (test_valid_delegate_registration_switch_delegation_credit_debit
-         Tez.one_mumav);
+         Tez.one_mutez);
     (*** double registration ***)
     Tztest.tztest "double registration" `Quick test_double_registration;
     Tztest.tztest

@@ -1179,7 +1179,7 @@ let rec create_Tztest_batches test tests_msg operations =
    batch of n manager operations. *)
 type probes = {
   source : Signature.Public_key_hash.t;
-  fee : Tez.mav;
+  fee : Tez.tez;
   gas_limit : Gas.Arith.integral;
   nb_counter : Z.t;
 }

@@ -523,9 +523,9 @@ let init_with_constants_gen tup constants =
   let open Tp015_parameters in
   let bootstrap_accounts =
     List.map
-      (fun (acc, mav, delegate_to) ->
+      (fun (acc, tez, delegate_to) ->
         Default_parameters.make_bootstrap_account
-          (acc.Account.pkh, acc.Account.pk, mav, delegate_to, None))
+          (acc.Account.pkh, acc.Account.pk, tez, delegate_to, None))
       accounts
   in
   let parameters =

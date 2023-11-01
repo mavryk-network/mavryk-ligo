@@ -271,13 +271,13 @@ let minimal_timestamp_switch =
 
 let tez_format =
   "Text format: `DDDDDDD.DDDDDD`.\n\
-   Tez and mumav and separated by a period sign. Trailing and pending zeroes \
+   Tez and mutez and separated by a period sign. Trailing and pending zeroes \
    are allowed."
 
 let tez_parameter param =
   parameter (fun _ s ->
       match Tez.of_string s with
-      | Some mav -> return mav
+      | Some tez -> return tez
       | None -> fail (Bad_tez_arg (param, s)))
 
 let tez_arg ~default ~parameter ~doc =
@@ -461,7 +461,7 @@ let max_priority_arg =
          try return (int_of_string s) with _ -> fail (Bad_max_priority s)))
 
 let default_minimal_fees =
-  match Tez.of_mumav 100L with None -> assert false | Some t -> t
+  match Tez.of_mutez 100L with None -> assert false | Some t -> t
 
 let default_minimal_nanotez_per_gas_unit = Q.of_int 100
 
@@ -471,7 +471,7 @@ let minimal_fees_arg =
   default_arg
     ~long:"minimal-fees"
     ~placeholder:"amount"
-    ~doc:"exclude operations with fees lower than this threshold (in mav)"
+    ~doc:"exclude operations with fees lower than this threshold (in tez)"
     ~default:(Tez.to_string default_minimal_fees)
     (parameter (fun _ s ->
          match Tez.of_string s with

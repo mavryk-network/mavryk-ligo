@@ -978,7 +978,7 @@ let prepare_first_block ~level ~timestamp ctxt =
               c.sc_rollup.commitment_period_in_blocks * 10_000_000;
             (* TODO: https://gitlab.com/tezos/tezos/-/issues/2756
                The following constants need to be refined. *)
-            stake_amount = Tez_repr.of_mumav_exn 10_000_000_000L;
+            stake_amount = Tez_repr.of_mutez_exn 10_000_000_000L;
             commitment_period_in_blocks =
               c.sc_rollup.commitment_period_in_blocks;
             max_lookahead_in_blocks = c.sc_rollup.max_lookahead_in_blocks;

@@ -37,7 +37,7 @@ open Alpha_context
     parameter). *)
 type 'kind internal_operation_contents =
   | Transaction : {
-      amount : Tez.mav;
+      amount : Tez.tez;
       parameters : Script.lazy_expr;
       entrypoint : Entrypoint.t;
       destination : Destination.t;
@@ -46,7 +46,7 @@ type 'kind internal_operation_contents =
   | Origination : {
       delegate : Signature.Public_key_hash.t option;
       script : Script.t;
-      credit : Tez.mav;
+      credit : Tez.tez;
     }
       -> Kind.origination internal_operation_contents
   | Delegation :

@@ -9,7 +9,7 @@ code { UNPAIR ;
        ASSERT_SOME ;
        CDR ;
        CDR ;
-       PUSH mumav 0;
+       PUSH mutez 0;
        SWAP ;
        RIGHT (sapling_transaction 8);
        TRANSFER_TOKENS;

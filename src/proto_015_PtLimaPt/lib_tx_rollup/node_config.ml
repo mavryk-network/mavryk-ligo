@@ -110,21 +110,21 @@ let mode_encoding =
       ("custom", Custom);
     ]
 
-let mav t = Tez.of_mumav_exn Int64.(mul (of_int t) 1_000_000L)
+let tez t = Tez.of_mutez_exn Int64.(mul (of_int t) 1_000_000L)
 
-let default_cost_caps = {fee_cap = Tez.one; burn_cap = mav 2}
+let default_cost_caps = {fee_cap = Tez.one; burn_cap = tez 2}
 
-let default_commitment_caps = {fee_cap = mav 2; burn_cap = mav 3}
+let default_commitment_caps = {fee_cap = tez 2; burn_cap = tez 3}
 
-let default_submit_batch_caps = {fee_cap = mav 5; burn_cap = mav 5}
+let default_submit_batch_caps = {fee_cap = tez 5; burn_cap = tez 5}
 
 let default_finalize_commitment_caps = default_cost_caps
 
 let default_remove_commitment_caps = default_cost_caps
 
-let default_rejection_caps = {fee_cap = mav 10; burn_cap = mav 10}
+let default_rejection_caps = {fee_cap = tez 10; burn_cap = tez 10}
 
-let default_dispatch_withdrawals_caps = {fee_cap = mav 2; burn_cap = mav 3}
+let default_dispatch_withdrawals_caps = {fee_cap = tez 2; burn_cap = tez 3}
 
 let default_caps =
   {

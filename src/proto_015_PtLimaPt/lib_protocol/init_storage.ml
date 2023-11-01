@@ -38,8 +38,8 @@
 
 *)
 
-let invoice_contract ctxt ~address ~amount_mumav =
-  match Tez_repr.of_mumav amount_mumav with
+let invoice_contract ctxt ~address ~amount_mutez =
+  match Tez_repr.of_mutez amount_mutez with
   | None -> Lwt.return (ctxt, [])
   | Some amount -> (
       ( Contract_repr.of_b58check address >>?= fun recipient ->
@@ -191,13 +191,13 @@ let prepare_first_block chain_id ctxt ~typecheck ~level ~timestamp =
       Patch_ghostnet.patch chain_id ctxt level >>=? fun ctxt ->
       invoice_contract
         ctxt
-        ~address:"mv18Cw7psUrAAPBpXYd9CtCpHg9EgjHP9KTe"
-        ~amount_mumav:15_000_000_000L
+        ~address:"tz1X81bCXPtMiHu1d4UZF4GPhMPkvkp56ssb"
+        ~amount_mutez:15_000_000_000L
       >>= fun (ctxt, bu1) ->
       invoice_contract
         ctxt
-        ~address:"mv18Cw7psUrAAPBpXYd9CtCpHg9EgjHP9KTe"
-        ~amount_mumav:10_000_000_000L
+        ~address:"tz1MidLyXXvKWMmbRvKKeusDtP95NDJ5gAUx"
+        ~amount_mutez:10_000_000_000L
       >>= fun (ctxt, bu2) -> return (ctxt, bu1 @ bu2))
   >>=? fun (ctxt, balance_updates) ->
   List.fold_right_es patch_script Legacy_script_patches.addresses_to_patch ctxt

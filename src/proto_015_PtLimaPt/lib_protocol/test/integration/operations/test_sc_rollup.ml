@@ -797,7 +797,7 @@ let test_originating_with_invalid_types () =
   (* Following types fail at validation time. *)
   let* () =
     [
-      "mumav";
+      "mutez";
       "big_map string nat";
       "contract string";
       "sapling_state 2";
@@ -951,11 +951,11 @@ let string_receiver =
         code { CDR ; NIL operation; PAIR } }
   |}
 
-(* A contract that receives a mumav. *)
-let mumav_receiver =
+(* A contract that receives a mutez. *)
+let mutez_receiver =
   {|
-      { parameter mumav;
-        storage mumav;
+      { parameter mutez;
+        storage mutez;
         code { CDR ; NIL operation; PAIR } }
   |}
 
@@ -1122,17 +1122,17 @@ let test_multi_transaction_batch () =
     (Some 10)
 
 (** Test that executing an L2 to L1 transaction that involves an invalid
-    parameter (mumav) fails. *)
+    parameter (mutez) fails. *)
 let test_transaction_with_invalid_type () =
   let* block, (baker, originator) = context_init Context.T2 in
   let baker = Context.Contract.pkh baker in
   let source = Context.Contract.pkh originator in
   let* block, rollup = sc_originate block originator "list (ticket string)" in
   let* incr = Incremental.begin_construction block in
-  let* mumav_receiver, incr =
+  let* mutez_receiver, incr =
     originate_contract
       incr
-      ~script:mumav_receiver
+      ~script:mutez_receiver
       ~storage:"0"
       ~source_contract:originator
       ~baker
@@ -1141,7 +1141,7 @@ let test_transaction_with_invalid_type () =
   let* cemented_commitment, incr =
     publish_and_cement_dummy_commitment incr ~baker ~originator rollup
   in
-  let transactions = [(mumav_receiver, Entrypoint.default, "12")] in
+  let transactions = [(mutez_receiver, Entrypoint.default, "12")] in
   (* Create an atomic batch message. *)
   let output = make_output ~outbox_level:0 ~message_index:1 transactions in
   assert_fails
