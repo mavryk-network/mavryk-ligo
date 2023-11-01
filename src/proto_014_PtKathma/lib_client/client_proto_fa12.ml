@@ -764,7 +764,7 @@ let extract_error trace =
 
 let call_contract (cctxt : #Protocol_client_context.full) ~chain ~block
     ?confirmations ?dry_run ?verbose_signing ?branch ~source ~src_pk ~src_sk
-    ~contract ~action ~tez_amount ?fee ?gas_limit ?storage_limit ?counter
+    ~contract ~action ~mav_amount ?fee ?gas_limit ?storage_limit ?counter
     ~fee_parameter () =
   contract_has_fa12_interface cctxt ~chain ~block ~contract () >>=? fun () ->
   let entrypoint, parameters = translate_action_to_argument action in
@@ -780,7 +780,7 @@ let call_contract (cctxt : #Protocol_client_context.full) ~chain ~block
     ~src_sk
     ~destination:(Originated contract)
     ~parameters
-    ~amount:tez_amount
+    ~amount:mav_amount
     ~entrypoint
     ?fee
     ?gas_limit
@@ -800,7 +800,7 @@ type token_transfer = {
   token_contract : string;
   destination : string;
   amount : Z.t;
-  tez_amount : string option;
+  mav_amount : string option;
   fee : string option;
   gas_limit : Gas.Arith.integral option;
   storage_limit : Z.t option;
@@ -813,7 +813,7 @@ let token_transfer_encoding =
            token_contract;
            destination;
            amount;
-           tez_amount;
+           mav_amount;
            fee;
            gas_limit;
            storage_limit;
@@ -821,14 +821,14 @@ let token_transfer_encoding =
       ( token_contract,
         destination,
         amount,
-        tez_amount,
+        mav_amount,
         fee,
         gas_limit,
         storage_limit ))
     (fun ( token_contract,
            destination,
            amount,
-           tez_amount,
+           mav_amount,
            fee,
            gas_limit,
            storage_limit ) ->
@@ -836,7 +836,7 @@ let token_transfer_encoding =
         token_contract;
         destination;
         amount;
-        tez_amount;
+        mav_amount;
         fee;
         gas_limit;
         storage_limit;
@@ -850,21 +850,21 @@ let token_transfer_encoding =
        (opt "gas-limit" Gas.Arith.n_integral_encoding)
        (opt "storage-limit" z))
 
-let tez_of_string_exn index field s =
+let mav_of_string_exn index field s =
   match Tez.of_string s with
   | Some t -> ok t
   | None ->
       error_with
         "Invalid %s notation at entry %i, field \"%s\": %s"
-        Operation_result.tez_sym
+        Operation_result.mav_sym
         index
         field
         s
 
-let tez_of_opt_string_exn index field s =
-  Option.map_e (tez_of_string_exn index field) s
+let mav_of_opt_string_exn index field s =
+  Option.map_e (mav_of_string_exn index field) s
 
-let build_transaction_operation ?(tez_amount = Tez.zero) ?fee ?gas_limit
+let build_transaction_operation ?(mav_amount = Tez.zero) ?fee ?gas_limit
     ?storage_limit token action =
   let entrypoint = action_to_entrypoint action in
   let parameters =
@@ -872,7 +872,7 @@ let build_transaction_operation ?(tez_amount = Tez.zero) ?fee ?gas_limit
   in
   let operation =
     Transaction
-      {amount = tez_amount; parameters; destination = token; entrypoint}
+      {amount = mav_amount; parameters; destination = token; entrypoint}
   in
   Injection.prepare_manager_operation
     ~fee:(Limit.of_option fee)
@@ -892,9 +892,9 @@ let prepare_single_token_transfer cctxt ?default_fee ?default_gas_limit
     cctxt
     transfer.destination
   >>=? fun dest ->
-  tez_of_opt_string_exn index "tez_amount" transfer.tez_amount
-  >>?= fun tez_amount ->
-  tez_of_opt_string_exn index "fee" transfer.fee >>?= fun transfer_fee ->
+  mav_of_opt_string_exn index "mav_amount" transfer.mav_amount
+  >>?= fun mav_amount ->
+  mav_of_opt_string_exn index "fee" transfer.fee >>?= fun transfer_fee ->
   let fee = Option.either transfer_fee default_fee in
   let gas_limit = Option.either transfer.gas_limit default_gas_limit in
   let storage_limit =
@@ -903,7 +903,7 @@ let prepare_single_token_transfer cctxt ?default_fee ?default_gas_limit
   let action = Transfer (src, dest, transfer.amount) in
   let operation =
     build_transaction_operation
-      ?tez_amount
+      ?mav_amount
       ?fee
       ?gas_limit
       ?storage_limit

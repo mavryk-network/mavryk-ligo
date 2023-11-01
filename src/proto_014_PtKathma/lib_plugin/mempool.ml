@@ -36,7 +36,7 @@ type error_classification =
 
 type nanotez = Q.t
 
-let nanotez_enc : nanotez Data_encoding.t =
+let nanomav_enc : nanotez Data_encoding.t =
   let open Data_encoding in
   def
     "nanotez"
@@ -60,8 +60,8 @@ let manager_op_replacement_factor_enc : Q.t Data_encoding.t =
 
 type config = {
   minimal_fees : Tez.t;
-  minimal_nanotez_per_gas_unit : nanotez;
-  minimal_nanotez_per_byte : nanotez;
+  minimal_nanomav_per_gas_unit : nanotez;
+  minimal_nanomav_per_byte : nanotez;
   allow_script_failure : bool;
       (** If [true], this makes [post_filter_manager] unconditionally return
             [`Passed_postfilter filter_state], no matter the operation's
@@ -83,9 +83,9 @@ type config = {
 let default_minimal_fees =
   match Tez.of_mumav 100L with None -> assert false | Some t -> t
 
-let default_minimal_nanotez_per_gas_unit = Q.of_int 100
+let default_minimal_nanomav_per_gas_unit = Q.of_int 100
 
-let default_minimal_nanotez_per_byte = Q.of_int 1000
+let default_minimal_nanomav_per_byte = Q.of_int 1000
 
 let quota = Main.validation_passes
 
@@ -102,8 +102,8 @@ let managers_quota = Stdlib.List.nth quota managers_index
 let default_config =
   {
     minimal_fees = default_minimal_fees;
-    minimal_nanotez_per_gas_unit = default_minimal_nanotez_per_gas_unit;
-    minimal_nanotez_per_byte = default_minimal_nanotez_per_byte;
+    minimal_nanomav_per_gas_unit = default_minimal_nanomav_per_gas_unit;
+    minimal_nanomav_per_byte = default_minimal_nanomav_per_byte;
     allow_script_failure = true;
     clock_drift = None;
     replace_by_fee_factor =
@@ -117,31 +117,31 @@ let config_encoding : config Data_encoding.t =
   conv
     (fun {
            minimal_fees;
-           minimal_nanotez_per_gas_unit;
-           minimal_nanotez_per_byte;
+           minimal_nanomav_per_gas_unit;
+           minimal_nanomav_per_byte;
            allow_script_failure;
            clock_drift;
            replace_by_fee_factor;
            max_prechecked_manager_operations;
          } ->
       ( minimal_fees,
-        minimal_nanotez_per_gas_unit,
-        minimal_nanotez_per_byte,
+        minimal_nanomav_per_gas_unit,
+        minimal_nanomav_per_byte,
         allow_script_failure,
         clock_drift,
         replace_by_fee_factor,
         max_prechecked_manager_operations ))
     (fun ( minimal_fees,
-           minimal_nanotez_per_gas_unit,
-           minimal_nanotez_per_byte,
+           minimal_nanomav_per_gas_unit,
+           minimal_nanomav_per_byte,
            allow_script_failure,
            clock_drift,
            replace_by_fee_factor,
            max_prechecked_manager_operations ) ->
       {
         minimal_fees;
-        minimal_nanotez_per_gas_unit;
-        minimal_nanotez_per_byte;
+        minimal_nanomav_per_gas_unit;
+        minimal_nanomav_per_byte;
         allow_script_failure;
         clock_drift;
         replace_by_fee_factor;
@@ -150,13 +150,13 @@ let config_encoding : config Data_encoding.t =
     (obj7
        (dft "minimal_fees" Tez.encoding default_config.minimal_fees)
        (dft
-          "minimal_nanotez_per_gas_unit"
-          nanotez_enc
-          default_config.minimal_nanotez_per_gas_unit)
+          "minimal_nanomav_per_gas_unit"
+          nanomav_enc
+          default_config.minimal_nanomav_per_gas_unit)
        (dft
-          "minimal_nanotez_per_byte"
-          nanotez_enc
-          default_config.minimal_nanotez_per_byte)
+          "minimal_nanomav_per_byte"
+          nanomav_enc
+          default_config.minimal_nanomav_per_byte)
        (dft "allow_script_failure" bool default_config.allow_script_failure)
        (opt "clock_drift" Period.encoding)
        (dft
@@ -631,11 +631,11 @@ let pre_filter_manager :
     in
     let minimal_fees_for_gas_in_nanotez =
       Q.mul
-        config.minimal_nanotez_per_gas_unit
+        config.minimal_nanomav_per_gas_unit
         (Q.of_bigint @@ Gas.Arith.integral_to_z gas_limit)
     in
     let minimal_fees_for_size_in_nanotez =
-      Q.mul config.minimal_nanotez_per_byte (Q.of_int size)
+      Q.mul config.minimal_nanomav_per_byte (Q.of_int size)
     in
     if
       Q.compare

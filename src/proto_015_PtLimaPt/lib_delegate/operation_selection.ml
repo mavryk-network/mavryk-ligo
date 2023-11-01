@@ -79,7 +79,7 @@ end)
    operations in the pending mempool.
    See {!Tezos_protocol_plugin_alpha.Plugin.Mempool.weight_manager_operation}. *)
 let prioritize_manager ~max_size ~hard_gas_limit_per_block ~minimal_fees
-    ~minimal_nanotez_per_gas_unit ~minimal_nanotez_per_byte operation =
+    ~minimal_nanomav_per_gas_unit ~minimal_nanomav_per_byte operation =
   let op = Operation_pool.Prioritized_operation.packed operation in
   let {protocol_data = Operation_data {contents; _}; _} = op in
   let open Operation in
@@ -123,14 +123,14 @@ let prioritize_manager ~max_size ~hard_gas_limit_per_block ~minimal_fees
         let enough_fees_for_gas =
           let minimal_fees_in_nanotez =
             Q.mul
-              minimal_nanotez_per_gas_unit
+              minimal_nanomav_per_gas_unit
               (Q.of_bigint @@ Gas.Arith.integral_to_z gas)
           in
           Q.compare minimal_fees_in_nanotez fees_in_nanotez <= 0
         in
         let enough_fees_for_size =
           let minimal_fees_in_nanotez =
-            Q.mul minimal_nanotez_per_byte (Q.of_int size)
+            Q.mul minimal_nanomav_per_byte (Q.of_int size)
           in
           Q.compare minimal_fees_in_nanotez fees_in_nanotez <= 0
         in
@@ -140,7 +140,7 @@ let prioritize_manager ~max_size ~hard_gas_limit_per_block ~minimal_fees
   | _ -> None
 
 let prioritize_managers ~hard_gas_limit_per_block ~minimal_fees
-    ~minimal_nanotez_per_gas_unit ~minimal_nanotez_per_byte managers =
+    ~minimal_nanomav_per_gas_unit ~minimal_nanomav_per_byte managers =
   Prioritized_operation_set.fold
     (fun op acc ->
       match
@@ -148,8 +148,8 @@ let prioritize_managers ~hard_gas_limit_per_block ~minimal_fees
           ~max_size:managers_quota.max_size
           ~hard_gas_limit_per_block
           ~minimal_fees
-          ~minimal_nanotez_per_gas_unit
-          ~minimal_nanotez_per_byte
+          ~minimal_nanomav_per_gas_unit
+          ~minimal_nanomav_per_byte
           op
       with
       | None -> acc
@@ -214,8 +214,8 @@ let filter_operations_with_simulation initial_inc fees_config
     ~hard_gas_limit_per_block {consensus; votes; anonymous; managers} =
   let {
     Baking_configuration.minimal_fees;
-    minimal_nanotez_per_gas_unit;
-    minimal_nanotez_per_byte;
+    minimal_nanomav_per_gas_unit;
+    minimal_nanomav_per_byte;
   } =
     fees_config
   in
@@ -236,8 +236,8 @@ let filter_operations_with_simulation initial_inc fees_config
     prioritize_managers
       ~hard_gas_limit_per_block
       ~minimal_fees
-      ~minimal_nanotez_per_gas_unit
-      ~minimal_nanotez_per_byte
+      ~minimal_nanomav_per_gas_unit
+      ~minimal_nanomav_per_byte
       managers
   in
   filter_valid_operations_up_to_quota
@@ -296,8 +296,8 @@ let filter_operations_without_simulation fees_config ~hard_gas_limit_per_block
   in
   let {
     Baking_configuration.minimal_fees;
-    minimal_nanotez_per_gas_unit;
-    minimal_nanotez_per_byte;
+    minimal_nanomav_per_gas_unit;
+    minimal_nanomav_per_byte;
   } =
     fees_config
   in
@@ -306,8 +306,8 @@ let filter_operations_without_simulation fees_config ~hard_gas_limit_per_block
     prioritize_managers
       ~hard_gas_limit_per_block
       ~minimal_fees
-      ~minimal_nanotez_per_gas_unit
-      ~minimal_nanotez_per_byte
+      ~minimal_nanomav_per_gas_unit
+      ~minimal_nanomav_per_byte
       managers
   in
   let managers =

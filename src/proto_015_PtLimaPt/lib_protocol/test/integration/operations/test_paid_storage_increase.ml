@@ -136,7 +136,7 @@ let test_negative_amount () =
 
 (** We create an implicit account with not enough mav to pay for the
     storage increase. *)
-let test_no_tez_to_pay () =
+let test_no_mav_to_pay () =
   let open Lwt_result_syntax in
   let* b, (source, baker, receiver) = Context.init3 ~consensus_threshold:0 () in
   let* b, destination = contract_originate b source in
@@ -149,9 +149,9 @@ let test_no_tez_to_pay () =
     Z.div (Z.of_int 2_000_000) (Z.of_int64 (Tez.to_mumav cost_per_byte))
   in
   let* balance = Context.Contract.balance (I inc) source in
-  let*? tez_to_substract = Test_tez.(balance -? Tez.one) in
+  let*? mav_to_substract = Test_tez.(balance -? Tez.one) in
   let* op =
-    Op.transaction (I inc) ~fee:Tez.zero source receiver tez_to_substract
+    Op.transaction (I inc) ~fee:Tez.zero source receiver mav_to_substract
   in
   let* inc = Incremental.add_operation inc op in
   let* b = Incremental.finalize_block inc in
@@ -241,7 +241,7 @@ let tests =
     Tztest.tztest "balances simple" `Quick test_balances_simple;
     Tztest.tztest "null amount" `Quick test_null_amount;
     Tztest.tztest "negative amount" `Quick test_negative_amount;
-    Tztest.tztest "not enough mav to pay" `Quick test_no_tez_to_pay;
+    Tztest.tztest "not enough mav to pay" `Quick test_no_mav_to_pay;
     Tztest.tztest "no contract to bump its paid storage" `Quick test_no_contract;
     Tztest.tztest "effectiveness" `Quick test_effectiveness;
   ]

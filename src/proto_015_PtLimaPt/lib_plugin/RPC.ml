@@ -714,7 +714,7 @@ module Scripts = struct
       | IDiff_timestamps _ -> pp_print_string fmt "DIFF"
       | IAdd_tez _ -> pp_print_string fmt "ADD"
       | ISub_tez _ -> pp_print_string fmt "SUB_MUMAV"
-      | ISub_tez_legacy _ -> pp_print_string fmt "SUB"
+      | ISub_mav_legacy _ -> pp_print_string fmt "SUB"
       | IMul_teznat _ | IMul_nattez _ -> pp_print_string fmt "MUL"
       | IEdiv_teznat _ -> pp_print_string fmt "EDIV"
       | IEdiv_tez _ -> pp_print_string fmt "EDIV"

@@ -149,7 +149,7 @@ let test_pay_fee () =
 
 (** Create an originate contract where the contract does not have
     enough mav to pay for the fee. *)
-let test_not_tez_in_contract_to_pay_fee () =
+let test_not_mav_in_contract_to_pay_fee () =
   Context.init2 ~consensus_threshold:0 ()
   >>=? fun (b, (contract_1, contract_2)) ->
   (* transfer everything but one mav from 1 to 2 and check balance of 1 *)
@@ -221,7 +221,7 @@ let tests =
     Tztest.tztest
       "not enough mav in contract to pay fee"
       `Quick
-      test_not_tez_in_contract_to_pay_fee;
+      test_not_mav_in_contract_to_pay_fee;
     Tztest.tztest "multiple originations" `Quick test_multiple_originations;
     Tztest.tztest "counter" `Quick test_counter;
   ]

@@ -105,7 +105,7 @@ type instruction_name =
   (* currency operations *)
   | N_IAdd_tez
   | N_ISub_tez
-  | N_ISub_tez_legacy
+  | N_ISub_mav_legacy
   | N_IMul_teznat
   | N_IMul_nattez
   | N_IEdiv_teznat
@@ -303,7 +303,7 @@ let string_of_instruction_name : instruction_name -> string =
   | N_IDiff_timestamps -> "N_IDiff_timestamps"
   | N_IAdd_tez -> "N_IAdd_tez"
   | N_ISub_tez -> "N_ISub_tez"
-  | N_ISub_tez_legacy -> "N_ISub_tez_legacy"
+  | N_ISub_mav_legacy -> "N_ISub_mav_legacy"
   | N_IMul_teznat -> "N_IMul_teznat"
   | N_IMul_nattez -> "N_IMul_nattez"
   | N_IEdiv_teznat -> "N_IEdiv_teznat"
@@ -524,7 +524,7 @@ let all_instructions =
     N_IDiff_timestamps;
     N_IAdd_tez;
     N_ISub_tez;
-    N_ISub_tez_legacy;
+    N_ISub_mav_legacy;
     N_IMul_teznat;
     N_IMul_nattez;
     N_IEdiv_teznat;
@@ -841,7 +841,7 @@ module Instructions = struct
 
   let sub_tez _tez1 _tez2 = ir_sized_step N_ISub_tez nullary
 
-  let sub_tez_legacy _tez1 _tez2 = ir_sized_step N_ISub_tez_legacy nullary
+  let sub_mav_legacy _tez1 _tez2 = ir_sized_step N_ISub_mav_legacy nullary
 
   let mul_teznat _tez nat = ir_sized_step N_IMul_teznat (unary "nat" nat)
 
@@ -1264,8 +1264,8 @@ let extract_ir_sized_step :
       Instructions.add_tez (Size.mumav x) (Size.mumav y)
   | ISub_tez (_, _), (x, (y, _)) ->
       Instructions.sub_tez (Size.mumav x) (Size.mumav y)
-  | ISub_tez_legacy (_, _), (x, (y, _)) ->
-      Instructions.sub_tez_legacy (Size.mumav x) (Size.mumav y)
+  | ISub_mav_legacy (_, _), (x, (y, _)) ->
+      Instructions.sub_mav_legacy (Size.mumav x) (Size.mumav y)
   | IMul_teznat (_, _), (x, (y, _)) ->
       Instructions.mul_teznat (Size.mumav x) (Size.integer y)
   | IMul_nattez (_, _), (x, (y, _)) ->

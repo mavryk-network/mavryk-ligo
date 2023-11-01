@@ -66,7 +66,7 @@ let initial_staker_balance = Tez_repr.of_mumav_exn 100_000_000_000L
 let new_context () =
   let* ctxt, _stakers = new_context_with_stakers 1 in
   (* Mint some mav for staker accounts. *)
-  let mint_tez_for ctxt pkh_str =
+  let mint_mav_for ctxt pkh_str =
     let pkh = Signature.Public_key_hash.of_b58check_exn pkh_str in
     let contract = Contract_repr.Implicit pkh in
     let+ ctxt, _ =
@@ -75,9 +75,9 @@ let new_context () =
     in
     ctxt
   in
-  let* ctxt = mint_tez_for ctxt "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG" in
-  let* ctxt = mint_tez_for ctxt "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo" in
-  mint_tez_for ctxt "tz1Ke2h7sDdakHJQh8WX4Z372du1KChsksyU"
+  let* ctxt = mint_mav_for ctxt "tz1SdKt9kjPp1HRQFkBmXtBhgMfvdgFhSjmG" in
+  let* ctxt = mint_mav_for ctxt "tz1RikjCkrEde1QQmuesp796jCxeiyE6t3Vo" in
+  mint_mav_for ctxt "tz1Ke2h7sDdakHJQh8WX4Z372du1KChsksyU"
 
 let new_sc_rollup ctxt =
   let+ rollup, _size, ctxt =

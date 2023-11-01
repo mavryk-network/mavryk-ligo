@@ -3568,7 +3568,7 @@ and parse_instr :
       Item_t (Mumav_t, (Item_t (Mumav_t, _) as stack)) ) ->
       if legacy then
         check_var_annot loc annot >>?= fun () ->
-        let instr = {apply = (fun k -> ISub_tez_legacy (loc, k))} in
+        let instr = {apply = (fun k -> ISub_mav_legacy (loc, k))} in
         typed ctxt loc instr stack
       else fail (Deprecated_instruction I_SUB)
   | Prim (loc, I_SUB_MUMAV, [], annot), Item_t (Mumav_t, Item_t (Mumav_t, rest))

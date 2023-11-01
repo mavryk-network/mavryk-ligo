@@ -274,7 +274,7 @@ let cost_of_instr : type a s r f. (a, s, r, f) kinstr -> a -> s -> Gas.cost =
   | IBytes_size _ -> Interp_costs.bytes_size
   | IAdd_tez _ -> Interp_costs.add_tez
   | ISub_tez _ -> Interp_costs.sub_tez
-  | ISub_tez_legacy _ -> Interp_costs.sub_tez_legacy
+  | ISub_mav_legacy _ -> Interp_costs.sub_mav_legacy
   | IOr _ -> Interp_costs.bool_or
   | IAnd _ -> Interp_costs.bool_and
   | IXor _ -> Interp_costs.bool_xor
@@ -893,7 +893,7 @@ type ('a, 'b, 'c, 'd, 'e, 'f) imul_teznat_type =
   Script_int.n Script_int.num * 'b ->
   ('e * 'f * outdated_context * local_gas_counter, error trace) result Lwt.t
 
-type ('a, 'b, 'c, 'd, 'e, 'f) imul_nattez_type =
+type ('a, 'b, 'c, 'd, 'e, 'f) imul_natmav_type =
   logger option ->
   outdated_context * step_constants ->
   local_gas_counter ->

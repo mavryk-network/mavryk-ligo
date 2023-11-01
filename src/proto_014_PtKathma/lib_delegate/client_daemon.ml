@@ -68,7 +68,7 @@ let rec retry_on_disconnection (cctxt : #Protocol_client_context.full) f =
 
 module Baker = struct
   let run (cctxt : Protocol_client_context.full) ?minimal_fees
-      ?minimal_nanotez_per_gas_unit ?minimal_nanotez_per_byte
+      ?minimal_nanomav_per_gas_unit ?minimal_nanomav_per_byte
       ?liquidity_baking_toggle_vote ?per_block_vote_file ?extra_operations
       ~chain ~context_path ~keep_alive delegates =
     let process () =
@@ -77,8 +77,8 @@ module Baker = struct
       let config =
         Baking_configuration.make
           ?minimal_fees
-          ?minimal_nanotez_per_gas_unit
-          ?minimal_nanotez_per_byte
+          ?minimal_nanomav_per_gas_unit
+          ?minimal_nanomav_per_byte
           ?liquidity_baking_toggle_vote
           ?per_block_vote_file
           ?extra_operations

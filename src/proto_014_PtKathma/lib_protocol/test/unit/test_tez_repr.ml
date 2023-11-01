@@ -29,14 +29,14 @@
     Invocation:   dune exec ./src/proto_alpha/lib_protocol/test/unit/main.exe -- test Tez_repr 
     Dependencies: --
     Subject:      To test the modules (including the top-level)
-                  in tez_repr.ml as individual units, particularly
+                  in mav_repr.ml as individual units, particularly
                   failure cases. Superficial goal: increase coverage percentage.
 *)
 open Protocol
 
 open Tztest
 
-module Test_tez_repr = struct
+module Test_mav_repr = struct
   (** Testing predefined units: zero, one_mumav etc *)
   let test_predefined_values () =
     let zero_int64 = Tez_repr.to_mumav Tez_repr.zero in
@@ -159,44 +159,44 @@ let tests =
     tztest
       "Check if predefined values hold expected values"
       `Quick
-      Test_tez_repr.test_predefined_values;
-    tztest "Tez.substract: basic behaviour" `Quick Test_tez_repr.test_subtract;
+      Test_mav_repr.test_predefined_values;
+    tztest "Tez.substract: basic behaviour" `Quick Test_mav_repr.test_subtract;
     tztest
       "Tez.substract: underflow case"
       `Quick
-      Test_tez_repr.test_substract_underflow;
+      Test_mav_repr.test_substract_underflow;
     tztest
       "Tez.add: basic behaviour (one + zero)"
       `Quick
-      Test_tez_repr.test_addition;
-    tztest "Tez.add: overflow" `Quick Test_tez_repr.test_addition_overflow;
-    tztest "Tez.mul: basic case" `Quick Test_tez_repr.test_mul;
-    tztest "Tez.mul: overflow case" `Quick Test_tez_repr.test_mul_overflow;
-    tztest "Tez.div: basic case" `Quick Test_tez_repr.test_div;
-    tztest "Tez.div: division by zero" `Quick Test_tez_repr.test_div_by_zero;
-    tztest "Tez.to_mumav: basic assertion" `Quick Test_tez_repr.test_to_mumav;
+      Test_mav_repr.test_addition;
+    tztest "Tez.add: overflow" `Quick Test_mav_repr.test_addition_overflow;
+    tztest "Tez.mul: basic case" `Quick Test_mav_repr.test_mul;
+    tztest "Tez.mul: overflow case" `Quick Test_mav_repr.test_mul_overflow;
+    tztest "Tez.div: basic case" `Quick Test_mav_repr.test_div;
+    tztest "Tez.div: division by zero" `Quick Test_mav_repr.test_div_by_zero;
+    tztest "Tez.to_mumav: basic assertion" `Quick Test_mav_repr.test_to_mumav;
     tztest
       "Tez.of_mumav: of non-negative ints"
       `Quick
-      Test_tez_repr.test_of_mumav_non_negative;
+      Test_mav_repr.test_of_mumav_non_negative;
     tztest
       "Tez.of_mumav: of non-negative ints"
       `Quick
-      Test_tez_repr.test_of_mumav_non_negative;
+      Test_mav_repr.test_of_mumav_non_negative;
     tztest
       "Tez.of_mumav: of negative ints"
       `Quick
-      Test_tez_repr.test_of_mumav_negative;
+      Test_mav_repr.test_of_mumav_negative;
     tztest
       "Tez.of_mumav_exn: of non-negative ints"
       `Quick
-      Test_tez_repr.test_of_mumav_non_negative;
+      Test_mav_repr.test_of_mumav_non_negative;
     tztest
       "Tez.of_mumav_exn: of negative ints"
       `Quick
-      Test_tez_repr.test_of_mumav_negative;
+      Test_mav_repr.test_of_mumav_negative;
     tztest
       "Tez.data_encoding: must encode tezzies correctly"
       `Quick
-      Test_tez_repr.test_data_encoding;
+      Test_mav_repr.test_data_encoding;
   ]

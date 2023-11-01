@@ -9,7 +9,7 @@
   test_gas_properties
   test_sampler
   test_script_comparison
-  test_tez_repr
+  test_mav_repr
   test_tx_rollup_l2_encoding
   test_bitset
   test_sc_rollup_tick_repr
@@ -71,7 +71,7 @@
 (rule
  (alias runtest)
  (package tezos-protocol-014-PtKathma-tests)
- (action (run %{dep:./test_tez_repr.exe})))
+ (action (run %{dep:./test_mav_repr.exe})))
 
 (rule
  (alias runtest)
@@ -105,7 +105,7 @@
 
 (rule (alias runtest2) (action (run %{exe:test_script_comparison.exe})))
 
-(rule (alias runtest2) (action (run %{exe:test_tez_repr.exe})))
+(rule (alias runtest2) (action (run %{exe:test_mav_repr.exe})))
 
 (rule (alias runtest2) (action (run %{exe:test_tx_rollup_l2_encoding.exe})))
 

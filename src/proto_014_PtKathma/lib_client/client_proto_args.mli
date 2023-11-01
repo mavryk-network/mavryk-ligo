@@ -66,9 +66,9 @@ val max_priority_arg : (int option, full) Clic.arg
 
 val minimal_fees_arg : (Tez.mav, full) Clic.arg
 
-val minimal_nanotez_per_gas_unit_arg : (Q.t, full) Clic.arg
+val minimal_nanomav_per_gas_unit_arg : (Q.t, full) Clic.arg
 
-val minimal_nanotez_per_byte_arg : (Q.t, full) Clic.arg
+val minimal_nanomav_per_byte_arg : (Q.t, full) Clic.arg
 
 val replace_by_fees_arg : (bool, full) Clic.arg
 
@@ -86,13 +86,13 @@ val no_print_source_flag : (bool, full) Clic.arg
 
 val no_confirmation : (bool, full) Clic.arg
 
-val tez_arg :
+val mav_arg :
   default:string -> parameter:string -> doc:string -> (Tez.t, full) Clic.arg
 
-val tez_opt_arg :
+val mav_opt_arg :
   parameter:string -> doc:string -> (Tez.t option, full) Clic.arg
 
-val tez_param :
+val mav_param :
   name:string ->
   desc:string ->
   ('a, full) Clic.params ->

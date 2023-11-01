@@ -448,7 +448,7 @@ and imul_teznat : type a b c d e f. (a, b, c, d, e, f) imul_teznat_type =
   | Some y ->
       Tez.(x *? y) >>?= fun res -> (step [@ocaml.tailcall]) g gas k ks res stack
 
-and imul_nattez : type a b c d e f. (a, b, c, d, e, f) imul_nattez_type =
+and imul_nattez : type a b c d e f. (a, b, c, d, e, f) imul_natmav_type =
  fun logger g gas loc k ks accu stack ->
   let y = accu in
   let x, stack = stack in
@@ -883,7 +883,7 @@ and step : type a s b t r f. (a, s, b, t, r, f) step_type =
           let y, stack = stack in
           let res = Tez.sub_opt x y in
           (step [@ocaml.tailcall]) g gas k ks res stack
-      | ISub_tez_legacy (_, k) ->
+      | ISub_mav_legacy (_, k) ->
           let x = accu in
           let y, stack = stack in
           Tez.(x -? y) >>?= fun res ->

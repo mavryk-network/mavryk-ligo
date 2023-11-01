@@ -635,13 +635,13 @@ let kinstr_split :
              continuation = k;
              reconstruct = (fun k -> ISub_tez (loc, k));
            }
-  | ISub_tez_legacy (loc, k), Item_t (_, s) ->
+  | ISub_mav_legacy (loc, k), Item_t (_, s) ->
       ok
       @@ Ex_split_kinstr
            {
              cont_init_stack = s;
              continuation = k;
-             reconstruct = (fun k -> ISub_tez_legacy (loc, k));
+             reconstruct = (fun k -> ISub_mav_legacy (loc, k));
            }
   | IMul_teznat (loc, k), Item_t (_, Item_t (_, s)) ->
       let s = Item_t (mumav_t, s) in

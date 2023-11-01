@@ -109,8 +109,8 @@ module Parameters = struct
     Injection.
       {
         minimal_fees = Tez.of_mumav_exn 100L;
-        minimal_nanotez_per_byte = Q.of_int 1000;
-        minimal_nanotez_per_gas_unit = Q.of_int 100;
+        minimal_nanomav_per_byte = Q.of_int 1000;
+        minimal_nanomav_per_gas_unit = Q.of_int 100;
         force_low_fee = false;
         fee_cap;
         burn_cap;

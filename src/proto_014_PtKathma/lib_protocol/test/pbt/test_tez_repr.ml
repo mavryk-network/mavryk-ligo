@@ -27,7 +27,7 @@
     -------
     Component:    Protocol Library
     Invocation:   dune exec \
-                  src/proto_alpha/lib_protocol/test/pbt/test_tez_repr.exe
+                  src/proto_alpha/lib_protocol/test/pbt/test_mav_repr.exe
     Subject:      Operations in Tez_repr
 *)
 
@@ -38,7 +38,7 @@ let z_mumav_min = Z.zero
 
 let z_mumav_max = Z.of_int64 Int64.max_int
 
-let tez_to_z (mav : Tez.t) : Z.t = Z.of_int64 (Tez.to_mumav mav)
+let mav_to_z (mav : Tez.t) : Z.t = Z.of_int64 (Tez.to_mumav mav)
 
 let z_in_mumav_bounds (z : Z.t) : bool =
   Z.Compare.(z_mumav_min <= z && z <= z_mumav_max)
@@ -49,7 +49,7 @@ let compare (c' : Z.t) (c : Tez.t tzresult) : bool =
       Lib_test.Qcheck2_helpers.qcheck_eq'
         ~pp:Z.pp_print
         ~expected:c'
-        ~actual:(tez_to_z c)
+        ~actual:(mav_to_z c)
         ()
   | true, Error _ ->
       QCheck2.Test.fail_reportf
@@ -67,13 +67,13 @@ let compare (c' : Z.t) (c : Tez.t tzresult) : bool =
    (resp. [b']) are [a] (resp. [b']) in [Z]. *)
 let prop_binop (f : Tez.t -> Tez.t -> Tez.t tzresult) (f' : Z.t -> Z.t -> Z.t)
     ((a, b) : Tez.t * Tez.t) : bool =
-  compare (f' (tez_to_z a) (tez_to_z b)) (f a b)
+  compare (f' (mav_to_z a) (mav_to_z b)) (f a b)
 
 (* [prop_binop64 f f' (a, b)] is as [prop_binop] but for binary operations
    where the second operand is of type [int64]. *)
 let prop_binop64 (f : Tez.t -> int64 -> Tez.t tzresult) (f' : Z.t -> Z.t -> Z.t)
     ((a, b) : Tez.t * int64) : bool =
-  compare (f' (tez_to_z a) (Z.of_int64 b)) (f a b)
+  compare (f' (mav_to_z a) (Z.of_int64 b)) (f a b)
 
 (** Generator for int64 by conversion from int32 *)
 let gen_int64_of32 : int64 QCheck2.Gen.t =
@@ -96,33 +96,33 @@ let gen_ui64_sizes : int64 QCheck2.Gen.t =
       v)
     gen_int64_sizes
 
-(** Generator for mav based on [gen_tez_sizes] *)
-let gen_tez_sizes =
+(** Generator for mav based on [gen_mav_sizes] *)
+let gen_mav_sizes =
   let open QCheck2.Gen in
   map Tez.of_mumav_exn gen_ui64_sizes
 
 let test_coherent_mul =
   QCheck2.Test.make
     ~name:"Tez.(*?) is coherent w.r.t. Z.(*)"
-    QCheck2.Gen.(pair gen_tez_sizes gen_ui64_sizes)
+    QCheck2.Gen.(pair gen_mav_sizes gen_ui64_sizes)
     (prop_binop64 ( *? ) Z.( * ))
 
 let test_coherent_sub =
   QCheck2.Test.make
     ~name:"Tez.(-?) is coherent w.r.t. Z.(-)"
-    QCheck2.Gen.(pair gen_tez_sizes gen_tez_sizes)
+    QCheck2.Gen.(pair gen_mav_sizes gen_mav_sizes)
     (prop_binop ( -? ) Z.( - ))
 
 let test_coherent_add =
   QCheck2.Test.make
     ~name:"Tez.(+?) is coherent w.r.t. Z.(+)"
-    QCheck2.Gen.(pair gen_tez_sizes gen_tez_sizes)
+    QCheck2.Gen.(pair gen_mav_sizes gen_mav_sizes)
     (prop_binop ( +? ) Z.( + ))
 
 let test_coherent_div =
   QCheck2.Test.make
     ~name:"Tez.(/?) is coherent w.r.t. Z.(/)"
-    QCheck2.Gen.(pair gen_tez_sizes gen_ui64_sizes)
+    QCheck2.Gen.(pair gen_mav_sizes gen_ui64_sizes)
     (fun (a, b) ->
       QCheck2.assume (b > 0L) ;
       prop_binop64 ( /? ) Z.( / ) (a, b))
@@ -132,5 +132,5 @@ let tests =
 
 let () =
   Alcotest.run
-    "protocol > pbt > tez_repr"
+    "protocol > pbt > mav_repr"
     [("Tez_repr", Lib_test.Qcheck2_helpers.qcheck_wrap tests)]

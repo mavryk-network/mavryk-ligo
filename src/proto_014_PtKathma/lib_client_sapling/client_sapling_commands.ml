@@ -156,7 +156,7 @@ let shield_cmd =
        fee_parameter_args
        message_arg)
     (prefixes ["sapling"; "shield"]
-    @@ tez_param
+    @@ mav_param
          ~name:"qty"
          ~desc:"Amount taken from transparent wallet of source."
     @@ prefix "from"
@@ -244,7 +244,7 @@ let unshield_cmd =
        no_print_source_flag
        fee_parameter_args)
     (prefixes ["sapling"; "unshield"]
-    @@ tez_param
+    @@ mav_param
          ~name:"qty"
          ~desc:"Amount taken from shielded wallet of source."
     @@ prefix "from"
@@ -348,7 +348,7 @@ let forge_shielded_cmd =
        (file_arg sapling_transaction_file)
        json_switch)
     (prefixes ["sapling"; "forge"; "transaction"]
-    @@ tez_param
+    @@ mav_param
          ~name:"qty"
          ~desc:"Amount taken from shielded wallet of source."
     @@ prefix "from"
@@ -724,7 +724,7 @@ let commands () =
                   "Total Sapling funds %a%s"
                   Context.Shielded_tez.pp
                   (Context.Account.balance account)
-                  Operation_result.tez_sym
+                  Operation_result.mav_sym
                 >>= fun () -> return_unit));
     command
       ~group

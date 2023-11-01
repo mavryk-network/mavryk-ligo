@@ -417,12 +417,12 @@ module Make (Rollup : PARAMETERS) = struct
         Injection.
           {
             minimal_fees = Tez.max acc.minimal_fees param.minimal_fees;
-            minimal_nanotez_per_byte =
-              Q.max acc.minimal_nanotez_per_byte param.minimal_nanotez_per_byte;
-            minimal_nanotez_per_gas_unit =
+            minimal_nanomav_per_byte =
+              Q.max acc.minimal_nanomav_per_byte param.minimal_nanomav_per_byte;
+            minimal_nanomav_per_gas_unit =
               Q.max
-                acc.minimal_nanotez_per_gas_unit
-                param.minimal_nanotez_per_gas_unit;
+                acc.minimal_nanomav_per_gas_unit
+                param.minimal_nanomav_per_gas_unit;
             force_low_fee = acc.force_low_fee || param.force_low_fee;
             fee_cap =
               WithExceptions.Result.get_ok
@@ -436,8 +436,8 @@ module Make (Rollup : PARAMETERS) = struct
       Injection.
         {
           minimal_fees = Tez.zero;
-          minimal_nanotez_per_byte = Q.zero;
-          minimal_nanotez_per_gas_unit = Q.zero;
+          minimal_nanomav_per_byte = Q.zero;
+          minimal_nanomav_per_gas_unit = Q.zero;
           force_low_fee = false;
           fee_cap = Tez.zero;
           burn_cap = Tez.zero;

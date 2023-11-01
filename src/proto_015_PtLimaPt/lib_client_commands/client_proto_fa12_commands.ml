@@ -56,8 +56,8 @@ let amount_param () =
            Lwt_result_syntax.return v
          with _ -> failwith "invalid amount (must be a non-negative number)"))
 
-let tez_amount_arg =
-  tez_arg ~default:"0" ~parameter:"mav-amount" ~doc:"amount in \xEA\x9C\xA9"
+let mav_amount_arg =
+  mav_arg ~default:"0" ~parameter:"mav-amount" ~doc:"amount in \xEA\x9C\xA9"
 
 let as_arg =
   Client_proto_contracts.ContractAlias.destination_arg
@@ -80,7 +80,7 @@ let callback_entrypoint_arg =
 
 let contract_call_options =
   Clic.args9
-    tez_amount_arg
+    mav_amount_arg
     fee_arg
     Client_proto_context_commands.dry_run_switch
     Client_proto_context_commands.verbose_signing_switch
@@ -93,7 +93,7 @@ let contract_call_options =
 let contract_view_options =
   Clic.args10
     callback_entrypoint_arg
-    tez_amount_arg
+    mav_amount_arg
     fee_arg
     Client_proto_context_commands.dry_run_switch
     Client_proto_context_commands.verbose_signing_switch
@@ -266,7 +266,7 @@ let commands_ro () : #Protocol_client_context.full Clic.command list =
              ~desc:"name or address of the callback contract"
         @@ stop)
         (fun ( callback_entrypoint,
-               tez_amount,
+               mav_amount,
                fee,
                dry_run,
                verbose_signing,
@@ -298,7 +298,7 @@ let commands_ro () : #Protocol_client_context.full Clic.command list =
               ~source
               ~src_pk
               ~src_sk
-              ~tez_amount
+              ~mav_amount
               ?gas_limit
               ?storage_limit
               ?counter
@@ -333,7 +333,7 @@ let commands_ro () : #Protocol_client_context.full Clic.command list =
              ~desc:"name or address of the callback contract"
         @@ stop)
         (fun ( callback_entrypoint,
-               tez_amount,
+               mav_amount,
                fee,
                dry_run,
                verbose_signing,
@@ -367,7 +367,7 @@ let commands_ro () : #Protocol_client_context.full Clic.command list =
               ~source
               ~src_pk
               ~src_sk
-              ~tez_amount
+              ~mav_amount
               ?gas_limit
               ?storage_limit
               ?counter
@@ -399,7 +399,7 @@ let commands_ro () : #Protocol_client_context.full Clic.command list =
              ~desc:"name or address of the callback contract"
         @@ stop)
         (fun ( callback_entrypoint,
-               tez_amount,
+               mav_amount,
                fee,
                dry_run,
                verbose_signing,
@@ -431,7 +431,7 @@ let commands_ro () : #Protocol_client_context.full Clic.command list =
               ~source
               ~src_pk
               ~src_sk
-              ~tez_amount
+              ~mav_amount
               ?gas_limit
               ?storage_limit
               ?counter
@@ -457,7 +457,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
         ~desc:"Transfer tokens between two given accounts"
         (Clic.args10
            as_arg
-           tez_amount_arg
+           mav_amount_arg
            fee_arg
            Client_proto_context_commands.dry_run_switch
            Client_proto_context_commands.verbose_signing_switch
@@ -471,7 +471,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
         @@ prefix "from" @@ from_param () @@ prefix "to" @@ to_param () @@ stop
         )
         (fun ( as_address,
-               tez_amount,
+               mav_amount,
                fee,
                dry_run,
                verbose_signing,
@@ -505,7 +505,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
               ~source
               ~src_pk:caller_pk
               ~src_sk:caller_sk
-              ~tez_amount
+              ~mav_amount
               ?gas_limit
               ?storage_limit
               ?counter
@@ -532,7 +532,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
              ~name:"from"
              ~desc:"name or address to approve withdrawal"
         @@ stop)
-        (fun ( tez_amount,
+        (fun ( mav_amount,
                fee,
                dry_run,
                verbose_signing,
@@ -563,7 +563,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
               ~source
               ~src_pk
               ~src_sk
-              ~tez_amount
+              ~mav_amount
               ?gas_limit
               ?storage_limit
               ?counter

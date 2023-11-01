@@ -129,8 +129,8 @@ module Parsed_account = struct
             >>= fun tz_balance ->
             match tz_balance with
             | Ok balance -> (
-                let tez_repr = Tez.of_mumav @@ Tez.to_mumav balance in
-                match tez_repr with
+                let mav_repr = Tez.of_mumav @@ Tez.to_mumav balance in
+                match mav_repr with
                 | None ->
                     (* we're reading the wallet, it's content MUST be valid *)
                     assert false

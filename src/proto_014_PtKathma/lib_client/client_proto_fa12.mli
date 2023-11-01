@@ -102,7 +102,7 @@ val call_contract :
   src_sk:Client_keys.sk_uri ->
   contract:Contract_hash.t ->
   action:action ->
-  tez_amount:Tez.t ->
+  mav_amount:Tez.t ->
   ?fee:Tez.t ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
@@ -118,7 +118,7 @@ type token_transfer = {
   token_contract : string;
   destination : string;
   amount : Z.t;
-  tez_amount : string option;
+  mav_amount : string option;
   fee : string option;
   gas_limit : Gas.Arith.integral option;
   storage_limit : Z.t option;

@@ -81,8 +81,8 @@ let get_manager_operation_gas_and_fee (contents : packed_contents_list) =
 
 type fee_parameter = {
   minimal_fees : Tez.t;
-  minimal_nanotez_per_byte : Q.t;
-  minimal_nanotez_per_gas_unit : Q.t;
+  minimal_nanomav_per_byte : Q.t;
+  minimal_nanomav_per_gas_unit : Q.t;
   force_low_fee : bool;
   fee_cap : Tez.t;
   burn_cap : Tez.t;
@@ -109,10 +109,10 @@ let check_fees :
           "The proposed fee (%s%a) are higher than the configured fee cap \
            (%s%a).@\n\
           \ Use `--fee-cap %a` to emit this operation anyway."
-          Operation_result.tez_sym
+          Operation_result.mav_sym
           Tez.pp
           fee
-          Operation_result.tez_sym
+          Operation_result.mav_sym
           Tez.pp
           config.fee_cap
           Tez.pp
@@ -127,11 +127,11 @@ let check_fees :
         in
         let minimal_fees_for_gas_in_nanotez =
           Q.mul
-            config.minimal_nanotez_per_gas_unit
+            config.minimal_nanomav_per_gas_unit
             (Q.of_bigint (Gas.Arith.integral_to_z gas))
         in
         let minimal_fees_for_size_in_nanotez =
-          Q.mul config.minimal_nanotez_per_byte (Q.of_int size)
+          Q.mul config.minimal_nanomav_per_byte (Q.of_int size)
         in
         let estimated_fees_in_nanotez =
           Q.add
@@ -156,10 +156,10 @@ let check_fees :
             "The proposed fee (%s%a) are lower than the fee that baker expect \
              by default (%s%a).@\n\
             \ Use `--force-low-fee` to emit this operation anyway."
-            Operation_result.tez_sym
+            Operation_result.mav_sym
             Tez.pp
             fee
-            Operation_result.tez_sym
+            Operation_result.mav_sym
             Tez.pp
             estimated_fees
           >>= fun () -> exit 1
@@ -799,11 +799,11 @@ let may_patch_limits (type kind) (cctxt : #Protocol_client_context.full)
         in
         let minimal_fees_for_gas_in_nanotez =
           Q.mul
-            fee_parameter.minimal_nanotez_per_gas_unit
+            fee_parameter.minimal_nanomav_per_gas_unit
             (Q.of_bigint @@ Gas.Arith.integral_to_z c.gas_limit)
         in
         let minimal_fees_for_size_in_nanotez =
-          Q.mul fee_parameter.minimal_nanotez_per_byte (Q.of_int size)
+          Q.mul fee_parameter.minimal_nanomav_per_byte (Q.of_int size)
         in
         let fees_in_nanotez =
           Q.add minimal_fees_in_nanotez
@@ -981,10 +981,10 @@ let may_patch_limits (type kind) (cctxt : #Protocol_client_context.full)
             "The operation will burn %s%a which is higher than the configured \
              burn cap (%s%a).@\n\
             \ Use `--burn-cap %a` to emit this operation."
-            Operation_result.tez_sym
+            Operation_result.mav_sym
             Tez.pp
             burn
-            Operation_result.tez_sym
+            Operation_result.mav_sym
             Tez.pp
             fee_parameter.burn_cap
             Tez.pp

@@ -58,11 +58,11 @@ let ( /! ) t1 t2 =
 
 let of_int x =
   match Tez.of_mumav (Int64.mul (Int64.of_int x) 1_000_000L) with
-  | None -> invalid_arg "tez_of_int"
+  | None -> invalid_arg "mav_of_int"
   | Some x -> x
 
 let of_mumav_exn x =
-  match Tez.of_mumav x with None -> invalid_arg "tez_of_mumav" | Some x -> x
+  match Tez.of_mumav x with None -> invalid_arg "mav_of_mumav" | Some x -> x
 
 let to_mumav = Tez.to_mumav
 

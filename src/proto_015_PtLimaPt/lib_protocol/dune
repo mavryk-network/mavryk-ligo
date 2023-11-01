@@ -311,7 +311,7 @@
   bitset.ml bitset.mli
   michelson_v1_primitives.ml michelson_v1_primitives.mli
   slot_repr.ml slot_repr.mli
-  tez_repr.ml tez_repr.mli
+  mav_repr.ml mav_repr.mli
   period_repr.ml period_repr.mli
   time_repr.ml time_repr.mli
   ratio_repr.ml ratio_repr.mli
@@ -557,7 +557,7 @@
   bitset.ml bitset.mli
   michelson_v1_primitives.ml michelson_v1_primitives.mli
   slot_repr.ml slot_repr.mli
-  tez_repr.ml tez_repr.mli
+  mav_repr.ml mav_repr.mli
   period_repr.ml period_repr.mli
   time_repr.ml time_repr.mli
   ratio_repr.ml ratio_repr.mli
@@ -808,7 +808,7 @@
   bitset.ml bitset.mli
   michelson_v1_primitives.ml michelson_v1_primitives.mli
   slot_repr.ml slot_repr.mli
-  tez_repr.ml tez_repr.mli
+  mav_repr.ml mav_repr.mli
   period_repr.ml period_repr.mli
   time_repr.ml time_repr.mli
   ratio_repr.ml ratio_repr.mli

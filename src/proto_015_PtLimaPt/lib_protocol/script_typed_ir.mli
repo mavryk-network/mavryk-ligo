@@ -658,7 +658,7 @@ and ('before_top, 'before, 'result_top, 'result) kinstr =
   | ISub_tez :
       Script.location * (Tez.t option, 's, 'r, 'f) kinstr
       -> (Tez.t, Tez.t * 's, 'r, 'f) kinstr
-  | ISub_tez_legacy :
+  | ISub_mav_legacy :
       Script.location * (Tez.t, 's, 'r, 'f) kinstr
       -> (Tez.t, Tez.t * 's, 'r, 'f) kinstr
   | IMul_teznat :

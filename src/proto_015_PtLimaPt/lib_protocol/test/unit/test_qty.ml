@@ -33,7 +33,7 @@
 
 open Protocol
 
-let known_ok_tez_literals =
+let known_ok_mav_literals =
   [
     (0L, "0");
     (10L, "0.00001");
@@ -58,7 +58,7 @@ let known_ok_tez_literals =
     (999_999_999_999_999_999L, "999999999999.999999");
   ]
 
-let known_bad_tez_literals =
+let known_bad_mav_literals =
   [
     "10000.";
     "100,.";
@@ -86,7 +86,7 @@ let fail_msg fmt = Format.kasprintf (fail "" "") fmt
 let default_printer _ = ""
 
 (** Literals which are supposed to be parsed correctly. *)
-let test_known_tez_literals () =
+let test_known_mav_literals () =
   List.iter
     (fun (v, s) ->
       let vv = Tez_repr.of_mumav v in
@@ -108,17 +108,17 @@ let test_known_tez_literals () =
       assert (vv = vs) ;
       assert (vv = vs') ;
       assert (Tez_repr.to_string vv = s))
-    known_ok_tez_literals ;
+    known_ok_mav_literals ;
   List.iter
     (fun s ->
       let vs = Tez_repr.of_string s in
       assert (vs = None))
-    known_bad_tez_literals ;
+    known_bad_mav_literals ;
   return_unit
 
 (** Randomly generated mav value which is printed into a string then
     parsed again for their equality. *)
-let test_random_tez_literals () =
+let test_random_mav_literals () =
   for _ = 0 to 100_000 do
     let v = Random.int64 12L in
     let vv = Tez_repr.of_mumav v in
@@ -146,8 +146,8 @@ let test_random_tez_literals () =
 
 let tests =
   [
-    ("mav-literals", fun _ -> test_known_tez_literals ());
-    ("rnd-mav-literals", fun _ -> test_random_tez_literals ());
+    ("mav-literals", fun _ -> test_known_mav_literals ());
+    ("rnd-mav-literals", fun _ -> test_random_mav_literals ());
   ]
 
 let wrap (n, f) =

@@ -95,7 +95,7 @@ let alphanet = {Clic.name = "alphanet"; title = "Alphanet only commands"}
 let binary_description =
   {Clic.name = "description"; title = "Binary Description"}
 
-let tez_of_string_exn index field s =
+let mav_of_string_exn index field s =
   let open Lwt_result_syntax in
   match Tez.of_string s with
   | Some t -> return t
@@ -106,8 +106,8 @@ let tez_of_string_exn index field s =
         field
         s
 
-let tez_of_opt_string_exn index field s =
-  Option.map_es (tez_of_string_exn index field) s
+let mav_of_opt_string_exn index field s =
+  Option.map_es (mav_of_string_exn index field) s
 
 let check_smart_contract = Managed_contract.check_smart_contract
 
@@ -221,7 +221,7 @@ let commands_ro () =
           get_balance cctxt ~chain:cctxt#chain ~block:cctxt#block contract
         in
         let*! () =
-          cctxt#answer "%a %s" Tez.pp amount Operation_result.tez_sym
+          cctxt#answer "%a %s" Tez.pp amount Operation_result.mav_sym
         in
         return_unit);
     command
@@ -596,7 +596,7 @@ let commands_ro () =
                             p
                             Tez.pp
                             (Tez.of_mumav_exn w)
-                            Operation_result.tez_sym
+                            Operation_result.mav_sym
                             (if
                              List.mem ~equal:Protocol_hash.equal p known_protos
                             then ""
@@ -623,21 +623,21 @@ let commands_ro () =
                    Current in favor %a %s, needed supermajority %a %s@]"
                   Tez.pp
                   (Tez.of_mumav_exn ballots_info.ballots.yay)
-                  Operation_result.tez_sym
+                  Operation_result.mav_sym
                   Tez.pp
                   (Tez.of_mumav_exn ballots_info.ballots.nay)
-                  Operation_result.tez_sym
+                  Operation_result.mav_sym
                   Tez.pp
                   (Tez.of_mumav_exn ballots_info.ballots.pass)
-                  Operation_result.tez_sym
+                  Operation_result.mav_sym
                   (Int32.to_float ballots_info.participation /. 100.)
                   (Int32.to_float ballots_info.current_quorum /. 100.)
                   Tez.pp
                   (Tez.of_mumav_exn ballots_info.ballots.yay)
-                  Operation_result.tez_sym
+                  Operation_result.mav_sym
                   Tez.pp
                   (Tez.of_mumav_exn ballots_info.supermajority)
-                  Operation_result.tez_sym
+                  Operation_result.mav_sym
               in
               return_unit
             else
@@ -709,7 +709,7 @@ let commands_ro () =
               match o with
               | None -> cctxt#answer "unlimited"
               | Some limit ->
-                  cctxt#answer "%a %s" Tez.pp limit Operation_result.tez_sym
+                  cctxt#answer "%a %s" Tez.pp limit Operation_result.mav_sym
             in
             return_unit);
   ]
@@ -876,8 +876,8 @@ let prepare_batch_operation cctxt ?arg ?fee ?gas_limit ?storage_limit
       cctxt
       batch.destination
   in
-  let* amount = tez_of_string_exn index "amount" batch.amount in
-  let* batch_fee = tez_of_opt_string_exn index "fee" batch.fee in
+  let* amount = mav_of_string_exn index "amount" batch.amount in
+  let* batch_fee = mav_of_opt_string_exn index "fee" batch.fee in
   let fee = Option.either batch_fee fee in
   let arg = Option.either batch.arg arg in
   let gas_limit = Option.either batch.gas_limit gas_limit in
@@ -1152,7 +1152,7 @@ let commands_rw () =
            ~name:"new"
            ~desc:"name of the new contract"
       @@ prefix "transferring"
-      @@ tez_param ~name:"qty" ~desc:"amount taken from source"
+      @@ mav_param ~name:"qty" ~desc:"amount taken from source"
       @@ prefix "from"
       @@ Client_keys.Public_key_hash.source_param
            ~name:"src"
@@ -1396,7 +1396,7 @@ let commands_rw () =
          replace_by_fees_arg
          successor_level_arg)
       (prefixes ["transfer"]
-      @@ tez_param ~name:"qty" ~desc:"amount taken from source"
+      @@ mav_param ~name:"qty" ~desc:"amount taken from source"
       @@ prefix "from"
       @@ ContractAlias.destination_param
            ~name:"src"
@@ -2123,7 +2123,7 @@ let commands_rw () =
       (prefixes ["set"; "deposits"; "limit"; "for"]
       @@ ContractAlias.destination_param ~name:"src" ~desc:"source contract"
       @@ prefix "to"
-      @@ tez_param
+      @@ mav_param
            ~name:"deposits limit"
            ~desc:"the maximum amount of frozen deposits"
       @@ stop)

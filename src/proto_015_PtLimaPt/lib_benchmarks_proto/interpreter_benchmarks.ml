@@ -1682,9 +1682,9 @@ module Registration_section = struct
 
     let () =
       simple_benchmark_with_stack_sampler
-        ~name:Interpreter_workload.N_ISub_tez_legacy
+        ~name:Interpreter_workload.N_ISub_mav_legacy
         ~stack_type:(mumav @$ mumav @$ bot)
-        ~kinstr:(ISub_tez_legacy (dummy_loc, halt))
+        ~kinstr:(ISub_mav_legacy (dummy_loc, halt))
         ~stack_sampler:(fun cfg rng_state ->
           let _, (module Samplers) =
             make_default_samplers cfg.Default_config.sampler
@@ -1699,7 +1699,7 @@ module Registration_section = struct
             (a, (b, eos)))
         ()
 
-    let sample_tez_nat (module Samplers : Michelson_samplers.S) rng_state =
+    let sample_mav_nat (module Samplers : Michelson_samplers.S) rng_state =
       let mumav = Samplers.Random_value.value mumav rng_state in
       let mumav_int64 = Alpha_context.Tez.to_mumav mumav in
       let int64 = Int64.(div max_int (mul mumav_int64 2L)) in
@@ -1718,7 +1718,7 @@ module Registration_section = struct
         ~stack_sampler:(fun cfg rng_state ->
           let _, samplers = make_default_samplers cfg.sampler in
           fun () ->
-            let mumav, nat = sample_tez_nat samplers rng_state in
+            let mumav, nat = sample_mav_nat samplers rng_state in
             (mumav, (nat, eos)))
         ()
 
@@ -1730,7 +1730,7 @@ module Registration_section = struct
         ~stack_sampler:(fun cfg rng_state ->
           let _, samplers = make_default_samplers cfg.sampler in
           fun () ->
-            let mumav, nat = sample_tez_nat samplers rng_state in
+            let mumav, nat = sample_mav_nat samplers rng_state in
             (nat, (mumav, eos)))
         ()
 
@@ -1743,7 +1743,7 @@ module Registration_section = struct
         ~stack_sampler:(fun cfg rng_state ->
           let _, samplers = make_default_samplers cfg.sampler in
           fun () ->
-            let mumav, nat = sample_tez_nat samplers rng_state in
+            let mumav, nat = sample_mav_nat samplers rng_state in
             (mumav, (nat, eos)))
         ()
 

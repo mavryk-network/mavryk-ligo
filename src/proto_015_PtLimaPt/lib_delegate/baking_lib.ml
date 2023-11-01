@@ -296,15 +296,15 @@ let endorsement_quorum state =
        - Yes :: repropose block with right payload and preendorsements for current round
        - No  :: repropose fresh block for current round *)
 let propose (cctxt : Protocol_client_context.full) ?minimal_fees
-    ?minimal_nanotez_per_gas_unit ?minimal_nanotez_per_byte ?force
+    ?minimal_nanomav_per_gas_unit ?minimal_nanomav_per_byte ?force
     ?(minimal_timestamp = false) ?extra_operations ?context_path delegates =
   let open Lwt_result_syntax in
   let* _block_stream, current_proposal = get_current_proposal cctxt in
   let config =
     Baking_configuration.make
       ?minimal_fees
-      ?minimal_nanotez_per_gas_unit
-      ?minimal_nanotez_per_byte
+      ?minimal_nanomav_per_gas_unit
+      ?minimal_nanomav_per_byte
       ?context_path
       ?force
       ?extra_operations
@@ -507,15 +507,15 @@ let baking_minimal_timestamp state =
   return_unit
 
 let bake (cctxt : Protocol_client_context.full) ?minimal_fees
-    ?minimal_nanotez_per_gas_unit ?minimal_nanotez_per_byte ?force
+    ?minimal_nanomav_per_gas_unit ?minimal_nanomav_per_byte ?force
     ?(minimal_timestamp = false) ?extra_operations
     ?(monitor_node_mempool = true) ?context_path delegates =
   let open Lwt_result_syntax in
   let config =
     Baking_configuration.make
       ?minimal_fees
-      ?minimal_nanotez_per_gas_unit
-      ?minimal_nanotez_per_byte
+      ?minimal_nanomav_per_gas_unit
+      ?minimal_nanomav_per_byte
       ?context_path
       ?force
       ?extra_operations

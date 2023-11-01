@@ -30,7 +30,7 @@ open Apply_results
 open Apply_operation_result
 open Apply_internal_results
 
-let tez_sym = "\xEA\x9C\xA9"
+let mav_sym = "\xEA\x9C\xA9"
 
 let pp_micheline_expr ppf expr =
   Format.fprintf ppf "@[<v 0>%a@]" Michelson_v1_printer.print_expr expr
@@ -51,7 +51,7 @@ let pp_internal_operation ppf (Internal_operation {operation; source; _}) =
       Format.fprintf
         ppf
         "Transaction:@,Amount: %s%a@,From: %a@,To: %a"
-        tez_sym
+        mav_sym
         Tez.pp
         amount
         Contract.pp
@@ -72,7 +72,7 @@ let pp_internal_operation ppf (Internal_operation {operation; source; _}) =
         "Origination:@,From: %a@,Credit: %s%a"
         Contract.pp
         source
-        tez_sym
+        mav_sym
         Tez.pp
         credit ;
       let code =
@@ -124,7 +124,7 @@ let pp_manager_operation_content (type kind) source ppf
       Format.fprintf
         ppf
         "Transaction:@,Amount: %s%a@,From: %a@,To: %a"
-        tez_sym
+        mav_sym
         Tez.pp
         amount
         Contract.pp
@@ -145,7 +145,7 @@ let pp_manager_operation_content (type kind) source ppf
         "Origination:@,From: %a@,Credit: %s%a"
         Contract.pp
         source
-        tez_sym
+        mav_sym
         Tez.pp
         credit ;
       let code =
@@ -495,8 +495,8 @@ let pp_balance_updates ppf balance_updates =
       balance_updates
   in
   let pp_update ppf = function
-    | Credited amount -> Format.fprintf ppf "+%s%a" tez_sym Tez.pp amount
-    | Debited amount -> Format.fprintf ppf "-%s%a" tez_sym Tez.pp amount
+    | Credited amount -> Format.fprintf ppf "+%s%a" mav_sym Tez.pp amount
+    | Debited amount -> Format.fprintf ppf "-%s%a" mav_sym Tez.pp amount
   in
   let pp_one ppf (balance, update) =
     let to_fill = column_size + 3 - String.length balance in
@@ -998,7 +998,7 @@ let pp_manager_operation_result ppf
         {balance_updates; operation_result; internal_operation_results} ) =
   Format.fprintf ppf "@[<v 2>Manager signed operations:" ;
   Format.fprintf ppf "@,From: %a" Signature.Public_key_hash.pp source ;
-  Format.fprintf ppf "@,Fee to the baker: %s%a" tez_sym Tez.pp fee ;
+  Format.fprintf ppf "@,Fee to the baker: %s%a" mav_sym Tez.pp fee ;
   Format.fprintf ppf "@,Expected counter: %a" Z.pp_print counter ;
   Format.fprintf ppf "@,Gas limit: %a" Gas.Arith.pp_integral gas_limit ;
   Format.fprintf ppf "@,Storage limit: %a bytes" Z.pp_print storage_limit ;

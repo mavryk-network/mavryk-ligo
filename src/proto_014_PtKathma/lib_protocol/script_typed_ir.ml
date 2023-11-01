@@ -695,7 +695,7 @@ and ('before_top, 'before, 'result_top, 'result) kinstr =
   | ISub_tez :
       Script.location * (Tez.t option, 's, 'r, 'f) kinstr
       -> (Tez.t, Tez.t * 's, 'r, 'f) kinstr
-  | ISub_tez_legacy :
+  | ISub_mav_legacy :
       Script.location * (Tez.t, 's, 'r, 'f) kinstr
       -> (Tez.t, Tez.t * 's, 'r, 'f) kinstr
   | IMul_teznat :
@@ -1487,7 +1487,7 @@ let kinstr_location : type a s b f. (a, s, b, f) kinstr -> Script.location =
   | IDiff_timestamps (loc, _) -> loc
   | IAdd_tez (loc, _) -> loc
   | ISub_tez (loc, _) -> loc
-  | ISub_tez_legacy (loc, _) -> loc
+  | ISub_mav_legacy (loc, _) -> loc
   | IMul_teznat (loc, _) -> loc
   | IMul_nattez (loc, _) -> loc
   | IEdiv_teznat (loc, _) -> loc
@@ -1887,7 +1887,7 @@ let kinstr_traverse i init f =
     | IDiff_timestamps (_, k) -> (next [@ocaml.tailcall]) k
     | IAdd_tez (_, k) -> (next [@ocaml.tailcall]) k
     | ISub_tez (_, k) -> (next [@ocaml.tailcall]) k
-    | ISub_tez_legacy (_, k) -> (next [@ocaml.tailcall]) k
+    | ISub_mav_legacy (_, k) -> (next [@ocaml.tailcall]) k
     | IMul_teznat (_, k) -> (next [@ocaml.tailcall]) k
     | IMul_nattez (_, k) -> (next [@ocaml.tailcall]) k
     | IEdiv_teznat (_, k) -> (next [@ocaml.tailcall]) k

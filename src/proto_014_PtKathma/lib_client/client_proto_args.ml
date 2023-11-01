@@ -29,7 +29,7 @@ open Protocol
 open Alpha_context
 open Clic
 
-type error += Bad_tez_arg of string * string (* Arg_name * value *)
+type error += Bad_mav_arg of string * string (* Arg_name * value *)
 
 type error += Bad_max_priority of string
 
@@ -57,9 +57,9 @@ let () =
         literal)
     Data_encoding.(obj2 (req "parameter" string) (req "literal" string))
     (function
-      | Bad_tez_arg (parameter, literal) -> Some (parameter, literal)
+      | Bad_mav_arg (parameter, literal) -> Some (parameter, literal)
       | _ -> None)
-    (fun (parameter, literal) -> Bad_tez_arg (parameter, literal)) ;
+    (fun (parameter, literal) -> Bad_mav_arg (parameter, literal)) ;
   register_error_kind
     `Permanent
     ~id:"badMaxPriorityArg"
@@ -269,37 +269,37 @@ let minimal_timestamp_switch =
        the baked block."
     ()
 
-let tez_format =
+let mav_format =
   "Text format: `DDDDDDD.DDDDDD`.\n\
    Tez and mumav and separated by a period sign. Trailing and pending zeroes \
    are allowed."
 
-let tez_parameter param =
+let mav_parameter param =
   parameter (fun _ s ->
       match Tez.of_string s with
       | Some mav -> return mav
-      | None -> fail (Bad_tez_arg (param, s)))
+      | None -> fail (Bad_mav_arg (param, s)))
 
-let tez_arg ~default ~parameter ~doc =
+let mav_arg ~default ~parameter ~doc =
   default_arg
     ~long:parameter
     ~placeholder:"amount"
     ~doc
     ~default
-    (tez_parameter ("--" ^ parameter))
+    (mav_parameter ("--" ^ parameter))
 
-let tez_opt_arg ~parameter ~doc =
+let mav_opt_arg ~parameter ~doc =
   arg
     ~long:parameter
     ~placeholder:"amount"
     ~doc
-    (tez_parameter ("--" ^ parameter))
+    (mav_parameter ("--" ^ parameter))
 
-let tez_param ~name ~desc next =
+let mav_param ~name ~desc next =
   Clic.param
     ~name
-    ~desc:(desc ^ " in \xEA\x9C\xA9\n" ^ tez_format)
-    (tez_parameter name)
+    ~desc:(desc ^ " in \xEA\x9C\xA9\n" ^ mav_format)
+    (mav_parameter name)
     next
 
 let non_negative_z_parameter =
@@ -324,14 +324,14 @@ let fee_arg =
     ~long:"fee"
     ~placeholder:"amount"
     ~doc:"fee in \xEA\x9C\xA9 to pay to the baker"
-    (tez_parameter "--fee")
+    (mav_parameter "--fee")
 
 let default_fee_arg =
   arg
     ~long:"default-fee"
     ~placeholder:"amount"
     ~doc:"default fee in \xEA\x9C\xA9 to pay to the baker for each transaction"
-    (tez_parameter "--default-fee")
+    (mav_parameter "--default-fee")
 
 let level_kind =
   parameter (fun _ s ->
@@ -463,9 +463,9 @@ let max_priority_arg =
 let default_minimal_fees =
   match Tez.of_mumav 100L with None -> assert false | Some t -> t
 
-let default_minimal_nanotez_per_gas_unit = Q.of_int 100
+let default_minimal_nanomav_per_gas_unit = Q.of_int 100
 
-let default_minimal_nanotez_per_byte = Q.of_int 1000
+let default_minimal_nanomav_per_byte = Q.of_int 1000
 
 let minimal_fees_arg =
   default_arg
@@ -478,22 +478,22 @@ let minimal_fees_arg =
          | Some t -> return t
          | None -> fail (Bad_minimal_fees s)))
 
-let minimal_nanotez_per_gas_unit_arg =
+let minimal_nanomav_per_gas_unit_arg =
   default_arg
     ~long:"minimal-nanotez-per-gas-unit"
     ~placeholder:"amount"
     ~doc:
       "exclude operations with fees per gas lower than this threshold (in \
        nanotez)"
-    ~default:(Q.to_string default_minimal_nanotez_per_gas_unit)
+    ~default:(Q.to_string default_minimal_nanomav_per_gas_unit)
     (parameter (fun _ s ->
          try return (Q.of_string s) with _ -> fail (Bad_minimal_fees s)))
 
-let minimal_nanotez_per_byte_arg =
+let minimal_nanomav_per_byte_arg =
   default_arg
     ~long:"minimal-nanotez-per-byte"
     ~placeholder:"amount"
-    ~default:(Q.to_string default_minimal_nanotez_per_byte)
+    ~default:(Q.to_string default_minimal_nanomav_per_byte)
     ~doc:
       "exclude operations with fees per byte lower than this threshold (in \
        nanotez)"
@@ -988,16 +988,16 @@ let fee_parameter_args =
     ~f:
       (fun _cctxt
            ( minimal_fees,
-             minimal_nanotez_per_byte,
-             minimal_nanotez_per_gas_unit,
+             minimal_nanomav_per_byte,
+             minimal_nanomav_per_gas_unit,
              force_low_fee,
              fee_cap,
              burn_cap ) ->
       return
         {
           Injection.minimal_fees;
-          minimal_nanotez_per_byte;
-          minimal_nanotez_per_gas_unit;
+          minimal_nanomav_per_byte;
+          minimal_nanomav_per_gas_unit;
           force_low_fee;
           fee_cap;
           burn_cap;
@@ -1005,8 +1005,8 @@ let fee_parameter_args =
     (Clic.aggregate
        (Clic.args6
           minimal_fees_arg
-          minimal_nanotez_per_byte_arg
-          minimal_nanotez_per_gas_unit_arg
+          minimal_nanomav_per_byte_arg
+          minimal_nanomav_per_gas_unit_arg
           force_low_fee_arg
           fee_cap_arg
           burn_cap_arg))

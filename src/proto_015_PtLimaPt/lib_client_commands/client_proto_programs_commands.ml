@@ -79,7 +79,7 @@ let commands () =
       ()
   in
   let amount_arg =
-    Client_proto_args.tez_arg
+    Client_proto_args.mav_arg
       ~parameter:"amount"
       ~doc:"amount of the transfer in \xEA\x9C\xA9"
       ~default:"0.05"
@@ -103,7 +103,7 @@ let commands () =
       ()
   in
   let balance_arg =
-    Client_proto_args.tez_opt_arg
+    Client_proto_args.mav_opt_arg
       ~parameter:"balance"
       ~doc:"balance of run contract in \xEA\x9C\xA9"
   in

@@ -281,8 +281,8 @@ storage_description.mli
 storage_functors.ml
 storage_functors.mli
 storage_sigs.ml
-tez_repr.ml
-tez_repr.mli
+mav_repr.ml
+mav_repr.mli
 ticket_accounting.ml
 ticket_accounting.mli
 ticket_balance_key.ml

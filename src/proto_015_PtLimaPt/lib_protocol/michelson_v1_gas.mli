@@ -137,7 +137,7 @@ module Cost_of : sig
 
     val sub_tez : Gas.cost
 
-    val sub_tez_legacy : Gas.cost
+    val sub_mav_legacy : Gas.cost
 
     val mul_teznat : Gas.cost
 

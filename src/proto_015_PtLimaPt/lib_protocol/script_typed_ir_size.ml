@@ -500,7 +500,7 @@ and kinstr_size :
     | IDiff_timestamps (loc, k) -> ret_succ_adding accu (base1 loc k)
     | IAdd_tez (loc, k) -> ret_succ_adding accu (base1 loc k)
     | ISub_tez (loc, k) -> ret_succ_adding accu (base1 loc k)
-    | ISub_tez_legacy (loc, k) -> ret_succ_adding accu (base1 loc k)
+    | ISub_mav_legacy (loc, k) -> ret_succ_adding accu (base1 loc k)
     | IMul_teznat (loc, k) -> ret_succ_adding accu (base1 loc k)
     | IMul_nattez (loc, k) -> ret_succ_adding accu (base1 loc k)
     | IEdiv_teznat (loc, k) -> ret_succ_adding accu (base1 loc k)

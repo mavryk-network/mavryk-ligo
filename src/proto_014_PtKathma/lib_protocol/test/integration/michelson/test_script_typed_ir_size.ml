@@ -831,8 +831,8 @@ let check_kinstr_size () =
       Kinstr ("IDiff_timestamps", IDiff_timestamps (loc, halt ()));
       Kinstr ("IAdd_tez", IAdd_tez (loc, halt ()));
       Kinstr ("ISub_tez", ISub_tez (loc, halt ()));
-      Kinstr ("ISub_tez_legacy", ISub_tez_legacy (loc, halt ()));
-      Kinstr ("IMul_tez_nat", IMul_teznat (loc, halt ()));
+      Kinstr ("ISub_mav_legacy", ISub_mav_legacy (loc, halt ()));
+      Kinstr ("IMul_mav_nat", IMul_teznat (loc, halt ()));
       Kinstr ("IMul_nattez", IMul_nattez (loc, halt ()));
       Kinstr ("IEdiv_teznat", IEdiv_teznat (loc, halt ()));
       Kinstr ("IEdiv_nattez", IEdiv_tez (loc, halt ()));

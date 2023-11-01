@@ -203,7 +203,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
              ~name:"new_multisig"
              ~desc:"name of the new multisig contract"
         @@ prefix "transferring"
-        @@ Client_proto_args.tez_param
+        @@ Client_proto_args.mav_param
              ~name:"qty"
              ~desc:"amount taken from source"
         @@ prefix "from"
@@ -289,7 +289,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
              ~name:"multisig"
              ~desc:"name or address of the originated multisig contract"
         @@ prefix "transferring"
-        @@ Client_proto_args.tez_param
+        @@ Client_proto_args.mav_param
              ~name:"qty"
              ~desc:"amount taken from source"
         @@ prefix "to"
@@ -451,7 +451,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
              ~name:"multisig"
              ~desc:"name/literal of the multisig contract"
         @@ prefix "transfer"
-        @@ Client_proto_args.tez_param
+        @@ Client_proto_args.mav_param
              ~name:"qty"
              ~desc:"amount taken from the multisig contract"
         @@ prefix "to"
@@ -869,7 +869,7 @@ let commands_rw () : #Protocol_client_context.full Clic.command list =
              ~name:"multisig"
              ~desc:"name or address of the originated multisig contract"
         @@ prefix "transferring"
-        @@ Client_proto_args.tez_param
+        @@ Client_proto_args.mav_param
              ~name:"qty"
              ~desc:"amount taken from source"
         @@ prefix "to"

@@ -218,8 +218,8 @@ let delegate_commands () : Protocol_client_context.full Clic.command list =
       ~desc:"Forge and inject block using the delegates' rights."
       (args8
          minimal_fees_arg
-         minimal_nanotez_per_gas_unit_arg
-         minimal_nanotez_per_byte_arg
+         minimal_nanomav_per_gas_unit_arg
+         minimal_nanomav_per_byte_arg
          minimal_timestamp_switch
          force_switch
          operations_arg
@@ -227,8 +227,8 @@ let delegate_commands () : Protocol_client_context.full Clic.command list =
          do_not_monitor_node_mempool_arg)
       (prefixes ["bake"; "for"] @@ sources_param)
       (fun ( minimal_fees,
-             minimal_nanotez_per_gas_unit,
-             minimal_nanotez_per_byte,
+             minimal_nanomav_per_gas_unit,
+             minimal_nanomav_per_byte,
              minimal_timestamp,
              force,
              extra_operations,
@@ -239,9 +239,9 @@ let delegate_commands () : Protocol_client_context.full Clic.command list =
         get_delegates cctxt pkhs >>=? fun delegates ->
         Baking_lib.bake
           cctxt
-          ~minimal_nanotez_per_gas_unit
+          ~minimal_nanomav_per_gas_unit
           ~minimal_timestamp
-          ~minimal_nanotez_per_byte
+          ~minimal_nanomav_per_byte
           ~minimal_fees
           ~force
           ~monitor_node_mempool:(not do_not_monitor_node_mempool)
@@ -269,16 +269,16 @@ let delegate_commands () : Protocol_client_context.full Clic.command list =
       ~desc:"Send a Tenderbake proposal"
       (args7
          minimal_fees_arg
-         minimal_nanotez_per_gas_unit_arg
-         minimal_nanotez_per_byte_arg
+         minimal_nanomav_per_gas_unit_arg
+         minimal_nanomav_per_byte_arg
          minimal_timestamp_switch
          force_switch
          operations_arg
          context_path_arg)
       (prefixes ["propose"; "for"] @@ sources_param)
       (fun ( minimal_fees,
-             minimal_nanotez_per_gas_unit,
-             minimal_nanotez_per_byte,
+             minimal_nanomav_per_gas_unit,
+             minimal_nanomav_per_byte,
              minimal_timestamp,
              force,
              extra_operations,
@@ -288,9 +288,9 @@ let delegate_commands () : Protocol_client_context.full Clic.command list =
         get_delegates cctxt sources >>=? fun delegates ->
         Baking_lib.propose
           cctxt
-          ~minimal_nanotez_per_gas_unit
+          ~minimal_nanomav_per_gas_unit
           ~minimal_timestamp
-          ~minimal_nanotez_per_byte
+          ~minimal_nanomav_per_byte
           ~minimal_fees
           ~force
           ?extra_operations
@@ -327,8 +327,8 @@ let baker_commands () : Protocol_client_context.full Clic.command list =
       (args8
          pidfile_arg
          minimal_fees_arg
-         minimal_nanotez_per_gas_unit_arg
-         minimal_nanotez_per_byte_arg
+         minimal_nanomav_per_gas_unit_arg
+         minimal_nanomav_per_byte_arg
          keep_alive_arg
          liquidity_baking_toggle_vote_arg
          per_block_vote_file_arg
@@ -341,8 +341,8 @@ let baker_commands () : Protocol_client_context.full Clic.command list =
       @@ sources_param)
       (fun ( pidfile,
              minimal_fees,
-             minimal_nanotez_per_gas_unit,
-             minimal_nanotez_per_byte,
+             minimal_nanomav_per_gas_unit,
+             minimal_nanomav_per_byte,
              keep_alive,
              liquidity_baking_toggle_vote,
              per_block_vote_file,
@@ -371,8 +371,8 @@ let baker_commands () : Protocol_client_context.full Clic.command list =
         Client_daemon.Baker.run
           cctxt
           ~minimal_fees
-          ~minimal_nanotez_per_gas_unit
-          ~minimal_nanotez_per_byte
+          ~minimal_nanomav_per_gas_unit
+          ~minimal_nanomav_per_byte
           ~liquidity_baking_toggle_vote
           ?per_block_vote_file
           ?extra_operations
