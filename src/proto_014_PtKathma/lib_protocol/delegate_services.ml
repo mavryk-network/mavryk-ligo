@@ -208,7 +208,7 @@ module S = struct
   let full_balance =
     RPC_service.get_service
       ~description:
-        "Returns the full balance (in mutez) of a given delegate, including \
+        "Returns the full balance (in mumav) of a given delegate, including \
          the frozen deposits and the frozen bonds. It does not include its \
          delegated balance."
       ~query:RPC_query.empty
@@ -218,7 +218,7 @@ module S = struct
   let current_frozen_deposits =
     RPC_service.get_service
       ~description:
-        "Returns the current amount of the frozen deposits (in mutez)."
+        "Returns the current amount of the frozen deposits (in mumav)."
       ~query:RPC_query.empty
       ~output:Tez.encoding
       RPC_path.(path / "current_frozen_deposits")
@@ -227,7 +227,7 @@ module S = struct
     RPC_service.get_service
       ~description:
         "Returns the initial amount (that is, at the beginning of a cycle) of \
-         the frozen deposits (in mutez). This amount is the same as the \
+         the frozen deposits (in mumav). This amount is the same as the \
          current amount of the frozen deposits, unless the delegate has been \
          punished."
       ~query:RPC_query.empty
@@ -237,7 +237,7 @@ module S = struct
   let staking_balance =
     RPC_service.get_service
       ~description:
-        "Returns the total amount of tokens (in mutez) delegated to a given \
+        "Returns the total amount of tokens (in mumav) delegated to a given \
          delegate. This includes the balances of all the contracts that \
          delegate to it, but also the balance of the delegate itself, its \
          frozen deposits, and its frozen bonds."
@@ -265,7 +265,7 @@ module S = struct
   let delegated_balance =
     RPC_service.get_service
       ~description:
-        "Returns the sum (in mutez) of all balances of all the contracts that \
+        "Returns the sum (in mumav) of all balances of all the contracts that \
          delegate to a given delegate. This excludes the delegate's own \
          balance, its frozen deposits and its frozen bonds."
       ~query:RPC_query.empty

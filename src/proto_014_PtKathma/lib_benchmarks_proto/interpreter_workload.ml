@@ -847,8 +847,8 @@ module Instructions = struct
 
   let mul_nattez nat _tez = ir_sized_step N_IMul_nattez (unary "nat" nat)
 
-  let ediv_teznat tez nat =
-    ir_sized_step N_IEdiv_teznat (binary "tez" tez "nat" nat)
+  let ediv_teznat mav nat =
+    ir_sized_step N_IEdiv_teznat (binary "mav" mav "nat" nat)
 
   let ediv_tez _tez1 _tez2 = ir_sized_step N_IEdiv_tez nullary
 
@@ -1261,19 +1261,19 @@ let extract_ir_sized_step :
   | IDiff_timestamps (_, _), (t1, (t2, _)) ->
       Instructions.diff_timestamps (Size.timestamp t1) (Size.timestamp t2)
   | IAdd_tez (_, _), (x, (y, _)) ->
-      Instructions.add_tez (Size.mutez x) (Size.mutez y)
+      Instructions.add_tez (Size.mumav x) (Size.mumav y)
   | ISub_tez (_, _), (x, (y, _)) ->
-      Instructions.sub_tez (Size.mutez x) (Size.mutez y)
+      Instructions.sub_tez (Size.mumav x) (Size.mumav y)
   | ISub_tez_legacy (_, _), (x, (y, _)) ->
-      Instructions.sub_tez_legacy (Size.mutez x) (Size.mutez y)
+      Instructions.sub_tez_legacy (Size.mumav x) (Size.mumav y)
   | IMul_teznat (_, _), (x, (y, _)) ->
-      Instructions.mul_teznat (Size.mutez x) (Size.integer y)
+      Instructions.mul_teznat (Size.mumav x) (Size.integer y)
   | IMul_nattez (_, _), (x, (y, _)) ->
-      Instructions.mul_nattez (Size.integer x) (Size.mutez y)
+      Instructions.mul_nattez (Size.integer x) (Size.mumav y)
   | IEdiv_teznat (_, _), (x, (y, _)) ->
-      Instructions.ediv_teznat (Size.mutez x) (Size.integer y)
+      Instructions.ediv_teznat (Size.mumav x) (Size.integer y)
   | IEdiv_tez (_, _), (x, (y, _)) ->
-      Instructions.ediv_tez (Size.mutez x) (Size.mutez y)
+      Instructions.ediv_tez (Size.mumav x) (Size.mumav y)
   | IOr (_, _), _ -> Instructions.or_
   | IAnd (_, _), _ -> Instructions.and_
   | IXor (_, _), _ -> Instructions.xor_

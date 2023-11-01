@@ -64,7 +64,7 @@ val delegate_arg : (Signature.Public_key_hash.t option, full) Clic.arg
 
 val max_priority_arg : (int option, full) Clic.arg
 
-val minimal_fees_arg : (Tez.tez, full) Clic.arg
+val minimal_fees_arg : (Tez.mav, full) Clic.arg
 
 val minimal_nanotez_per_gas_unit_arg : (Q.t, full) Clic.arg
 

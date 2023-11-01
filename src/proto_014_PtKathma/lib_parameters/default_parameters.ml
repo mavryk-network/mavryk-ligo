@@ -97,16 +97,16 @@ let constants_mainnet =
     seed_nonce_revelation_tip =
       (match Tez.(one /? 8L) with Ok c -> c | Error _ -> assert false);
     origination_size = 257;
-    baking_reward_fixed_portion (* 10_000_000 mutez *);
-    baking_reward_bonus_per_slot (* 4_286 mutez *);
-    endorsing_reward_per_slot (* 2_857 mutez *);
+    baking_reward_fixed_portion (* 10_000_000 mumav *);
+    baking_reward_bonus_per_slot (* 4_286 mumav *);
+    endorsing_reward_per_slot (* 2_857 mumav *);
     hard_storage_limit_per_operation = Z.of_int 60_000;
-    cost_per_byte = Tez.of_mutez_exn 250L;
+    cost_per_byte = Tez.of_mumav_exn 250L;
     quorum_min = 20_00l;
     quorum_max = 70_00l;
     min_proposal_quorum = 5_00l;
     (* liquidity_baking_subsidy is 1/16th of maximum total rewards for a block *)
-    liquidity_baking_subsidy = Tez.of_mutez_exn 2_500_000L;
+    liquidity_baking_subsidy = Tez.of_mumav_exn 2_500_000L;
     (* level after protocol activation when liquidity baking shuts off:
          about 6 months after first activation on mainnet *)
     liquidity_baking_sunset_level = 3_063_809l;
@@ -158,7 +158,7 @@ let constants_mainnet =
            issues related to proof size). *)
         hard_size_limit_per_inbox = 500_000;
         hard_size_limit_per_message = 5_000;
-        commitment_bond = Tez.of_mutez_exn 10_000_000_000L;
+        commitment_bond = Tez.of_mumav_exn 10_000_000_000L;
         finality_period = tx_rollup_finality_period;
         max_inboxes_count = tx_rollup_finality_period + 100;
         (* [60_000] blocks is about two weeks. *)
@@ -206,7 +206,7 @@ let constants_mainnet =
         max_available_messages = 1_000_000;
         (* TODO: https://gitlab.com/tezos/tezos/-/issues/2756
            The following constants need to be refined. *)
-        stake_amount = Tez.of_mutez_exn 32_000_000L;
+        stake_amount = Tez.of_mumav_exn 32_000_000L;
         commitment_period_in_blocks = 30;
         max_lookahead_in_blocks = 30_000l;
         max_active_outbox_levels = sc_rollup_max_active_outbox_levels;
@@ -254,9 +254,9 @@ let constants_sandbox =
     delay_increment_per_round = Period.one_second;
     consensus_committee_size = 256;
     consensus_threshold = 0;
-    baking_reward_fixed_portion (* 333_333 mutez *);
-    baking_reward_bonus_per_slot (* 3_921 mutez *);
-    endorsing_reward_per_slot (* 2_604 mutez *);
+    baking_reward_fixed_portion (* 333_333 mumav *);
+    baking_reward_bonus_per_slot (* 3_921 mumav *);
+    endorsing_reward_per_slot (* 2_604 mumav *);
     max_slashing_period = 2;
     frozen_deposits_percentage = 5;
   }
@@ -288,9 +288,9 @@ let constants_test =
     consensus_committee_size;
     consensus_threshold (* 17 slots *);
     max_slashing_period = 2;
-    baking_reward_fixed_portion (* 10 tez *);
-    baking_reward_bonus_per_slot (* 1.25 tez *);
-    endorsing_reward_per_slot (* 0.8 tez *);
+    baking_reward_fixed_portion (* 10 mav *);
+    baking_reward_bonus_per_slot (* 1.25 mav *);
+    endorsing_reward_per_slot (* 0.8 mav *);
     frozen_deposits_percentage =
       5
       (* not 10 so that multiplication and
@@ -305,19 +305,19 @@ let test_commitments =
          let blinded_public_key_hash =
            Protocol.Blinded_public_key_hash.of_b58check_exn bpkh
          in
-         let amount = Protocol.Alpha_context.Tez.of_mutez_exn amount in
+         let amount = Protocol.Alpha_context.Tez.of_mumav_exn amount in
          {Protocol.Alpha_context.Commitment.blinded_public_key_hash; amount})
        [
-         ("btz1bRL4X5BWo2Fj4EsBdUwexXqgTf75uf1qa", 23932454669343L);
-         ("btz1SxjV1syBgftgKy721czKi3arVkVwYUFSv", 72954577464032L);
-         ("btz1LtoNCjiW23txBTenALaf5H6NKF1L3c1gw", 217487035428348L);
-         ("btz1SUd3mMhEBcWudrn8u361MVAec4WYCcFoy", 4092742372031L);
-         ("btz1MvBXf4orko1tsGmzkjLbpYSgnwUjEe81r", 17590039016550L);
-         ("btz1LoDZ3zsjgG3k3cqTpUMc9bsXbchu9qMXT", 26322312350555L);
-         ("btz1RMfq456hFV5AeDiZcQuZhoMv2dMpb9hpP", 244951387881443L);
-         ("btz1Y9roTh4A7PsMBkp8AgdVFrqUDNaBE59y1", 80065050465525L);
-         ("btz1Q1N2ePwhVw5ED3aaRVek6EBzYs1GDkSVD", 3569618927693L);
-         ("btz1VFFVsVMYHd5WfaDTAt92BeQYGK8Ri4eLy", 9034781424478L);
+        ("bmv1PnoN7PYp9bXWHPBkUimLygrYSDVYufqLY", 23932454669343L);
+        ("bmv1FLCncCLV3FATZ7Rarrp1jCbiUJtV3PKHj", 72954577464032L);
+        ("bmv19GGfo45oNdAjQbyM1aQM6S7EHoPs74tbt", 217487035428349L);
+        ("bmv1Er6MMg4XYBngs16hkGuhNeBWacu1Ptpuh", 4092742372031L);
+        ("bmv1AHeqFPBA7NHg6R6ZbyAHqhTYmVs8Po5ty", 17590039016550L);
+        ("bmv19AgreKF32qKXGmA2fiBJAktPaB6RDueZv", 26322312350555L);
+        ("bmv1Dj98ePTzc4LwsN38TejFixNn1BkFpoRfj", 244951387881443L);
+        ("bmv1LXL741RTTy98Qu8h1vTBH1rLBvxc6CyJW", 80065050465525L);
+        ("bmv1CNqLEiJzrWM1SBu9GjUS7PCrXRPntNyjD", 3569618927693L);
+        ("bmv1HcioToiqeCMHtiY227xiCoRQEsWqwuAgn", 9034781424478L);
        ])
 
 let bootstrap_accounts_strings =
@@ -329,7 +329,7 @@ let bootstrap_accounts_strings =
     "edpkv8EUUH68jmo3f7Um5PezmfGrRF24gnfLpH3sVNwJnV5bVCxL2n";
   ]
 
-let bootstrap_balance = Tez.of_mutez_exn 4_000_000_000_000L
+let bootstrap_balance = Tez.of_mumav_exn 4_000_000_000_000L
 
 let compute_accounts =
   List.map (fun s ->

@@ -223,7 +223,7 @@ let get_tx_address_balance_command () =
           block_id_param))
     (prefixes ["get"; "balance"; "for"]
     @@ bls_pkh_param
-         ~name:"tz4"
+         ~name:"mv4"
          ~desc:"tz4 address from which the balance is queried"
     @@ prefixes ["of"]
     @@ param

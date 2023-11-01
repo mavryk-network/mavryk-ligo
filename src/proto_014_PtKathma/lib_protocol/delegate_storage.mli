@@ -122,7 +122,7 @@ val fold :
 val list : Raw_context.t -> Signature.Public_key_hash.t list Lwt.t
 
 val balance :
-  Raw_context.t -> Signature.public_key_hash -> Tez_repr.tez tzresult Lwt.t
+  Raw_context.t -> Signature.public_key_hash -> Tez_repr.mav tzresult Lwt.t
 
 type level_participation = Participated | Didn't_participate
 

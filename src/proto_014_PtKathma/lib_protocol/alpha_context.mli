@@ -109,37 +109,37 @@ module Tez : sig
 
   include BASIC_DATA with type t := t
 
-  type tez = t
+  type mav = t
 
-  val zero : tez
+  val zero : mav
 
-  val one_mutez : tez
+  val one_mumav : mav
 
-  val one_cent : tez
+  val one_cent : mav
 
-  val fifty_cents : tez
+  val fifty_cents : mav
 
-  val one : tez
+  val one : mav
 
-  val ( -? ) : tez -> tez -> tez tzresult
+  val ( -? ) : mav -> mav -> mav tzresult
 
-  val sub_opt : tez -> tez -> tez option
+  val sub_opt : mav -> mav -> mav option
 
-  val ( +? ) : tez -> tez -> tez tzresult
+  val ( +? ) : mav -> mav -> mav tzresult
 
-  val ( *? ) : tez -> int64 -> tez tzresult
+  val ( *? ) : mav -> int64 -> mav tzresult
 
-  val ( /? ) : tez -> int64 -> tez tzresult
+  val ( /? ) : mav -> int64 -> mav tzresult
 
-  val of_string : string -> tez option
+  val of_string : string -> mav option
 
-  val to_string : tez -> string
+  val to_string : mav -> string
 
-  val of_mutez : int64 -> tez option
+  val of_mumav : int64 -> mav option
 
-  val to_mutez : tez -> int64
+  val to_mumav : mav -> int64
 
-  val of_mutez_exn : int64 -> t
+  val of_mumav_exn : int64 -> t
 
   val mul_exn : t -> int -> t
 
@@ -605,7 +605,7 @@ module Script : sig
     | I_SLICE
     | I_STEPS_TO_QUOTA
     | I_SUB
-    | I_SUB_MUTEZ
+    | I_SUB_MUMAV
     | I_SWAP
     | I_TRANSFER_TOKENS
     | I_SET_DELEGATE
@@ -652,7 +652,7 @@ module Script : sig
     | T_signature
     | T_string
     | T_bytes
-    | T_mutez
+    | T_mumav
     | T_timestamp
     | T_unit
     | T_operation
@@ -3669,7 +3669,7 @@ and _ contents =
   | Failing_noop : string -> Kind.failing_noop contents
   | Manager_operation : {
       source : Signature.Public_key_hash.t;
-      fee : Tez.tez;
+      fee : Tez.mav;
       counter : counter;
       operation : 'kind manager_operation;
       gas_limit : Gas.Arith.integral;
@@ -3680,7 +3680,7 @@ and _ contents =
 and _ manager_operation =
   | Reveal : Signature.Public_key.t -> Kind.reveal manager_operation
   | Transaction : {
-      amount : Tez.tez;
+      amount : Tez.mav;
       parameters : Script.lazy_expr;
       entrypoint : Entrypoint.t;
       destination : Contract.t;
@@ -3689,7 +3689,7 @@ and _ manager_operation =
   | Origination : {
       delegate : Signature.Public_key_hash.t option;
       script : Script.t;
-      credit : Tez.tez;
+      credit : Tez.mav;
     }
       -> Kind.origination manager_operation
   | Delegation :
@@ -3711,7 +3711,7 @@ and _ manager_operation =
   | Tx_rollup_submit_batch : {
       tx_rollup : Tx_rollup.t;
       content : string;
-      burn_limit : Tez.tez option;
+      burn_limit : Tez.mav option;
     }
       -> Kind.tx_rollup_submit_batch manager_operation
   | Tx_rollup_commit : {
@@ -4111,7 +4111,7 @@ end
 module Commitment : sig
   type t = {
     blinded_public_key_hash : Blinded_public_key_hash.t;
-    amount : Tez.tez;
+    amount : Tez.mav;
   }
 
   val encoding : t Data_encoding.t

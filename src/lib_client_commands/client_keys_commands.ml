@@ -130,7 +130,7 @@ let gen_keys_containing ?(encrypted = false) ?(prefix = false)
             in
             let matches =
               if prefix then
-                let containing_tz1 = List.map (( ^ ) "tz1") containing in
+                let containing_tz1 = List.map (( ^ ) "mv1") containing in
                 fun key ->
                   List.exists
                     (fun containing ->

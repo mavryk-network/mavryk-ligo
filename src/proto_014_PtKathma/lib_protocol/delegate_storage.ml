@@ -317,9 +317,9 @@ let expected_slots_for_given_active_stake ctxt ~total_active_stake ~active_stake
     (Z.to_int
        (Z.div
           (Z.mul
-             (Z.of_int64 (Tez_repr.to_mutez active_stake))
+             (Z.of_int64 (Tez_repr.to_mumav active_stake))
              (Z.of_int number_of_endorsements_per_cycle))
-          (Z.of_int64 (Tez_repr.to_mutez total_active_stake))))
+          (Z.of_int64 (Tez_repr.to_mumav total_active_stake))))
 
 let delegate_participated_enough ctxt delegate =
   Storage.Contract.Missed_endorsements.find ctxt delegate >>=? function
@@ -599,12 +599,12 @@ let get_stakes_for_selected_index ctxt index =
         let frozen_deposits_percentage =
           Int64.of_int @@ Constants_storage.frozen_deposits_percentage ctxt
         in
-        let max_mutez = of_mutez_exn Int64.max_int in
+        let max_mumav = of_mumav_exn Int64.max_int in
         let frozen_deposits_limit =
-          match frozen_deposits_limit with Some fdp -> fdp | None -> max_mutez
+          match frozen_deposits_limit with Some fdp -> fdp | None -> max_mumav
         in
         let aux = min total_balance frozen_deposits_limit in
-        let*? overflow_bound = max_mutez /? 100L in
+        let*? overflow_bound = max_mumav /? 100L in
         if aux <= overflow_bound then
           let*? aux = aux *? 100L in
           let*? v = aux /? frozen_deposits_percentage in
@@ -614,7 +614,7 @@ let get_stakes_for_selected_index ctxt index =
           let*? a = aux /? frozen_deposits_percentage in
           if sbal <= a then return staking_balance
           else
-            let*? r = max_mutez /? frozen_deposits_percentage in
+            let*? r = max_mumav /? frozen_deposits_percentage in
             return r
       in
       let*? total_stake = Tez_repr.(total_stake +? stake_for_cycle) in
@@ -646,7 +646,7 @@ let select_distribution_for_cycle ctxt cycle =
   >>=? fun ctxt ->
   List.fold_left_es
     (fun acc (pkh, stake) ->
-      pubkey ctxt pkh >|=? fun pk -> ((pk, pkh), Tez_repr.to_mutez stake) :: acc)
+      pubkey ctxt pkh >|=? fun pk -> ((pk, pkh), Tez_repr.to_mumav stake) :: acc)
     []
     stakes
   >>=? fun stakes_pk ->

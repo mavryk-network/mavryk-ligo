@@ -568,8 +568,8 @@ let emit_event (type t tc) (ctxt, sc) gas ~(event_type : (t, tc) ty)
   let gas, ctxt = local_gas_counter_and_outdated_context ctxt in
   return (res, ctxt, gas)
 
-(* [transfer (ctxt, sc) gas tez parameters_ty parameters destination entrypoint]
-   creates an operation that transfers an amount of [tez] to a destination and
+(* [transfer (ctxt, sc) gas mav parameters_ty parameters destination entrypoint]
+   creates an operation that transfers an amount of [mav] to a destination and
    an entrypoint instantiated with argument [parameters] of type
    [parameters_ty]. *)
 let transfer (ctxt, sc) gas amount location parameters_ty parameters

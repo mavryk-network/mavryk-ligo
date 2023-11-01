@@ -1207,7 +1207,7 @@ and ('ty, 'comparable) ty =
   | Signature_t : (signature, yes) ty
   | String_t : (Script_string.t, yes) ty
   | Bytes_t : (bytes, yes) ty
-  | Mutez_t : (Tez.t, yes) ty
+  | Mumav_t : (Tez.t, yes) ty
   | Key_hash_t : (public_key_hash, yes) ty
   | Key_t : (public_key, yes) ty
   | Timestamp_t : (Script_timestamp.t, yes) ty
@@ -1342,7 +1342,7 @@ and ('input, 'output) view_signature =
 and 'kind manager_operation =
   | Transaction_to_contract : {
       destination : Contract.t;
-      amount : Tez.tez;
+      amount : Tez.mav;
       entrypoint : Entrypoint.t;
       location : Script.location;
       parameters_ty : ('a, _) ty;
@@ -1375,7 +1375,7 @@ and 'kind manager_operation =
       delegate : Signature.Public_key_hash.t option;
       code : Script.expr;
       unparsed_storage : Script.expr;
-      credit : Tez.tez;
+      credit : Tez.mav;
       preorigination : Contract_hash.t;
       storage_type : ('storage, _) ty;
       storage : 'storage;
@@ -1596,7 +1596,7 @@ let meta_basic = {size = Type_size.one}
 
 let ty_metadata : type a ac. (a, ac) ty -> a ty_metadata = function
   | Unit_t | Never_t | Int_t | Nat_t | Signature_t | String_t | Bytes_t
-  | Mutez_t | Bool_t | Key_hash_t | Key_t | Timestamp_t | Chain_id_t | Address_t
+  | Mumav_t | Bool_t | Key_hash_t | Key_t | Timestamp_t | Chain_id_t | Address_t
   | Tx_rollup_l2_address_t ->
       meta_basic
   | Pair_t (_, _, meta, _) -> meta
@@ -1624,7 +1624,7 @@ let is_comparable : type v c. (v, c) ty -> c dbool = function
   | Signature_t -> Yes
   | String_t -> Yes
   | Bytes_t -> Yes
-  | Mutez_t -> Yes
+  | Mumav_t -> Yes
   | Bool_t -> Yes
   | Key_hash_t -> Yes
   | Key_t -> Yes
@@ -1666,7 +1666,7 @@ let string_t = String_t
 
 let bytes_t = Bytes_t
 
-let mutez_t = Mutez_t
+let mumav_t = Mumav_t
 
 let key_hash_t = Key_hash_t
 
@@ -1723,7 +1723,7 @@ let option_t loc t =
   let cmp = is_comparable t in
   Option_t (t, {size}, cmp)
 
-let option_mutez_t = Option_t (mutez_t, {size = Type_size.two}, Yes)
+let option_mumav_t = Option_t (mumav_t, {size = Type_size.two}, Yes)
 
 let option_string_t = Option_t (string_t, {size = Type_size.two}, Yes)
 
@@ -1737,15 +1737,15 @@ let option_pair_nat_nat_t =
       {size = Type_size.four},
       Yes )
 
-let option_pair_nat_mutez_t =
+let option_pair_nat_mumav_t =
   Option_t
-    ( Pair_t (nat_t, mutez_t, {size = Type_size.three}, YesYes),
+    ( Pair_t (nat_t, mumav_t, {size = Type_size.three}, YesYes),
       {size = Type_size.four},
       Yes )
 
-let option_pair_mutez_mutez_t =
+let option_pair_mumav_mumav_t =
   Option_t
-    ( Pair_t (mutez_t, mutez_t, {size = Type_size.three}, YesYes),
+    ( Pair_t (mumav_t, mumav_t, {size = Type_size.three}, YesYes),
       {size = Type_size.four},
       Yes )
 
@@ -2004,7 +2004,7 @@ let ty_traverse =
    fun f accu ty continue ->
     let accu = f.apply accu ty in
     match ty with
-    | Unit_t | Int_t | Nat_t | Signature_t | String_t | Bytes_t | Mutez_t
+    | Unit_t | Int_t | Nat_t | Signature_t | String_t | Bytes_t | Mumav_t
     | Key_hash_t | Key_t | Timestamp_t | Address_t | Tx_rollup_l2_address_t
     | Bool_t | Sapling_transaction_t _ | Sapling_transaction_deprecated_t _
     | Sapling_state_t _ | Operation_t | Chain_id_t | Never_t | Bls12_381_g1_t
@@ -2086,7 +2086,7 @@ let value_traverse (type t tc) (ty : (t, tc) ty) (x : t) init f =
               (on_list [@ocaml.tailcall]) ty' accu xs)
     in
     match ty with
-    | Unit_t | Int_t | Nat_t | Signature_t | String_t | Bytes_t | Mutez_t
+    | Unit_t | Int_t | Nat_t | Signature_t | String_t | Bytes_t | Mumav_t
     | Key_hash_t | Key_t | Timestamp_t | Address_t | Tx_rollup_l2_address_t
     | Bool_t | Sapling_transaction_t _ | Sapling_transaction_deprecated_t _
     | Sapling_state_t _ | Operation_t | Chain_id_t | Never_t | Bls12_381_g1_t

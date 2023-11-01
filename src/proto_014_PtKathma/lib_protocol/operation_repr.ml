@@ -312,7 +312,7 @@ and _ contents =
   | Failing_noop : string -> Kind.failing_noop contents
   | Manager_operation : {
       source : Signature.public_key_hash;
-      fee : Tez_repr.tez;
+      fee : Tez_repr.mav;
       counter : counter;
       operation : 'kind manager_operation;
       gas_limit : Gas_limit_repr.Arith.integral;
@@ -323,7 +323,7 @@ and _ contents =
 and _ manager_operation =
   | Reveal : Signature.Public_key.t -> Kind.reveal manager_operation
   | Transaction : {
-      amount : Tez_repr.tez;
+      amount : Tez_repr.mav;
       parameters : Script_repr.lazy_expr;
       entrypoint : Entrypoint_repr.t;
       destination : Contract_repr.t;
@@ -332,7 +332,7 @@ and _ manager_operation =
   | Origination : {
       delegate : Signature.Public_key_hash.t option;
       script : Script_repr.t;
-      credit : Tez_repr.tez;
+      credit : Tez_repr.mav;
     }
       -> Kind.origination manager_operation
   | Delegation :

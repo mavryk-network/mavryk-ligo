@@ -32,8 +32,8 @@
 
     Do not fail if something goes wrong.
 *)
-let invoice_contract ctxt ~address ~amount_mutez =
-  match Tez_repr.of_mutez amount_mutez with
+let invoice_contract ctxt ~address ~amount_mumav =
+  match Tez_repr.of_mumav amount_mumav with
   | None -> Lwt.return (ctxt, [])
   | Some amount -> (
       ( Contract_repr.of_b58check address >>?= fun recipient ->
@@ -61,7 +61,7 @@ module Patch_dictator_for_ghostnet = struct
 
   let oxhead_testnet_baker =
     Signature.Public_key_hash.of_b58check_exn
-      "tz1Xf8zdT3DbAX9cHw3c3CXh79rc4nK4gCe8"
+      "mv18Cw7psUrAAPBpXYd9CtCpHg9EgjHP9KTe"
 
   let patch_constant chain_id ctxt =
     if Chain_id.equal chain_id ghostnet_id then
@@ -143,8 +143,8 @@ let prepare_first_block chain_id ctxt ~typecheck ~level ~timestamp =
       Patch_dictator_for_ghostnet.patch_constant chain_id ctxt >>= fun ctxt ->
       invoice_contract
         ctxt
-        ~address:"tz1X81bCXPtMiHu1d4UZF4GPhMPkvkp56ssb"
-        ~amount_mutez:3_000_000_000L
+        ~address:"mv18Cw7psUrAAPBpXYd9CtCpHg9EgjHP9KTe"
+        ~amount_mumav:3_000_000_000L
       >>= fun (ctxt, balance_updates) -> return (ctxt, balance_updates))
   >>=? fun (ctxt, balance_updates) ->
   Receipt_repr.group_balance_updates balance_updates >>?= fun balance_updates ->

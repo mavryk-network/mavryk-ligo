@@ -1533,7 +1533,7 @@ let apply_external_manager_operation_content :
             Constants.frozen_deposits_percentage ctxt
           in
           let max_limit =
-            Tez.of_mutez_exn
+            Tez.of_mumav_exn
               Int64.(
                 mul (of_int frozen_deposits_percentage) Int64.(div max_int 100L))
           in
