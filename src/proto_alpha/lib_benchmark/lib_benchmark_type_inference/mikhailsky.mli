@@ -57,8 +57,8 @@ open Protocol
    3. Some instructions are annotated with the type on which they operate.
       Eg if Prim (_, I_ADD, [], []) is the (ad-hoc polymorphic) addition in Michelson,
       we will have the following variants in Mikhailsky:
-      - Prim (_, I_ADD, [ Prim (_, T_mutez, [], []),
-                          Prim (_, T_mutez, [], []) ], []) for mutez addition
+      - Prim (_, I_ADD, [ Prim (_, T_mumav, [], []),
+                          Prim (_, T_mumav, [], []) ], []) for mutez addition
       - Prim (_, I_ADD, [ Prim (_, T_int, [], []),
                           Prim (_, T_nat, [], []) ], []) for int+nat addition
       etc.

@@ -46,13 +46,13 @@ type error +=
 let zero = Tez_tag 0L
 
 (* all other constant are defined from the value of one micro tez *)
-let one_mutez = Tez_tag 1L
+let one_mumav = Tez_tag 1L
 
-let max_mutez = Tez_tag Int64.max_int
+let max_mumav = Tez_tag Int64.max_int
 
 let mul_int (Tez_tag tez) i = Tez_tag (Int64.mul tez i)
 
-let one_cent = mul_int one_mutez 10_000L
+let one_cent = mul_int one_mumav 10_000L
 
 let fifty_cents = mul_int one_cent 50L
 
@@ -158,12 +158,12 @@ let div_exn t d =
   | Ok v -> v
   | Error _ -> invalid_arg "div_exn"
 
-let of_mutez t = if t < 0L then None else Some (Tez_tag t)
+let of_mumav t = if t < 0L then None else Some (Tez_tag t)
 
-let of_mutez_exn x =
-  match of_mutez x with None -> invalid_arg "Tez.of_mutez" | Some v -> v
+let of_mumav_exn x =
+  match of_mumav x with None -> invalid_arg "Tez.of_mumav" | Some v -> v
 
-let to_mutez (Tez_tag t) = t
+let to_mumav (Tez_tag t) = t
 
 let encoding =
   let open Data_encoding in

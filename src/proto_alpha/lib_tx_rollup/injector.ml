@@ -108,7 +108,7 @@ module Parameters = struct
     in
     Injection.
       {
-        minimal_fees = Tez.of_mutez_exn 100L;
+        minimal_fees = Tez.of_mumav_exn 100L;
         minimal_nanotez_per_byte = Q.of_int 1000;
         minimal_nanotez_per_gas_unit = Q.of_int 100;
         force_low_fee = false;
@@ -124,7 +124,7 @@ module Parameters = struct
      check the size, or compute them wrt operation kind *)
   let approximate_fee_bound _ _ =
     {
-      fee = Tez.of_mutez_exn 3_000_000L;
+      fee = Tez.of_mumav_exn 3_000_000L;
       counter = Z.of_int 500_000;
       gas_limit = Gas.Arith.integral_of_int_exn 500_000;
       storage_limit = Z.of_int 500_000;

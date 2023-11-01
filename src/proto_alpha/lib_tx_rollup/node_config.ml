@@ -110,7 +110,7 @@ let mode_encoding =
       ("custom", Custom);
     ]
 
-let tez t = Tez.of_mutez_exn Int64.(mul (of_int t) 1_000_000L)
+let tez t = Tez.of_mumav_exn Int64.(mul (of_int t) 1_000_000L)
 
 let default_cost_caps = {fee_cap = Tez.one; burn_cap = tez 2}
 

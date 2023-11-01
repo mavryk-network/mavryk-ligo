@@ -28,10 +28,10 @@ open Alpha_context
 module Smart_contracts = Client_proto_stresstest_contracts
 
 type transfer_strategy =
-  | Fixed_amount of {mutez : Tez.t}  (** Amount to transfer *)
+  | Fixed_amount of {mumav : Tez.t}  (** Amount to transfer *)
   | Evaporation of {fraction : float}
       (** Maximum fraction of current wealth to transfer.
-          Minimum amount is 1 mutez regardless of total wealth. *)
+          Minimum amount is 1 mumav regardless of total wealth. *)
 
 type limit =
   | Abs of int  (** Absolute level at which we should stop  *)
@@ -44,7 +44,7 @@ type parameters = {
   tps : float;  (** Transaction per seconds target *)
   strategy : transfer_strategy;
   regular_transfer_fee : Tez.t;
-      (** fees for each transfer (except for transfers to smart contracts), in mutez *)
+      (** fees for each transfer (except for transfers to smart contracts), in mumav *)
   regular_transfer_gas_limit : Gas.Arith.integral;
       (** gas limit per operation (except for transfers to smart contracts) *)
   storage_limit : Z.t;  (** storage limit per operation *)
@@ -143,8 +143,8 @@ let default_parameters =
     seed = 0x533D;
     fresh_probability = 0.001;
     tps = 5.0;
-    strategy = Fixed_amount {mutez = Tez.one};
-    regular_transfer_fee = Tez.of_mutez_exn 2_000L;
+    strategy = Fixed_amount {mumav = Tez.one};
+    regular_transfer_fee = Tez.of_mumav_exn 2_000L;
     regular_transfer_gas_limit = Gas.Arith.integral_of_int_exn 1_600;
     (* [gas_limit] corresponds to a slight overapproximation of the
        gas needed to inject an operation. It was obtained by simulating
@@ -215,11 +215,11 @@ let parse_strategy s =
   | ["fixed"; parameter] -> (
       match int_of_string parameter with
       | exception _ -> Error "invalid integer literal"
-      | mutez when mutez <= 0 -> Error "negative amount"
-      | mutez -> (
-          match Tez.of_mutez (Int64.of_int mutez) with
-          | None -> Error "invalid mutez"
-          | Some mutez -> Ok (Fixed_amount {mutez})))
+      | mumav when mumav <= 0 -> Error "negative amount"
+      | mumav -> (
+          match Tez.of_mumav (Int64.of_int mumav) with
+          | None -> Error "invalid mumav"
+          | Some mumav -> Ok (Fixed_amount {mumav})))
   | ["evaporation"; parameter] -> (
       match float_of_string parameter with
       | exception _ -> Error "invalid float literal"
@@ -489,15 +489,15 @@ let rec sample_transfer (cctxt : Protocol_client_context.full) chain block
     in
     let amount =
       match parameters.strategy with
-      | Fixed_amount {mutez} -> mutez
+      | Fixed_amount {mumav} -> mumav
       | Evaporation {fraction} ->
-          let mutez = Int64.to_float (Tez.to_mutez tez) in
-          let max_fraction = Int64.of_float (mutez *. fraction) in
+          let mumav = Int64.to_float (Tez.to_mumav tez) in
+          let max_fraction = Int64.of_float (mumav *. fraction) in
           let amount =
             if max_fraction = 0L then 1L
             else max 1L (Random.State.int64 state.rng_state max_fraction)
           in
-          Tez.of_mutez_exn amount
+          Tez.of_mumav_exn amount
     in
     return {src; dst; fee; gas_limit; amount; counter = None; fresh_dst = fresh}
 
@@ -1009,7 +1009,7 @@ let strategy_arg =
   let open Clic in
   arg
     ~long:"strategy"
-    ~placeholder:"fixed:mutez | evaporation:[0;1]"
+    ~placeholder:"fixed:mumav | evaporation:[0;1]"
     ~doc:"wealth redistribution strategy"
     (parameter (fun (cctxt : Protocol_client_context.full) s ->
          match parse_strategy s with
@@ -1342,7 +1342,7 @@ let estimate_transaction_cost ?smart_contracts
       dst;
       fee;
       gas_limit;
-      amount = Tez.of_mutez_exn (Int64.of_int 1);
+      amount = Tez.of_mumav_exn (Int64.of_int 1);
       counter = Some transf_counter;
       fresh_dst = false;
     }
@@ -1445,7 +1445,7 @@ let generate_reveals ~sources ~fee ~gas_limit ~storage_limit =
     accounts in a exponential way.
 *)
 let generate_starter_ops ~sources ~amount ~batch_size =
-  let fee = Tez.of_mutez_exn 1_000L in
+  let fee = Tez.of_mumav_exn 1_000L in
   let gas_limit = Gas.Arith.integral_of_int_exn 1_040 in
   let storage_limit = Z.of_int 257 in
   let parameters =
@@ -1486,7 +1486,7 @@ let generate_account_funding_batches (starter_sources : source_with_uri list)
     (empty_accounts : source_with_uri list) ~batch_size ~amount =
   let open Lwt_result_syntax in
   let nb_sources = List.length starter_sources in
-  let fee = Tez.of_mutez_exn 1_000L in
+  let fee = Tez.of_mumav_exn 1_000L in
   let gas_limit = Gas.Arith.integral_of_int_exn 1_040 in
   let storage_limit = Z.of_int 257 in
   let parameters =
@@ -1625,7 +1625,7 @@ let initial_amount_arg =
     (parameter (fun _ s ->
          match Int64.of_string_opt s with
          | Some i when i > 0L -> (
-             try Lwt_result_syntax.return (Tez.of_mutez_exn i)
+             try Lwt_result_syntax.return (Tez.of_mumav_exn i)
              with e ->
                failwith "Cannot convert to Tez.t:%s" (Printexc.to_string e))
          | Some _ -> failwith "Integer must be positive."
@@ -1894,7 +1894,7 @@ let fund_accounts_from_source : Protocol_client_context.full Clic.command =
                    = reveal + max_nb_transfers * (storage_fees + tx fees)
                    = 0.001tz + max_nb_transfers * (0.06425tz + 0.001tz)
                    =~ max_nb_transfers * 0.1 tz *)
-        let fees_approx = Tez.of_mutez_exn 100_000L in
+        let fees_approx = Tez.of_mumav_exn 100_000L in
         let amount =
           WithExceptions.Result.get_ok
             ~loc:__LOC__

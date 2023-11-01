@@ -165,7 +165,7 @@ let originate_test_fa12 ~typecheck ctxt admin =
       }
   in
   typecheck ctxt script >>=? fun (script, ctxt) ->
-  originate ctxt fa12_address ~balance:(Tez_repr.of_mutez_exn 1_000_000L) script
+  originate ctxt fa12_address ~balance:(Tez_repr.of_mumav_exn 1_000_000L) script
   >|=? fun (ctxt, origination_result) ->
   (ctxt, fa12_address, [origination_result])
 
@@ -234,7 +234,7 @@ let init ctxt ~typecheck =
       originate
         ctxt
         cpmm_address
-        ~balance:(Tez_repr.of_mutez_exn 100L)
+        ~balance:(Tez_repr.of_mumav_exn 100L)
         cpmm_script
       >>=? fun (ctxt, cpmm_result) ->
       originate ctxt lqt_address ~balance:Tez_repr.zero lqt_script

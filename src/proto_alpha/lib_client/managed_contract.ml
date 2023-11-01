@@ -195,14 +195,14 @@ let build_lambda_for_transfer_to_implicit ~destination ~amount =
     "{ DROP ; NIL operation ;PUSH key_hash 0x%s; IMPLICIT_ACCOUNT;PUSH mutez \
      %Ld ;UNIT;TRANSFER_TOKENS ; CONS }"
     destination
-    (Tez.to_mutez amount)
+    (Tez.to_mumav amount)
 
 let build_lambda_for_transfer_to_originated ~destination ~entrypoint ~amount
     ~parameter_type ~parameter =
   let destination =
     Data_encoding.Binary.to_bytes_exn Contract.originated_encoding destination
   in
-  let amount = Tez.to_mutez amount in
+  let amount = Tez.to_mumav amount in
   let (`Hex destination) = Hex.of_bytes destination in
   let entrypoint = Entrypoint.to_address_suffix entrypoint in
   if parameter_type = t_unit then

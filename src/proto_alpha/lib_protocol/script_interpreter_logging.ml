@@ -627,7 +627,7 @@ let kinstr_split :
              reconstruct = (fun k -> IAdd_tez (loc, k));
            }
   | ISub_tez (loc, k), Item_t (_, Item_t (_, s)) ->
-      let s = Item_t (option_mutez_t, s) in
+      let s = Item_t (option_mumav_t, s) in
       ok
       @@ Ex_split_kinstr
            {
@@ -661,7 +661,7 @@ let kinstr_split :
              reconstruct = (fun k -> IMul_nattez (loc, k));
            }
   | IEdiv_teznat (loc, k), Item_t (_, Item_t (_, s)) ->
-      let s = Item_t (option_pair_mutez_mutez_t, s) in
+      let s = Item_t (option_pair_mumav_mumav_t, s) in
       ok
       @@ Ex_split_kinstr
            {
@@ -670,7 +670,7 @@ let kinstr_split :
              reconstruct = (fun k -> IEdiv_teznat (loc, k));
            }
   | IEdiv_tez (loc, k), Item_t (_, Item_t (_, s)) ->
-      let s = Item_t (option_pair_nat_mutez_t, s) in
+      let s = Item_t (option_pair_nat_mumav_t, s) in
       ok
       @@ Ex_split_kinstr
            {

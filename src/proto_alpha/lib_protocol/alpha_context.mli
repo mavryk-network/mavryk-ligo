@@ -113,7 +113,7 @@ module Tez : sig
 
   val zero : tez
 
-  val one_mutez : tez
+  val one_mumav : tez
 
   val one_cent : tez
 
@@ -135,11 +135,11 @@ module Tez : sig
 
   val to_string : tez -> string
 
-  val of_mutez : int64 -> tez option
+  val of_mumav : int64 -> tez option
 
-  val to_mutez : tez -> int64
+  val to_mumav : tez -> int64
 
-  val of_mutez_exn : int64 -> t
+  val of_mumav_exn : int64 -> t
 
   val mul_exn : t -> int -> t
 
@@ -652,7 +652,7 @@ module Script : sig
     | T_signature
     | T_string
     | T_bytes
-    | T_mutez
+    | T_mumav
     | T_timestamp
     | T_unit
     | T_operation

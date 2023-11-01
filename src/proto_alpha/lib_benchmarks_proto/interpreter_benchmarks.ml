@@ -1701,7 +1701,7 @@ module Registration_section = struct
 
     let sample_tez_nat (module Samplers : Michelson_samplers.S) rng_state =
       let mutez = Samplers.Random_value.value mutez rng_state in
-      let mutez_int64 = Alpha_context.Tez.to_mutez mutez in
+      let mutez_int64 = Alpha_context.Tez.to_mumav mutez in
       let int64 = Int64.(div max_int (mul mutez_int64 2L)) in
       let nat =
         match Script_int.(is_nat (of_int64 int64)) with

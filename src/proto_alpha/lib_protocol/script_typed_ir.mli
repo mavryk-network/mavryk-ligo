@@ -1671,7 +1671,7 @@ val option_t : Script.location -> ('v, 'c) ty -> ('v option, 'c) ty tzresult
 val comparable_option_t :
   Script.location -> 'v comparable_ty -> 'v option comparable_ty tzresult
 
-val option_mutez_t : Tez.t option comparable_ty
+val option_mumav_t : Tez.t option comparable_ty
 
 val option_string_t : Script_string.t option comparable_ty
 
@@ -1681,9 +1681,9 @@ val option_nat_t : n num option comparable_ty
 
 val option_pair_nat_nat_t : (n num, n num) pair option comparable_ty
 
-val option_pair_nat_mutez_t : (n num, Tez.t) pair option comparable_ty
+val option_pair_nat_mumav_t : (n num, Tez.t) pair option comparable_ty
 
-val option_pair_mutez_mutez_t : (Tez.t, Tez.t) pair option comparable_ty
+val option_pair_mumav_mumav_t : (Tez.t, Tez.t) pair option comparable_ty
 
 val option_pair_int_nat_t : (z num, n num) pair option comparable_ty
 

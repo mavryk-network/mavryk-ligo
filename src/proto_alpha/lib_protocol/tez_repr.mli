@@ -44,7 +44,7 @@ type tez = t
 
 val zero : t
 
-val one_mutez : t
+val one_mumav : t
 
 val one_cent : t
 
@@ -52,7 +52,7 @@ val fifty_cents : t
 
 val one : t
 
-val max_mutez : t
+val max_mumav : t
 
 val ( -? ) : t -> t -> t tzresult
 
@@ -65,14 +65,14 @@ val ( *? ) : t -> int64 -> t tzresult
 
 val ( /? ) : t -> int64 -> t tzresult
 
-val to_mutez : t -> int64
+val to_mumav : t -> int64
 
-(** [of_mutez n] (micro tez) is None if n is negative *)
-val of_mutez : int64 -> t option
+(** [of_mumav n] (micro tez) is None if n is negative *)
+val of_mumav : int64 -> t option
 
-(** [of_mutez_exn n] fails if n is negative.
+(** [of_mumav_exn n] fails if n is negative.
     It should only be used at toplevel for constants. *)
-val of_mutez_exn : int64 -> t
+val of_mumav_exn : int64 -> t
 
 (** It should only be used at toplevel for constants. *)
 val mul_exn : t -> int -> t

@@ -1763,7 +1763,7 @@ let option_t loc t =
   let cmp = is_comparable t in
   Option_t (t, {size}, cmp)
 
-let option_mutez_t = Option_t (mutez_t, {size = Type_size.two}, Yes)
+let option_mumav_t = Option_t (mutez_t, {size = Type_size.two}, Yes)
 
 let option_string_t = Option_t (string_t, {size = Type_size.two}, Yes)
 
@@ -1777,13 +1777,13 @@ let option_pair_nat_nat_t =
       {size = Type_size.four},
       Yes )
 
-let option_pair_nat_mutez_t =
+let option_pair_nat_mumav_t =
   Option_t
     ( Pair_t (nat_t, mutez_t, {size = Type_size.three}, YesYes),
       {size = Type_size.four},
       Yes )
 
-let option_pair_mutez_mutez_t =
+let option_pair_mumav_mumav_t =
   Option_t
     ( Pair_t (mutez_t, mutez_t, {size = Type_size.three}, YesYes),
       {size = Type_size.four},

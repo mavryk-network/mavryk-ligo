@@ -117,7 +117,7 @@ let constants_mainnet =
     baking_reward_bonus_per_slot (* 4_286 mutez *);
     endorsing_reward_per_slot (* 2_857 mutez *);
     hard_storage_limit_per_operation = Z.of_int 60_000;
-    cost_per_byte = Tez.of_mutez_exn 250L;
+    cost_per_byte = Tez.of_mumav_exn 250L;
     quorum_min = 20_00l;
     quorum_max = 70_00l;
     min_proposal_quorum = 5_00l;
@@ -171,7 +171,7 @@ let constants_mainnet =
            issues related to proof size). *)
         hard_size_limit_per_inbox = 500_000;
         hard_size_limit_per_message = 5_000;
-        commitment_bond = Tez.of_mutez_exn 10_000_000_000L;
+        commitment_bond = Tez.of_mumav_exn 10_000_000_000L;
         finality_period = tx_rollup_finality_period;
         max_inboxes_count = tx_rollup_finality_period + 100;
         (* [60_000] blocks is about two weeks. *)
@@ -233,7 +233,7 @@ let constants_mainnet =
            commitment_period_in_blocks * 10_000_000;
          (* TODO: https://gitlab.com/tezos/tezos/-/issues/2756
             The following constants need to be refined. *)
-         stake_amount = Tez.of_mutez_exn 10_000_000_000L;
+         stake_amount = Tez.of_mumav_exn 10_000_000_000L;
          max_lookahead_in_blocks = 30_000l;
          max_active_outbox_levels = sc_rollup_max_active_outbox_levels;
          max_outbox_messages_per_level = sc_rollup_max_outbox_messages_per_level;
@@ -352,7 +352,7 @@ let test_commitments =
          let blinded_public_key_hash =
            Protocol.Blinded_public_key_hash.of_b58check_exn bpkh
          in
-         let amount = Protocol.Alpha_context.Tez.of_mutez_exn amount in
+         let amount = Protocol.Alpha_context.Tez.of_mumav_exn amount in
          {Protocol.Alpha_context.Commitment.blinded_public_key_hash; amount})
        [
          ("btz1bRL4X5BWo2Fj4EsBdUwexXqgTf75uf1qa", 23932454669343L);
@@ -376,7 +376,7 @@ let bootstrap_accounts_strings =
     "edpkv8EUUH68jmo3f7Um5PezmfGrRF24gnfLpH3sVNwJnV5bVCxL2n";
   ]
 
-let bootstrap_balance = Tez.of_mutez_exn 4_000_000_000_000L
+let bootstrap_balance = Tez.of_mumav_exn 4_000_000_000_000L
 
 let compute_accounts =
   List.map (fun s ->

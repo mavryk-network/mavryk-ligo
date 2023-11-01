@@ -140,7 +140,7 @@ let fee = 999n
 let mutez_to_natural (a: tez) : nat =  a / 1mutez
 
 [@inline]
-let natural_to_mutez (a: nat): tez = a * 1mutez  
+let natural_to_mumav (a: nat): tez = a * 1mutez  
 
 [@inline]
 let is_a_nat (i : int) : nat option = Michelson.is_nat i
@@ -229,7 +229,7 @@ let remove_liquidity (param : remove_liquidity) (storage : storage) : result =
     else if Tezos.amount > 0mutez then
         (failwith error_AMOUNT_MUST_BE_ZERO : result)
     else begin
-        let xtz_withdrawn    : tez = natural_to_mutez ((lqtBurned * (mutez_to_natural storage.xtzPool)) / storage.lqtTotal) in
+        let xtz_withdrawn    : tez = natural_to_mumav ((lqtBurned * (mutez_to_natural storage.xtzPool)) / storage.lqtTotal) in
         let tokens_withdrawn : nat = lqtBurned * storage.tokenPool /  storage.lqtTotal in
 
         // Check that minimum withdrawal conditions are met
@@ -287,12 +287,12 @@ let xtz_to_token (param : xtz_to_token) (storage : storage) =
 
         // update xtzPool
         let storage = {storage with
-                        xtzPool = storage.xtzPool + (natural_to_mutez amount_net_burn);
+                        xtzPool = storage.xtzPool + (natural_to_mumav amount_net_burn);
                         tokenPool = new_tokenPool } in
         // send tokens_withdrawn to to address
         // if tokens_bought is greater than storage.tokenPool, this will fail
         let op = token_transfer storage Tezos.self_address to_ tokens_bought in
-        let op_burn = xtz_transfer null_address (natural_to_mutez burn_amount) in
+        let op_burn = xtz_transfer null_address (natural_to_mumav burn_amount) in
 	([ op ; op_burn], storage)
     end
 
@@ -310,7 +310,7 @@ let token_to_xtz (param : token_to_xtz) (storage : storage) =
     else
         // we don't check that tokenPool > 0, because that is impossible
         // unless all liquidity has been removed
-        let xtz_bought = natural_to_mutez (((tokensSold * fee * (mutez_to_natural storage.xtzPool)) / (storage.tokenPool * 1000n + (tokensSold * fee)))) in
+        let xtz_bought = natural_to_mumav (((tokensSold * fee * (mutez_to_natural storage.xtzPool)) / (storage.tokenPool * 1000n + (tokensSold * fee)))) in
        
         let xtz_bought_net_burn =
 	    let bought = (xtz_bought * 999n) / 1000n in
