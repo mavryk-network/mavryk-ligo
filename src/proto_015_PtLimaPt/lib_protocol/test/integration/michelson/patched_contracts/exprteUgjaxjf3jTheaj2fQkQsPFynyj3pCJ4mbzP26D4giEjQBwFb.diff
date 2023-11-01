@@ -5,7 +5,7 @@
 +{ parameter (unit %main) ;
    storage
      (pair :storage
-        (big_map :depositors address mutez)
+        (big_map :depositors address mumav)
 @@ -241,7 +241,8 @@
                     DIP 8 { DUP @s } ;
                     DIG 8 ;

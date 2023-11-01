@@ -150,7 +150,7 @@ let equal_string ~loc (a : string) (b : string) =
 let not_equal_string ~loc (a : string) (b : string) =
   not_equal ~loc String.equal "Strings are equal" Format.pp_print_string a b
 
-(* tez *)
+(* mav *)
 let equal_tez ~loc (a : Alpha_context.Tez.t) (b : Alpha_context.Tez.t) =
   let open Alpha_context in
   equal ~loc Tez.( = ) "Tez aren't equal" Tez.pp a b

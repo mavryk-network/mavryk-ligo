@@ -77,7 +77,7 @@ val register_global_constant :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -154,7 +154,7 @@ val set_delegate :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   public_key_hash ->
   src_pk:public_key ->
   manager_sk:Client_keys.sk_uri ->
@@ -170,7 +170,7 @@ val update_consensus_key :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   consensus_pk:Signature.public_key ->
   manager_sk:Client_keys.sk_uri ->
   fee_parameter:Injection.fee_parameter ->
@@ -203,7 +203,7 @@ val set_deposits_limit :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   public_key_hash ->
   src_pk:public_key ->
   manager_sk:Client_keys.sk_uri ->
@@ -221,7 +221,7 @@ val increase_paid_storage :
   ?force:bool ->
   ?dry_run:bool ->
   ?verbose_signing:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?confirmations:int ->
   ?simulation:bool ->
   source:public_key_hash ->
@@ -242,7 +242,7 @@ val register_as_delegate :
   ?confirmations:int ->
   ?dry_run:bool ->
   ?verbose_signing:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   manager_sk:Client_keys.sk_uri ->
   fee_parameter:Injection.fee_parameter ->
   ?consensus_pk:public_key ->
@@ -568,7 +568,7 @@ val originate_tx_rollup :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -591,8 +591,8 @@ val submit_tx_rollup_batch :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
-  ?burn_limit:Tez.tez ->
+  ?fee:Tez.mav ->
+  ?burn_limit:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -617,7 +617,7 @@ val submit_tx_rollup_commitment :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -645,7 +645,7 @@ val submit_tx_rollup_finalize_commitment :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -670,7 +670,7 @@ val submit_tx_rollup_remove_commitment :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -694,7 +694,7 @@ val submit_tx_rollup_rejection :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -728,7 +728,7 @@ val submit_tx_rollup_return_bond :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -752,7 +752,7 @@ val tx_rollup_dispatch_tickets :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -781,7 +781,7 @@ val transfer_ticket :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
@@ -940,7 +940,7 @@ val sc_rollup_recover_bond :
   ?dry_run:bool ->
   ?verbose_signing:bool ->
   ?simulation:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:Gas.Arith.integral ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
