@@ -542,7 +542,7 @@ module Nat_ticket = struct
                 CONTRACT %%deposit (pair (ticket nat) tx_rollup_l2_address);
                 ASSERT_SOME;
                 SWAP;
-                PUSH mutez 0;
+                PUSH mumav 0;
                 SWAP;
                 # create a ticket
                 PUSH nat %a;
@@ -578,7 +578,7 @@ module Nat_ticket = struct
       ~fee:Tez.one
       account
       deposit_contract
-      (Tez.of_mutez_exn 0L)
+      (Tez.of_mumav_exn 0L)
 
   (** Return an operation to originate a contract that will deposit [amount]
       tickets to l2 address [pkh] on [tx_rollup] *)
@@ -690,8 +690,8 @@ let test_two_originations () =
     according to its docstring. *)
 let test_burn_per_byte_update () =
   let test ~inbox_ema ~burn_per_byte ~elapsed ~final_size ~hard_limit ~result =
-    let burn_per_byte = Tez.of_mutez_exn burn_per_byte in
-    let result = Tez.of_mutez_exn result in
+    let burn_per_byte = Tez.of_mumav_exn burn_per_byte in
+    let result = Tez.of_mumav_exn result in
     let state =
       Alpha_context.Tx_rollup_state.Internal_for_tests.make
         ~burn_per_byte
@@ -1448,7 +1448,7 @@ let test_valid_deposit_invalid_amount () =
   context_init1 () >>=? fun (b, account) ->
   originate b account >>=? fun (b, tx_rollup) ->
   Contract_helpers.originate_contract
-    "contracts/tx_rollup_deposit_one_mutez.tz"
+    "contracts/tx_rollup_deposit_one_mumav.tz"
     "Unit"
     account
     b
@@ -2646,7 +2646,7 @@ module Rejection = struct
     >>=? fun (b, (deposit_message, _), _ticket_hash) ->
     Context.Contract.balance (B b) contract1 >>=? fun balance ->
     Context.Contract.balance (B b) contract2 >>=? fun balance2 ->
-    (* [check_frozen] checks that contract1 has [expect] frozen tez. *)
+    (* [check_frozen] checks that contract1 has [expect] frozen mav. *)
     let check_frozen ~loc b expect =
       Incremental.begin_construction b >>=? fun i ->
       Contract.get_frozen_bonds (Incremental.alpha_ctxt i) contract1
@@ -2718,7 +2718,7 @@ module Rejection = struct
     check_bond_from_block b tx_rollup contract1 0 >>=? fun () ->
     Assert.balance_was_debited ~loc:__LOC__ (B b) contract1 balance bond_cost
     >>=? fun () ->
-    (* Now we need to check that the tez is really gone -- not just frozen *)
+    (* Now we need to check that the mav is really gone -- not just frozen *)
     check_frozen ~loc:__LOC__ b Tez.zero >>=? fun () ->
     let reward = assert_ok Tez.(bond_cost /? 2L) in
     Assert.balance_was_credited ~loc:__LOC__ (B b) contract2 balance2 reward
@@ -2753,7 +2753,7 @@ module Rejection = struct
     check_bond_from_block b tx_rollup contract1 0 >>=? fun () ->
     Assert.balance_was_debited ~loc:__LOC__ (B b) contract1 balance Tez.zero
     >>=? fun () ->
-    (* Now we need to check that the tez still really gone -- not just frozen *)
+    (* Now we need to check that the mav still really gone -- not just frozen *)
     check_frozen ~loc:__LOC__ b Tez.zero >>=? fun () ->
     Assert.balance_was_credited ~loc:__LOC__ (B b) contract2 balance2 Tez.zero
 
@@ -4105,7 +4105,7 @@ module Withdraw = struct
                            SWAP;
                            DUG 3;
                            PAIR;
-                           PUSH mutez 0;
+                           PUSH mumav 0;
                            SWAP;
                            TRANSFER_TOKENS;
                            NIL operation;
@@ -5399,7 +5399,7 @@ module Withdraw = struct
         ~fee:Tez.one
         account
         forge_withdraw_deposit_contract
-        (Tez.of_mutez_exn 0L)
+        (Tez.of_mumav_exn 0L)
       >>=? fun operation -> Block.bake ~operation block
     in
     let deposit_ticket block =
@@ -5417,7 +5417,7 @@ module Withdraw = struct
         ~fee:Tez.one
         account
         forge_withdraw_deposit_contract
-        (Tez.of_mutez_exn 0L)
+        (Tez.of_mumav_exn 0L)
       >>=? fun operation -> Block.bake ~operation block
     in
     let dispatch_ticket block =
@@ -5540,7 +5540,7 @@ module Withdraw = struct
         ~fee:Tez.one
         account
         forge_withdraw_deposit_contract
-        (Tez.of_mutez_exn 0L)
+        (Tez.of_mumav_exn 0L)
       >>=? fun operation -> Block.bake ~operation block
     in
     let failing_deposit_ticket block =
@@ -5558,7 +5558,7 @@ module Withdraw = struct
         ~fee:Tez.one
         account
         forge_withdraw_deposit_contract
-        (Tez.of_mutez_exn 0L)
+        (Tez.of_mumav_exn 0L)
       >>=? fun operation ->
       Incremental.begin_construction block >>=? fun incr ->
       Incremental.add_operation

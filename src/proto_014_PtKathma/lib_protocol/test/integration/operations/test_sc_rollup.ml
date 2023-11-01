@@ -406,7 +406,7 @@ let test_originating_with_invalid_types () =
   (* Following types fail at validation time. *)
   let* () =
     [
-      "mutez";
+      "mumav";
       "big_map string nat";
       "contract string";
       "sapling_state 2";

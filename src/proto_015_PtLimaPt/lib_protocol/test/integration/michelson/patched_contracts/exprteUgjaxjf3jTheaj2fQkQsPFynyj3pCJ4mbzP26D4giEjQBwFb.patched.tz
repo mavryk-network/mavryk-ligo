@@ -1,20 +1,20 @@
 { parameter (unit %main) ;
   storage
     (pair :storage
-       (big_map :depositors address mutez)
+       (big_map :depositors address mumav)
        (pair (address %owner)
-             (pair (mutez %min_deposit)
+             (pair (mumav %min_deposit)
                    (pair (nat %withdraw_fee)
                          (pair (nat %collat_coeff)
-                               (pair (mutez %deposited)
-                                     (pair (mutez %borrowed) (pair (nat %depositors_size) (key_hash %delegate))))))))) ;
+                               (pair (mumav %deposited)
+                                     (pair (mumav %borrowed) (pair (nat %depositors_size) (key_hash %delegate))))))))) ;
   code { DUP ;
          DIP { CDR @storage_slash_1 } ;
          CAR @__slash_2 ;
          PUSH @one_prec6 nat 1000000 ;
          LAMBDA
-           (pair (pair mutez nat) nat)
-           mutez
+           (pair (pair mumav nat) nat)
+           mumav
            { RENAME @_amount_coeff__one_prec6_slash_8 ;
              DUP ;
              CDR @one_prec6_slash_3 ;
@@ -44,7 +44,7 @@
          DIG 4 ;
          COMPARE ;
          NEQ ;
-         PUSH mutez 1000000 ;
+         PUSH mumav 1000000 ;
          DIP 4 { DUP @amount } ;
          DIG 4 ;
          COMPARE ;
@@ -190,7 +190,7 @@
               DIG 4 ;
               COMPARE ;
               NEQ ;
-              PUSH mutez 1000000 ;
+              PUSH mumav 1000000 ;
               DIP 4 { DUP @amount } ;
               DIG 4 ;
               COMPARE ;
@@ -241,7 +241,7 @@
                    DIP 8 { DUP @s } ;
                    DIG 8 ;
                    { CDR ; CDR ; CDR ; CDR ; CDR ; CAR %deposited } ;
-                   SUB_MUTEZ ;
+                   SUB_MUMAV ;
                    IF_NONE {UNIT ; FAILWITH} {};
                    PAIR %deposited ;
                    SWAP ;
@@ -259,7 +259,7 @@
                    DIP { DUP @s } ;
                    SWAP ;
                    CAR %depositors ;
-                   NONE mutez ;
+                   NONE mumav ;
                    DIP 8 { DUP @sender } ;
                    DIG 8 ;
                    UPDATE ;
@@ -345,7 +345,7 @@
                    DIG 4 ;
                    DIP 9 { DUP @user_balance } ;
                    DIG 9 ;
-                   SUB_MUTEZ ;
+                   SUB_MUMAV ;
                    IF_NONE {UNIT ; FAILWITH} {};
                    ADD @withdraw_amount ;
                    UNIT ;
@@ -371,7 +371,7 @@
                    DIG 4 ;
                    COMPARE ;
                    EQ ;
-                   PUSH mutez 0 ;
+                   PUSH mumav 0 ;
                    DIP 4 { DUP @amount } ;
                    DIG 4 ;
                    COMPARE ;
@@ -446,7 +446,7 @@
                         { CDR ; CDR ; CDR ; CDR ; CDR ; CDR ; CAR %borrowed } ;
                         DIP 2 { DUP @max_borrowing } ;
                         DIG 2 ;
-                        SUB_MUTEZ ;
+                        SUB_MUMAV ;
                         IF_NONE {UNIT ; FAILWITH} {} ;
                         PAIR ;
                         DUP ;
@@ -461,7 +461,7 @@
                         GT ;
                         IF { DUP @b } { DIP { DUP @a } ; SWAP } ;
                         DIP { DROP 3 } ;
-                        PUSH mutez 0 ;
+                        PUSH mumav 0 ;
                         DIP { DUP @borrowing } ;
                         SWAP ;
                         COMPARE ;
@@ -536,7 +536,7 @@
                         DIG 4 ;
                         COMPARE ;
                         EQ ;
-                        PUSH mutez 420000 ;
+                        PUSH mumav 420000 ;
                         DIP 4 { DUP @amount } ;
                         DIG 4 ;
                         COMPARE ;
@@ -557,7 +557,7 @@
                              IF_NONE
                                { PUSH string "No entrypoint default with parameter type unit" ; FAILWITH }
                                {} ;
-                             PUSH mutez 420000 ;
+                             PUSH mumav 420000 ;
                              UNIT ;
                              TRANSFER_TOKENS @op_refund ;
                              CONS ;
@@ -568,7 +568,7 @@
                              DIG 4 ;
                              COMPARE ;
                              EQ ;
-                             PUSH mutez 0 ;
+                             PUSH mumav 0 ;
                              DIP 4 { DUP @amount } ;
                              DIG 4 ;
                              COMPARE ;
@@ -613,7 +613,7 @@
                                   DIP 8 { DUP @s } ;
                                   DIG 8 ;
                                   { CDR ; CDR ; CDR ; CDR ; CDR ; CDR ; CAR %borrowed } ;
-                                  SUB_MUTEZ ;
+                                  SUB_MUMAV ;
                                   IF_NONE {UNIT ; FAILWITH} {} ;
                                   PAIR %borrowed ;
                                   SWAP ;

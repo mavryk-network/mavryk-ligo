@@ -243,7 +243,7 @@ let () =
       };
       {
         filename = "auction";
-        amount = Tez.of_mutez_exn 100_000_000L;
+        amount = Tez.of_mumav_exn 100_000_000L;
         parameter = "\"tz1b7tUupMgCNw2cCLpKTkSD1NZzB5TkP2sv\"";
         storage =
           "Pair \"2099-12-31T23:59:59Z\" (Pair 50000000 \
@@ -378,7 +378,7 @@ let () =
       };
       {
         filename = "spawn_identities";
-        amount = Tez.of_mutez_exn 1_200_00L;
+        amount = Tez.of_mumav_exn 1_200_00L;
         parameter = "7";
         storage = "{}";
       };

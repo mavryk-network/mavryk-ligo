@@ -39,17 +39,17 @@ open Test_tez
 let ( >>>=? ) x f = x >|= Environment.wrap_tzresult >>=? f
 
 let big_random_amount () =
-  match Tez.of_mutez (Int64.add 1L (Random.int64 10_000L)) with
+  match Tez.of_mumav (Int64.add 1L (Random.int64 10_000L)) with
   | None -> assert false
   | Some x -> x
 
 let small_random_amount () =
-  match Tez.of_mutez (Int64.add 1L (Random.int64 1_000L)) with
+  match Tez.of_mumav (Int64.add 1L (Random.int64 1_000L)) with
   | None -> assert false
   | Some x -> x
 
 let very_small_random_amount () =
-  match Tez.of_mutez (Int64.add 1L (Random.int64 100L)) with
+  match Tez.of_mumav (Int64.add 1L (Random.int64 100L)) with
   | None -> assert false
   | Some x -> x
 
@@ -412,7 +412,7 @@ let test_scenario scenario =
   let tx_rollup2, _ = mk_tx_rollup ~nonce () in
   let bond_id1 = Bond_id.Tx_rollup_bond_id tx_rollup1 in
   let bond_id2 = Bond_id.Tx_rollup_bond_id tx_rollup2 in
-  let deposit_amount = Tez.of_mutez_exn 1000L in
+  let deposit_amount = Tez.of_mumav_exn 1000L in
   let deposit_account1 = `Frozen_bonds (user_contract, bond_id1) in
   let deposit_account2 = `Frozen_bonds (user_contract, bond_id2) in
   let do_delegate ?(delegate = delegate1) ctxt =
@@ -623,7 +623,7 @@ let test_delegate_freeze_unfreeze_freeze_redelegate () =
       do_undelegate ~delegate:delegate2 ctxt amount2 >>=? fun _ -> return_unit)
 
 let test_delegate_freeze_slash_undelegate () =
-  let slash_amount = Tez.of_mutez_exn 1000L in
+  let slash_amount = Tez.of_mumav_exn 1000L in
   test_scenario
     (fun
       ctxt

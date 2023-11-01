@@ -275,7 +275,7 @@ let liquidity_baking_storage n () =
          \        100\n\
          \        \"KT1VqarPDicMFn1ejmQqqshUkUXTCTXwmkCN\"\n\
          \        \"KT1AafHA1C1vk959wvHWBispY9Y2f3fxBUUo\""
-         (100 + (n * Int64.to_int (to_mutez subsidy))))
+         (100 + (n * Int64.to_int (to_mumav subsidy))))
   in
   Block.bake_n n blk >>=? fun blk ->
   Context.Contract.storage (B blk) liquidity_baking >>=? fun storage ->
@@ -319,8 +319,8 @@ let liquidity_baking_balance_update () =
   >>?= fun credits ->
   Assert.equal_int
     ~loc:__LOC__
-    (Int64.to_int (to_mutez credits))
-    (128 * Int64.to_int (to_mutez subsidy))
+    (Int64.to_int (to_mumav credits))
+    (128 * Int64.to_int (to_mumav subsidy))
   >>=? fun () -> return_unit
 
 let get_cpmm_result results =
@@ -372,7 +372,7 @@ let liquidity_baking_origination_result_cpmm_balance () =
   >>=? fun (_blk, origination_results) ->
   let result = get_cpmm_result origination_results in
   let balance_update = get_balance_update_in_result result in
-  Assert.equal_tez ~loc:__LOC__ balance_update (of_mutez_exn 100L)
+  Assert.equal_tez ~loc:__LOC__ balance_update (of_mumav_exn 100L)
   >>=? fun () -> return_unit
 
 let liquidity_baking_origination_result_lqt_address () =
@@ -405,8 +405,8 @@ let liquidity_baking_origination_result_lqt_balance () =
   ] ->
       Assert.equal_tez ~loc:__LOC__ am1 am2 >>=? fun () ->
       Assert.equal_tez ~loc:__LOC__ am3 am4 >>=? fun () ->
-      Assert.equal_tez ~loc:__LOC__ am1 (of_mutez_exn 64_250L) >>=? fun () ->
-      Assert.equal_tez ~loc:__LOC__ am3 (of_mutez_exn 494_500L)
+      Assert.equal_tez ~loc:__LOC__ am1 (of_mumav_exn 64_250L) >>=? fun () ->
+      Assert.equal_tez ~loc:__LOC__ am3 (of_mumav_exn 494_500L)
   | _ -> failwith "Unexpected balance updates (%s)" __LOC__
 
 (* Test that with no contract at the tzBTC address and the level low enough to indicate we're not on mainnet, three contracts are originated in stitching. *)
@@ -521,7 +521,7 @@ let tests =
       `Quick
       liquidity_baking_origination_result_cpmm_address;
     Tztest.tztest
-      "test liquidity baking CPMM balance in origination result is 100 mutez"
+      "test liquidity baking CPMM balance in origination result is 100 mumav"
       `Quick
       liquidity_baking_origination_result_cpmm_balance;
     Tztest.tztest
@@ -529,7 +529,7 @@ let tests =
       `Quick
       liquidity_baking_origination_result_lqt_address;
     Tztest.tztest
-      "test liquidity baking LQT balance in origination result is 0 mutez"
+      "test liquidity baking LQT balance in origination result is 0 mumav"
       `Quick
       liquidity_baking_origination_result_lqt_balance;
     Tztest.tztest

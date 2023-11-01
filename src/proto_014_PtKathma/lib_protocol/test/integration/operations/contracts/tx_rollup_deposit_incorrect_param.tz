@@ -7,7 +7,7 @@ code {
 
        IF_SOME {
                  # amount for transfering
-                 PUSH mutez 0;
+                 PUSH mumav 0;
 
                  # create a ticket
                  PUSH nat 100;

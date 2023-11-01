@@ -5,13 +5,13 @@
 +{ parameter (unit %main) ;
    storage
      (pair :storage
-        (big_map :depositors address mutez)
+        (big_map :depositors address mumav)
 @@ -241,7 +241,8 @@
                     DIP 8 { DUP @s } ;
                     DIG 8 ;
                     { CDR ; CDR ; CDR ; CDR ; CDR ; CAR %deposited } ;
 -                   SUB ;
-+                   SUB_MUTEZ ;
++                   SUB_MUMAV ;
 +                   IF_NONE {UNIT ; FAILWITH} {};
                     PAIR %deposited ;
                     SWAP ;
@@ -21,7 +21,7 @@
                     DIP 9 { DUP @user_balance } ;
                     DIG 9 ;
 -                   SUB ;
-+                   SUB_MUTEZ ;
++                   SUB_MUMAV ;
 +                   IF_NONE {UNIT ; FAILWITH} {};
                     ADD @withdraw_amount ;
                     UNIT ;
@@ -31,7 +31,7 @@
                          DIP 2 { DUP @max_borrowing } ;
                          DIG 2 ;
 -                        SUB ;
-+                        SUB_MUTEZ ;
++                        SUB_MUMAV ;
 +                        IF_NONE {UNIT ; FAILWITH} {} ;
                          PAIR ;
                          DUP ;
@@ -41,7 +41,7 @@
                                    DIG 8 ;
                                    { CDR ; CDR ; CDR ; CDR ; CDR ; CDR ; CAR %borrowed } ;
 -                                  SUB ;
-+                                  SUB_MUTEZ ;
++                                  SUB_MUMAV ;
 +                                  IF_NONE {UNIT ; FAILWITH} {} ;
                                    PAIR %borrowed ;
                                    SWAP ;

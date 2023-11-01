@@ -120,7 +120,7 @@ let positive_pools env state =
   0L < xtz && 0 < tzbtc && 0 < lqt
 
 (** [validate_xtz_balance c env (blk, state)] returns [true] iff the
-    tez balance for the contract [c] is the same in [blk] and in
+    mav balance for the contract [c] is the same in [blk] and in
     [state]. *)
 let validate_xtz_balance :
     Contract.t -> ValidationMachine.t -> bool tzresult Lwt.t =
@@ -152,7 +152,7 @@ let validate_liquidity_balance :
   >>=? fun amount -> return (expected = amount)
 
 (** [validate_balances c env (blk, state)] returns true iff the
-    contract [c] holds the same amount of tez, tzbtc and liquidity in
+    contract [c] holds the same amount of mav, tzbtc and liquidity in
     [blk] and [state]. *)
 let validate_balances :
     Contract.t -> Contract.t env -> ValidationMachine.t -> bool tzresult Lwt.t =
@@ -191,7 +191,7 @@ let validate_consistency :
          env.implicit_accounts)
 
 (** [validate_storage env blk] returns [true] iff the storage of the
-    CPMM contract is consistent wrt. to its actual balances (tez,
+    CPMM contract is consistent wrt. to its actual balances (mav,
     tzbtc, and liquidity). *)
 let validate_storage :
     Contract.t env -> ConcreteMachine.t -> bool tzresult Lwt.t =
@@ -202,7 +202,7 @@ let validate_storage :
     [
       (* 1. Check the CPMM's [xtzPool] is equal to the actual CPMM balance *)
       ( ConcreteMachine.get_xtz_balance env.cpmm_contract blk
-      >>=? fun cpmm_xtz -> return (cpmm_xtz = Tez.to_mutez cpmm_storage.xtzPool)
+      >>=? fun cpmm_xtz -> return (cpmm_xtz = Tez.to_mumav cpmm_storage.xtzPool)
       );
       (* 2. Check the CPMM’s [lqtTotal] is correct wrt. liquidity contract *)
       ( Lqt_fa12_repr.Storage.get (B blk) ~contract:env.liquidity_contract

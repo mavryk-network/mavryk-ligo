@@ -79,7 +79,7 @@ let test_batch_reveal_in_the_middle kind1 kind2 () =
     mk_reveal
       {
         (operation_req_default K_Reveal) with
-        fee = Some Tez.one_mutez;
+        fee = Some Tez.one_mumav;
         counter = Some counter;
       }
       infos
@@ -139,7 +139,7 @@ let test_batch_two_reveals kind () =
     mk_reveal
       {
         (operation_req_default K_Reveal) with
-        fee = Some Tez.one_mutez;
+        fee = Some Tez.one_mumav;
         counter = Some counter;
       }
       infos
@@ -149,7 +149,7 @@ let test_batch_two_reveals kind () =
     mk_reveal
       {
         (operation_req_default K_Reveal) with
-        fee = Some Tez.one_mutez;
+        fee = Some Tez.one_mumav;
         counter = Some counter;
       }
       infos
@@ -242,7 +242,7 @@ let test_batch_inconsistent_counters kind1 kind2 () =
   let* infos = default_init_ctxt () in
   let source = contract_of infos.accounts.source in
   let* counter = Context.Contract.counter (B infos.ctxt.block) source in
-  let fee = Some Tez.one_mutez in
+  let fee = Some Tez.one_mumav in
   let op_infos = operation_req_default K_Reveal in
   let op_infos = {{op_infos with fee} with counter = Some counter} in
   let* reveal = mk_reveal op_infos infos in
@@ -572,7 +572,7 @@ let test_batch_reveal_transaction_ok () =
   let source = contract_of infos.accounts.source in
   let* counter = Context.Contract.counter (B infos.ctxt.block) source in
   let counter = counter in
-  let fee = Tez.one_mutez in
+  let fee = Tez.one_mumav in
   let* reveal =
     mk_reveal
       {

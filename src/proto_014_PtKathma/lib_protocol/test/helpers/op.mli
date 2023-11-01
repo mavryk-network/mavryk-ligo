@@ -75,7 +75,7 @@ val pp_gas_limit : Format.formatter -> gas_limit -> unit
 val transaction :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   ?parameters:Script.lazy_expr ->
@@ -115,7 +115,7 @@ val unsafe_transaction :
 
 val delegation :
   ?force_reveal:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?counter:Z.t ->
   ?storage_limit:Z.t ->
@@ -126,19 +126,19 @@ val delegation :
 
 val set_deposits_limit :
   ?force_reveal:bool ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   ?counter:Z.t ->
   Context.t ->
   Contract.t ->
-  Tez.tez option ->
+  Tez.mav option ->
   Operation.packed tzresult Lwt.t
 
 val increase_paid_storage :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -153,7 +153,7 @@ val increase_paid_storage :
 
     Optional arguments allow to override defaults:
 
-    {ul {li [?fee:Tez.tez]: specify a fee, otherwise set to
+    {ul {li [?fee:Tez.mav]: specify a fee, otherwise set to
     [Tez.zero].}
 
     {li [?gas_limit:Gas.Arith.integral]: force a gas limit, otherwise
@@ -196,8 +196,8 @@ val contract_origination :
   ?delegate:public_key_hash ->
   script:Script.t ->
   ?public_key:public_key ->
-  ?credit:Tez.tez ->
-  ?fee:Tez.tez ->
+  ?credit:Tez.mav ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -210,8 +210,8 @@ val contract_origination_hash :
   ?delegate:public_key_hash ->
   script:Script.t ->
   ?public_key:public_key ->
-  ?credit:Tez.tez ->
-  ?fee:Tez.tez ->
+  ?credit:Tez.mav ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -224,7 +224,7 @@ val register_global_constant :
   ?force_reveal:bool ->
   ?counter:Z.t ->
   ?public_key:Signature.public_key ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -312,7 +312,7 @@ val dummy_script_cost : Tez.t
 val tx_rollup_origination :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -331,8 +331,8 @@ val tx_rollup_origination :
 val tx_rollup_submit_batch :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
-  ?burn_limit:Tez.tez ->
+  ?fee:Tez.mav ->
+  ?burn_limit:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -352,7 +352,7 @@ val tx_rollup_submit_batch :
 val tx_rollup_commit :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -372,7 +372,7 @@ val tx_rollup_commit :
 val tx_rollup_return_bond :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -391,7 +391,7 @@ val tx_rollup_return_bond :
 val tx_rollup_finalize :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -404,7 +404,7 @@ val tx_rollup_finalize :
 val tx_rollup_remove_commitment :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -490,7 +490,7 @@ val transfer_ticket :
 val tx_rollup_reject :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -542,7 +542,7 @@ val sc_rollup_origination :
 val sc_rollup_publish :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -562,7 +562,7 @@ val sc_rollup_publish :
 val sc_rollup_cement :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -590,7 +590,7 @@ val sc_rollup_execute_outbox_message :
 (** [sc_rollup_recover_bond ctxt source sc_rollup] returns a commitment bond. *)
 val sc_rollup_recover_bond :
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   ?force_reveal:bool ->
@@ -602,7 +602,7 @@ val sc_rollup_recover_bond :
 val sc_rollup_add_messages :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -614,7 +614,7 @@ val sc_rollup_add_messages :
 val sc_rollup_refute :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->
@@ -628,7 +628,7 @@ val sc_rollup_refute :
 val sc_rollup_timeout :
   ?force_reveal:bool ->
   ?counter:Z.t ->
-  ?fee:Tez.tez ->
+  ?fee:Tez.mav ->
   ?gas_limit:gas_limit ->
   ?storage_limit:Z.t ->
   Context.t ->

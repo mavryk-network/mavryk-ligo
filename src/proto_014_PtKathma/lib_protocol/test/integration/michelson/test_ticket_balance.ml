@@ -59,7 +59,7 @@ let transaction block ~baker ~sender ~entrypoint ~recipient ~parameters =
       ~fee:Tez.one
       sender
       recipient
-      (Tez.of_mutez_exn 0L)
+      (Tez.of_mumav_exn 0L)
   in
   let* incr =
     Incremental.begin_construction ~policy:Block.(By_account baker) block
@@ -478,7 +478,7 @@ let test_send_tickets () =
                    IF_NONE
                      { PUSH string "Contract of type `ticket(string)' not found" ;
                        FAILWITH }
-                     { PUSH mutez 0 ;
+                     { PUSH mumav 0 ;
                        PUSH nat 1 ;
                        PUSH string "Red" ;
                        TICKET ;
@@ -528,7 +528,7 @@ let test_send_and_store_zero_amount_tickets () =
                     { DROP ;
                       PUSH string "Contract of type `ticket(string)` not found" ;
                       FAILWITH }
-                    { PUSH mutez 0 ;
+                    { PUSH mumav 0 ;
                       DIG 2 ;
                       PUSH string "Red" ;
                       TICKET ;
@@ -560,7 +560,7 @@ let test_send_and_store_zero_amount_tickets () =
                     { SWAP ;
                       IF_CONS
                         { DIG 2 ;
-                          PUSH mutez 0 ;
+                          PUSH mumav 0 ;
                           DIG 2 ;
                           TRANSFER_TOKENS ;
                           SWAP ;
@@ -764,7 +764,7 @@ let test_send_tickets_in_big_map () =
                        IF_NONE
                          { PUSH string "Contract of type `ticket(string)` not found" ;
                            FAILWITH }
-                         { PUSH mutez 0 ;
+                         { PUSH mumav 0 ;
                            DIG 2 ;
                            TRANSFER_TOKENS ;
                            EMPTY_BIG_MAP int (ticket string) ;
@@ -972,7 +972,7 @@ let test_send_tickets_in_big_map_and_drop () =
                      { DROP ;
                        PUSH string "Contract of type `ticket(string)` not found" ;
                        FAILWITH }
-                     { PUSH mutez 0 ;
+                     { PUSH mumav 0 ;
                        DIG 2 ;
                        TRANSFER_TOKENS ;
                        PUSH unit Unit ;
@@ -1019,7 +1019,7 @@ let test_create_contract_with_ticket () =
                    UNPAIR ;
                    UNPAIR ;
                    TICKET ;
-                   PUSH mutez 0 ;
+                   PUSH mumav 0 ;
                    DIG 2 ;
                    SOME ;
                    CREATE_CONTRACT
@@ -1120,7 +1120,7 @@ let ticket_builder =
       storage address;
       code
         {
-          AMOUNT; PUSH mutez 0; ASSERT_CMPEQ;
+          AMOUNT; PUSH mumav 0; ASSERT_CMPEQ;
 
           UNPAIR;
           IF_LEFT
@@ -1142,7 +1142,7 @@ let ticket_builder =
 
               UNPAIR;
               SWAP; UNIT; TICKET;
-              PUSH mutez 0; SWAP; TRANSFER_TOKENS;
+              PUSH mumav 0; SWAP; TRANSFER_TOKENS;
               NIL operation; SWAP; CONS
             };
           PAIR
@@ -1168,7 +1168,7 @@ let ticket_wallet =
     storage (pair (address %manager) (big_map %tickets address (ticket unit)));
     code
       {
-        AMOUNT; PUSH mutez 0; ASSERT_CMPEQ;
+        AMOUNT; PUSH mumav 0; ASSERT_CMPEQ;
 
         UNPAIR 3;
         IF_LEFT
@@ -1236,7 +1236,7 @@ let ticket_wallet =
 
             # Send the ticket
             SWAP;
-            PUSH mutez 0;
+            PUSH mumav 0;
             DIG 3;
             TRANSFER_TOKENS;
             NIL operation;
@@ -1370,7 +1370,7 @@ let test_ticket_storage () =
                      { DROP ;
                        PUSH string "Contract of type `ticket(string)` not found" ;
                        FAILWITH }
-                     { PUSH mutez 0 ;
+                     { PUSH mumav 0 ;
                        DIG 2 ;
                        TRANSFER_TOKENS ;
                        PUSH unit Unit ;
@@ -1404,7 +1404,7 @@ let test_ticket_storage () =
                     { DROP ;
                       PUSH string "Contract of type `ticket(string)` not found" ;
                       FAILWITH }
-                    { PUSH mutez 0 ;
+                    { PUSH mumav 0 ;
                       DIG 2 ;
                       PUSH nat 1 ;
                       PUSH string "Red" ;

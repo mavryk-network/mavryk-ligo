@@ -19,7 +19,7 @@ code {
                  PAIR;
 
                  # amount for transfering
-                 PUSH mutez 0;
+                 PUSH mumav 0;
                  SWAP;
 
                  # deposit

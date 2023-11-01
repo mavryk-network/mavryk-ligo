@@ -60,7 +60,7 @@ let rec tnames_of_type :
   | Script_typed_ir.Signature_t -> `TSignature :: acc
   | Script_typed_ir.String_t -> `TString :: acc
   | Script_typed_ir.Bytes_t -> `TBytes :: acc
-  | Script_typed_ir.Mutez_t -> `TMutez :: acc
+  | Script_typed_ir.Mumav_t -> `TMumav :: acc
   | Script_typed_ir.Key_hash_t -> `TKey_hash :: acc
   | Script_typed_ir.Key_t -> `TKey :: acc
   | Script_typed_ir.Timestamp_t -> `TTimestamp :: acc

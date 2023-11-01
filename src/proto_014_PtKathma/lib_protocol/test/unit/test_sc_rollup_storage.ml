@@ -40,7 +40,7 @@ module Commitment_repr = Sc_rollup_commitment_repr
 let lift k = Lwt.map Environment.wrap_tzresult k
 
 (** [new_context_with_stakers n] creates a context with [n] stakers initially
-    credited with 100 000 tez. *)
+    credited with 100 000 mav. *)
 let new_context_with_stakers nb_stakers =
   let initial_balance = Int64.of_string "100_000_000_000" in
   let*? initial_balances =
@@ -61,11 +61,11 @@ let new_context_with_stakers nb_stakers =
   in
   (ctxt, stakers)
 
-let initial_staker_balance = Tez_repr.of_mutez_exn 100_000_000_000L
+let initial_staker_balance = Tez_repr.of_mumav_exn 100_000_000_000L
 
 let new_context () =
   let* ctxt, _stakers = new_context_with_stakers 1 in
-  (* Mint some tez for staker accounts. *)
+  (* Mint some mav for staker accounts. *)
   let mint_tez_for ctxt pkh_str =
     let pkh = Signature.Public_key_hash.of_b58check_exn pkh_str in
     let contract = Contract_repr.Implicit pkh in
