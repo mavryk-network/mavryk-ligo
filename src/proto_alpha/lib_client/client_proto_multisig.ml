@@ -379,7 +379,7 @@ code
       { # Main entry point
         # Assert no token was sent:
         # to send tokens, the default entry point should be used
-        PUSH mutez 0 ; AMOUNT ; ASSERT_CMPEQ ;
+        PUSH mumav 0 ; AMOUNT ; ASSERT_CMPEQ ;
         SWAP ; DUP ; DIP { SWAP } ;
         DIP
           {
@@ -579,7 +579,7 @@ let check_multisig_contract (cctxt : #Protocol_client_context.full) ~chain
 let lambda_action_t ~loc = lambda_t ~loc (unit_t ~loc) (operations_t ~loc)
 
 (* Conversion functions from common types to Script_expr using the optimized representation *)
-let mutez ~loc (amount : Tez.t) = int ~loc (Z.of_int64 (Tez.to_mumav amount))
+let mumav ~loc (amount : Tez.t) = int ~loc (Z.of_int64 (Tez.to_mumav amount))
 
 let optimized_key_hash ~loc (key_hash : Signature.Public_key_hash.t) =
   bytes
@@ -657,7 +657,7 @@ let action_to_expr_legacy ~loc = function
              ~loc
              (pair
                 ~loc
-                (mutez ~loc amount)
+                (mumav ~loc amount)
                 (optimized_address ~loc ~address:destination ~entrypoint))
   | Lambda _ -> error @@ Unsupported_feature_lambda ""
   | Change_delegate delegate ->

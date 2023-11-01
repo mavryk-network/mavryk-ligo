@@ -58,7 +58,7 @@ open Protocol
       Eg if Prim (_, I_ADD, [], []) is the (ad-hoc polymorphic) addition in Michelson,
       we will have the following variants in Mikhailsky:
       - Prim (_, I_ADD, [ Prim (_, T_mumav, [], []),
-                          Prim (_, T_mumav, [], []) ], []) for mutez addition
+                          Prim (_, T_mumav, [], []) ], []) for mumav addition
       - Prim (_, I_ADD, [ Prim (_, T_int, [], []),
                           Prim (_, T_nat, [], []) ], []) for int+nat addition
       etc.
@@ -307,7 +307,7 @@ module Data : sig
 
   val timestamp : Script_timestamp.t -> node
 
-  val mutez : Alpha_context.Tez.t -> node
+  val mumav : Alpha_context.Tez.t -> node
 
   val key_hash : Signature.Public_key_hash.t -> node
 

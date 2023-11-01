@@ -1332,7 +1332,7 @@ and ('ty, 'comparable) ty =
   | Signature_t : (signature, yes) ty
   | String_t : (Script_string.t, yes) ty
   | Bytes_t : (bytes, yes) ty
-  | Mutez_t : (Tez.t, yes) ty
+  | Mumav_t : (Tez.t, yes) ty
   | Key_hash_t : (public_key_hash, yes) ty
   | Key_t : (public_key, yes) ty
   | Timestamp_t : (Script_timestamp.t, yes) ty
@@ -1612,7 +1612,7 @@ val string_t : Script_string.t comparable_ty
 
 val bytes_t : Bytes.t comparable_ty
 
-val mutez_t : Tez.t comparable_ty
+val mumav_t : Tez.t comparable_ty
 
 val key_hash_t : public_key_hash comparable_ty
 

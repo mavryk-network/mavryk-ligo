@@ -644,7 +644,7 @@ let kinstr_split :
              reconstruct = (fun k -> ISub_tez_legacy (loc, k));
            }
   | IMul_teznat (loc, k), Item_t (_, Item_t (_, s)) ->
-      let s = Item_t (mutez_t, s) in
+      let s = Item_t (mumav_t, s) in
       ok
       @@ Ex_split_kinstr
            {
@@ -1092,7 +1092,7 @@ let kinstr_split :
              reconstruct = (fun k -> INow (loc, k));
            }
   | IBalance (loc, k), s ->
-      let s = Item_t (mutez_t, s) in
+      let s = Item_t (mumav_t, s) in
       ok
       @@ Ex_split_kinstr
            {
@@ -1206,7 +1206,7 @@ let kinstr_split :
              reconstruct = (fun k -> ISelf_address (loc, k));
            }
   | IAmount (loc, k), s ->
-      let s = Item_t (mutez_t, s) in
+      let s = Item_t (mumav_t, s) in
       ok
       @@ Ex_split_kinstr
            {

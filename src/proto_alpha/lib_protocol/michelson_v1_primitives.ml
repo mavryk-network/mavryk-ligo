@@ -383,7 +383,7 @@ let string_of_prim = function
   | T_signature -> "signature"
   | T_string -> "string"
   | T_bytes -> "bytes"
-  | T_mumav -> "mutez"
+  | T_mumav -> "mumav"
   | T_timestamp -> "timestamp"
   | T_unit -> "unit"
   | T_operation -> "operation"
@@ -540,7 +540,7 @@ let prim_of_string = function
   | "signature" -> ok T_signature
   | "string" -> ok T_string
   | "bytes" -> ok T_bytes
-  | "mutez" -> ok T_mumav
+  | "mumav" -> ok T_mumav
   | "timestamp" -> ok T_timestamp
   | "unit" -> ok T_unit
   | "operation" -> ok T_operation
@@ -711,7 +711,7 @@ let prim_encoding =
          ("signature", T_signature);
          ("string", T_string);
          ("bytes", T_bytes);
-         ("mutez", T_mumav);
+         ("mumav", T_mumav);
          ("timestamp", T_timestamp);
          ("unit", T_unit);
          ("operation", T_operation);

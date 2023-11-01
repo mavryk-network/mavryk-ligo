@@ -113,16 +113,16 @@ let constants_mainnet =
     seed_nonce_revelation_tip =
       (match Tez.(one /? 8L) with Ok c -> c | Error _ -> assert false);
     origination_size = 257;
-    baking_reward_fixed_portion (* 10_000_000 mutez *);
-    baking_reward_bonus_per_slot (* 4_286 mutez *);
-    endorsing_reward_per_slot (* 2_857 mutez *);
+    baking_reward_fixed_portion (* 10_000_000 mumav *);
+    baking_reward_bonus_per_slot (* 4_286 mumav *);
+    endorsing_reward_per_slot (* 2_857 mumav *);
     hard_storage_limit_per_operation = Z.of_int 60_000;
     cost_per_byte = Tez.of_mumav_exn 250L;
     quorum_min = 20_00l;
     quorum_max = 70_00l;
     min_proposal_quorum = 5_00l;
     (* liquidity_baking_subsidy is 1/16th of maximum total rewards for a block *)
-    liquidity_baking_subsidy (* 2_500_000 mutez *);
+    liquidity_baking_subsidy (* 2_500_000 mumav *);
     (* 1/2 window size of 2000 blocks with precision of 1_000_000
        for integer computation *)
     liquidity_baking_toggle_ema_threshold = 1_000_000_000l;
@@ -300,9 +300,9 @@ let constants_sandbox =
     delay_increment_per_round = Period.one_second;
     consensus_committee_size = 256;
     consensus_threshold = 0;
-    baking_reward_fixed_portion (* 333_333 mutez *);
-    baking_reward_bonus_per_slot (* 3_921 mutez *);
-    endorsing_reward_per_slot (* 2_604 mutez *);
+    baking_reward_fixed_portion (* 333_333 mumav *);
+    baking_reward_bonus_per_slot (* 3_921 mumav *);
+    endorsing_reward_per_slot (* 2_604 mumav *);
     max_slashing_period = 2;
     frozen_deposits_percentage = 5;
   }

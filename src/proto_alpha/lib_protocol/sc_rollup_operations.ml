@@ -175,7 +175,7 @@ let rec validate_ty :
   | Map_t (key_ty, val_ty, _) ->
       (validate_two_tys [@ocaml.tailcall]) key_ty val_ty k
   (* Invalid types. *)
-  | Mutez_t -> error Sc_rollup_invalid_parameters_type
+  | Mumav_t -> error Sc_rollup_invalid_parameters_type
   | Big_map_t (_key_ty, _val_ty, _) -> error Sc_rollup_invalid_parameters_type
   | Contract_t _ -> error Sc_rollup_invalid_parameters_type
   | Sapling_transaction_t _ -> error Sc_rollup_invalid_parameters_type

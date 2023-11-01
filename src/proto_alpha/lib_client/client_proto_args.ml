@@ -271,7 +271,7 @@ let minimal_timestamp_switch =
 
 let tez_format =
   "Text format: `DDDDDDD.DDDDDD`.\n\
-   Tez and mutez and separated by a period sign. Trailing and pending zeroes \
+   Tez and mumav and separated by a period sign. Trailing and pending zeroes \
    are allowed."
 
 let tez_parameter param =

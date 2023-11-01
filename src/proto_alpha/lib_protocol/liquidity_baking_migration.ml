@@ -58,7 +58,7 @@ let mainnet_tzBTC_address =
 
 (** If token_pool, xtz_pool, or lqt_total are ever zero the CPMM will be
     permanently broken. Therefore, we initialize it with the null address
-    registered as a liquidity provider with 1 satoshi tzBTC and 100 mutez
+    registered as a liquidity provider with 1 satoshi tzBTC and 100 mumav
     (roughly the current exchange rate).  *)
 let cpmm_init_storage ~token_address ~lqt_address =
   Script_repr.lazy_expr

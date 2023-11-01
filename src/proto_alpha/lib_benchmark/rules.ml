@@ -616,10 +616,10 @@ struct
     let open Patt in
     Pattern (focus (prim_pred (fun prim -> prim = A_Timestamp) list_any))
 
-  (* Matches a mutez literal *)
+  (* Matches a mumav literal *)
   let match_mumav =
     let open Patt in
-    Pattern (focus (prim_pred (fun prim -> prim = A_Mutez) list_any))
+    Pattern (focus (prim_pred (fun prim -> prim = A_Mumav) list_any))
 
   (* Matches a key_hash literal *)
   let match_key_hash =
@@ -632,7 +632,7 @@ struct
       (focus
          (prim_pred
             (function
-              | A_Int | A_Nat | A_Mutez | A_Timestamp | A_Key_hash | A_Key
+              | A_Int | A_Nat | A_Mumav | A_Timestamp | A_Key_hash | A_Key
               | D_None ->
                   true
               | _ -> false)
@@ -747,8 +747,8 @@ struct
         ~replacement:Mikhailsky.Data.none
     in
     let replace_by_mumav rng_state =
-      replacement_gen ~fresh:[] ~typ:Type.mutez ~replacement:(fun () ->
-          Mikhailsky.Data.mutez (Michelson_base.tez rng_state))
+      replacement_gen ~fresh:[] ~typ:Type.mumav ~replacement:(fun () ->
+          Mikhailsky.Data.mumav (Michelson_base.tez rng_state))
     in
     let replace_by_key_hash rng_state =
       replacement_gen ~fresh:[] ~typ:Type.key_hash ~replacement:(fun () ->
@@ -928,7 +928,7 @@ struct
               | Mikhailsky_prim.D_Elt | D_Hole -> false
               | D_False | D_Left | D_None | D_Pair | D_Right | D_Some | D_True
               | D_Unit | A_Int | A_Nat | A_Set | A_List | A_Map | A_Key_hash
-              | A_Mutez | A_Timestamp | A_Key ->
+              | A_Mumav | A_Timestamp | A_Key ->
                   true
               | _ -> false)
             list_any))

@@ -40,8 +40,8 @@ let nanotez_enc : nanotez Data_encoding.t =
   let open Data_encoding in
   def
     "nanotez"
-    ~title:"A thousandth of a mutez"
-    ~description:"One thousand nanotez make a mutez (1 tez = 1e9 nanotez)"
+    ~title:"A thousandth of a mumav"
+    ~description:"One thousand nanotez make a mumav (1 tez = 1e9 nanotez)"
     (conv
        (fun q -> (q.Q.num, q.Q.den))
        (fun (num, den) -> {Q.num; den})

@@ -81,7 +81,7 @@ let default_dal_node_addr = "127.0.0.1"
 
 let default_dal_node_port = 10732
 
-let tez t = Tez.of_mutez_exn Int64.(mul (of_int t) 1_000_000L)
+let tez t = Tez.of_mumav_exn Int64.(mul (of_int t) 1_000_000L)
 
 let default_minimal_fees = Mempool.default_minimal_fees
 
@@ -99,7 +99,7 @@ let default_burn_cap = Tez.zero
 (* The below default fee and burn limits are computed by taking into account
    the worst fee found in the tests for the rollup node.
 
-   We take as base the cost of commitment cementation, which is 719 mutez in fees:
+   We take as base the cost of commitment cementation, which is 719 mumav in fees:
    - Commitment publishing is 1.37 times more expensive.
    - Message submission is 0.7 times more expensive, so cheaper but it depends on
      the size of the message.
@@ -109,7 +109,7 @@ let default_burn_cap = Tez.zero
      - Proof move is 1.47 times more expensive but depends on the size of the proof.
      - Timeout move is 1.34 times more expensive.
 
-   We set a fee limit of 1 tz for cementation (instead of 719 mutez) which
+   We set a fee limit of 1 tz for cementation (instead of 719 mumav) which
    should be plenty enough even if the gas price or gas consumption
    increases. We adjust the other limits in proportion.
 *)

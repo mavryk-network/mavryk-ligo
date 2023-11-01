@@ -26,7 +26,7 @@
 
 let id = "tez"
 
-let name = "mutez"
+let name = "mumav"
 
 open Compare.Int64 (* invariant: positive *)
 
@@ -56,7 +56,7 @@ let one_cent = mul_int one_mumav 10_000L
 
 let fifty_cents = mul_int one_cent 50L
 
-(* 1 tez = 100 cents = 1_000_000 mutez *)
+(* 1 tez = 100 cents = 1_000_000 mumav *)
 let one = mul_int one_cent 100L
 
 let of_string s =
