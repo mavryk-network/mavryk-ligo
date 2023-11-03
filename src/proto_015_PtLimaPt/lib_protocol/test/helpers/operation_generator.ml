@@ -173,9 +173,9 @@ let pkhs =
   List.map
     Signature.Public_key_hash.of_b58check_exn
     [
-      "tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx";
-      "tz1b7tUupMgCNw2cCLpKTkSD1NZzB5TkP2sv";
-      "tz1faswCTDciRzE4oJ9jn2Vm2dvjeyA9fUzU";
+      "mv1FeNQ3gSZoEFp1mr6VTLnMqV5tuNwHTgw5";
+      "mv1S14SxfuavHMGDXxZJoBERZafLTyX3Z6Dx";
+      "mv1PVMnW8iyYxCoqLfPAha8EAPRxjTx7wqbn";
     ]
 
 let random_pkh random_state = choose_list_element random_state pkhs
